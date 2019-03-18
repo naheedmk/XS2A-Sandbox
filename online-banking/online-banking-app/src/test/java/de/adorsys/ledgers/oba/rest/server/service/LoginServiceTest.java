@@ -4,7 +4,6 @@ import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.payment.SinglePaymentTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.OpTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCALoginResponseTO;
-import de.adorsys.ledgers.middleware.api.domain.sca.SCAPaymentResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
@@ -16,7 +15,6 @@ import de.adorsys.ledgers.oba.rest.api.exception.PaymentAuthorisationException;
 import de.adorsys.ledgers.oba.rest.server.resource.utils.ResponseUtils;
 import de.adorsys.psd2.consent.api.pis.CmsPaymentResponse;
 import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,8 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.SCAMETHODSELECTED;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -53,15 +49,6 @@ public class LoginServiceTest {
     private ResponseUtils responseUtils;
     @Mock
     private CommonPisService commonPisService;
-
-    @Before
-    public void setUp() throws PaymentAuthorisationException {
-        doNothing().when(commonPisService).processPaymentResponse(any(PaymentWorkflow.class), any(SCAPaymentResponseTO.class));
-        doNothing().when(commonPisService).scaStatus(any(PaymentWorkflow.class), any(String.class), any(HttpServletResponse.class));
-        doNothing().when(commonPisService).initiatePayment(any(PaymentWorkflow.class), any(HttpServletResponse.class));
-        doNothing().when(commonPisService).selectMethod(any(String.class), any(PaymentWorkflow.class));
-        doNothing().when(commonPisService).updateScaStatusPaymentStatusConsentData(any(String.class), any(PaymentWorkflow.class), any(HttpServletResponse.class));
-    }
 
     @Test
     public void login_Success() throws PaymentAuthorisationException {
