@@ -18,7 +18,7 @@ public class ConsentWorkflow {
 	private String consentStatus;
 	private String authCodeMessage;
 	private HttpStatus errorCode;
-	private ConsentAuthorizeResponse authResponse;
+	private ConsentAuthorisationResponse authResponse;
 	private final ConsentReference consentReference;
 	private SCAResponseTO scaResponse;
 	
@@ -46,11 +46,11 @@ public class ConsentWorkflow {
 		this.errorCode = errorCode;
 	}
 
-	public ConsentAuthorizeResponse getAuthResponse() {
+	public ConsentAuthorisationResponse getAuthResponse() {
 		return authResponse;
 	}
 
-	public void setAuthResponse(ConsentAuthorizeResponse authResponse) {
+	public void setAuthResponse(ConsentAuthorisationResponse authResponse) {
 		this.authResponse = authResponse;
 	}
 

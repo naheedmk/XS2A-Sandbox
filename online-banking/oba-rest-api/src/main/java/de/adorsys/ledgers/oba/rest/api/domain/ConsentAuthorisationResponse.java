@@ -2,14 +2,14 @@ package de.adorsys.ledgers.oba.rest.api.domain;
 
 import de.adorsys.ledgers.middleware.api.domain.um.AisConsentTO;
 
-public class ConsentAuthorizeResponse extends AuthorisationResponse {
+public class ConsentAuthorisationResponse extends AuthorisationResponse {
 	private AisConsentTO consent;
 	private String authMessageTemplate;
 	
-	public ConsentAuthorizeResponse() {
+	public ConsentAuthorisationResponse() {
 	}
 	
-	public ConsentAuthorizeResponse(AisConsentTO consent) {
+	public ConsentAuthorisationResponse(AisConsentTO consent) {
 		super();
 		this.consent = consent;
 	}

@@ -1,6 +1,7 @@
 package de.adorsys.ledgers.oba.rest.api.resource;
 
 import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
+import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorisationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.CreatePiisConsentRequestTO;
 import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
 import io.swagger.annotations.Api;
@@ -34,11 +34,11 @@ public interface AISApi {
 	 * @param login the login 
 	 * @param pin the password
 	 * @param consentCookieString the cosent cookie
-	 * @return ConsentAuthorizeResponse
+	 * @return ConsentAuthorisationResponse
 	 */
 	@PostMapping(path="/{encryptedConsentId}/authorisation/{authorisationId}/login")
 	@ApiOperation(value = "Identifies the user by login an pin. Return sca methods information")
-	ResponseEntity<ConsentAuthorizeResponse> login(
+	ResponseEntity<ConsentAuthorisationResponse> login(
 			@PathVariable("encryptedConsentId") String encryptedConsentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@RequestParam("login") String login,
@@ -52,11 +52,11 @@ public interface AISApi {
 	 * @param authorisationId the auth id
 	 * @param scaMethodId sca
 	 * @param consentAndaccessTokenCookieString the cosent cookie
-	 * @return ConsentAuthorizeResponse
+	 * @return ConsentAuthorisationResponse
 	 */
 	@PostMapping("/{encryptedConsentId}/authorisation/{authorisationId}/methods/{scaMethodId}")
 	@ApiOperation(value = "Selects the SCA Method for use.", authorizations = @Authorization(value = "apiKey"))
-	ResponseEntity<ConsentAuthorizeResponse> selectMethod(
+	ResponseEntity<ConsentAuthorisationResponse> selectMethod(
 			@PathVariable("encryptedConsentId") String encryptedConsentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@PathVariable("scaMethodId") String scaMethodId,
@@ -69,11 +69,11 @@ public interface AISApi {
 	 * @param authorisationId the auth id
 	 * @param consentAndaccessTokenCookieString the cosent cookie
 	 * @param authCode the auth code
-	 * @return ConsentAuthorizeResponse
+	 * @return ConsentAuthorisationResponse
 	 */
 	@PostMapping(path="/{encryptedConsentId}/authorisation/{authorisationId}/authCode", params= {"authCode"})
 	@ApiOperation(value = "Provides a TAN for the validation of an authorization", authorizations = @Authorization(value = "apiKey"))
-	ResponseEntity<ConsentAuthorizeResponse> authrizedConsent(
+	ResponseEntity<ConsentAuthorisationResponse> authrizedConsent(
 			@PathVariable("encryptedConsentId") String encryptedConsentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@RequestHeader(name="Cookie", required=false) String consentAndaccessTokenCookieString,
