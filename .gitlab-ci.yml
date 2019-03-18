@@ -15,6 +15,7 @@ stages:
   - "build:qa"     # run tests and code quality checks
   - "build:image"  # dockerize jar and push to docker registry
   - "release"
+  - "deploy"
 
 # ------------------------------------------------------------------
 # variables
@@ -27,6 +28,12 @@ variables:
   DOCKER_IMAGE_NAME_XS2A_CERTIFICATE_GENERATOR: "docker.io/adorsys/xs2a-certificate-generator"
   DOCKER_IMAGE_NAME_XS2A_ONLINE_BANKING_UI: "docker.io/adorsys/xs2a-online-banking-ui"
 
+  DOCKER_IMAGE_NAME_XS2A: "docker.io/adorsys/xs2a-service"
+  DOCKER_IMAGE_NAME_CNT_MGMNT: "docker.io/adorsys/xs2a-consent-management"
+  DOCKER_IMAGE_NAME_ASPSP_PROFILE: "docker.io/adorsys/xs2a-aspsp-profile"
+  DOCKER_IMAGE_NAME_LEDGERS: "docker.io/adorsys/ledgers"
+  DOCKER_IMAGE_NAME_CONNECTOR_EXAMPLES: "docker.io/adorsys/xs2a-connector-examples"
+
   ###########################
   # Build variables         #
   ###########################
@@ -34,6 +41,15 @@ variables:
   # Defaults for Java 8
   JAVA_TOOL_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAM=3G -XX:MaxRAMFraction=3"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+  ###########################
+  # Deployment variables    #
+  ###########################
+
+  DEV_NAMESPACE: psd2-dynamic-sandbox-dev
+  #INTEG_NAMESPACE: adorsys-psd2-integ
+  #DEMO_NAMESPACE: adorsys-psd2-demo
+  TILLER_NAMESPACE: adorsys-psd2-tiller
 
 # ------------------------------------------------------------------
 # reusable yaml anchors
@@ -66,6 +82,51 @@ variables:
     - docker push "$DOCKER_IMAGE_NAME_XS2A_ONLINE_BANKING_UI:$DOCKER_TAG"
 
     - docker logout
+
+
+.helm_env_deploy: &helm_env_deploy
+  image: adorsys/ci-helm:2.10
+  before_script:
+    - eval $(gpg-agent --daemon --quiet --allow-preset-passphrase)
+    - echo -n "${GPG_KEY}" | gpg --quiet --batch --import -
+  script:
+    - "echo \"OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE}\""
+    - "echo \"HELM_STAGE: ${HELM_STAGE}\""
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@git.adorsys.de/adorsys/xs2a/xs2a-openshift.git .helm
+    - cd .helm && git checkout develop && cd ..
+    - cd .helm/charts/xs2a
+    - oc login openshift.adorsys.de --token=${HELM_TOKEN}
+    # get docker image commit hashes
+    - SHA_XS2A=$(skopeo inspect docker://$DOCKER_IMAGE_NAME_XS2A:$DOCKER_TAG | jq -r .Digest)
+    - SHA_CNT_MGMNT=$(skopeo inspect docker://$DOCKER_IMAGE_NAME_CNT_MGMNT:$DOCKER_TAG | jq -r .Digest)
+    - SHA_ASPSP_PROFILE=$(skopeo inspect docker://$DOCKER_IMAGE_NAME_ASPSP_PROFILE:$DOCKER_TAG | jq -r .Digest)
+    - SHA_LEDGERS=$(skopeo inspect docker://$DOCKER_IMAGE_NAME_LEDGERS:$DOCKER_TAG | jq -r .Digest)
+    - SHA_CONNECTOR_EXAMPLES=$(skopeo inspect docker://$DOCKER_IMAGE_NAME_CONNECTOR_EXAMPLES:$DOCKER_TAG | jq -r .Digest)
+      #    - SHA_CONNECTOR_ONLINE_BANKING=$(skopeo inspect docker://$DOCKER_IMAGE_NAME_ONLINE_BANKING:$DOCKER_TAG | jq -r .Digest)
+    # assemble full docker image name
+    - IMAGE_WITH_SHA_XS2A="$DOCKER_IMAGE_NAME_XS2A@$SHA_XS2A"
+    - IMAGE_WITH_SHA_CNT_MGMNT="$DOCKER_IMAGE_NAME_CNT_MGMNT@$SHA_CNT_MGMNT"
+    - IMAGE_WITH_SHA_ASPSP_PROFILE="$DOCKER_IMAGE_NAME_ASPSP_PROFILE@$SHA_ASPSP_PROFILE"
+    - IMAGE_WITH_SHA_LEDGERS="$DOCKER_IMAGE_NAME_LEDGERS@$SHA_LEDGERS"
+    - IMAGE_WITH_SHA_CONNECTOR_EXAMPLES="$DOCKER_IMAGE_NAME_CONNECTOR_EXAMPLES@$SHA_CONNECTOR_EXAMPLES"
+    #- IMAGE_WITH_SHA_ONLINE_BANKING="$DOCKER_IMAGE_NAME_ONLINE_BANKING@$SHA_ONLINE_BANKING"
+    - |-
+      HELM_ARGS=(
+        "--set dockerImageXs2a=$IMAGE_WITH_SHA_XS2A"
+        "--set dockerImageCntMgmnt=$IMAGE_WITH_SHA_CNT_MGMNT"
+        "--set dockerImageAspspProfile=$IMAGE_WITH_SHA_ASPSP_PROFILE"
+        "--set dockerImageLedgers=$IMAGE_WITH_SHA_LEDGERS"
+        "--set dockerImageConnectorExamples=$IMAGE_WITH_SHA_CONNECTOR_EXAMPLES"
+        "-f env/${HELM_STAGE}/env.yaml"
+        "-f env/${HELM_STAGE}/secrets.yaml"
+      )
+      # diff helm changes
+    - helm-wrapper diff upgrade ${HELM_RELEASE} . --allow-unreleased -q ${HELM_ARGS[@]} || true
+    # apply helm changes
+    - helm-wrapper upgrade -i ${HELM_RELEASE} . --namespace=${OPENSHIFT_NAMESPACE} --wait --timeout=1200 --force ${HELM_ARGS[@]}
+  after_script:
+    - pkill gpg-agent
+
 
 # ------------------------------------------------------------------
 # jobs
@@ -149,3 +210,18 @@ release_maven_central:
     - echo $SONATYPE_GPG_SECRET_KEY | base64 --decode | $SONATYPE_GPG_EXECUTABLE --import
     - echo $SONATYPE_GPG_OWNERTRUST | base64 --decode | $SONATYPE_GPG_EXECUTABLE --import-ownertrust
     - mvn --settings scripts/maven-release-settings.xml -Prelease -DskipTests -B -U deploy
+
+deploy_openshift_config:
+  stage: "deploy"
+  <<: *helm_env_deploy
+  only:
+    - develop
+    - dgo_add_helm_depl_develop
+  variables:
+    OPENSHIFT_NAMESPACE: "${DEV_NAMESPACE}"
+    DOCKER_TAG: "develop"
+    HELM_RELEASE: "sandbox-dev"
+    HELM_STAGE: "sandbox-dev"
+  environment:
+    name: dev
+    url: ~
