@@ -1,4 +1,4 @@
-package de.adorsys.ledgers.oba.rest.server.resource;
+package de.adorsys.ledgers.oba.rest.server.resource.utils;
 
 import org.springframework.http.ResponseEntity;
 

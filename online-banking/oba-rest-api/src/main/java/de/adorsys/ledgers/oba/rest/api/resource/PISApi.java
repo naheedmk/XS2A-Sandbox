@@ -1,5 +1,6 @@
 package de.adorsys.ledgers.oba.rest.api.resource;
 
+import de.adorsys.ledgers.oba.rest.api.domain.PaymentAuthorisationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,8 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
-import de.adorsys.ledgers.oba.rest.api.domain.PaymentAuthorizeResponse;
+import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -24,11 +24,11 @@ public interface PISApi {
 	 * 
 	 * @param redirectId  the redirect is
 	 * @param encryptedPaymentId the enc payment idf
-	 * @return AuthorizeResponse
+	 * @return AuthorisationResponse
 	 */
 	@GetMapping(path="/auth", params= {"redirectId","encryptedPaymentId"})
 	@ApiOperation(value = "Entry point for authenticating payment requests.")
-	ResponseEntity<AuthorizeResponse> pisAuth(
+	ResponseEntity<AuthorisationResponse> preparePaymentForAuthorisation(
 			@RequestParam(name = "redirectId") String redirectId,
 			@RequestParam(name = "encryptedPaymentId") String encryptedPaymentId);
 	
@@ -40,11 +40,11 @@ public interface PISApi {
 	 * @param login the login 
 	 * @param pin the password
 	 * @param consentCookieString the cosent cookie
-	 * @return PaymentAuthorizeResponse
+	 * @return PaymentAuthorisationResponse
 	 */
 	@PostMapping(path="/{encryptedPaymentId}/authorisation/{authorisationId}/login")
 	@ApiOperation(value = "Identifies the user by login an pin. Return sca methods information")
-	ResponseEntity<PaymentAuthorizeResponse> login(
+	ResponseEntity<PaymentAuthorisationResponse> login(
 			@PathVariable("encryptedPaymentId") String encryptedPaymentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@RequestParam("login") String login,
@@ -56,12 +56,12 @@ public interface PISApi {
 	 * @param encryptedPaymentId the sca id
 	 * @param authorisationId the auth id
 	 * @param consentAndaccessTokenCookieString the cosent cookie
-	 * @return PaymentAuthorizeResponse
+	 * @return PaymentAuthorisationResponse
 	 */
 	@PostMapping(path="/{encryptedPaymentId}/authorisation/{authorisationId}/initiate")
 	@ApiOperation(value = "Calls the consent validation page.", 
 		authorizations = @Authorization(value = "apiKey"))
-	ResponseEntity<PaymentAuthorizeResponse> initiatePayment(
+	ResponseEntity<PaymentAuthorisationResponse> initiatePayment(
 			@PathVariable("encryptedPaymentId") String encryptedPaymentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@RequestHeader(name="Cookie", required=false) String consentAndaccessTokenCookieString);
@@ -73,11 +73,11 @@ public interface PISApi {
 	 * @param authorisationId the auth id
 	 * @param scaMethodId sca
 	 * @param consentAndaccessTokenCookieString the cosent cookie
-	 * @return PaymentAuthorizeResponse
+	 * @return PaymentAuthorisationResponse
 	 */
 	@PostMapping("/{encryptedPaymentId}/authorisation/{authorisationId}/methods/{scaMethodId}")
 	@ApiOperation(value = "Selects the SCA Method for use.", authorizations = @Authorization(value = "apiKey"))
-	ResponseEntity<PaymentAuthorizeResponse> selectMethod(
+	ResponseEntity<PaymentAuthorisationResponse> selectScaMethod(
 			@PathVariable("encryptedPaymentId") String encryptedPaymentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@PathVariable("scaMethodId") String scaMethodId,
@@ -90,11 +90,11 @@ public interface PISApi {
 	 * @param authorisationId the auth id
 	 * @param consentAndaccessTokenCookieString the cosent cookie
 	 * @param authCode the auth code
-	 * @return PaymentAuthorizeResponse
+	 * @return PaymentAuthorisationResponse
 	 */
 	@PostMapping(path="/{encryptedPaymentId}/authorisation/{authorisationId}/authCode", params= {"authCode"})
 	@ApiOperation(value = "Provides a TAN for the validation of an authorization", authorizations = @Authorization(value = "apiKey"))
-	ResponseEntity<PaymentAuthorizeResponse> authrizedPayment(
+	ResponseEntity<PaymentAuthorisationResponse> authorisePayment(
 			@PathVariable("encryptedPaymentId") String encryptedPaymentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@RequestHeader(name="Cookie", required=false) String consentAndaccessTokenCookieString,

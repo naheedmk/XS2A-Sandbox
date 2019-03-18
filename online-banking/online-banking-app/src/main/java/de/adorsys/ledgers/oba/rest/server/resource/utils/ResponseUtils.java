@@ -1,19 +1,4 @@
-package de.adorsys.ledgers.oba.rest.server.resource;
-
-import java.net.HttpCookie;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
+package de.adorsys.ledgers.oba.rest.server.resource.utils;
 
 import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
@@ -22,6 +7,19 @@ import de.adorsys.ledgers.oba.rest.api.domain.PsuMessage;
 import de.adorsys.ledgers.oba.rest.api.domain.PsuMessageCategory;
 import de.adorsys.ledgers.oba.rest.api.domain.ValidationCode;
 import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.net.HttpCookie;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ResponseUtils {

@@ -46,6 +46,11 @@
 			<artifactId>xs2a-server-api</artifactId>
 			<version>${xs2a.version}</version>
 		</dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 	</dependencies>
 </project>
 

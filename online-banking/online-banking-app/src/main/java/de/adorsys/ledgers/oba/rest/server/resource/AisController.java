@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import de.adorsys.ledgers.oba.rest.api.domain.*;
+import de.adorsys.ledgers.oba.rest.server.resource.utils.AuthUtils;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CmsAspspPiisClient;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentRequest;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentResponse;
@@ -31,12 +33,7 @@ import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
 import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
-import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorizeResponse;
-import de.adorsys.ledgers.oba.rest.api.domain.ConsentWorkflow;
-import de.adorsys.ledgers.oba.rest.api.domain.CreatePiisConsentRequestTO;
-import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
-import de.adorsys.ledgers.oba.rest.api.domain.ValidationCode;
+import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
 import de.adorsys.ledgers.oba.rest.api.exception.ConsentAuthorizeException;
 import de.adorsys.ledgers.oba.rest.api.resource.AISApi;
 import de.adorsys.ledgers.oba.rest.server.mapper.AisConsentMapper;
@@ -47,10 +44,10 @@ import feign.FeignException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@RestController(AISController.BASE_PATH)
-@RequestMapping(AISController.BASE_PATH)
-@Api(value = AISController.BASE_PATH, tags = "PSU AIS", description = "Provides access to online banking account functionality")
-public class AISController extends AbstractXISController implements AISApi {
+@RestController(AisController.BASE_PATH)
+@RequestMapping(AisController.BASE_PATH)
+@Api(value = AisController.BASE_PATH, tags = "PSU AIS", description = "Provides access to online banking account functionality")
+public class AisController extends AbstractXisController implements AISApi {
 	@Autowired
 	private HttpServletRequest request;
 	@Autowired
@@ -72,8 +69,8 @@ public class AISController extends AbstractXISController implements AISApi {
 
 	@Override
 	@ApiOperation(value = "Entry point for authenticating ais consent requests.")
-	public ResponseEntity<AuthorizeResponse> aisAuth(String redirectId,
-			String encryptedConsentId) {
+	public ResponseEntity<AuthorisationResponse> aisAuth(String redirectId,
+                                                         String encryptedConsentId) {
 		return auth(redirectId, ConsentType.AIS, encryptedConsentId, request, response);
 	}
 

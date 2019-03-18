@@ -1,5 +1,6 @@
 package de.adorsys.ledgers.oba.rest.api.resource;
 
+import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.CreatePiisConsentRequestTO;
 import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
@@ -22,7 +22,7 @@ public interface AISApi {
 
 	@GetMapping(path="/auth", params= {"redirectId","encryptedConsentId"})
 	@ApiOperation(value = "Entry point for authenticating ais consent requests.")
-	ResponseEntity<AuthorizeResponse> aisAuth(
+	ResponseEntity<AuthorisationResponse> aisAuth(
 			@RequestParam(name = "redirectId") String redirectId,
 			@RequestParam(name = "encryptedConsentId") String encryptedConsentId);
 

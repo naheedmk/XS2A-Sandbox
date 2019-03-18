@@ -1,14 +1,5 @@
 package de.adorsys.ledgers.oba.rest.server.consentref;
 
-import java.text.ParseException;
-import java.util.Date;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -16,12 +7,19 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReferencePolicy;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
 import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
 import de.adorsys.ledgers.util.Ids;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.text.ParseException;
+import java.util.Date;
 
 public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
     private static final String CONSENT_TYPE_JWT_CLAIM_NAME = "consent-type";
@@ -59,7 +57,7 @@ public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
 				.claim(REDIRECT_ID_JWT_CLAIM_NAME, ref.getRedirectId())
 				.claim(CONSENT_TYPE_JWT_CLAIM_NAME, ref.getConsentType().name())
 				.claim(ENC_CONSENT_ID_JWT_CLAIM_NAME, ref.getEncryptedConsentId())
-				.claim(AUTH_ID_JWT_CLAIM_NAME, ref.getAuthorizationId())
+				.claim(AUTH_ID_JWT_CLAIM_NAME, ref.getAuthorisationId())
 				.expirationTime(DateUtils.addSeconds(now, 300)).issueTime(now)
 				.build();
 		return signJWT(claimsSet);
@@ -77,7 +75,7 @@ public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
 	}
 
 	/*
-	 * Verify the consent jwt. If strict is true, the jwt must contain the encryptedConsentId and the authorizationId.
+	 * Verify the consent jwt. If strict is true, the jwt must contain the encryptedConsentId and the authorisationId.
 	 */
 	@SuppressWarnings("PMD")
 	private ConsentReference verifyParseJWT(String encryptedConsentId, String authorizationId, String cookieString, boolean strict) throws InvalidConsentException {
@@ -134,7 +132,7 @@ public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
 		cr.setConsentType(ConsentType.valueOf(jwtClaimsSet.getClaim(CONSENT_TYPE_JWT_CLAIM_NAME).toString()));
 		cr.setRedirectId(jwtClaimsSet.getClaim(REDIRECT_ID_JWT_CLAIM_NAME).toString());
 		cr.setEncryptedConsentId(encryptedConsentId);
-		cr.setAuthorizationId(authorizationId);
+		cr.setAuthorisationId(authorizationId);
 		cr.setCookieString(toClaim(cr));
 		
 		return cr;

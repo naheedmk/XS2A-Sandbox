@@ -1,12 +1,12 @@
 package de.adorsys.ledgers.oba.rest.api.resource;
 
+import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -17,9 +17,9 @@ public interface SCAApi {
 
 	/**
 	 * STEP-P1, STEP-A1: Validates the login and password of a user. This request is associated with
-	 * an scaId that is directly bound to the consentId/paymentId used in the xs2a 
+	 * an scaId that is directly bound to the consentId/getPaymentId used in the xs2a
 	 * redirect request. BTW the scaId can be the initiating consent id itself or
-	 * a random id mapping to the consentId (resp. paymentId)
+	 * a random id mapping to the consentId (resp. getPaymentId)
 	 * 
 	 * Implementation first validates existence of the consent. If the consent does
 	 * not exist or has the wrong status, the request is rejected.
@@ -32,10 +32,10 @@ public interface SCAApi {
 	 * If the user has no sca method, then return the consent access token.
 	 * 
 	 * If the user has only one sca method, sent authentication code to the user and
-	 * return the sac method id in the AuthorizeResponse
+	 * return the sac method id in the AuthorisationResponse
 	 * 
 	 * If the user has more than one sca methods, returns the list of sca methods in
-	 * the AuthorizeResponse and wait for sca method selection.
+	 * the AuthorisationResponse and wait for sca method selection.
 	 * 
 	 * Method expects
 	 * 
@@ -46,7 +46,7 @@ public interface SCAApi {
 	 */
 	@PostMapping("/login")
 	@ApiOperation(value = "Identifies the user by login an pin. Return sca methods information")
-	ResponseEntity<AuthorizeResponse> login(
+	ResponseEntity<AuthorisationResponse> login(
 			@RequestParam("login") String login,
 			@RequestParam("pin") String pin);
 
@@ -61,7 +61,7 @@ public interface SCAApi {
 	 */
 	@PostMapping(path="/{scaId}/authorisation/{authorisationId}/methods/{methodId}")
 	@ApiOperation(value = "Selects the SCA Method for use.", authorizations = @Authorization(value = "apiKey"))
-	ResponseEntity<AuthorizeResponse> selectMethod(
+	ResponseEntity<AuthorisationResponse> selectMethod(
 			@PathVariable("scaId") String scaId,
 			@PathVariable("authorisationId") String authorisationId,
 			@PathVariable("methodId") String methodId,
@@ -69,7 +69,7 @@ public interface SCAApi {
 
 	@PostMapping(path="/{scaId}/authorisation/{authorisationId}/authCode", params="authCode")
 	@ApiOperation(value = "Validate the provided authentication code.", authorizations = @Authorization(value = "apiKey"))
-	ResponseEntity<AuthorizeResponse> validateAuthCode(
+	ResponseEntity<AuthorisationResponse> validateAuthCode(
 			@PathVariable("scaId") String scaId,
 			@PathVariable("authorisationId") String authorisationId,
 			@RequestParam(name="authCode") String authCode,

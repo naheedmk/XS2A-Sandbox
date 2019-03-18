@@ -28,7 +28,7 @@ public class CmsPaymentDeserializer extends StdDeserializer<CmsPayment> {
 	public CmsPayment deserialize(JsonParser p, DeserializationContext ctxt)
 			throws IOException, JsonProcessingException {
 		JsonNode node = p.getCodec().readTree(p);
-		String paymentTypeValue = node.get("paymentType").asText();
+		String paymentTypeValue = node.get("getPaymentType").asText();
 		PaymentType paymentType = PaymentType.getByValue(paymentTypeValue).orElseThrow(
 				() -> new IllegalStateException(String.format("Unknown payment type %s", paymentTypeValue)));
 		switch (paymentType) {

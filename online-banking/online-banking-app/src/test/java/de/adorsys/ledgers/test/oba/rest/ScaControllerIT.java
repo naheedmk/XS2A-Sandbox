@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = LedgersXs2aObaApp.class)
-public class SCAControllerIT {
+public class ScaControllerIT {
 
 	@Test
 	public void test() {

@@ -3,6 +3,8 @@ package de.adorsys.ledgers.oba.rest.server.resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
+import de.adorsys.ledgers.oba.rest.server.resource.utils.ResponseUtils;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +19,11 @@ import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReferencePolicy;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
 import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
 
-public abstract class AbstractXISController {
-	private static final Logger logger = LoggerFactory.getLogger(AbstractXISController.class);
+public abstract class AbstractXisController {
+	private static final Logger logger = LoggerFactory.getLogger(AbstractXisController.class);
 
-	
 	@Autowired
 	protected AspspConsentDataClient aspspConsentDataClient;
 
@@ -54,14 +54,14 @@ public abstract class AbstractXISController {
 	
 	public abstract String getBasePath();
 	
-	protected ResponseEntity<AuthorizeResponse> auth(
+	protected ResponseEntity<AuthorisationResponse> auth(
 			String redirectId,
 			ConsentType consentType,
 			String encryptedConsentId,
 			HttpServletRequest request,
 			HttpServletResponse response) {
 		// SCA Status is set to STARTED
-		AuthorizeResponse authResponse = new AuthorizeResponse();
+		AuthorisationResponse authResponse = new AuthorisationResponse();
 		
 		// 1. Store redirect link in a cookie
 		ConsentReference consentReference;
@@ -86,7 +86,7 @@ public abstract class AbstractXISController {
 			return responseUtils.redirectKeepCookie(uriString, response);
 		} else {
 			response.addHeader("Location", uriString);
-			return ResponseEntity.<AuthorizeResponse>ok(authResponse);
+			return ResponseEntity.<AuthorisationResponse>ok(authResponse);
 		}
 	}
 }

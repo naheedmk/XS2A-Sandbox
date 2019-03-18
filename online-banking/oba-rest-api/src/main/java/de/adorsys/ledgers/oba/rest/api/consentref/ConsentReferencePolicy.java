@@ -11,7 +11,7 @@ public interface ConsentReferencePolicy {
 	/**
 	 * Produces The consent reference based on the inbound URL.
 	 * 
-	 * The inbound url will contain either the ais consentId or the pis paymentId.
+	 * The inbound url will contain either the ais consentId or the pis getPaymentId.
 	 * @param redirectId: the redirect id. 
 	 * @param consentType: the type of consent requested payment or account information
 	 * @param encryptedConsentId the original customer redirected url
