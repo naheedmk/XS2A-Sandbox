@@ -58,7 +58,7 @@ public class PaymentWorkflow {
         return paymentResponse.getPayment().getPaymentId();
     }
 
-    public String getAuthrisationId() {
+    public String getAuthorisationId() {
         return paymentResponse.getAuthorisationId();
     }
 }

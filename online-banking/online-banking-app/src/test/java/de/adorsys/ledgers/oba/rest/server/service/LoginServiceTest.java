@@ -1,8 +1,12 @@
 package de.adorsys.ledgers.oba.rest.server.service;
 
+import de.adorsys.ledgers.middleware.api.domain.payment.PaymentTypeTO;
+import de.adorsys.ledgers.middleware.api.domain.payment.SinglePaymentTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.OpTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCALoginResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAPaymentResponseTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
+import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
@@ -24,6 +28,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
+import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.SCAMETHODSELECTED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -75,28 +80,42 @@ public class LoginServiceTest {
 
         //Then
         assertThat(actualResult.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(actualResult.getBody()).isEqualTo(expectedResult);
-    }
-
-    @Test
-    public void login_Fail() {
-
+        assertThat(actualResult.getBody()).isNotNull();
+        assertThat(actualResult.getBody().getSinglePayment()).isEqualToComparingFieldByField(expectedResult.getSinglePayment());
     }
 
     private PaymentAuthorisationResponse buildPaymentAuthorisationResponse() {
-        PaymentAuthorisationResponse response = new PaymentAuthorisationResponse();
+        PaymentAuthorisationResponse response = new PaymentAuthorisationResponse(PaymentTypeTO.SINGLE, buildSinglePayment());
+        response.setAuthorisationId(AUTHORISATION_ID);
+        response.setEncryptedConsentId(ENCRYPTED_PAYMENT_ID);
+        response.setScaStatus(SCAMETHODSELECTED);
+
         return response;
+    }
+
+    private SinglePaymentTO buildSinglePayment() {
+        SinglePaymentTO singlePayment = new SinglePaymentTO();
+        singlePayment.setPaymentId(ENCRYPTED_PAYMENT_ID);
+        return singlePayment;
     }
 
     private PaymentWorkflow buildPaymentWorkflow() {
         PaymentWorkflow paymentWorkflow = new PaymentWorkflow(buildCmsPaymentResponse(), buildConsentReference());
+        paymentWorkflow.setScaResponse(buildScaLoginResponse());
+        paymentWorkflow.setAuthResponse(buildPaymentAuthorisationResponse());
         return paymentWorkflow;
     }
 
     private ResponseEntity<SCALoginResponseTO> buildScaLoginResponseEntity() {
-        SCALoginResponseTO scaLoginResponseTO = new SCALoginResponseTO();
-        scaLoginResponseTO.setAuthorisationId(AUTHORISATION_ID);
-        return ResponseEntity.ok(scaLoginResponseTO);
+        return ResponseEntity.ok(buildScaLoginResponse());
+    }
+
+    private SCALoginResponseTO buildScaLoginResponse() {
+        SCALoginResponseTO scaLoginResponse = new SCALoginResponseTO();
+        scaLoginResponse.setAuthorisationId(AUTHORISATION_ID);
+        scaLoginResponse.setBearerToken(buildBearerToken());
+        scaLoginResponse.setScaStatus(SCAMETHODSELECTED);
+        return scaLoginResponse;
     }
 
     private CmsPaymentResponse buildCmsPaymentResponse() {
@@ -119,5 +138,15 @@ public class LoginServiceTest {
         consentReference.setEncryptedConsentId(ENCRYPTED_PAYMENT_ID);
 
         return consentReference;
+    }
+
+    private BearerTokenTO buildBearerToken() {
+        BearerTokenTO bearerToken = new BearerTokenTO();
+        AccessTokenTO accessTokenObject = new AccessTokenTO();
+        accessTokenObject.setAuthorisationId(AUTHORISATION_ID);
+        accessTokenObject.setLogin(LOGIN);
+        bearerToken.setAccessTokenObject(accessTokenObject);
+
+        return bearerToken;
     }
 }

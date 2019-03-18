@@ -140,13 +140,12 @@ public class CommonPisService {
         }
     }
 
-    public SCAPaymentResponseTO selectMethod(String scaMethodId, final PaymentWorkflow workflow) {
+    public void selectMethod(String scaMethodId, final PaymentWorkflow workflow) {
         try {
             authInterceptor.setAccessToken(workflow.getBearerToken().getAccess_token());
 
-            SCAPaymentResponseTO paymentResponseTO = paymentRestClient.selectMethod(workflow.getPaymentId(), workflow.getAuthrisationId(), scaMethodId).getBody();
+            SCAPaymentResponseTO paymentResponseTO = paymentRestClient.selectMethod(workflow.getPaymentId(), workflow.getAuthorisationId(), scaMethodId).getBody();
             processPaymentResponse(workflow, paymentResponseTO);
-            return paymentResponseTO;
         } finally {
             authInterceptor.setAccessToken(null);
         }

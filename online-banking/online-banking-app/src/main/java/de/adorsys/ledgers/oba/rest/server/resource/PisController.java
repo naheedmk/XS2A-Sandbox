@@ -100,7 +100,7 @@ public class PisController extends AbstractXisController implements PISApi {
 
             authInterceptor.setAccessToken(workflow.getBearerToken().getAccess_token());
 
-            SCAPaymentResponseTO scaPaymentResponse = paymentRestClient.authorizePayment(workflow.getPaymentId(), workflow.getAuthrisationId(), authCode).getBody();
+            SCAPaymentResponseTO scaPaymentResponse = paymentRestClient.authorizePayment(workflow.getPaymentId(), workflow.getAuthorisationId(), authCode).getBody();
             commonPisService.processPaymentResponse(workflow, scaPaymentResponse);
 
             commonPisService.updateScaStatusPaymentStatusConsentData(psuId, workflow, response);

@@ -40,7 +40,7 @@ public class LoginService {
 
         // Authorise
         ResponseEntity<SCALoginResponseTO> authoriseForConsent =
-            userManagementRestClient.authoriseForConsent(login, pin, workflow.getPaymentId(), workflow.getAuthrisationId(), OpTypeTO.PAYMENT);
+            userManagementRestClient.authoriseForConsent(login, pin, workflow.getPaymentId(), workflow.getAuthorisationId(), OpTypeTO.PAYMENT);
         commonPisService.processSCAResponse(workflow, authoriseForConsent.getBody());
 
         boolean success = AuthUtils.success(authoriseForConsent);
