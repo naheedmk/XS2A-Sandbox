@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuPisClient;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,12 +48,10 @@ public class CommonPisService {
     private final BulkPaymentMapper bulkPaymentMapper;
     private final PeriodicPaymentMapper periodicPaymentMapper;
     private final PaymentRestClient paymentRestClient;
-    private final  AspspConsentDataClient aspspConsentDataClient;
-    private final  TokenStorageService tokenStorageService;
-    private final  AuthRequestInterceptor authInterceptor;
+    private final AspspConsentDataClient aspspConsentDataClient;
+    private final TokenStorageService tokenStorageService;
+    private final AuthRequestInterceptor authInterceptor;
 
-
-    @SuppressWarnings("PMD.CyclomaticComplexity")
     public PaymentWorkflow identifyPayment(String encryptedPaymentId, String authorizationId,
                                            boolean strict, String consentCookieString, String psuId, HttpServletResponse
                                                                                                          response, BearerTokenTO bearerToken) throws PaymentAuthorisationException {
@@ -66,17 +65,7 @@ public class CommonPisService {
 
         CmsPaymentResponse cmsPaymentResponse = loadPaymentByRedirectId(psuId, consentReference, response);
 
-        PaymentWorkflow workflow = new PaymentWorkflow(cmsPaymentResponse, consentReference);
-        Object convertedPaymentTO = convertPayment(response, workflow.getPaymentType(), cmsPaymentResponse);
-        workflow.setAuthResponse(new PaymentAuthorisationResponse(workflow.getPaymentType(), convertedPaymentTO));
-        workflow.getAuthResponse().setAuthorisationId(cmsPaymentResponse.getAuthorisationId());
-        workflow.getAuthResponse().setEncryptedConsentId(encryptedPaymentId);
-        if (bearerToken != null) {
-            SCAPaymentResponseTO scaPaymentResponseTO = new SCAPaymentResponseTO();
-            scaPaymentResponseTO.setBearerToken(bearerToken);
-            workflow.setScaResponse(scaPaymentResponseTO);
-        }
-        return workflow;
+        return createPaymentWorkflow(encryptedPaymentId, response, bearerToken, consentReference, cmsPaymentResponse);
     }
 
     public void processPaymentResponse(PaymentWorkflow paymentWorkflow, SCAPaymentResponseTO paymentResponse) {
@@ -106,21 +95,22 @@ public class CommonPisService {
         }
     }
 
-    public void updateScaStatusPaymentStatusConsentData(String psuId, PaymentWorkflow workflow, HttpServletResponse response)
-        throws PaymentAuthorisationException {
-        // UPDATE CMS
+    public void updateScaStatusPaymentStatusConsentData(String psuId, PaymentWorkflow workflow, HttpServletResponse response) throws PaymentAuthorisationException {
         scaStatus(workflow, psuId, response);
         updatePaymentStatus(response, workflow);
         updateAspspConsentData(workflow, response);
     }
 
-    public void initiatePayment(final PaymentWorkflow paymentWorkflow, HttpServletResponse response) throws PaymentAuthorisationException {
+    public PaymentWorkflow initiatePayment(PaymentWorkflow paymentWorkflow, HttpServletResponse response) throws PaymentAuthorisationException {
         CmsPaymentResponse paymentResponse = paymentWorkflow.getPaymentResponse();
         Object payment = convertPayment(response, paymentWorkflow.getPaymentType(), paymentResponse);
+
         try {
             authInterceptor.setAccessToken(paymentWorkflow.getBearerToken().getAccess_token());
             SCAPaymentResponseTO paymentResponseTO = paymentRestClient.initiatePayment(paymentWorkflow.getPaymentType(), payment).getBody();
             processPaymentResponse(paymentWorkflow, paymentResponseTO);
+
+            return paymentWorkflow;
         } catch (FeignException f) {
             paymentWorkflow.setErrorCode(HttpStatus.valueOf(f.status()));
             throw f;
@@ -215,6 +205,23 @@ public class CommonPisService {
         if (!HttpStatus.OK.equals(updatePaymentStatus.getStatusCode())) {
             throw new PaymentAuthorisationException(responseUtils.couldNotProcessRequest(new PaymentAuthorisationResponse(), "Could not set payment status. See status code.", updatePaymentStatus.getStatusCode(), response));
         }
+    }
+
+    @NotNull
+    private PaymentWorkflow createPaymentWorkflow(String encryptedPaymentId, HttpServletResponse response, BearerTokenTO bearerToken, ConsentReference consentReference, CmsPaymentResponse cmsPaymentResponse) throws PaymentAuthorisationException {
+        PaymentWorkflow workflow = new PaymentWorkflow(cmsPaymentResponse, consentReference);
+        Object convertedPaymentTO = convertPayment(response, workflow.getPaymentType(), cmsPaymentResponse);
+        workflow.setAuthResponse(new PaymentAuthorisationResponse(workflow.getPaymentType(), convertedPaymentTO));
+        workflow.getAuthResponse().setAuthorisationId(cmsPaymentResponse.getAuthorisationId());
+
+        workflow.getAuthResponse().setEncryptedConsentId(encryptedPaymentId);
+        if (bearerToken != null) {
+            SCAPaymentResponseTO scaPaymentResponseTO = new SCAPaymentResponseTO();
+            scaPaymentResponseTO.setBearerToken(bearerToken);
+            workflow.setScaResponse(scaPaymentResponseTO);
+        }
+
+        return workflow;
     }
 
 }

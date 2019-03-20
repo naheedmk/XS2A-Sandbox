@@ -34,7 +34,6 @@ public class PisController extends AbstractXisController implements PISApi {
         return auth(redirectId, ConsentType.PIS, encryptedPaymentId, request, response);
     }
 
-    @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     @ApiOperation(value = "Identifies the user by login an pin. Return sca methods information")
     public ResponseEntity<PaymentAuthorisationResponse> login(String encryptedPaymentId,
@@ -50,7 +49,7 @@ public class PisController extends AbstractXisController implements PISApi {
         String encryptedPaymentId, String authorisationId, String consentAndAccessTokenCookieString) {
 
         try {
-            String psuId = AuthUtils.psuId(auth);
+            String psuId = AuthUtils.getPsuId(auth);
             // Identity the link and load the workflow.
             PaymentWorkflow workflow = commonPisService.identifyPayment(encryptedPaymentId, authorisationId, true, consentAndAccessTokenCookieString, psuId, response, auth.getBearerToken());
 
@@ -74,7 +73,7 @@ public class PisController extends AbstractXisController implements PISApi {
         String encryptedPaymentId, String authorisationId,
         String scaMethodId, String consentAndaccessTokenCookieString) {
 
-        String psuId = AuthUtils.psuId(auth);
+        String psuId = AuthUtils.getPsuId(auth);
         try {
             PaymentWorkflow workflow = commonPisService.identifyPayment(encryptedPaymentId, authorisationId, true, consentAndaccessTokenCookieString, psuId, response, auth.getBearerToken());
             commonPisService.selectMethod(scaMethodId, workflow);
@@ -94,7 +93,7 @@ public class PisController extends AbstractXisController implements PISApi {
         String authorisationId,
         String consentAndaccessTokenCookieString, String authCode) {
 
-        String psuId = AuthUtils.psuId(auth);
+        String psuId = AuthUtils.getPsuId(auth);
         try {
             PaymentWorkflow workflow = commonPisService.identifyPayment(encryptedPaymentId, authorisationId, true, consentAndaccessTokenCookieString, psuId, response, auth.getBearerToken());
 

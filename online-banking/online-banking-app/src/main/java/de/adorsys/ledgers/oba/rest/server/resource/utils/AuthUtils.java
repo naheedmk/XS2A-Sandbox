@@ -8,20 +8,19 @@ import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
 
 public class AuthUtils {
 
-	public static boolean success(ResponseEntity<SCALoginResponseTO> authoriseForConsent) {
-		// Success if there is a bearer token.
-        return authoriseForConsent!=null && authoriseForConsent.getBody()!=null && authoriseForConsent.getBody().getBearerToken()!=null;
-	}
+    public static boolean isSuccessfulAuthorisation(ResponseEntity<SCALoginResponseTO> scaLoginResponse) {
+        return scaLoginResponse != null && scaLoginResponse.getBody() != null && scaLoginResponse.getBody().getBearerToken() != null;
+    }
 
-	public static String psuId(MiddlewareAuthentication auth) {
-		if(auth==null) {
-			return null;
-		}
-		return psuId(auth.getBearerToken());
-	}
-	
-	public static String psuId(BearerTokenTO bearerToken) {
-		return bearerToken.getAccessTokenObject().getLogin();
-	}
-	
+    public static String getPsuId(MiddlewareAuthentication authentication) {
+        if (authentication == null) {
+            return null;
+        }
+        return getPsuId(authentication.getBearerToken());
+    }
+
+    public static String getPsuId(BearerTokenTO bearerToken) {
+        return bearerToken.getAccessTokenObject().getLogin();
+    }
+
 }

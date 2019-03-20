@@ -17,8 +17,8 @@ import org.springframework.http.ResponseEntity;
 
 import de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO;
 import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
-import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorizeResponse;
+import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
+import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorisationResponse;
 import de.adorsys.ledgers.oba.rest.client.ObaAisApiClient;
 import de.adorsys.ledgers.xs2a.api.client.AccountApiClient;
 import de.adorsys.ledgers.xs2a.api.client.ConsentApiClient;
@@ -106,7 +106,7 @@ public class ConsentHelper {
 		return consentsResponse201;
 	}
 
-	public ResponseEntity<ConsentAuthorizeResponse> login(
+	public ResponseEntity<ConsentAuthorisationResponse> login(
 			ResponseEntity<ConsentsResponse201> createConsentResp) {
 		ConsentsResponse201 consentsResponse201 = createConsentResp.getBody();
 		String scaRedirectLink = getScaRedirect(consentsResponse201.getLinks());
@@ -116,12 +116,12 @@ public class ConsentHelper {
 
 		Assert.assertEquals(encryptedConsentId, encryptedConsentIdFromOnlineBanking);
 
-		ResponseEntity<AuthorizeResponse> aisAuth = obaAisApiClient.aisAuth(redirectId, encryptedConsentId);
+		ResponseEntity<AuthorisationResponse> aisAuth = obaAisApiClient.aisAuth(redirectId, encryptedConsentId);
 		URI location = aisAuth.getHeaders().getLocation();
 		String authorisationId = QuerryParser.param(location.toString(), "authorisationId");
 		List<String> cookieStrings = aisAuth.getHeaders().get("Set-Cookie");
 		String consentCookieString = cu.readCookie(cookieStrings, "CONSENT");
-		ResponseEntity<ConsentAuthorizeResponse> loginResponse = obaAisApiClient.login(encryptedConsentId,
+		ResponseEntity<ConsentAuthorisationResponse> loginResponse = obaAisApiClient.login(encryptedConsentId,
 				authorisationId, PSU_ID, "12345", cu.resetCookies(cookieStrings));
 
 		Assert.assertNotNull(loginResponse);
@@ -151,7 +151,7 @@ public class ConsentHelper {
 		return (String) map.get("scaRedirect");
 	}
 
-	public ResponseEntity<ConsentAuthorizeResponse> authCode(ResponseEntity<ConsentAuthorizeResponse> authResponseWrapper) {
+	public ResponseEntity<ConsentAuthorisationResponse> authCode(ResponseEntity<ConsentAuthorisationResponse> authResponseWrapper) {
 		Assert.assertNotNull(authResponseWrapper);
 		Assert.assertTrue(authResponseWrapper.getStatusCode().is2xxSuccessful());
 		List<String> cookieStrings = authResponseWrapper.getHeaders().get("Set-Cookie");
@@ -160,9 +160,9 @@ public class ConsentHelper {
 		String accessTokenCookieString = cu.readCookie(cookieStrings, "ACCESS_TOKEN");
 		Assert.assertNotNull(accessTokenCookieString);
 
-		ConsentAuthorizeResponse authResponse = authResponseWrapper.getBody();
+		ConsentAuthorisationResponse authResponse = authResponseWrapper.getBody();
 		
-		ResponseEntity<ConsentAuthorizeResponse> authrizedConsentResponseWrapper = obaAisApiClient.authrizedConsent(authResponse.getEncryptedConsentId(), authResponse.getAuthorisationId(), 
+		ResponseEntity<ConsentAuthorisationResponse> authrizedConsentResponseWrapper = obaAisApiClient.authrizedConsent(authResponse.getEncryptedConsentId(), authResponse.getAuthorisationId(), 
 				cu.resetCookies(cookieStrings), "123456");
 
 		Assert.assertNotNull(authrizedConsentResponseWrapper);
@@ -176,8 +176,8 @@ public class ConsentHelper {
 		return authrizedConsentResponseWrapper;
 	}
 
-	public ResponseEntity<ConsentAuthorizeResponse> choseScaMethod(
-			ResponseEntity<ConsentAuthorizeResponse> authResponseWrapper) {
+	public ResponseEntity<ConsentAuthorisationResponse> choseScaMethod(
+			ResponseEntity<ConsentAuthorisationResponse> authResponseWrapper) {
 		Assert.assertNotNull(authResponseWrapper);
 		Assert.assertTrue(authResponseWrapper.getStatusCode().is2xxSuccessful());
 		List<String> cookieStrings = authResponseWrapper.getHeaders().get("Set-Cookie");
@@ -186,10 +186,10 @@ public class ConsentHelper {
 		String accessTokenCookieString = cu.readCookie(cookieStrings, "ACCESS_TOKEN");
 		Assert.assertNotNull(accessTokenCookieString);
 
-		ConsentAuthorizeResponse consentAuthorizeResponse = authResponseWrapper.getBody();
-		ScaUserDataTO scaUserDataTO = consentAuthorizeResponse.getScaMethods().iterator().next();
-		ResponseEntity<ConsentAuthorizeResponse> selectMethodResponseWrapper = obaAisApiClient.selectMethod(consentAuthorizeResponse.getEncryptedConsentId(), 
-				consentAuthorizeResponse.getAuthorisationId(), scaUserDataTO.getId(), cu.resetCookies(cookieStrings));
+		ConsentAuthorisationResponse consentAuthorisationResponse = authResponseWrapper.getBody();
+		ScaUserDataTO scaUserDataTO = consentAuthorisationResponse.getScaMethods().iterator().next();
+		ResponseEntity<ConsentAuthorisationResponse> selectMethodResponseWrapper = obaAisApiClient.selectMethod(consentAuthorisationResponse.getEncryptedConsentId(), 
+				consentAuthorisationResponse.getAuthorisationId(), scaUserDataTO.getId(), cu.resetCookies(cookieStrings));
 		
 		Assert.assertNotNull(selectMethodResponseWrapper);
 		Assert.assertTrue(selectMethodResponseWrapper.getStatusCode().is2xxSuccessful());
@@ -212,10 +212,10 @@ public class ConsentHelper {
 		Assert.assertEquals(expectedStatus, currentStatus);
 	}
 
-	public void validateResponseStatus(ResponseEntity<ConsentAuthorizeResponse> authResponseWrapper, ScaStatusTO expectedScaStatus) {
+	public void validateResponseStatus(ResponseEntity<ConsentAuthorisationResponse> authResponseWrapper, ScaStatusTO expectedScaStatus) {
 		Assert.assertNotNull(authResponseWrapper);
 		Assert.assertEquals(HttpStatus.OK, authResponseWrapper.getStatusCode());
-		ConsentAuthorizeResponse authResponse = authResponseWrapper.getBody();
+		ConsentAuthorisationResponse authResponse = authResponseWrapper.getBody();
 		ScaStatusTO scaStatus = authResponse.getScaStatus();
 		Assert.assertNotNull(scaStatus);
 		Assert.assertEquals(expectedScaStatus, scaStatus);
@@ -257,8 +257,8 @@ public class ConsentHelper {
 		return consents;
 	}
 	
-	public Map<String, Map<String, List<TransactionDetails>>> loadTransactions(ConsentAuthorizeResponse consentAuthorizeResponse, Boolean withBalance) {
-		String encryptedConsentId = consentAuthorizeResponse.getEncryptedConsentId();
+	public Map<String, Map<String, List<TransactionDetails>>> loadTransactions(ConsentAuthorisationResponse consentAuthorisationResponse, Boolean withBalance) {
+		String encryptedConsentId = consentAuthorisationResponse.getEncryptedConsentId();
 		AccountList accountList = lisftOfAccounts(withBalance, encryptedConsentId);
 		List<AccountDetails> accounts = accountList.getAccounts();
 		Map<String, Map<String, List<TransactionDetails>>> result = new HashMap<>();

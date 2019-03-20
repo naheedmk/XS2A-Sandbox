@@ -5,6 +5,7 @@ import de.adorsys.psd2.model.PaymentInitiationSctJson;
 public class PaymentCase {
 	private String psuId;
 	private PaymentInitiationSctJson payment;
+
 	public String getPsuId() {
 		return psuId;
 	}

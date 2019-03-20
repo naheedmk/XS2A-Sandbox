@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorizeResponse;
+import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorisationResponse;
 import de.adorsys.ledgers.xs2a.test.ctk.StarterApplication;
 import de.adorsys.psd2.model.ConsentStatus;
 import de.adorsys.psd2.model.ConsentsResponse201;
@@ -40,7 +40,7 @@ public class ConsentRedirectUnknownUser extends AbstractConsentRedirect {
         Assert.assertEquals(ConsentStatus.RECEIVED, consentStatus);
 
         try {
-            ResponseEntity<ConsentAuthorizeResponse> loginResponseWrapper = consentHelper.login(createConsentResp);
+            ResponseEntity<ConsentAuthorisationResponse> loginResponseWrapper = consentHelper.login(createConsentResp);
             Assert.fail("Expecting a bad request");
         } catch (FeignException f) {
             // TODO:  Middleware return not found. SPI design does not allow
