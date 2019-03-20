@@ -33,7 +33,6 @@ import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
 import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorisationResponse;
 import de.adorsys.ledgers.oba.rest.api.exception.ConsentAuthorisationException;
 import de.adorsys.ledgers.oba.rest.api.resource.AISApi;
 import de.adorsys.ledgers.oba.rest.server.mapper.AisConsentMapper;
