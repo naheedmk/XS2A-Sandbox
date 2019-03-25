@@ -2,8 +2,9 @@ package de.adorsys.ledgers.oba.rest.server.service;
 
 import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
+import de.adorsys.ledgers.oba.rest.server.config.CookieConfigProperties;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
@@ -17,9 +18,9 @@ import static de.adorsys.ledgers.oba.rest.server.resource.CookieName.ACCESS_TOKE
 import static de.adorsys.ledgers.oba.rest.server.resource.CookieName.CONSENT_COOKIE_NAME;
 
 @Service
+@RequiredArgsConstructor
 public class CookieService {
-    @Value("${online.banking.https.enabled:false}")
-    private boolean httpsEnabled;
+    private final CookieConfigProperties cookieConfigProperties;
 
     public String readCookie(HttpServletRequest request, String name) {
         Cookie cookie = WebUtils.getCookie(request, name);
@@ -30,11 +31,11 @@ public class CookieService {
 
     public Cookie createCookie(String name, String value, int validity) {
         Cookie cookie = new Cookie(name, value);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(httpsEnabled);
         cookie.setMaxAge(validity);
-        cookie.setDomain("localhost");
-        cookie.setPath("/");
+        cookie.setHttpOnly(cookieConfigProperties.isHttpOnly());
+        cookie.setSecure(cookieConfigProperties.isSecure());
+        cookie.setDomain(cookieConfigProperties.getDomain());
+        cookie.setPath(cookieConfigProperties.getPath());
         return cookie;
     }
 
@@ -77,8 +78,8 @@ public class CookieService {
 
     private void removeCookie(HttpServletResponse response, String cookieName) {
         Cookie cookie = new Cookie(cookieName, "");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(httpsEnabled);
+        cookie.setHttpOnly(cookieConfigProperties.isHttpOnly());
+        cookie.setSecure(cookieConfigProperties.isSecure());
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
