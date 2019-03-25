@@ -1,36 +1,34 @@
 package de.adorsys.ledgers.oba.rest.server.auth;
 
-import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.GenericFilterBean;
-
+@Slf4j
+@RequiredArgsConstructor
 public class JWTAuthenticationFilter extends GenericFilterBean {
-
-    private TokenAuthenticationService tokenAuthenticationService;
-
-    public JWTAuthenticationFilter(TokenAuthenticationService tokenAuthenticationService) {
-        this.tokenAuthenticationService = tokenAuthenticationService;
-    }
+    private final TokenAuthenticationService tokenAuthenticationService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-            throws IOException, ServletException {
-        if(logger.isTraceEnabled()) {
-        	logger.trace("doFilter start");
+        throws IOException, ServletException {
+        if (log.isTraceEnabled()) {
+            log.trace("doFilter start");
         }
 
-        Authentication authentication = SecurityContextHolder .getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
-            if(logger.isDebugEnabled()) {
-            	logger.debug("Authentication is null. Try to get authentication from request...");
+            if (log.isDebugEnabled()) {
+                log.debug("Authentication is null. Try to get authentication from request...");
             }
 
             authentication = tokenAuthenticationService.getAuthentication((HttpServletRequest) request);
@@ -39,8 +37,8 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 
         filterChain.doFilter(request, response);
 
-        if(logger.isTraceEnabled()) {
-        	logger.trace("doFilter end");
+        if (log.isTraceEnabled()) {
+            log.trace("doFilter end");
         }
     }
 }

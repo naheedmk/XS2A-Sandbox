@@ -80,11 +80,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return
      */
-    private static Optional<MiddlewareAuthentication> auth() {
-        return SecurityContextHolder.getContext() == null ||
-                   !(SecurityContextHolder.getContext().getAuthentication() instanceof MiddlewareAuthentication)
-                   ? Optional.empty()
-                   : Optional.of((MiddlewareAuthentication) SecurityContextHolder.getContext().getAuthentication());
+    private Optional<MiddlewareAuthentication> auth() {
+        return Optional.ofNullable(SecurityContextHolder.getContext())
+                   .filter(context -> context instanceof MiddlewareAuthentication)
+                   .map(MiddlewareAuthentication.class::cast);
     }
 
     private AccessTokenTO extractToken(MiddlewareAuthentication authentication) {

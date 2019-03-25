@@ -5,6 +5,8 @@ import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
+import de.adorsys.ledgers.oba.rest.server.resource.CookieName;
+import de.adorsys.ledgers.oba.rest.server.service.CookieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -15,25 +17,26 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenAuthenticationService {
-
     private final UserMgmtRestClient ledgersUserMgmt;
     private final AuthRequestInterceptor authInterceptor;
+    private final CookieService cookieService;
 
     public Authentication getAuthentication(HttpServletRequest request) {
-        String accessToken = readAccessTokenCookie(request);
+        String accessToken = cookieService.readCookie(request, CookieName.ACCESS_TOKEN_COOKIE_NAME);
+
         if (StringUtils.isBlank(accessToken)) {
-            debug(String.format("Missing cookie with name %s.", "ACCESS_TOKEN"));
+            debug(String.format("Missing cookie with name %s.", CookieName.ACCESS_TOKEN_COOKIE_NAME));
             return null;
         }
+
         BearerTokenTO bearerToken = null;
         try {
             authInterceptor.setAccessToken(accessToken);
@@ -52,25 +55,14 @@ public class TokenAuthenticationService {
 
         // process roles
         AccessTokenTO token = bearerToken.getAccessTokenObject();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if (token.getRole() != null) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + token.getRole().name()));
-        }
 
-        return new MiddlewareAuthentication(token.getSub(), bearerToken, authorities);
+        return new MiddlewareAuthentication(token.getSub(), bearerToken, getGrantedAuthorities(token));
     }
 
-    private String readAccessTokenCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            return null;
-        }
-        for (Cookie cookie : cookies) {
-            if ("ACCESS_TOKEN".equalsIgnoreCase(cookie.getName())) {
-                return cookie.getValue();
-            }
-        }
-        return null;
+    private List<GrantedAuthority> getGrantedAuthorities(AccessTokenTO token) {
+        return token.getRole() != null
+                   ? Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + token.getRole().name()))
+                   : Collections.emptyList();
     }
 
     private void debug(String s) {

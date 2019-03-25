@@ -10,7 +10,6 @@ public class ConsentAuthorizeResponse extends AuthorizeResponse  {
 	}
 	
 	public ConsentAuthorizeResponse(AisConsentTO consent) {
-		super();
 		this.consent = consent;
 	}
 	public String getAuthMessageTemplate() {

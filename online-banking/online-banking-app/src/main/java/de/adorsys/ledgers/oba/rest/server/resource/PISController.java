@@ -27,9 +27,9 @@ import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
 import feign.FeignException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuPisClient;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,27 +38,23 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static de.adorsys.ledgers.oba.rest.server.resource.CookieName.CONSENT_COOKIE_NAME;
+
+@RequiredArgsConstructor
 @RestController(PISController.BASE_PATH)
 @RequestMapping(PISController.BASE_PATH)
 @Api(value = PISController.BASE_PATH, tags = "PSU PIS", description = "Provides access to online banking payment functionality")
 public class PISController extends AbstractXISController implements PISApi {
-    @Autowired
-    private CmsPsuPisClient cmsPsuPisClient;
-    @Autowired
-    private PaymentRestClient paymentRestClient;
-    @Autowired
-    private UserMgmtRestClient userMgmtRestClient;
-
-    @Autowired
-    private SinglePaymentMapper singlePaymentMapper;
-    @Autowired
-    private BulkPaymentMapper bulkPaymentMapper;
-    @Autowired
-    private PeriodicPaymentMapper periodicPaymentMapper;
+    private final CmsPsuPisClient cmsPsuPisClient;
+    private final PaymentRestClient paymentRestClient;
+    private final UserMgmtRestClient userMgmtRestClient;
+    private final SinglePaymentMapper singlePaymentMapper;
+    private final BulkPaymentMapper bulkPaymentMapper;
+    private final PeriodicPaymentMapper periodicPaymentMapper;
 
     @Override
     public ResponseEntity<AuthorizeResponse> pisAuth(String redirectId, String encryptedPaymentId) {
-        return auth(redirectId, ConsentType.PIS, encryptedPaymentId, request, response);
+        return auth(redirectId, ConsentType.PIS, encryptedPaymentId);
     }
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
@@ -108,18 +104,18 @@ public class PISController extends AbstractXISController implements PISApi {
                 case EXEMPTED:
                 case PSUAUTHENTICATED:
                 case SCAMETHODSELECTED:
-                    responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
+                    cookieService.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
                     return ResponseEntity.ok(workflow.getAuthResponse());
                 case STARTED:
                 case FAILED:
                 default:
                     // failed Message. No repeat. Delete cookies.
-                    responseUtils.removeCookies(response);
+                    cookieService.removeCookies(response);
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
         } else {
             // failed Message. No repeat. Delete cookies.
-            responseUtils.removeCookies(response);
+            cookieService.removeCookies(response);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -141,7 +137,7 @@ public class PISController extends AbstractXISController implements PISApi {
             updateScaStatusPaymentStatusConsentData(psuId, workflow);
 
             // Store result in token.
-            responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
+            cookieService.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
             return ResponseEntity.ok(workflow.getAuthResponse());
         } catch (PaymentAuthorizeException e) {
             return e.getError();
@@ -160,7 +156,7 @@ public class PISController extends AbstractXISController implements PISApi {
 
             updateScaStatusPaymentStatusConsentData(psuId, workflow);
 
-            responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
+            cookieService.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
             return ResponseEntity.ok(workflow.getAuthResponse());
         } catch (PaymentAuthorizeException e) {
             return e.getError();
@@ -184,7 +180,7 @@ public class PISController extends AbstractXISController implements PISApi {
 
             updateScaStatusPaymentStatusConsentData(psuId, workflow);
 
-            responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
+            cookieService.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
             return ResponseEntity.ok(workflow.getAuthResponse());
         } catch (PaymentAuthorizeException e) {
             return e.getError();
@@ -266,9 +262,9 @@ public class PISController extends AbstractXISController implements PISApi {
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
     private PaymentWorkflow identifyPayment(String encryptedPaymentId, String authorizationId, boolean strict, String consentCookieString, String psuId, HttpServletResponse response, BearerTokenTO bearerToken) throws PaymentAuthorizeException {
-        ConsentReference consentReference = null;
+        ConsentReference consentReference;
         try {
-            String consentCookie = responseUtils.consentCookie(consentCookieString);
+            String consentCookie = cookieService.parseCookie(consentCookieString, CONSENT_COOKIE_NAME);
             consentReference = referencePolicy.fromRequest(encryptedPaymentId, authorizationId, consentCookie, strict);
         } catch (InvalidConsentException e) {
             throw new PaymentAuthorizeException(responseUtils.forbidden(authResp(), e.getMessage(), response));

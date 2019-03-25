@@ -1,16 +1,5 @@
 package de.adorsys.ledgers.oba.rest.server.resource;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import de.adorsys.ledgers.middleware.api.service.TokenStorageService;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
@@ -19,47 +8,59 @@ import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
 import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
 import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
+import de.adorsys.ledgers.oba.rest.server.service.CookieService;
+import lombok.extern.slf4j.Slf4j;
+import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@Slf4j
 public abstract class AbstractXISController {
-	private static final Logger logger = LoggerFactory.getLogger(AbstractXISController.class);
+    @Value("${online-banking.sca.loginpage:web/login}")
+    private String loginPage;
 
-	
-	@Autowired
+    @Value("${online-banking.sca.uiRedirect:false}")
+    private boolean uiRedirect;
+
+
+    @Autowired
 	protected AspspConsentDataClient aspspConsentDataClient;
 
-	@Autowired
+    @Autowired
 	protected TokenStorageService tokenStorageService;
-	
-	@Autowired
+
+    @Autowired
 	protected AuthRequestInterceptor authInterceptor;
-	
-	@Autowired
+
+    @Autowired
 	protected HttpServletRequest request;
-	@Autowired
+
+    @Autowired
 	protected HttpServletResponse response;
+
 	@Autowired
 	protected MiddlewareAuthentication auth;
-	
-	@Value("${online-banking.sca.loginpage:web/login}")
-	private String loginPage;
-	
-	@Value("${online-banking.sca.uiRedirect:false}")
-	private boolean uiRedirect;
-	
+
 	@Autowired
 	protected ConsentReferencePolicy referencePolicy;
 	
 	@Autowired
 	protected ResponseUtils responseUtils;
+
+	@Autowired
+    protected CookieService cookieService;
 	
 	public abstract String getBasePath();
 	
 	protected ResponseEntity<AuthorizeResponse> auth(
 			String redirectId,
 			ConsentType consentType,
-			String encryptedConsentId,
-			HttpServletRequest request,
-			HttpServletResponse response) {
+			String encryptedConsentId) {
 		// SCA Status is set to STARTED
 		AuthorizeResponse authResponse = new AuthorizeResponse();
 		
@@ -70,10 +71,10 @@ public abstract class AbstractXISController {
 			authResponse.setEncryptedConsentId(encryptedConsentId);
 			authResponse.setAuthorisationId(redirectId);
 			// 2. Set cookies
-			responseUtils.setCookies(response, consentReference, null, null);
+            cookieService.setCookies(response, consentReference, null, null);
 		} catch (InvalidConsentException e) {
-			logger.info(e.getMessage());
-			responseUtils.removeCookies(response);
+			log.info(e.getMessage());
+            cookieService.removeCookies(response);
 			return responseUtils.unknownCredentials(authResponse, response);
 		}
 		
@@ -86,7 +87,7 @@ public abstract class AbstractXISController {
 			return responseUtils.redirectKeepCookie(uriString, response);
 		} else {
 			response.addHeader("Location", uriString);
-			return ResponseEntity.<AuthorizeResponse>ok(authResponse);
+			return ResponseEntity.ok(authResponse);
 		}
 	}
 }
