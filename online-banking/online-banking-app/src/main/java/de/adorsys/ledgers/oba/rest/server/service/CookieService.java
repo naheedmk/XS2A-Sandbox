@@ -10,9 +10,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.HttpCookie;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static de.adorsys.ledgers.oba.rest.server.resource.CookieName.ACCESS_TOKEN_COOKIE_NAME;
@@ -38,16 +36,6 @@ public class CookieService {
         cookie.setDomain("localhost");
         cookie.setPath("/");
         return cookie;
-    }
-
-    public String parseCookie(String cookieString, String name) {
-        List<HttpCookie> cookies = HttpCookie.parse(cookieString);
-        for (HttpCookie httpCookie : cookies) {
-            if (StringUtils.equalsIgnoreCase(httpCookie.getName(), name)) {
-                return httpCookie.getValue();
-            }
-        }
-        return null;
     }
 
     /*
