@@ -264,8 +264,7 @@ public class PISController extends AbstractXISController implements PISApi {
     private PaymentWorkflow identifyPayment(String encryptedPaymentId, String authorizationId, boolean strict, String consentCookieString, String psuId, HttpServletResponse response, BearerTokenTO bearerToken) throws PaymentAuthorizeException {
         ConsentReference consentReference;
         try {
-            String consentCookie = cookieService.parseCookie(consentCookieString, CONSENT_COOKIE_NAME);
-            consentReference = referencePolicy.fromRequest(encryptedPaymentId, authorizationId, consentCookie, strict);
+            consentReference = referencePolicy.fromRequest(encryptedPaymentId, authorizationId, consentCookieString, strict);
         } catch (InvalidConsentException e) {
             throw new PaymentAuthorizeException(responseUtils.forbidden(authResp(), e.getMessage(), response));
         }

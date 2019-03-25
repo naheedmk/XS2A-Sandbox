@@ -226,8 +226,7 @@ public class AISController extends AbstractXISController implements AISApi {
         throws ConsentAuthorizeException {
         ConsentReference consentReference;
         try {
-            String consentCookie = cookieService.parseCookie(consentCookieString, CONSENT_COOKIE_NAME);
-            consentReference = referencePolicy.fromRequest(encryptedConsentId, authorizationId, consentCookie, strict);
+            consentReference = referencePolicy.fromRequest(encryptedConsentId, authorizationId, consentCookieString, strict);
         } catch (InvalidConsentException e) {
             throw new ConsentAuthorizeException(responseUtils.forbidden(authResp(), e.getMessage(), response));
         }

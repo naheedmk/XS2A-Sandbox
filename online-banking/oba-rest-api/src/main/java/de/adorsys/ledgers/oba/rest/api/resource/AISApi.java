@@ -1,12 +1,7 @@
 package de.adorsys.ledgers.oba.rest.api.resource;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorizeResponse;
@@ -42,8 +37,8 @@ public interface AISApi {
 			@PathVariable("encryptedConsentId") String encryptedConsentId,
 			@PathVariable("authorisationId") String authorisationId,
 			@RequestParam("login") String login,
-			@RequestParam("pin") String pin, 
-			@RequestHeader(name="Cookie", required=false) String consentCookieString);
+			@RequestParam("pin") String pin,
+            @CookieValue(name="CONSENT", required = false) String consentCookieString);
 	
 	/**
 	 * Selects the SCA Method for use.
