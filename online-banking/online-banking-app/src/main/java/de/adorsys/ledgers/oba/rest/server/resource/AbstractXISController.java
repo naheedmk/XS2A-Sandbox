@@ -11,6 +11,7 @@ import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
 import de.adorsys.ledgers.oba.rest.server.service.CookieService;
 import lombok.extern.slf4j.Slf4j;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 public abstract class AbstractXISController {
-    @Value("${online-banking.sca.loginpage:web/login}")
+    @Value("${online-banking.sca.loginpage:http://localhost:4400/}")
     private String loginPage;
 
     @Value("${online-banking.sca.uiRedirect:false}")
@@ -29,65 +30,89 @@ public abstract class AbstractXISController {
 
 
     @Autowired
-	protected AspspConsentDataClient aspspConsentDataClient;
+    protected AspspConsentDataClient aspspConsentDataClient;
 
     @Autowired
-	protected TokenStorageService tokenStorageService;
+    protected TokenStorageService tokenStorageService;
 
     @Autowired
-	protected AuthRequestInterceptor authInterceptor;
+    protected AuthRequestInterceptor authInterceptor;
 
     @Autowired
-	protected HttpServletRequest request;
+    protected HttpServletRequest request;
 
     @Autowired
-	protected HttpServletResponse response;
+    protected HttpServletResponse response;
 
-	@Autowired
-	protected MiddlewareAuthentication auth;
+    @Autowired
+    protected MiddlewareAuthentication auth;
 
-	@Autowired
-	protected ConsentReferencePolicy referencePolicy;
-	
-	@Autowired
-	protected ResponseUtils responseUtils;
+    @Autowired
+    protected ConsentReferencePolicy referencePolicy;
 
-	@Autowired
+    @Autowired
+    protected ResponseUtils responseUtils;
+
+    @Autowired
     protected CookieService cookieService;
-	
-	public abstract String getBasePath();
-	
-	protected ResponseEntity<AuthorizeResponse> auth(
-			String redirectId,
-			ConsentType consentType,
-			String encryptedConsentId) {
-		// SCA Status is set to STARTED
-		AuthorizeResponse authResponse = new AuthorizeResponse();
-		
-		// 1. Store redirect link in a cookie
-		ConsentReference consentReference;
-		try {
-			consentReference = referencePolicy.fromURL(redirectId, consentType, encryptedConsentId);
-			authResponse.setEncryptedConsentId(encryptedConsentId);
-			authResponse.setAuthorisationId(redirectId);
-			// 2. Set cookies
-            cookieService.setCookies(response, consentReference, null, null);
-		} catch (InvalidConsentException e) {
-			log.info(e.getMessage());
-            cookieService.removeCookies(response);
-			return responseUtils.unknownCredentials(authResponse, response);
-		}
-		
-		String uriString = UriComponentsBuilder.fromUriString(loginPage)
-			.queryParam("encryptedConsentId", authResponse.getEncryptedConsentId())
-			.queryParam("authorisationId", authResponse.getAuthorisationId())
-			.build().toUriString();
 
-		if(uiRedirect) {
-			return responseUtils.redirectKeepCookie(uriString, response);
-		} else {
-			response.addHeader("Location", uriString);
-			return ResponseEntity.ok(authResponse);
-		}
-	}
+    public abstract String getBasePath();
+
+    /**
+     * The purpose of this protocol step is to parse the redirect link and start
+     * the user agent.
+     * <p>
+     * The user agent is defined by providing the URL read from the property online-banking.sca.loginpage.
+     * <p>
+     * A 302 redirect will be performed to that URL by default. But if the target user agent does not
+     * which for a redirect, it can set the NO_REDIRECT_HEADER_PARAM to true/on.
+     *
+     * @param redirectId
+     * @param consentType
+     * @param encryptedConsentId
+     * @return
+     */
+    protected ResponseEntity<AuthorizeResponse> auth(
+        String redirectId,
+        ConsentType consentType,
+        String encryptedConsentId) {
+
+        // This auth response carries information we want to passe directly to the calling user agent.
+        // In this case:
+        // - The encrypted consent id used to identify the consent.
+        // - The redirectId use to identify this redirect instance.
+        // We would like the user agent to return with both information so we can match them again the
+        // one we stored in the consent cookie.
+        AuthorizeResponse authResponse = new AuthorizeResponse();
+
+        // 1. Store redirect link in a cookie
+        try {
+            ConsentReference consentReference = referencePolicy.fromURL(redirectId, consentType, encryptedConsentId);
+            authResponse.setEncryptedConsentId(encryptedConsentId);
+            authResponse.setAuthorisationId(redirectId);
+            // 2. Set cookies
+            cookieService.setCookies(response, consentReference, null, null);
+        } catch (InvalidConsentException e) {
+            log.info(e.getMessage());
+            cookieService.removeCookies(response);
+            return responseUtils.unknownCredentials(authResponse, response);
+        }
+
+        // This is the link we are expecting from the loaded agent.
+        String uriString = UriComponentsBuilder.fromUriString(loginPage)
+                               .queryParam("encryptedConsentId", authResponse.getEncryptedConsentId())
+                               .queryParam("authorisationId", authResponse.getAuthorisationId())
+                               .build().toUriString();
+
+        // This header tels is we shall send back a 302 or a 200 back to the user agent.
+        // Header shall be set by the user agent.
+//		String noRedirect = request.getHeader("X-NO-REDIRECT");
+        String userAgent = request.getHeader("User-Agent");
+        if (!StringUtils.containsIgnoreCase(userAgent, "Java/")) {
+            return responseUtils.redirectKeepCookie(uriString, response);
+        } else {
+            response.addHeader("Location", uriString);
+            return ResponseEntity.ok(authResponse);
+        }
+    }
 }
