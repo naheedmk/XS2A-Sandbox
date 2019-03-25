@@ -38,8 +38,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static de.adorsys.ledgers.oba.rest.server.resource.CookieName.CONSENT_COOKIE_NAME;
-
 @RequiredArgsConstructor
 @RestController(PISController.BASE_PATH)
 @RequestMapping(PISController.BASE_PATH)

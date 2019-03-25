@@ -39,8 +39,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import static de.adorsys.ledgers.oba.rest.server.resource.CookieName.CONSENT_COOKIE_NAME;
-
 @RequiredArgsConstructor
 @RestController(AISController.BASE_PATH)
 @RequestMapping(AISController.BASE_PATH)
