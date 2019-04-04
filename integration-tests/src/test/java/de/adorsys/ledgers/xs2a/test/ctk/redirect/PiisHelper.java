@@ -1,19 +1,5 @@
 package de.adorsys.ledgers.xs2a.test.ctk.redirect;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Currency;
-import java.util.List;
-import java.util.UUID;
-
-import javax.validation.Valid;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Assert;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
 import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
 import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
@@ -22,12 +8,26 @@ import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
 import de.adorsys.ledgers.oba.rest.client.ObaAisApiClient;
 import de.adorsys.ledgers.oba.rest.client.ObaScaApiClient;
 import de.adorsys.ledgers.xs2a.api.client.FundsConfirmationApiClient;
-import de.adorsys.ledgers.xs2a.api.client.FundsConfirmationResponse;
 import de.adorsys.psd2.model.AccountReference;
 import de.adorsys.psd2.model.Amount;
 import de.adorsys.psd2.model.ConfirmationOfFunds;
+import de.adorsys.psd2.model.InlineResponse200;
 import de.adorsys.psd2.xs2a.core.tpp.TppInfo;
 import de.adorsys.psd2.xs2a.core.tpp.TppRole;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Currency;
+import java.util.List;
+import java.util.UUID;
+import javax.validation.Valid;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Assert;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+
+
 
 public class PiisHelper {
 
@@ -134,7 +134,7 @@ public class PiisHelper {
 		consents.setAllowedFrequencyPerDay(4);
 		consents.setValidUntil(LocalDate.of(2021, 11, 30));
 		TppInfo tppInfo = new TppInfo();
-		tppInfo.setAuthorisationNumber("12345987");// Took this from debugger
+		tppInfo.setAuthorisationNumber("PSDDE-FAKENCA-87B2AC");// Took this from debugger
 		tppInfo.setAuthorityId(RandomStringUtils.randomNumeric(4));
 		
 		// Ticket. What if this is null
@@ -144,7 +144,7 @@ public class PiisHelper {
 		return consents;
 	}
 
-	public ResponseEntity<FundsConfirmationResponse> confOfFund(ResponseEntity<AuthorizeResponse> authResponseWrapper) {
+	public ResponseEntity<InlineResponse200> confOfFund(ResponseEntity<AuthorizeResponse> authResponseWrapper) {
 		UUID xRequestID = UUID.randomUUID();
 		@Valid
 		ConfirmationOfFunds cof = new ConfirmationOfFunds();
@@ -159,7 +159,7 @@ public class PiisHelper {
 		cof.setCardNumber(iban);
 		cof.setPayee("Francis");
 		
-		ResponseEntity<FundsConfirmationResponse> availabilityOfFunds = fundsConfirmationApiClient._checkAvailabilityOfFunds(cof, xRequestID, digest, signature, tpPSignatureCertificate);
+		ResponseEntity<InlineResponse200> availabilityOfFunds = fundsConfirmationApiClient._checkAvailabilityOfFunds(cof, xRequestID, digest, signature, tpPSignatureCertificate);
 		return availabilityOfFunds;
 	}
 

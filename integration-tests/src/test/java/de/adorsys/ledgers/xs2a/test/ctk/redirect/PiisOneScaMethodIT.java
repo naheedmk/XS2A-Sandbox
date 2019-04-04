@@ -1,14 +1,16 @@
 package de.adorsys.ledgers.xs2a.test.ctk.redirect;
 
+import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
+import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
+import de.adorsys.psd2.model.InlineResponse200;
 import java.net.MalformedURLException;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
-import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
-import de.adorsys.ledgers.xs2a.api.client.FundsConfirmationResponse;
+
+
+
 
 public class PiisOneScaMethodIT extends AbstractPiis {
 	@Override
@@ -20,6 +22,9 @@ public class PiisOneScaMethodIT extends AbstractPiis {
 		return "DE80760700240271232400";
 	}
 
+	/**
+	 * If test fails, check if the tpp-id in the helper still matches the one in the test certificate See log file.
+	 */
 	@Test
 	public void test_cif() throws MalformedURLException {
 		// Login
@@ -31,8 +36,8 @@ public class PiisOneScaMethodIT extends AbstractPiis {
 		ResponseEntity<PIISConsentCreateResponse> createPiisConsent = cifHelper.createPiisConsent(authCode);
 		
 		// TODO: fix this after https://git.adorsys.de/adorsys/xs2a/aspsp-xs2a/issues/648 addressed
-		ResponseEntity<FundsConfirmationResponse> confOfFund = cifHelper.confOfFund(authCode);
-		FundsConfirmationResponse inlineResponse200 = confOfFund.getBody();
+		ResponseEntity<InlineResponse200> confOfFund = cifHelper.confOfFund(authCode);
+		InlineResponse200 inlineResponse200 = confOfFund.getBody();
 		Assert.assertNotNull(inlineResponse200);
 		// Intentional not null
 		Assert.assertNotNull(inlineResponse200.isFundsAvailable());

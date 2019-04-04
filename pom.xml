@@ -22,6 +22,7 @@
     <description>OpenSource Implementation Of PSD2 Dynamic Sandbox</description>
 
     <modules>
+        <module>xs2a-rest-client</module>
         <module>online-banking</module>
         <module>integration-tests</module>
         <module>psd2-api-gateway</module>

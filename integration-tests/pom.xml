@@ -41,9 +41,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>de.adorsys.ledgers</groupId>
+			<groupId>de.adorsys.psd2.sandbox</groupId>
 			<artifactId>xs2a-rest-client</artifactId>
-			<version>${connector.version}</version>
+			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -348,9 +348,9 @@
 								<argument>${project.build.directory}/gateway/gateway-app.jar</argument>
 								<argument>--spring.profiles.active=mockspi</argument>
 								<argument>--security.basic.enabled=false</argument>
-								<argument>--log4j.logger.org.springframework=WARN</argument>
-								<argument>--logging.level.root=WARN</argument>
-								<argument>--logging.level.org.springframework.boot=WARN</argument>
+								<argument>--log4j.logger.org.springframework=DEBUG</argument>
+								<argument>--logging.level.root=DEBUG</argument>
+								<argument>--logging.level.org.springframework.boot=DEBUG</argument>
 							</arguments>
 						</configuration>
 					</execution>

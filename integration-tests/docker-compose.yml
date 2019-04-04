@@ -21,7 +21,9 @@ services:
     - ASPSP_PROFILE_BASEURL=http://profile:48080/api/v1
     - CONSENT_SERVICE_BASEURL=http://consent:38080/api/v1
     - SECURITY_BASIC_ENABLED=false
-    - LOGGING_LEVEL_ROOT=INFO
+    - LOGGING_LEVEL_ROOT=DEBUG
+#    - LOGGING_LEVEL_DE_ADORSYS_LEDGERS_XS2A=DEBUG
+#    - FEIGN_CLIENT_CONFIG_DEFAULT_LOGGERLEVEL=full
     networks:
     - xs2a-net
     depends_on:
