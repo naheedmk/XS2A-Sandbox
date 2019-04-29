@@ -9,7 +9,7 @@ import {InfoModule} from "../../../commons/info/info.module";
 import {RegisterComponent} from './register.component';
 import {CertificateComponent} from "../certificate/certificate.component";
 
-fdescribe('RegisterComponent', () => {
+describe('RegisterComponent', () => {
     let component: RegisterComponent;
     let registerFixture: ComponentFixture<RegisterComponent>;
     let de: DebugElement;
@@ -120,7 +120,7 @@ fdescribe('RegisterComponent', () => {
     });
 
     it(`Submit button should be enabled`, () => {
-        component.userForm.controls['branch'].setValue('test');
+        component.userForm.controls['branch'].setValue('12345678');
         component.userForm.controls['login'].setValue('test');
         component.userForm.controls['email'].setValue('asd@asd.com');
         component.userForm.controls['pin'].setValue('1234');
