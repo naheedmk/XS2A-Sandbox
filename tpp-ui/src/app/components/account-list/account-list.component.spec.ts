@@ -62,6 +62,6 @@ describe('AccountListComponent', () => {
         component.ngOnInit();
 
         expect(getAccountsSpy).toHaveBeenCalled();
-        expect(component.accounts).not.toBeNull();
+        expect(component.accounts).toEqual(mockAccounts);
     });
 });
