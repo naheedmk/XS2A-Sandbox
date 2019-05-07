@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormArray, ReactiveFormsModule} from "@angular/forms";
 import {RouterTestingModule} from "@angular/router/testing";
-import {HttpClientModule} from "@angular/common/http";
 import {UserCreateComponent} from './user-create.component';
 import {IconModule} from "../../../commons/icon/icon.module";
 import {DebugElement} from "@angular/core";
@@ -141,13 +140,13 @@ describe('UserCreateComponent', () => {
     it('validate addScaData method', () => {
         const length = (<FormArray>component.userForm.controls['scaUserData']).length;
         component.addScaDataItem();
-        const newLength =  (<FormArray>component.userForm.controls['scaUserData']).length;
+        const newLength = (<FormArray>component.userForm.controls['scaUserData']).length;
         expect(newLength).toEqual(length + 1);
     });
 
     it('validate removeScaDataItem method', () => {
         component.removeScaDataItem(0);
-        const length =  (<FormArray>component.userForm.controls['scaUserData']).length;
+        const length = (<FormArray>component.userForm.controls['scaUserData']).length;
         expect(length).toEqual(0);
     });
 
