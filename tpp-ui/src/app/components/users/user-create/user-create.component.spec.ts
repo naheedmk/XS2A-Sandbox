@@ -7,11 +7,14 @@ import {IconModule} from "../../../commons/icon/icon.module";
 import {DebugElement} from "@angular/core";
 import {UserService} from "../../../services/user.service";
 import {Observable} from "rxjs";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {Router} from "@angular/router";
 
 describe('UserCreateComponent', () => {
     let component: UserCreateComponent;
     let fixture: ComponentFixture<UserCreateComponent>;
     let userService: UserService;
+    let router: Router;
     let de: DebugElement;
     let el: HTMLElement;
 
@@ -19,8 +22,8 @@ describe('UserCreateComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 ReactiveFormsModule,
-                RouterTestingModule,
-                HttpClientModule,
+                RouterTestingModule.withRoutes([]),
+                HttpClientTestingModule,
                 IconModule
             ],
             providers: [UserService],
@@ -32,6 +35,8 @@ describe('UserCreateComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(UserCreateComponent);
         component = fixture.componentInstance;
+        userService = TestBed.get(UserService);
+        router = TestBed.get(Router);
         fixture.detectChanges();
     });
 
@@ -153,5 +158,25 @@ describe('UserCreateComponent', () => {
             methodValue: ''
         };
         expect(formGroup.value).toEqual(data);
+    });
+
+    it('should call user service when form is valid and submitted', () => {
+        component.ngOnInit();
+        expect(component.submitted).toBeFalsy();
+        expect(component.userForm.valid).toBeFalsy();
+
+        // populate form and call service
+        component.userForm.controls['email'].setValue('dart.vader@dark-side.com');
+        component.userForm.controls['login'].setValue('dart.vader');
+        component.userForm.controls['pin'].setValue('12345678');
+        component.userForm.controls['scaUserData']['controls'][0].controls['methodValue'].setValue('dart.vader@dark-side.com');
+        expect(component.userForm.valid).toBeTruthy();
+        component.onSubmit();
+        expect(component.submitted).toBeTruthy();
+        let createUserSpy = spyOn(userService, 'createUser').and.callFake(() => Observable.of({value: 'Sample response'}));
+        let navigateSpy = spyOn(router, 'navigate');
+        expect(createUserSpy).toHaveBeenCalled();
+        expect(navigateSpy).toHaveBeenCalledWith(['/users/all']);
+
     });
 });
