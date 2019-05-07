@@ -165,18 +165,20 @@ describe('UserCreateComponent', () => {
         expect(component.submitted).toBeFalsy();
         expect(component.userForm.valid).toBeFalsy();
 
-        // populate form and call service
+        // populate form
         component.userForm.controls['email'].setValue('dart.vader@dark-side.com');
         component.userForm.controls['login'].setValue('dart.vader');
         component.userForm.controls['pin'].setValue('12345678');
         component.userForm.controls['scaUserData']['controls'][0].controls['methodValue'].setValue('dart.vader@dark-side.com');
-        expect(component.userForm.valid).toBeTruthy();
+
+        // create spies and fake call function
+        const sampleResponse = {value: 'sample response'};
+        let createUserSpy = spyOn(userService, 'createUser').and.callFake(() => Observable.of(sampleResponse));
+        let navigateSpy = spyOn(router, 'navigateByUrl');
         component.onSubmit();
         expect(component.submitted).toBeTruthy();
-        let createUserSpy = spyOn(userService, 'createUser').and.callFake(() => Observable.of({value: 'Sample response'}));
-        let navigateSpy = spyOn(router, 'navigate');
+        expect(component.userForm.valid).toBeTruthy();
         expect(createUserSpy).toHaveBeenCalled();
-        expect(navigateSpy).toHaveBeenCalledWith(['/users/all']);
-
+        expect(navigateSpy).toHaveBeenCalledWith('/users/all');
     });
 });
