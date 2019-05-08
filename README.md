@@ -38,7 +38,7 @@ Here are links where you can install needed dependencies:
 
 
 **Note 1**: please, use **node** version lower than **12** (e.g. **10.x.x** or **11.x.x**). Otherwise angular applications would not be built due to
-a version conflicts.
+version conflicts.
 
 **Note 2**: check amount of memory given to **Docker** (Open Docker Desktop -> Preferences -> Advanced -> Memory).
 For a fast and painless start of all the services it should be not less than 5 GB.
