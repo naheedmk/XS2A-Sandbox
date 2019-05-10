@@ -15,14 +15,4 @@ export class AppComponent {
       this.operation = operation;
     })
   }
-
-  public checkUrl(): number {
-    const url = window.location.href;
-    return url.indexOf('/login');
-  }
-
-  public checkUrlbank(): number {
-    const url = window.location.href;
-    return url.indexOf('/bank-offered');
-  }
 }
