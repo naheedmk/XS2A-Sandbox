@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TanConfirmationComponent } from './tan-confirmation.component';
+import {AccountDetailsComponent} from "../account-details/account-details.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('TanConfirmationComponent', () => {
   let component: TanConfirmationComponent;
@@ -8,7 +12,12 @@ describe('TanConfirmationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TanConfirmationComponent ]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule.withRoutes([]),
+        HttpClientTestingModule
+      ],
+      declarations: [ TanConfirmationComponent, AccountDetailsComponent ]
     })
     .compileComponents();
   }));
