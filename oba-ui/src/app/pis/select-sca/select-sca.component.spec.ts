@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectScaComponent } from './select-sca.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {PaymentDetailsComponent} from "../payment-details/payment-details.component";
 
 describe('SelectScaComponent', () => {
   let component: SelectScaComponent;
@@ -8,7 +12,12 @@ describe('SelectScaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectScaComponent ]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule.withRoutes([]),
+        HttpClientTestingModule
+      ],
+      declarations: [ SelectScaComponent, PaymentDetailsComponent ]
     })
     .compileComponents();
   }));

@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmCancellationComponent } from './confirm-cancellation.component';
+import {PaymentDetailsComponent} from "../payment-details/payment-details.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('ConfirmCancellationComponent', () => {
   let component: ConfirmCancellationComponent;
@@ -8,7 +12,12 @@ describe('ConfirmCancellationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmCancellationComponent ]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule.withRoutes([]),
+        HttpClientTestingModule
+      ],
+      declarations: [ ConfirmCancellationComponent, PaymentDetailsComponent ]
     })
     .compileComponents();
   }));
