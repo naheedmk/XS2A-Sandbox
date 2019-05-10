@@ -1,5 +1,5 @@
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
@@ -23,6 +23,7 @@ import {NgHttpLoaderModule} from "ng-http-loader";
     HttpClientModule,
     NgHttpLoaderModule.forRoot()
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     AisService,
     ShareDataService,
