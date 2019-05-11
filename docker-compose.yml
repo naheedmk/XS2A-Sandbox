@@ -148,7 +148,7 @@ services:
     networks:
       - xs2a-net
     environment:
-      - ONLINE_BANKING_SERVER_URL=http://xs2a-online-banking:8090
+      ONLINE_BANKING_SERVER_URL: "http://localhost:8090"
 
   # TPP-UI
   xs2a-tpp-ui:
