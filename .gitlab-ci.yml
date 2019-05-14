@@ -314,21 +314,20 @@ deploy_openshift_develop:
 
 # nightly
 
-# needs no build because it uses existing develop tag
-#build_dockerhub_image_nightly:
-#  stage: "Package"
-#  only:
-#    - schedules
-#  variables:
-#    DOCKER_TAG: develop
-#  <<: *push_dockerhub_images
+build_dockerhub_image_nightly:
+  stage: "Package"
+  only:
+    - schedules
+  variables:
+    DOCKER_TAG: nightly
+  <<: *push_dockerhub_images
 
 deploy_openshift_nightly:
   stage: "Deploy"
   only:
     - schedules
   variables:
-    DOCKER_TAG: develop # Dockerhub source tag
+    DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   <<: *deploy_openshift
 
