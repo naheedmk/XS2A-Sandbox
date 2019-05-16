@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +34,8 @@ public class ResponseUtils {
 	public static final String UNKNOWN_CREDENTIALS = "Unknown credentials";
 	public static final String REQUEST_WITH_REDIRECT_NOT_FOUND = "Request with redirect id not found";
 
-//	@Value("${online.banking.https.enabled:false}")
-	private static final boolean https_enabled = false;
-
-	public ResponseUtils() {
-//		this.https_enabled = https_enabled;
-	}
+	@Value("${online.banking.https.enabled:false}")
+	private static final boolean httpsEnabled = false;
 
 	/*
 	 * Set both access token cookie and consent cookie.
@@ -61,7 +58,7 @@ public class ResponseUtils {
 			// Set Cookie. Access Token
 			Cookie accessTokenCookie = new Cookie(ACCESS_TOKEN_COOKIE_NAME, accessTokenString);
 			accessTokenCookie.setHttpOnly(true);
-			accessTokenCookie.setSecure(https_enabled);
+			accessTokenCookie.setSecure(httpsEnabled);
 			accessTokenCookie.setMaxAge(validity);
 			accessTokenCookie.setDomain("localhost");
 			accessTokenCookie.setPath("/");
@@ -74,7 +71,7 @@ public class ResponseUtils {
 			// Set cookie consent
 			Cookie consentCookie = new Cookie(CONSENT_COOKIE_NAME, consentReference.getCookieString());
 			consentCookie.setHttpOnly(true);
-			consentCookie.setSecure(https_enabled);
+			consentCookie.setSecure(httpsEnabled);
 			consentCookie.setMaxAge(validity);
 			consentCookie.setDomain("localhost");
 			consentCookie.setPath("/");
@@ -90,7 +87,7 @@ public class ResponseUtils {
 	private void removeCookie(HttpServletResponse response, String cookieName) {
 		Cookie cookie = new Cookie(cookieName, "");
 		cookie.setHttpOnly(true);
-		cookie.setSecure(https_enabled);
+		cookie.setSecure(httpsEnabled);
 		cookie.setMaxAge(0);
 		response.addCookie(cookie);
 	}
