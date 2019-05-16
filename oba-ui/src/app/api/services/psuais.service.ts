@@ -93,7 +93,7 @@ class PSUAISService extends __BaseService {
     if (params.encryptedConsentId != null) __params = __params.set('encryptedConsentId', params.encryptedConsentId.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/ais/auth`,
+      this.rootUrl + `ais/auth`,
       __body,
       {
         headers: __headers,
