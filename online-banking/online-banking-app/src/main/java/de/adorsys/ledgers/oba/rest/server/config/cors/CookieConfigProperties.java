@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "server.servlet.session.cookie")
 public class CookieConfigProperties {
-    private Boolean secure = false;
-    private Integer maxAge = 300;
-    private Boolean httpOnly = true;
+    private boolean secure = false;
+    private int maxAge = 300;
+    private boolean httpOnly = true;
     private String path = "/";
 }
