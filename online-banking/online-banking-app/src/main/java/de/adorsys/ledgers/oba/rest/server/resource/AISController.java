@@ -49,14 +49,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @RestController(AISController.BASE_PATH)
 @RequestMapping(AISController.BASE_PATH)
 @Api(value = AISController.BASE_PATH, tags = "PSU AIS", description = "Provides access to online banking account functionality")
 @SuppressWarnings("PMD.TooManyMethods")
 public class AISController extends AbstractXISController implements AISApi {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultConsentReferencePolicy.class);
+    private static final Logger logger = LoggerFactory.getLogger(AISController.class);
 
     @Autowired
     private HttpServletRequest request;
@@ -114,13 +113,12 @@ public class AISController extends AbstractXISController implements AISApi {
             workflow = identifyConsent(encryptedConsentId, authorisationId, false, consentCookieString, login, response,
                                        null);
 
-            logger.debug("login", login);
-            logger.debug("pin", pin);
+            logger.debug("Login: {}", login);
 
 
             CmsAisConsentResponse consent = workflow.getConsentResponse();
 
-            logger.debug("authorisationId", consent.getAuthorisationId());
+            logger.debug("authorisationId: {}", consent.getAuthorisationId());
 
             tppNokRedirectUri = consent.getTppNokRedirectUri();
             tppOkRedirectUri = consent.getTppOkRedirectUri();
