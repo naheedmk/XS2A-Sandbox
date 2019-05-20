@@ -16,6 +16,7 @@ import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
 import de.adorsys.ledgers.oba.rest.api.domain.*;
 import de.adorsys.ledgers.oba.rest.api.exception.ConsentAuthorizeException;
 import de.adorsys.ledgers.oba.rest.api.resource.AISApi;
+import de.adorsys.ledgers.oba.rest.server.consentref.DefaultConsentReferencePolicy;
 import de.adorsys.ledgers.oba.rest.server.mapper.AisConsentMapper;
 import de.adorsys.ledgers.oba.rest.server.mapper.CreatePiisConsentRequestMapper;
 import de.adorsys.psd2.consent.api.CmsAspspConsentDataBase64;
@@ -26,12 +27,15 @@ import de.adorsys.psd2.xs2a.core.psu.PsuIdData;
 import feign.FeignException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CmsAspspPiisClient;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentRequest;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentResponse;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,10 +49,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController(AISController.BASE_PATH)
 @RequestMapping(AISController.BASE_PATH)
 @Api(value = AISController.BASE_PATH, tags = "PSU AIS", description = "Provides access to online banking account functionality")
 public class AISController extends AbstractXISController implements AISApi { //NOPMD
+
+    private static final Logger logger = LoggerFactory.getLogger(DefaultConsentReferencePolicy.class);
+
     @Autowired
     private HttpServletRequest request;
     @Autowired
@@ -79,6 +87,9 @@ public class AISController extends AbstractXISController implements AISApi { //N
     @ApiOperation(value = "Entry point for authenticating ais consent requests.")
     public ResponseEntity<AuthorizeResponse> aisAuth(String redirectId,
                                                      String encryptedConsentId) {
+
+        logger.debug("encryptedConsentId", encryptedConsentId);
+
         return auth(redirectId, ConsentType.AIS, encryptedConsentId, request, response);
     }
 
@@ -96,11 +107,20 @@ public class AISController extends AbstractXISController implements AISApi { //N
         // match value stored in the cookie.
         // The load initiated consent from consent database, and store it in the response.
         // Also hold Bearer Token in the consent workflow if any.
+
         ConsentWorkflow workflow;
         try {
             workflow = identifyConsent(encryptedConsentId, authorisationId, false, consentCookieString, login, response,
                                        null);
+
+            logger.debug("login", login);
+            logger.debug("pin", pin);
+
+
             CmsAisConsentResponse consent = workflow.getConsentResponse();
+
+            logger.debug("authorisationId", consent.getAuthorisationId());
+
             tppNokRedirectUri = consent.getTppNokRedirectUri();
             tppOkRedirectUri = consent.getTppOkRedirectUri();
             scaStatus = ScaStatusTO.RECEIVED;
@@ -127,6 +147,9 @@ public class AISController extends AbstractXISController implements AISApi { //N
                 // My current response: I think we have to set PSU SCA status to PSUIDENTIFIED.
                 try {
                     workflow.getAuthResponse().setScaStatus(ScaStatusTO.PSUIDENTIFIED);
+
+                    logger.debug("403 Error", ScaStatusTO.PSUIDENTIFIED);
+
                     // Store the id of the psu
                     updatePSUIdentification(workflow, login);
                     // Store the SCA Status
