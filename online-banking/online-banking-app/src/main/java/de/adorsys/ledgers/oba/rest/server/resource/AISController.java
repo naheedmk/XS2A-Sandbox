@@ -86,7 +86,7 @@ public class AISController extends AbstractXISController implements AISApi {
     public ResponseEntity<AuthorizeResponse> aisAuth(String redirectId,
                                                      String encryptedConsentId) {
 
-        logger.debug("encryptedConsentId", encryptedConsentId);
+        logger.debug("encryptedConsentId: {}", encryptedConsentId);
 
         return auth(redirectId, ConsentType.AIS, encryptedConsentId, request, response);
     }
