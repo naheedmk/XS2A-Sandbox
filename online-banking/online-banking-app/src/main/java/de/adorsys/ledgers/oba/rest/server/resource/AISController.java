@@ -49,11 +49,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("PMD")
 @Slf4j
 @RestController(AISController.BASE_PATH)
 @RequestMapping(AISController.BASE_PATH)
 @Api(value = AISController.BASE_PATH, tags = "PSU AIS", description = "Provides access to online banking account functionality")
+@SuppressWarnings("PMD.TooManyMethods")
 public class AISController extends AbstractXISController implements AISApi {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultConsentReferencePolicy.class);
@@ -100,7 +100,7 @@ public class AISController extends AbstractXISController implements AISApi {
     }
 
     @Override
-    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
+    @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity", "PMD.ExcessiveMethodLength"})
     public ResponseEntity<ConsentAuthorizeResponse> login(String encryptedConsentId, String authorisationId,
                                                           String login, String pin, String consentCookieString) {
 
