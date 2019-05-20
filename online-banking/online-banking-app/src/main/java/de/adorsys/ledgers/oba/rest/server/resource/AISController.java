@@ -49,11 +49,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("PMD")
 @Slf4j
 @RestController(AISController.BASE_PATH)
 @RequestMapping(AISController.BASE_PATH)
 @Api(value = AISController.BASE_PATH, tags = "PSU AIS", description = "Provides access to online banking account functionality")
-public class AISController extends AbstractXISController implements AISApi { //NOPMD
+public class AISController extends AbstractXISController implements AISApi {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultConsentReferencePolicy.class);
 
