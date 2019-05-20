@@ -145,7 +145,7 @@ public class AISController extends AbstractXISController implements AISApi {
                 try {
                     workflow.getAuthResponse().setScaStatus(ScaStatusTO.PSUIDENTIFIED);
 
-                    logger.debug("403 Error", ScaStatusTO.PSUIDENTIFIED);
+                    logger.debug("403 Error: {}", ScaStatusTO.PSUIDENTIFIED);
 
                     // Store the id of the psu
                     updatePSUIdentification(workflow, login);
