@@ -22,7 +22,32 @@ export class TestCasesComponent implements OnInit {
   }
 
   onActivate(ev) {
-    this.dataService.currentRouteUrl = this.actRoute['_routerState'].snapshot.url;
+    this.dataService.currentRouteUrl = this.actRoute[
+      '_routerState'
+    ].snapshot.url;
+  }
+
+  collapseThis(collapseId: string): void {
+    const collapsibleItemContent = document.getElementById(
+      `${collapseId}-content`
+    );
+
+    switch (collapseId) {
+      case 'redirect':
+        this.redirectFlag = !this.redirectFlag;
+        break;
+      case 'embedded':
+        this.embeddedFlag = !this.embeddedFlag;
+        break;
+    }
+
+    if (collapsibleItemContent.style.maxHeight) {
+      collapsibleItemContent.style.maxHeight = '';
+    } else {
+      collapsibleItemContent.style.maxHeight = `${
+        collapsibleItemContent.scrollHeight
+      }px`;
+    }
   }
 
   collapseThis(collapseId: string): void {
