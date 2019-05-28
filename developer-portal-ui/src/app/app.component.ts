@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private actRoute: ActivatedRoute,
-    public dataService: DataService
+    public dataService: DataService,
+    public loginService: LoginService
   ) {}
 
   goToPage(page) {
