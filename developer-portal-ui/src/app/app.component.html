@@ -1,50 +1,62 @@
-<div class="nav-bar">
+<div id="top"></div>
+
+<div class="nav-bar" *ngIf="!dataService.currentRouteUrl.includes('admin')">
   <img
     class="logo"
     src="../assets/images/Logo_XS2ASandbox.png"
     (click)="goToPage('home')"
   />
-  <div>
-    <span
-      class="header-item"
-      [ngStyle]="
-        dataService.currentRouteUrl === '/getting-started'
-          ? { opacity: 1 }
-          : null
-      "
-      (click)="goToPage('getting-started')"
-      >Getting started</span
-    >
-    <span
-      class="header-item"
-      [ngStyle]="
-        dataService.currentRouteUrl.includes('test-cases')
-          ? { opacity: 1 }
-          : null
-      "
-      (click)="goToPage('/test-cases/redirect')"
-      >Test cases</span
-    >
-    <span
-      class="header-item"
-      [ngStyle]="dataService.currentRouteUrl === '/faq' ? { opacity: 1 } : null"
-      (click)="goToPage('/faq')"
-      >FAQs</span
-    >
-    <span
-      class="header-item"
-      [ngStyle]="
-        dataService.currentRouteUrl === '/contact' ? { opacity: 1 } : null
-      "
-      (click)="goToPage('/contact')"
-      >Contact</span
-    >
+  <div class="nav">
+    <div>
+      <span
+        class="header-item"
+        [ngStyle]="
+          dataService.currentRouteUrl.includes('getting-started')
+            ? { opacity: 1 }
+            : null
+        "
+        (click)="goToPage('getting-started')"
+        >Getting started</span
+      >
+      <span
+        class="header-item"
+        [ngStyle]="
+          dataService.currentRouteUrl.includes('test-cases')
+            ? { opacity: 1 }
+            : null
+        "
+        (click)="goToPage('/test-cases/redirect')"
+        >Test cases</span
+      >
+      <span
+        class="header-item"
+        [ngStyle]="
+          dataService.currentRouteUrl.includes('faq') ? { opacity: 1 } : null
+        "
+        (click)="goToPage('/faq')"
+        >FAQs</span
+      >
+      <span
+        class="header-item"
+        [ngStyle]="
+          dataService.currentRouteUrl.includes('contact')
+            ? { opacity: 1 }
+            : null
+        "
+        (click)="goToPage('/contact')"
+        >Contact</span
+      >
+    </div>
+    <div class="header-icons" *ngIf="this.loginService.isLoggedIn()">
+      <img src="../assets/icons/logout.png" (click)="loginService.logOut()" />
+      <img src="../assets/icons/cogwheel-setting.png" />
+    </div>
   </div>
 </div>
 
 <router-outlet (activate)="onActivate($event)"></router-outlet>
 
-<div class="footer-bar">
+<div class="footer-bar" *ngIf="!dataService.currentRouteUrl.includes('admin')">
   <div class="footer-top-items">
     <img
       class="logo"
