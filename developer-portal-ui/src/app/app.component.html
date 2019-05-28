@@ -3,7 +3,7 @@
 <div class="nav-bar" *ngIf="!dataService.currentRouteUrl.includes('admin')">
   <img
     class="logo"
-    src="../assets/images/Logo_XS2ASandbox.png"
+    [src]="constantService.getLogo()"
     (click)="goToPage('home')"
   />
   <div class="nav">
@@ -49,7 +49,7 @@
     </div>
     <div class="header-icons" *ngIf="this.loginService.isLoggedIn()">
       <img src="../assets/icons/logout.png" (click)="loginService.logOut()" />
-      <img src="../assets/icons/cogwheel-setting.png" />
+      <app-settings-modal></app-settings-modal>
     </div>
   </div>
 </div>
