@@ -1,0 +1,20 @@
+<img src="../../assets/icons/cogwheel-setting.png" (click)="collapseThis()" />
+
+<div class="collapse-content" id="modal">
+  <div class="modal-header"><span class="modal-title">Settings</span></div>
+
+  <div class="modal-body">
+    <label for="logo">
+      Logo URL <input type="text" id="logo" [(ngModel)]="newLogoPath" />
+    </label>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="save" (click)="save()">
+      <span>Save</span>
+    </button>
+    <button type="button" class="close" (click)="collapseThis()">
+      <span>Close</span>
+    </button>
+  </div>
+</div>

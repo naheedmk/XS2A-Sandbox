@@ -15,7 +15,8 @@ import { RestService } from '../services/rest.service';
 import { DataService } from '../services/data.service';
 import { TestValuesComponent } from '../pages/test-cases/components/test-values/test-values.component';
 import { AdminComponent } from '../pages/admin/admin.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SettingsModalComponent } from '../pages/settigs-modal/settings-modal.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContactComponent,
     TestValuesComponent,
     AdminComponent,
+    SettingsModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,9 @@ import { ReactiveFormsModule } from '@angular/forms';
       timeOut: 1300,
     }),
     ReactiveFormsModule,
+    FormsModule,
   ],
+  exports: [SettingsModalComponent],
   providers: [RestService, DataService],
   bootstrap: [AppComponent],
 })
