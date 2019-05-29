@@ -268,7 +268,7 @@ postman_tests:
   artifacts:
     when: always
     paths:
-      - postman-tests-report.html
+      - "postman-scripts/postman-tests-report.html"
 
 ttp_frontend_unit_tests:
   stage: "Test"
