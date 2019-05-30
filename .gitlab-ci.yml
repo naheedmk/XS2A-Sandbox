@@ -136,7 +136,6 @@ postman_tests:
     - schedules
   script:
     - npm config set unsafe-perm true
-    - newman —-version
     - npm install -g newman-reporter-html
     - cd postman-scripts
     - newman run postman_collection.json -e postman_environment_dev.json -g postman_global_variable.json --reporters cli,html --reporter-html-template html_report_template.hbs --reporter-html-export postman-tests-report.html
