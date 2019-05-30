@@ -136,11 +136,11 @@ postman_tests:
     - schedules
   script:
     - newman —version
-    - npm install newman-reporter-html
+    - npm install -g newman-reporter-html
     - cd postman-scripts
     - newman run postman_collection.json -e postman_environment_dev.json -g postman_global_variable.json --reporters cli,html --reporter-html-template html_report_template.hbs --reporter-html-export postman-tests-report.html
-    - cd ..
   artifacts:
     when: always
     paths:
       - "postman-scripts/postman-tests-report.html"
+    expire_in: "10 day"
