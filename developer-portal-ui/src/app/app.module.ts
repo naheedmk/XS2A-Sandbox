@@ -13,7 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ContactComponent } from '../pages/contact/contact.component';
 import { RestService } from '../services/rest.service';
 import { DataService } from '../services/data.service';
-import { TestValuesComponent } from '../pages/test-cases/components/test-values/test-values.component';
 import { AdminComponent } from '../pages/admin/admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingsModalComponent } from '../pages/settigs-modal/settings-modal.component';
@@ -25,7 +24,6 @@ import { SettingsModalComponent } from '../pages/settigs-modal/settings-modal.co
     GettingStartedComponent,
     FaqComponent,
     ContactComponent,
-    TestValuesComponent,
     AdminComponent,
     SettingsModalComponent,
   ],

@@ -50,29 +50,6 @@ export class TestCasesComponent implements OnInit {
     }
   }
 
-  collapseThis(collapseId: string): void {
-    const collapsibleItemContent = document.getElementById(
-      `${collapseId}-content`
-    );
-
-    switch (collapseId) {
-      case 'redirect':
-        this.redirectFlag = !this.redirectFlag;
-        break;
-      case 'embedded':
-        this.embeddedFlag = !this.embeddedFlag;
-        break;
-    }
-
-    if (collapsibleItemContent.style.maxHeight) {
-      collapsibleItemContent.style.maxHeight = '';
-    } else {
-      collapsibleItemContent.style.maxHeight = `${
-        collapsibleItemContent.scrollHeight
-      }px`;
-    }
-  }
-
   ngOnInit() {
     this.collapseThis('redirect');
   }
