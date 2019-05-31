@@ -1,9 +1,13 @@
 <div id="top"></div>
 
-<div class="nav-bar" *ngIf="!dataService.currentRouteUrl.includes('admin')">
+<div
+  class="nav-bar"
+  *ngIf="!dataService.currentRouteUrl.includes('admin')"
+  [ngStyle]="{ backgroundColor: headerBG, color: headerFontColor }"
+>
   <img
     class="logo"
-    [src]="constantService.getLogo()"
+    [src]="customizeService.getLogo()"
     (click)="goToPage('home')"
   />
   <div class="nav">
@@ -48,7 +52,7 @@
       >
     </div>
     <div class="header-icons" *ngIf="this.loginService.isLoggedIn()">
-      <img src="../assets/icons/logout.png" (click)="loginService.logOut()" />
+      <i class="fas fa-sign-out-alt" (click)="loginService.logOut()"></i>
       <app-settings-modal></app-settings-modal>
     </div>
   </div>
@@ -56,11 +60,15 @@
 
 <router-outlet (activate)="onActivate($event)"></router-outlet>
 
-<div class="footer-bar" *ngIf="!dataService.currentRouteUrl.includes('admin')">
+<div
+  class="footer-bar"
+  *ngIf="!dataService.currentRouteUrl.includes('admin')"
+  [ngStyle]="{ backgroundColor: footerBG, color: footerFontColor }"
+>
   <div class="footer-top-items">
     <img
       class="logo"
-      src="../assets/images/Logo_XS2ASandbox.png"
+      [src]="customizeService.getLogo()"
       (click)="goToPage('home')"
     />
     <div>
@@ -74,14 +82,24 @@
       <span class="footer-item" (click)="goToPage('/contact')">Contact</span>
     </div>
   </div>
-  <div class="social-media">
-    <a href="https://www.facebook.com/adorsysGmbH/" target="_blank"
-      ><i class="fab fa-facebook-f"></i
-    ></a>
-    <a
-      href="https://www.linkedin.com/company/adorsys-gmbh-&-co-kg/"
-      target="_blank"
-      ><i class="fab fa-linkedin-in"></i
-    ></a>
+
+  <div
+    class="social-media"
+    *ngIf="globalSettings.facebook || globalSettings.linkedIn"
+  >
+    <div *ngIf="globalSettings.facebook">
+      <a [href]="globalSettings.facebook" target="_blank">
+        <i class="fab fa-facebook-f" [ngStyle]="{ color: footerFontColor }"></i>
+      </a>
+    </div>
+
+    <div *ngIf="globalSettings.linkedIn">
+      <a [href]="globalSettings.linkedIn" target="_blank">
+        <i
+          class="fab fa-linkedin-in"
+          [ngStyle]="{ color: footerFontColor }"
+        ></i>
+      </a>
+    </div>
   </div>
 </div>
