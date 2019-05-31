@@ -9,6 +9,7 @@ import {Observable} from "rxjs";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
 import {InfoService} from "../../../commons/info/info.service";
+import {InfoModule} from "../../../commons/info/info.module";
 
 describe('UserCreateComponent', () => {
     let component: UserCreateComponent;
@@ -23,6 +24,7 @@ describe('UserCreateComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 ReactiveFormsModule,
+                InfoModule,
                 RouterTestingModule.withRoutes([]),
                 HttpClientTestingModule,
                 IconModule
