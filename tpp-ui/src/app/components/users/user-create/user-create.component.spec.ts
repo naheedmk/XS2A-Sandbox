@@ -8,11 +8,13 @@ import {UserService} from "../../../services/user.service";
 import {Observable} from "rxjs";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
+import {InfoService} from "../../../commons/info/info.service";
 
 describe('UserCreateComponent', () => {
     let component: UserCreateComponent;
     let fixture: ComponentFixture<UserCreateComponent>;
     let userService: UserService;
+    let infoService: InfoService;
     let router: Router;
     let de: DebugElement;
     let el: HTMLElement;
@@ -25,7 +27,7 @@ describe('UserCreateComponent', () => {
                 HttpClientTestingModule,
                 IconModule
             ],
-            providers: [UserService],
+            providers: [UserService, InfoService],
             declarations: [UserCreateComponent]
         })
             .compileComponents();
@@ -35,6 +37,7 @@ describe('UserCreateComponent', () => {
         fixture = TestBed.createComponent(UserCreateComponent);
         component = fixture.componentInstance;
         userService = TestBed.get(UserService);
+        infoService = TestBed.get(InfoService);
         router = TestBed.get(Router);
         fixture.detectChanges();
     });
