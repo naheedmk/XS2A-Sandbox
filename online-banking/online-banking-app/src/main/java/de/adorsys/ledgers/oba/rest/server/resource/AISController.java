@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -184,6 +185,14 @@ public class AISController extends AbstractXISController implements AISApi {
                 case SCAMETHODSELECTED:
                     List<AccountDetailsTO> listOfAccounts = listOfAccounts(workflow);
                     workflow.getAuthResponse().setAccounts(listOfAccounts);
+
+                    // update consent accounts, transactions and balances if global consent is set
+                    if (workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2().equals("ALL_ACCOUNTS")) {
+
+                    } else if (workflow.getConsentResponse().getAccountConsent().getAccess().getAvailableAccounts().equals("ALL_ACCOUNTS")) { // update consent accounts, if all accounts consent is set
+
+                    }
+
                     responseUtils.setCookies(response, workflow.getConsentReference(),
                                              workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
                     return ResponseEntity.ok(workflow.getAuthResponse());
@@ -625,6 +634,21 @@ public class AISController extends AbstractXISController implements AISApi {
         } finally {
             authInterceptor.setAccessToken(null);
         }
+    }
+
+    /**
+     * Returns list of accounts IBANs to which user has access.
+     * Necessary for Global Consent and All Accounts Consent.
+     *
+     * @param  accounts user account accesses
+     */
+    private List<String> extractUserIbans(List<AccountDetailsTO> accounts) {
+        List<String> ibans = new ArrayList<>();
+        for (AccountDetailsTO account : accounts)
+        {
+            ibans.add(account.getIban());
+        }
+        return ibans;
     }
 
 }
