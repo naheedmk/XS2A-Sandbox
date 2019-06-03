@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -188,7 +187,7 @@ public class AISController extends AbstractXISController implements AISApi {
                     workflow.getAuthResponse().setAccounts(listOfAccounts);
 
                     // update consent accounts, transactions and balances if global consent is set
-                    if (workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2().equals(AisAccountAccessTypeTO.ALL_ACCOUNTS.toString())) {
+                    if (AisAccountAccessTypeTO.ALL_ACCOUNTS.toString().equals(workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2())) {
                         List<String> ibans = extractUserIbans(listOfAccounts);
                         workflow.getAuthResponse().getConsent().getAccess().setAccounts(ibans);
                         workflow.getAuthResponse().getConsent().getAccess().setTransactions(ibans);
@@ -642,7 +641,7 @@ public class AISController extends AbstractXISController implements AISApi {
      * Returns list of accounts' IBANs to which user has an access.
      * Necessary for Global Consent and All Accounts Consent.
      *
-     * @param  accounts user account accesses
+     * @param accounts user account accesses
      */
     private List<String> extractUserIbans(List<AccountDetailsTO> accounts) {
         return accounts
