@@ -188,16 +188,11 @@ public class AISController extends AbstractXISController implements AISApi {
                     workflow.getAuthResponse().setAccounts(listOfAccounts);
 
                     // update consent accounts, transactions and balances if global consent is set
-                    String global = workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2();
-
-                    if (global.equals("ALL_ACCOUNTS")) {
-
-
+                    if (workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2().equals(AisAccountAccessTypeTO.ALL_ACCOUNTS.toString())) {
                         List<String> ibans = extractUserIbans(listOfAccounts);
                         workflow.getAuthResponse().getConsent().getAccess().setAccounts(ibans);
                         workflow.getAuthResponse().getConsent().getAccess().setTransactions(ibans);
                         workflow.getAuthResponse().getConsent().getAccess().setBalances(ibans);
-
                     }
 
                     responseUtils.setCookies(response, workflow.getConsentReference(),
@@ -654,12 +649,6 @@ public class AISController extends AbstractXISController implements AISApi {
                    .stream()
                    .map(AccountDetailsTO::getIban)
                    .collect(Collectors.toList());
-//        List<String> ibans = new ArrayList<>();
-//        for (AccountDetailsTO account : accounts)
-//        {
-//            ibans.add(account.getIban());
-//        }
-//        return ibans;
     }
 
 }
