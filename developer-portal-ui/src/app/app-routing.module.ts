@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '**', component: HomeComponent },
 ];
 const routerOptions: ExtraOptions = {
-  anchorScrolling: 'enabled',
+  scrollPositionRestoration: 'top',
 };
 
 @NgModule({

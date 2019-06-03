@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   goToPage(page) {
-    this.router.navigateByUrl(`/${page}#top`);
+    this.router.navigateByUrl(`/${page}`);
   }
 
   onActivate(ev) {
