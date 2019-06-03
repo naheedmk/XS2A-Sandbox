@@ -186,12 +186,15 @@ public class AISController extends AbstractXISController implements AISApi {
                     List<AccountDetailsTO> listOfAccounts = listOfAccounts(workflow);
                     workflow.getAuthResponse().setAccounts(listOfAccounts);
 
-                    // update consent accounts, transactions and balances if global consent is set
-                    if (AisAccountAccessTypeTO.ALL_ACCOUNTS.toString().equals(workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2())) {
+                    // update consent accounts, transactions and balances if global consent flag is set
+                    AisAccountAccess consentAccountAccess = workflow.getConsentResponse().getAccountConsent().getAccess();
+                    if (isConsentGlobal(consentAccountAccess)) {
+                        AisAccountAccessInfoTO authAccountAccess = workflow.getAuthResponse().getConsent().getAccess();
+
                         List<String> ibans = extractUserIbans(listOfAccounts);
-                        workflow.getAuthResponse().getConsent().getAccess().setAccounts(ibans);
-                        workflow.getAuthResponse().getConsent().getAccess().setTransactions(ibans);
-                        workflow.getAuthResponse().getConsent().getAccess().setBalances(ibans);
+                        authAccountAccess.setAccounts(ibans);
+                        authAccountAccess.setTransactions(ibans);
+                        authAccountAccess.setBalances(ibans);
                     }
 
                     responseUtils.setCookies(response, workflow.getConsentReference(),
@@ -648,6 +651,10 @@ public class AISController extends AbstractXISController implements AISApi {
                    .stream()
                    .map(AccountDetailsTO::getIban)
                    .collect(Collectors.toList());
+    }
+
+    private boolean isConsentGlobal(AisAccountAccess aisAccountAccess) {
+        return AisAccountAccessTypeTO.ALL_ACCOUNTS.toString().equals(aisAccountAccess.getAllPsd2());
     }
 
 }
