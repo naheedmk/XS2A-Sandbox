@@ -3,6 +3,7 @@ package de.adorsys.ledgers.oba.rest.server.resource;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.*;
 import de.adorsys.ledgers.middleware.api.domain.um.AisAccountAccessInfoTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AisAccountAccessTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AisConsentTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.client.rest.AccountRestClient;
@@ -187,9 +188,15 @@ public class AISController extends AbstractXISController implements AISApi {
                     workflow.getAuthResponse().setAccounts(listOfAccounts);
 
                     // update consent accounts, transactions and balances if global consent is set
-                    if (workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2().equals("ALL_ACCOUNTS")) {
+                    String global = workflow.getConsentResponse().getAccountConsent().getAccess().getAllPsd2();
 
-                    } else if (workflow.getConsentResponse().getAccountConsent().getAccess().getAvailableAccounts().equals("ALL_ACCOUNTS")) { // update consent accounts, if all accounts consent is set
+                    if (global.equals("ALL_ACCOUNTS")) {
+
+
+                        List<String> ibans = extractUserIbans(listOfAccounts);
+                        workflow.getAuthResponse().getConsent().getAccess().setAccounts(ibans);
+                        workflow.getAuthResponse().getConsent().getAccess().setTransactions(ibans);
+                        workflow.getAuthResponse().getConsent().getAccess().setBalances(ibans);
 
                     }
 
@@ -637,18 +644,22 @@ public class AISController extends AbstractXISController implements AISApi {
     }
 
     /**
-     * Returns list of accounts IBANs to which user has access.
+     * Returns list of accounts' IBANs to which user has an access.
      * Necessary for Global Consent and All Accounts Consent.
      *
      * @param  accounts user account accesses
      */
     private List<String> extractUserIbans(List<AccountDetailsTO> accounts) {
-        List<String> ibans = new ArrayList<>();
-        for (AccountDetailsTO account : accounts)
-        {
-            ibans.add(account.getIban());
-        }
-        return ibans;
+        return accounts
+                   .stream()
+                   .map(AccountDetailsTO::getIban)
+                   .collect(Collectors.toList());
+//        List<String> ibans = new ArrayList<>();
+//        for (AccountDetailsTO account : accounts)
+//        {
+//            ibans.add(account.getIban());
+//        }
+//        return ibans;
     }
 
 }
