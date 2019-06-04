@@ -5,10 +5,11 @@ RUN apk add --update nodejs
 
 ENV NEWMAN_VERSION 4.5.0
 
-RUN npm init
+USER 0
+#RUN npm init
 RUN npm config set unsafe-perm true
-RUN npm install newman@${NEWMAN_VERSION};
-RUN npm install newman newman-reporter-html
+RUN npm install -g newman@${NEWMAN_VERSION};
+RUN npm install -g newman-reporter-html
 
 WORKDIR /etc/newman
 
