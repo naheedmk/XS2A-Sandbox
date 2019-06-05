@@ -55,7 +55,7 @@ export class SettingsModalComponent {
           console.log('invalid json file', e);
         }
       } else {
-        this.dataService.showToast("It's not a JSON file", 'Error!', 'error');
+        this.dataService.showToast('It\'s not a JSON file', 'Error!', 'error');
       }
     };
     fileReader.onerror = error => {

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { LocalStorageService } from './local-storage.service';
 import { HttpClient } from '@angular/common/http';
-// import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -103,11 +101,6 @@ export class CustomizeService {
     return this.USER_THEME;
   }
 
-  // getDefaultTheme() {
-  //   this.STATUS_WAS_CHANGED = !this.STATUS_WAS_CHANGED;
-  //   return this.DEFAULT_THEME;
-  // }
-
   getDefaultTheme(): Promise<Theme> {
     return this.http
       .get('../assets/UI/defaultTheme.json')
@@ -179,14 +172,6 @@ export class CustomizeService {
       );
     }
   }
-
-  // getChangeStatus() {
-  //   return this.STATUS_WAS_CHANGED;
-  // }
-  //
-  // getNewThemaStatus() {
-  //   return this.NEW_THEME_WAS_SET;
-  // }
 
   validateTheme(theme): string[] {
     const general = ['globalSettings', 'contactInfo', 'officesInfo'];
