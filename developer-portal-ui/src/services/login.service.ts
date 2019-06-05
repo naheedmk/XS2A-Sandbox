@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LoginService {
-  private logInFlag: boolean = true;
+  private logInFlag = false;
   private login = 'admin';
   private password = 'admin';
 

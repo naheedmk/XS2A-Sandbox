@@ -38,7 +38,9 @@ export class SettingsModalComponent {
       if (typeof fileReader.result === 'string') {
         try {
           this.importedTheme = JSON.parse(fileReader.result);
-          const errors = this.validateTheme(this.importedTheme);
+          const errors = this.customizeService.validateTheme(
+            this.importedTheme
+          );
           if (errors.length !== 0) {
             this.dataService.showToast(
               JSON.stringify(errors),
@@ -97,37 +99,5 @@ export class SettingsModalComponent {
       type: 'application/json',
     });
     saveAs(blob, type);
-  }
-
-  validateTheme(theme) {
-    const general = ['globalSettings', 'contactInfo', 'officesInfo'];
-    const additional = [
-      ['logoPath'],
-      ['imgPath', 'name', 'position'],
-      ['city', 'company', 'addressFirstLine', 'addressSecondLine'],
-    ];
-    const errors: string[] = [];
-
-    for (let i = 0; i < general.length; i++) {
-      if (!theme.hasOwnProperty(general[i])) {
-        errors.push(`Missing field ${general[i]}!`);
-      } else if (i !== 2) {
-        for (const property of additional[i]) {
-          if (!theme[general[i]].hasOwnProperty(property)) {
-            errors.push(`Field ${general[i]} missing property ${property}!`);
-          }
-        }
-      } else {
-        for (const office of theme.officesInfo) {
-          for (const property of additional[i]) {
-            if (!office.hasOwnProperty(property)) {
-              errors.push(`Field ${general[i]} missing property ${property}!`);
-            }
-          }
-        }
-      }
-    }
-
-    return errors;
   }
 }

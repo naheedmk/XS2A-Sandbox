@@ -1,9 +1,10 @@
-<div id="top"></div>
-
 <div
   class="nav-bar"
   *ngIf="!dataService.currentRouteUrl.includes('admin')"
-  [ngStyle]="{ backgroundColor: headerBG, color: headerFontColor }"
+  [ngStyle]="{
+    backgroundColor: globalSettings.headerBG,
+    color: globalSettings.headerFontColor
+  }"
 >
   <img
     class="logo"
@@ -63,7 +64,10 @@
 <div
   class="footer-bar"
   *ngIf="!dataService.currentRouteUrl.includes('admin')"
-  [ngStyle]="{ backgroundColor: footerBG, color: footerFontColor }"
+  [ngStyle]="{
+    backgroundColor: globalSettings.footerBG,
+    color: globalSettings.footerFontColor
+  }"
 >
   <div class="footer-top-items">
     <img
@@ -89,7 +93,10 @@
   >
     <div *ngIf="globalSettings.facebook">
       <a [href]="globalSettings.facebook" target="_blank">
-        <i class="fab fa-facebook-f" [ngStyle]="{ color: footerFontColor }"></i>
+        <i
+          class="fab fa-facebook-f"
+          [ngStyle]="{ color: globalSettings.footerFontColor }"
+        ></i>
       </a>
     </div>
 
@@ -97,7 +104,7 @@
       <a [href]="globalSettings.linkedIn" target="_blank">
         <i
           class="fab fa-linkedin-in"
-          [ngStyle]="{ color: footerFontColor }"
+          [ngStyle]="{ color: globalSettings.footerFontColor }"
         ></i>
       </a>
     </div>

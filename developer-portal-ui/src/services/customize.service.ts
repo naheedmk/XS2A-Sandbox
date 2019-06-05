@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
+// import { LocalStorageService } from './local-storage.service';
+import { HttpClient } from '@angular/common/http';
+// import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +11,7 @@ export class CustomizeService {
   private STATUS_WAS_CHANGED = false;
   private DEFAULT_THEME: Theme = {
     globalSettings: {
-      logoPath: '../assets/images/Logo_XS2ASandbox.png',
+      logo: '../assets/images/Logo_XS2ASandbox.png',
       fontFamily: 'Arial, sans-serif',
       headerBG: '#ffffff',
       headerFontColor: '#000000',
@@ -19,7 +21,7 @@ export class CustomizeService {
       linkedIn: 'https://www.linkedin.com/company/adorsys-gmbh-&-co-kg/',
     },
     contactInfo: {
-      imgPath: '../../assets/images/Rene.png',
+      img: '../../assets/images/Rene.png',
       name: 'René Pongratz',
       position: 'Software Architect & Expert for API Management',
       email: 'psd2@adorsys.de',
@@ -46,11 +48,11 @@ export class CustomizeService {
   };
   private USER_THEME: Theme = {
     globalSettings: {
-      logoPath: '',
+      logo: '',
       fontFamily: '',
     },
     contactInfo: {
-      imgPath: '',
+      img: '',
       name: '',
       position: '',
     },
@@ -70,19 +72,49 @@ export class CustomizeService {
     ],
   };
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(private http: HttpClient) {}
 
-  getTheme() {
-    if (this.NEW_THEME_WAS_SET) {
-      return this.USER_THEME;
-    } else {
-      return this.DEFAULT_THEME;
-    }
+  public getJSON(): Promise<Theme> {
+    return this.http
+      .get('../assets/UI/UITheme.json')
+      .toPromise()
+      .then(data => {
+        let theme = data;
+        try {
+          JSON.parse(JSON.stringify(theme));
+          const errors = this.validateTheme(theme);
+          if (errors.length) {
+            console.log(errors);
+            theme = this.getDefaultTheme();
+          }
+        } catch (e) {
+          console.log(e);
+          theme = this.getDefaultTheme();
+        }
+        return theme as Theme;
+      })
+      .catch(e => {
+        console.log(e);
+        return this.getDefaultTheme();
+      });
   }
 
-  getDefaultTheme() {
-    this.STATUS_WAS_CHANGED = !this.STATUS_WAS_CHANGED;
-    return this.DEFAULT_THEME;
+  getTheme() {
+    return this.USER_THEME;
+  }
+
+  // getDefaultTheme() {
+  //   this.STATUS_WAS_CHANGED = !this.STATUS_WAS_CHANGED;
+  //   return this.DEFAULT_THEME;
+  // }
+
+  getDefaultTheme(): Promise<Theme> {
+    return this.http
+      .get('../assets/UI/defaultTheme.json')
+      .toPromise()
+      .then(data => {
+        return data as Theme;
+      });
   }
 
   setDefaultTheme() {
@@ -91,11 +123,11 @@ export class CustomizeService {
     this.changeFontFamily();
     this.USER_THEME = {
       globalSettings: {
-        logoPath: '',
+        logo: '',
         fontFamily: '',
       },
       contactInfo: {
-        imgPath: '',
+        img: '',
         name: '',
         position: '',
       },
@@ -125,9 +157,9 @@ export class CustomizeService {
 
   getLogo() {
     if (this.NEW_THEME_WAS_SET) {
-      return this.USER_THEME.globalSettings.logoPath;
+      return this.USER_THEME.globalSettings.logo;
     } else {
-      return this.DEFAULT_THEME.globalSettings.logoPath;
+      return this.DEFAULT_THEME.globalSettings.logo;
     }
   }
 
@@ -148,12 +180,44 @@ export class CustomizeService {
     }
   }
 
-  getChangeStatus() {
-    return this.STATUS_WAS_CHANGED;
-  }
+  // getChangeStatus() {
+  //   return this.STATUS_WAS_CHANGED;
+  // }
+  //
+  // getNewThemaStatus() {
+  //   return this.NEW_THEME_WAS_SET;
+  // }
 
-  getNewThemaStatus() {
-    return this.NEW_THEME_WAS_SET;
+  validateTheme(theme): string[] {
+    const general = ['globalSettings', 'contactInfo', 'officesInfo'];
+    const additional = [
+      ['logo'],
+      ['img', 'name', 'position'],
+      ['city', 'company', 'addressFirstLine', 'addressSecondLine'],
+    ];
+    const errors: string[] = [];
+
+    for (let i = 0; i < general.length; i++) {
+      if (!theme.hasOwnProperty(general[i])) {
+        errors.push(`Missing field ${general[i]}!`);
+      } else if (i !== 2) {
+        for (const property of additional[i]) {
+          if (!theme[general[i]].hasOwnProperty(property)) {
+            errors.push(`Field ${general[i]} missing property ${property}!`);
+          }
+        }
+      } else {
+        for (const office of theme.officesInfo) {
+          for (const property of additional[i]) {
+            if (!office.hasOwnProperty(property)) {
+              errors.push(`Field ${general[i]} missing property ${property}!`);
+            }
+          }
+        }
+      }
+    }
+
+    return errors;
   }
 }
 
@@ -164,7 +228,7 @@ export interface Theme {
 }
 
 export interface GlobalSettings {
-  logoPath: string;
+  logo: string;
   fontFamily?: string;
   headerBG?: string;
   headerFontColor?: string;
@@ -175,7 +239,7 @@ export interface GlobalSettings {
 }
 
 export interface ContactInfo {
-  imgPath: string;
+  img: string;
   name: string;
   position: string;
   email?: string;

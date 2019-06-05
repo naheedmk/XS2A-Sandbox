@@ -5,15 +5,15 @@
   <span class="any-questions-subtitle">Ask this person.</span>
   <div class="person-card">
     <div class="person-card-image-wrapper">
-      <img [src]="contactInfo.imgPath" alt="" />
+      <img [src]="contactInfo.img" alt="" />
     </div>
     <div class="person-card-info">
       <div class="main-personal-info">
         <span>{{ contactInfo.name }}</span>
         <span>{{ contactInfo.position }}</span>
       </div>
-      <div class="sub-personal-info">
-        <a href="mailto:psd2@adorsys.de">{{ contactInfo.email }}</a>
+      <div class="sub-personal-info" *ngIf="contactInfo.email">
+        <a [href]="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
       </div>
     </div>
   </div>
