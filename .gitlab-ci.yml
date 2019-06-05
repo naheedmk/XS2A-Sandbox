@@ -125,11 +125,11 @@ variables:
       --dest-creds=openshift:${OPENSHIFT_TOKEN}
       "docker://${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_DEVPORTAL_UI}:${DOCKER_TAG}"
       "docker://${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_DEVPORTAL_UI}:latest"
-    - >-
-      skopeo copy
-      --dest-creds=openshift:${OPENSHIFT_TOKEN}
-      "docker://${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS}:${DOCKER_TAG}"
-      "docker://${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS}:latest"
+#    - >-
+#      skopeo copy
+#      --dest-creds=openshift:${OPENSHIFT_TOKEN}
+#      "docker://${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS}:${DOCKER_TAG}"
+#      "docker://${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS}:latest"
 
 # ------------------------------------------------------------------
 # jobs
