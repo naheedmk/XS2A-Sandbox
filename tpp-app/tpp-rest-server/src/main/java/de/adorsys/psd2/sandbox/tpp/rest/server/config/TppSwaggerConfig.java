@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class TppSwaggerConfig {
 
     @Bean
-    public Docket api() {
+    public Docket apiDocklet() {
         return new Docket(DocumentationType.SWAGGER_2)
                    .apiInfo(new ApiInfoBuilder()
                                 .title("TPP backend application")
