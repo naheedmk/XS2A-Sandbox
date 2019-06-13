@@ -13,6 +13,9 @@ export class PlayWthDataComponent implements OnInit {
   @Input() headers: object;
   @Input() body: object;
   @Input() url: string;
+  @Input() accountIdFlag: boolean;
+  @Input() bookingStatusFlag: boolean;
+  @Input() transactionIdFlag: boolean;
   @Input() paymentServiceFlag: boolean;
   @Input() paymentProductFlag: boolean;
   @Input() paymentIdFlag: boolean;
@@ -29,6 +32,10 @@ export class PlayWthDataComponent implements OnInit {
   cancellationId = '';
   consentId = '';
   authorisationId = '';
+  accountId = '';
+  transactionId = '';
+  bookingStatus = '';
+  redirectUrl = '';
 
   paymentServiceSelect = ['payments', 'bulk-payments', 'periodic-payments'];
   paymentProductSelect = [
@@ -41,6 +48,7 @@ export class PlayWthDataComponent implements OnInit {
     'pain.001-target-2-payments',
     'pain.001-cross-border-credit-transfers',
   ];
+  bookingStatusSelect = ['booked', 'pending', 'both'];
 
   constructor(
     public restService: RestService,
@@ -75,8 +83,14 @@ export class PlayWthDataComponent implements OnInit {
 
       this.finalUrl += this.variablePathEnd ? this.variablePathEnd : '';
       this.finalUrl += this.authorisationId ? '/' + this.authorisationId : '';
-    } else {
-      this.finalUrl = this.url;
+    } else if (this.accountIdFlag) {
+      this.finalUrl += '/' + this.accountId;
+
+      this.finalUrl += this.variablePathEnd ? this.variablePathEnd : '';
+      this.finalUrl += this.bookingStatus
+        ? '?bookingStatus=' + this.bookingStatus
+        : '';
+      this.finalUrl += this.transactionId ? '/' + this.transactionId : '';
     }
 
     console.log(this.variablePathEnd);
@@ -89,9 +103,11 @@ export class PlayWthDataComponent implements OnInit {
         .subscribe(
           resp => {
             this.response = Object.assign(resp);
+            if (this.response['body']._links.hasOwnProperty('scaRedirect')) {
+              this.redirectUrl += this.response['body']._links.scaRedirect.href;
+            }
             this.dataService.isLoading = false;
             this.dataService.showToast('Request sent', 'Success!', 'success');
-            console.log('response:', JSON.stringify(this.response));
           },
           err => {
             this.dataService.isLoading = false;
@@ -134,5 +150,8 @@ export class PlayWthDataComponent implements OnInit {
     this.cancellationId = this.cancellationIdFlag ? 'cancellationId' : '';
     this.consentId = this.consentIdFlag ? 'consentId' : '';
     this.authorisationId = this.authorisationIdFlag ? 'authorisationId' : '';
+    this.accountId = this.accountIdFlag ? 'accountId' : '';
+    this.transactionId = this.transactionIdFlag ? 'transactionId' : '';
+    this.bookingStatus = this.bookingStatusFlag ? 'booked' : '';
   }
 }
