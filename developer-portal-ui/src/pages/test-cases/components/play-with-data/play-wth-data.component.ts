@@ -96,15 +96,15 @@ export class PlayWthDataComponent implements OnInit {
     console.log(this.variablePathEnd);
     console.log('path: ', this.finalUrl);
     const respBodyEl = document.getElementById('textArea');
-    if (!respBodyEl || this.isValidJSONString(respBodyEl['value'])) {
-      const bodyValue = respBodyEl ? JSON.parse(respBodyEl['value']) : {};
+    if (!respBodyEl || this.isValidJSONString(respBodyEl.value)) {
+      const bodyValue = respBodyEl ? JSON.parse(respBodyEl.value) : {};
       this.restService
         .sendRequest(this.method, this.finalUrl, this.headers, bodyValue)
         .subscribe(
           resp => {
             this.response = Object.assign(resp);
-            if (this.response['body']._links.hasOwnProperty('scaRedirect')) {
-              this.redirectUrl += this.response['body']._links.scaRedirect.href;
+            if (this.response.body._links.hasOwnProperty('scaRedirect')) {
+              this.redirectUrl += this.response.body._links.scaRedirect.href;
             }
             this.dataService.isLoading = false;
             this.dataService.showToast('Request sent', 'Success!', 'success');

@@ -129,32 +129,32 @@ export class HomeComponent implements OnInit, AfterViewInit {
   slider() {
     const images = document.querySelectorAll('#slider .slide');
     const buttons = document.querySelectorAll('.button-block button');
-    buttons[0]['style'].backgroundColor = '#D8D8D8';
+    buttons[0].style.backgroundColor = '#D8D8D8';
     let currentImg = 0;
     let carouselIntervalId = null;
     // Show only first slide
-    images[currentImg]['classList'].add('show');
+    images[currentImg].classList.add('show');
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', () => {
-        buttons[currentImg]['style'].backgroundColor = null;
-        buttons[i]['style'].backgroundColor = '#D8D8D8';
+        buttons[currentImg].style.backgroundColor = null;
+        buttons[i].style.backgroundColor = '#D8D8D8';
         // Stop autoplay on button click
         clearInterval(carouselIntervalId);
-        images[currentImg]['classList'].remove('show');
-        images[i]['classList'].add('show');
+        images[currentImg].classList.remove('show');
+        images[i].classList.add('show');
         currentImg = i;
       });
     }
 
     function nextSlide() {
-      images[currentImg]['classList'].remove('show');
-      buttons[currentImg]['style'].backgroundColor = null;
+      images[currentImg].classList.remove('show');
+      buttons[currentImg].style.backgroundColor = null;
       currentImg++;
       if (currentImg >= images.length) {
         currentImg = 0;
       }
-      images[currentImg]['classList'].add('show');
-      buttons[currentImg]['style'].backgroundColor = '#D8D8D8';
+      images[currentImg].classList.add('show');
+      buttons[currentImg].style.backgroundColor = '#D8D8D8';
     }
 
     // Start autoplay
