@@ -1,17 +1,19 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.service;
 
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
+import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.AccountBalance;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
 import de.adorsys.psd2.sandbox.tpp.rest.server.utils.IbanGenerator;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -20,20 +22,39 @@ public class TestsDataGenerationService {
     private final RestExecutionService executionService;
     private final UserMgmtRestClient userMgmtRestClient;
 
-    public byte[] generate() {
-        UserTO userTO = userMgmtRestClient.getUser()
-                            .getBody();
+    private static final String MSG_NO_IBAN_AVAILABLE = "Could not generate new IBAN, seems you used out all possible combinations";
+    private static final String MSG_NO_DATA_IN_FILE = "Seems no data is present in file!";
 
-        String branch = Optional.ofNullable(userTO)
-                            .map(UserTO::getBranch)
-                            .orElseThrow(() -> new RuntimeException("User not found"));
+    public byte[] generate() {
+        UserTO user = userMgmtRestClient.getUser()
+                          .getBody();
 
         DataPayload dataPayload = parseService.getDefaultData()
-                                      .map(d -> generateData(d, branch))
-                                      .orElseThrow(() -> new RuntimeException("Seems no data is present in file!"));
+                                      .map(d -> generateData(d, user.getBranch()))
+                                      .orElseThrow(() -> new TppException(MSG_NO_DATA_IN_FILE, 400));
 
         executionService.updateLedgers(dataPayload);
         return parseService.getFile(dataPayload);
+    }
+
+    public String generateRandomIban() {
+        UserTO user = userMgmtRestClient.getUser()
+                          .getBody();
+
+        return getNextFreeIban(user.getAccountAccesses(), user.getBranch());
+    }
+
+    private String getNextFreeIban(List<AccountAccessTO> access, String branch) {
+        return IntStream.range(0, 100)
+                   .mapToObj(i -> IbanGenerator.generateRandomIban(branch, i))
+                   .filter(iban -> isNotContainingIban(access, iban))
+                   .findFirst()
+                   .orElseThrow(() -> new TppException(MSG_NO_IBAN_AVAILABLE, 400));
+    }
+
+    private boolean isNotContainingIban(List<AccountAccessTO> access, String iban) {
+        return access.stream()
+                   .noneMatch(a -> a.getIban().equals(iban));
     }
 
     private DataPayload generateData(DataPayload data, String branch) {
@@ -56,7 +77,6 @@ public class TestsDataGenerationService {
         return Optional.ofNullable(list).orElse(Collections.emptyList());
     }
 
-    @NotNull
     private String getLastTwoSymbols(AccountDetailsTO a) {
         return a.getIban()
                    .substring(a.getIban().length() - 2);
@@ -69,7 +89,7 @@ public class TestsDataGenerationService {
     }
 
     private AccountDetailsTO generateDetails(AccountDetailsTO details, String branch) {
-        String iban = generateIban(branch, details.getIban());
+        String iban = IbanGenerator.generateIbanForNispAccount(branch, details.getIban());
         details.setIban(iban);
         return details;
     }
@@ -85,18 +105,13 @@ public class TestsDataGenerationService {
         return user;
     }
 
-    @NotNull
     private String addBranchPrefix(String branch, String concatObj) {
         return branch + "_" + concatObj;
-    }
-
-    private String generateIban(String branch, String iban) {
-        return IbanGenerator.generateIban(branch, iban);
     }
 
     private String getGeneratedIbanOrNew(String iban, String branch, Map<String, AccountDetailsTO> detailsMap) {
         return detailsMap.containsKey(iban)
                    ? detailsMap.get(iban).getIban()
-                   : generateIban(branch, iban);
+                   : IbanGenerator.generateIbanForNispAccount(branch, iban);
     }
 }

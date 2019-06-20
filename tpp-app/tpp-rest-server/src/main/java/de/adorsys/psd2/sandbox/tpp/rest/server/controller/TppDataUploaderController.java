@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -54,6 +55,12 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
                    .contentLength(bytes.length)
                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
                    .body(resource);
+    }
+
+    @Override
+    public ResponseEntity<String> generateIban() {
+        String randomIban = generationService.generateRandomIban();
+        return ResponseEntity.ok(randomIban);
     }
 
 
