@@ -23,6 +23,6 @@ public interface TppDataUploaderRestApi {
     ResponseEntity<Resource> generateData();
 
     @ApiOperation(value = "Generate random IBAN", authorizations = @Authorization(value = "apiKey"))
-    @GetMapping("/generateRandomIban")
+    @GetMapping("/generate/iban")
     ResponseEntity<String> generateIban();
 }
