@@ -1,142 +1,102 @@
 <div class="getting-started-container">
   <section>
     <div class="divider"></div>
-    <h1 class="title">Introduction</h1>
+    <h1 class="title">{{'GETTING_STARTED.INTRODUCTION.TITLE' | translate}}</h1>
     <p>
-      The
-      <a
-        target="_blank"
-        href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32015L2366&from=EN"
-      >
-        Payment Service Directive 2 (PSD2)</a
-      >
-      instructs banks (Account Servicing Payment Service Providers or ASPSPs) to
-      provide a fully productive Access-to-Account (XS2A) interface to Third
-      Party Providers (TPPs) until September 2019. XS2A itself consists of
-      banking services to initiate payments (PIS), request account data (AIS)
-      and get the confirmation of the availability of funds (PIIS). In order to
-      guarantee the compliance of this deadline due to adaptions and bugs, PSD2
-      claims the banks to provide a functional dynamic sandbox offering the XS2A
-      services in a non-productive environment until June 2019.
+      <a target="_blank" href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32015L2366&from=EN">
+        {{'GETTING_STARTED.INTRODUCTION.CONTENT.LINK' | translate}}
+      </a>
+      {{'GETTING_STARTED.INTRODUCTION.CONTENT.PART_1' | translate}}
     </p>
 
     <p>
-      The <span class="bold">XS2ASandbox</span> is a dynamic sandbox environment
-      that fully meets the PSD2 requirements for providing APIs for Third-Party
-      Providers (TPP). Based on the Berlin Group’s NextGen PSD2 specification
-      for access to accounts (XS2A),
+      <span class="bold">{{'GETTING_STARTED.INTRODUCTION.CONTENT.XS2A' | translate}}</span>
+      {{'GETTING_STARTED.INTRODUCTION.CONTENT.PART_2' | translate}}
     </p>
 
     <p>
-      This developer portal is created to help TPP developers start working with
-      XS2ASandbox.
+      {{'GETTING_STARTED.INTRODUCTION.CONTENT.PART_3' | translate}}
     </p>
   </section>
 
   <section>
     <div class="divider"></div>
-    <h1>XS2ASandbox architecture and modules</h1>
+    <h1>{{'GETTING_STARTED.ARCHITECTURE.TITLE' | translate}}</h1>
     <p>
-      Components of XS2ASandbox with their connections to each other are shown
-      in Figure 1.1.
+      {{'GETTING_STARTED.ARCHITECTURE.CONTENT' | translate}}
     </p>
-    <img
-      style="width: 100%;"
-      src="../../assets/images/Graphic_XS2A_Sandbox.jpg"
-    />
-    <p>Figure 1.1: Components of the XS2ASandbox</p>
+    <img src="../../assets/images/Graphic_XS2A_Sandbox.jpg"/>
+    <p>{{'GETTING_STARTED.ARCHITECTURE.CAPTION' | translate}}</p>
   </section>
 
   <section>
     <div class="divider"></div>
-    <h1>XS2A Interface</h1>
+    <h1>{{'GETTING_STARTED.INTERFACE.TITLE' | translate}}</h1>
     <p>
-      Central component of the <span class="bold">XS2ASandbox</span> is the XS2A
-      interface which meets the requirements of the Berlin Group's specification
-      <a
-        target="_blank"
-        href="https://www.berlin-group.org/psd2-access-to-bank-accounts"
-        >NextGenPSD2</a
-      >
-      (Version 1.3) and is based on test data. You can visit our
-      <a target="_blank" href="http://localhost:8089/swagger-ui.html"
-        >XS2A Swagger UI</a
-      >
-      or find full
-      <a target="_blank" href="https://github.com/adorsys/xs2a"
-        >OpenSource XS2A Interface on Github.</a
-      >
+      {{'GETTING_STARTED.INTERFACE.CONTENT.PART_1' | translate}}
+      <span class="bold">{{'GETTING_STARTED.INTERFACE.CONTENT.XS2A' | translate}}</span>
+      {{'GETTING_STARTED.INTERFACE.CONTENT.PART_2' | translate}}
+      <a target="_blank" href="https://www.berlin-group.org/psd2-access-to-bank-accounts">
+        NextGenPSD2
+      </a>
+      {{'GETTING_STARTED.INTERFACE.CONTENT.PART_3' | translate}}
+      <a target="_blank" href="http://localhost:8089/swagger-ui.html">
+        XS2A Swagger UI
+      </a>
+      {{'GETTING_STARTED.INTERFACE.CONTENT.PART_4' | translate}}
+      <a target="_blank" href="https://github.com/adorsys/xs2a">
+        {{'GETTING_STARTED.INTERFACE.CONTENT.LINK' | translate}}
+      </a>
     </p>
   </section>
 
   <section>
     <div class="divider"></div>
-    <h1>ASPSP-Profile</h1>
+    <h1>{{'GETTING_STARTED.PROFILE.TITLE' | translate}}</h1>
     <p>
-      Besides the actual interface, PSD2 instructs ASPSPs to offer a technical
-      documentation free of charge containing amongst others, information about
-      supported payment products and payment services. This information is
-      stored in <span class="bold">ASPSP-profile</span> (bank profile), a
-      service based on yaml file where a bank can provide available payment
-      products, payment services, supported SCA approaches and other
-      bank-specific settings.
+      {{'GETTING_STARTED.PROFILE.CONTENT.PART_1' | translate}}
+      <span class="bold">{{'GETTING_STARTED.PROFILE.CONTENT.ASPSP' | translate}}</span>
+      {{'GETTING_STARTED.PROFILE.CONTENT.PART_2' | translate}}
     </p>
     <div class="divider"></div>
-    <h2>Active XS2A Configuration (Bank Profile)</h2>
+    <h2>{{'GETTING_STARTED.PROFILE.SUBTITLE_1' | translate}}</h2>
     <ul>
-      <li>Supported SCA-Approach: Redirect, Embedded</li>
-      <li>
-        Available payment types and payment products for each type:
+      <li>{{'GETTING_STARTED.PROFILE.LIST.LI_1' | translate}}</li>
+      <li>{{'GETTING_STARTED.PROFILE.LIST.LI_2' | translate}}
         <ul>
-          <li>Single (sepa-credit-transfers)</li>
-          <li>Future-Dated (sepa-credit-transfers)</li>
-          <li>Bulk (sepa-credit-transfers)</li>
-          <li>Periodic (sepa-credit-transfers)</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_1.LI_1' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_1.LI_2' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_1.LI_3' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_1.LI_4' | translate}}</li>
         </ul>
       </li>
-      <li>Confirmation of Funds: supported</li>
-      <li>
-        Redirect URLs to Online Banking:
+      <li>{{'GETTING_STARTED.PROFILE.LIST.LI_3' | translate}}</li>
+      <li>{{'GETTING_STARTED.PROFILE.LIST.LI_4' | translate}}
         <ul>
-          <li>
-            Redirect URL for Payment confirmation: **
-            http://localhost:4400/payment-initiation/login?paymentId=encrypted-payment-id&redirectId=redirect-id
-            **
-          </li>
-          <li>
-            Redirect URL for Payment cancellation: **
-            http://localhost:4400/payment-cancellation/login?paymentId=encrypted-payment-id&redirectId=redirect-id
-            **
-          </li>
-          <li>
-            Redirect URL for Account Consent confirmation: **
-            http://localhost:4400/account-information/login?encryptedConsentId=encrypted-consent-id&redirectId=redirect-id
-            **
-          </li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_2.LI_1' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_2.LI_2' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_2.LI_3' | translate}}</li>
         </ul>
       </li>
-      <li>
-        Supported types of Consents:
+      <li>{{'GETTING_STARTED.PROFILE.LIST.LI_5' | translate}}
         <ul>
-          <li>Dedicated: Yes</li>
-          <li>Bank-Offered: Yes</li>
-          <li>Global: Yes</li>
-          <li>Available Accounts: Yes</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_3.LI_1' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_3.LI_2' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_3.LI_3' | translate}}</li>
+          <li>{{'GETTING_STARTED.PROFILE.LIST.UL_3.LI_4' | translate}}</li>
         </ul>
       </li>
     </ul>
 
-    <span style="font-size: 1.2vw;color: #9e9e9e;"
-      >Currently disabled features:</span
-    >
+    <span class="currently-disabled-features">{{'GETTING_STARTED.PROFILE.LIST.DISABLED' | translate}}</span>
 
     <ul>
-      <li>Signing Basket</li>
-      <li>Delta-Reports</li>
+      <li>{{'GETTING_STARTED.PROFILE.LIST.LI_6' | translate}}</li>
+      <li>{{'GETTING_STARTED.PROFILE.LIST.LI_7' | translate}}</li>
     </ul>
 
     <div class="divider"></div>
-    <h2>Corresponding ASPSP-Profile settings in .yaml file:</h2>
+    <h2>{{'GETTING_STARTED.PROFILE.SUBTITLE_2' | translate}}</h2>
 
     <div class="yaml">
       {{
@@ -191,60 +151,38 @@
 
   <section>
     <div class="divider"></div>
-    <h1>TPP Certificate Service</h1>
+    <h1>{{'GETTING_STARTED.CERTIFICATE.TITLE' | translate}}</h1>
     <p>
-      Usually, before accessing the XS2A services a TPP would need to register
-      at its National Competent Authority (NCA) and request an
-      <a
-        target="_blank"
-        href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32014R0910&from=EN"
-        >eIDAS</a
-      >
-      certificate at an appropriate Trust Service Provider (TSP). Issuing a real
-      certificate just for testing purposes would be too much effort, which is
-      why the <span class="bold">XS2ASandbox</span> is additionally simulating a
-      fictional TSP issuing Qualified Website Authentication Certificates
-      (QWAC). A QWAC is part of eIDAS and might be better known
-      <a target="_blank" href="https://www.ietf.org/rfc/rfc3739.txt"
-        >as X.509</a
-      >
-      certificate. For PSD2-purposes the certificate gets extended by the
-      QcStatement containing appropriate values such as the role(s) of the PSP
-      (see
-      <a
-        target="_blank"
-        href="https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.01.02_60/ts_119495v010102p.pdf"
-        >ETSI</a
-      >).
+      {{'GETTING_STARTED.CERTIFICATE.CONTENT.PART_1' | translate}}
+      <a target="_blank" href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32014R0910&from=EN">
+        eIDAS
+      </a>
+      {{'GETTING_STARTED.CERTIFICATE.CONTENT.PART_2' | translate}}
+      <span class="bold">XS2ASandbox</span>
+      {{'GETTING_STARTED.CERTIFICATE.CONTENT.PART_3' | translate}}
+      <a target="_blank" href="https://www.ietf.org/rfc/rfc3739.txt">
+        as X.509
+      </a>
+      {{'GETTING_STARTED.CERTIFICATE.CONTENT.PART_4' | translate}}
+      <a target="_blank" href="https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.01.02_60/ts_119495v010102p.pdf">ETSI</a>
+      ).
     </p>
 
     <p>
-      After embedding the QWAC in the actual XS2A request, the role and the
-      signature get validated at a central reverse proxy before it gets finally
-      passed to the interface where the banking logic happens.
+      {{'GETTING_STARTED.CERTIFICATE.CONTENT.PART_5' | translate}}
     </p>
   </section>
 
   <section>
     <div class="divider"></div>
-    <h1>TPP User Interface</h1>
-    <p>
-      TPP developers can register themselves into the system, obtain certificate
-      and download test data for their TPP application using generated
-      certificate and prepared data in TPP UI.
-    </p>
+    <h1>{{'GETTING_STARTED.UI.TITLE' | translate}}</h1>
+    <p>{{'GETTING_STARTED.UI.CONTENT' | translate}}</p>
   </section>
 
   <section>
     <div class="divider"></div>
-    <h1>Online banking</h1>
-    <p>
-      In case of REDIRECT SCA approach a user wants to provide consent for using
-      their account information or for payment confirmation/cancellation. Online
-      banking is a user interface to provide consent to a bank. Links for a
-      consent confirmation and payment confirmation or cancellation are provided
-      in the response of the corresponding endpoints.
-    </p>
+    <h1>{{'GETTING_STARTED.OBA.TITLE' | translate}}</h1>
+    <p>{{'GETTING_STARTED.OBA.CONTENT' | translate}}</p>
   </section>
 
   <section>
@@ -672,7 +610,7 @@
         Whole flow for TPPs to start their work with XS2ASandbox is displayed in
         Figure 1.2:
       </p>
-      <img style="width: 100%" src="../../assets/images/Flow.png" />
+      <img src="../../assets/images/Flow.png" />
       <p>Figure 1.2: TPP flow step-by-step</p>
     </ol>
   </section>
