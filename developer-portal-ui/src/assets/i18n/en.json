@@ -1,0 +1,118 @@
+{
+  "HEADER": {
+    "GETTING_STARTED": "Getting started",
+    "TEST_CASES": "Test cases",
+    "FAQ": "FAQs",
+    "CONTACT": "Contact"
+  },
+  "FOOTER": {
+    "GETTING_STARTED": "Getting started",
+    "TEST_CASES": "Test cases",
+    "FAQ": "FAQs",
+    "CONTACT": "Contact"
+  },
+  "HOME": {
+    "HEADER": {
+      "TITLE_1": "Developer Portal",
+      "TITLE_2": "by adorsys",
+      "SUBTITLE_1": "Creating new, digital",
+      "SUBTITLE_2": "services through Open",
+      "SUBTITLE_3": "Banking"
+    },
+    "WHAT_IS": {
+      "TITLE": "What is XS2ASandbox?",
+      "CONTENT": {
+        "XS2A": "XS2ASandbox",
+        "PART_1": "is a dynamic sandbox\n  environment that fully meets the PSD2 requirements for providing APIs for\n  Third-Party Providers (TPP). Based on the Berlin Group’s NextGen PSD2\n  specification for access to accounts (XS2A),",
+        "PART_2": "meets all the regulatory\n  requirements and is NISP compliant. This developer portal is created to help\n  TPP developers start working with XS2ASandbox."
+      }
+    },
+    "HOW_TO": {
+      "TITLE": "How to use XS2ASandbox",
+      "STEP_1": {
+        "TITLE": "Step 1",
+        "CONTENT": "Read «Getting started» manual"
+      },
+      "STEP_2": {
+        "TITLE": "Step 2",
+        "CONTENT": "Download, install and run XS2ASandbox"
+      },
+      "STEP_3": {
+        "TITLE": "Step 3",
+        "CONTENT": "Read «Testing flows» and start testing!"
+      }
+    },
+    "PSD2": {
+      "TITLE": "PSD2 and Open Banking",
+      "LINK": "Payment Service Directive 2 (PSD2)",
+      "CONTENT": "instructs banks (Account Servicing Payment Service Providers or ASPSPs) to\n provide a fully productive Access-to-Account (XS2A) interface to Third Party\n Providers (TPPs) until September 2019. XS2A itself consists of banking\n services to initiate payments (PIS), request account data (AIS) and get the\n confirmation of the availability of funds (PIIS). In order to guarantee the\n compliance of this deadline due to adaptations and bugs, PSD2 claims the\n banks to provide a functional dynamic sandbox offering the XS2A services in\n a non-productive environment until June 2019."
+    },
+    "FEATURES": {
+      "TITLE": "XS2ASandbox Features",
+      "CONTENT": "XS2ASandbox is a dynamic sandbox environment: you can create users, payments\n    and consents, play with data for testing purposes. With dynamic sandbox TPP\n    UI you can access banking API directly, get TPP certificate and manage\n    testing accounts. The developer portal contains testing instructions and all\n    needed test-cases. All XS2ASandbox services can be installed and run in one\n    simple command. Two main SCA approaches are supported: REDIRECT and\n    EMBEDDED. For redirect approach online banking demo UI was created.",
+      "SLIDES": {
+        "SLIDE_1": {
+          "TITLE": "Plug and Play",
+          "CONTENT": "Ready to use solution, which can be easily installed"
+        },
+        "SLIDE_2": {
+          "TITLE": "Detailed Documentation",
+          "CONTENT": "Well described documentation on a developer portal"
+        },
+        "SLIDE_3": {
+          "TITLE": "Reliable test options",
+          "CONTENT": "TPP-Test certificate generation tool and NISP Tests"
+        },
+        "SLIDE_4": {
+          "TITLE": "Customizable User Interface",
+          "CONTENT": "TPP-UI for users and account management on the bank side"
+        },
+        "SLIDE_5": {
+          "TITLE": "Customer focused",
+          "CONTENT": "Client-oriented approach, flexible solution for customer needs and customer support"
+        },
+        "SLIDE_6": {
+          "TITLE": "Realistic Simulation",
+          "CONTENT": "Real bank system emulations with embedded XS2A API"
+        },
+        "SLIDE_7": {
+          "TITLE": "Wide range of services",
+          "CONTENT": "Accounting Service, Security Service and Payment Service"
+        },
+        "SLIDE_8": {
+          "TITLE": "Open source",
+          "CONTENT": "Open source project, available on GitHub and constantly updated"
+        }
+      }
+    },
+    "HISTORY": {
+      "TITLE": "Product History",
+      "PRODUCT": {
+        "POINT_1": {
+          "TITLE": "Project Kick-Off with two Team Members",
+          "CONTENT": ""
+        },
+        "POINT_2": {
+          "TITLE": "PreDemo of MVP 1.0",
+          "CONTENT": "Embedded approach: PIS, AIS, PIIS"
+        },
+        "POINT_3": {
+          "TITLE": "DEMO of MVP 1.0",
+          "CONTENT": "Embedded and redirected approaches"
+        },
+        "POINT_4": {
+          "TITLE": "Release of XS2ASandbox ver 1.0",
+          "CONTENT": "Support of Redirect and Embedded approach: TPP-UI, Online Banking"
+        },
+        "POINT_5": {
+          "TITLE": "Release ver 1.1",
+          "CONTENT": "Multilevel SCA, Multicurrency accounts"
+        }
+      }
+    },
+    "QUESTIONS": {
+      "TITLE": "Any Questions?",
+      "ASK": "Ask this person."
+    }
+  }
+}
