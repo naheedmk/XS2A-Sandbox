@@ -25,4 +25,9 @@ public class TppAccountsController implements TppAccountsRestApi {
     public ResponseEntity<List<AccountDetailsTO>> getAllAccounts() {
         return accountMgmtStaffRestClient.getListOfAccounts();
     }
+
+    @Override
+    public ResponseEntity<AccountDetailsTO> getSingleAccount(String accountId) {
+        return accountMgmtStaffRestClient.getAccountDetailsById(accountId);
+    }
 }
