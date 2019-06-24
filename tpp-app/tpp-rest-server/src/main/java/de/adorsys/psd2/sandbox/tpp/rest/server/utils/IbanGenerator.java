@@ -13,21 +13,21 @@ public class IbanGenerator {
 
     private IbanGenerator() {}
 
-    public static String generateRandomIban(String tppCode, int partOfIban) {
-        return generateIban(tppCode, String.format("%02d", partOfIban), BANK_CODE_FOR_RANDOM);
+    public static String generateRandomIban(String tppCode, int ibanEnding) {
+        return generateIban(tppCode, String.format("%02d", ibanEnding), BANK_CODE_FOR_RANDOM);
     }
 
-    public static String generateIbanForNispAccount(String tppCode, String partOfIban) {
-        return generateIban(tppCode, partOfIban, BANK_CODE_NISP);
+    public static String generateIbanForNispAccount(String tppCode, String ibanEnding) {
+        return generateIban(tppCode, ibanEnding, BANK_CODE_NISP);
     }
 
-    private static String generateIban(String tppCode, String partOfIban, String bankCode) {
-        if (isDigitsAndSize(tppCode, ALLOWED_LENGTH_OF_TPP_CODE) && isDigitsAndSize(partOfIban, ALLOWED_LENGTH_OF_IBAN_SUFFIX)) {
-            BigInteger totalNr = new BigInteger(bankCode + tppCode + partOfIban + "131400");
+    private static String generateIban(String tppCode, String ibanEnding, String bankCode) {
+        if (isDigitsAndSize(tppCode, ALLOWED_LENGTH_OF_TPP_CODE) && isDigitsAndSize(ibanEnding, ALLOWED_LENGTH_OF_IBAN_SUFFIX)) {
+            BigInteger totalNr = new BigInteger(bankCode + tppCode + ibanEnding + "131400");
             String checkSum = String.format("%02d", 98 - totalNr.remainder(BigInteger.valueOf(97)).intValue());
-            return COUNTRY_CODE_PREFIX + checkSum + BANK_CODE_NISP + tppCode + partOfIban;
+            return COUNTRY_CODE_PREFIX + checkSum + BANK_CODE_NISP + tppCode + ibanEnding;
         }
-        throw new TppException(String.format("Inappropriate data for IBAN creation %s %s", tppCode, partOfIban), 400);
+        throw new TppException(String.format("Inappropriate data for IBAN creation %s %s", tppCode, ibanEnding), 400);
     }
 
     private static boolean isDigitsAndSize(String toCheck, int size) {
