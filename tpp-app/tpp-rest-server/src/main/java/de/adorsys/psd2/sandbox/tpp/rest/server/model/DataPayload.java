@@ -29,18 +29,14 @@ public class DataPayload {
     private Map<String, String> generatedIbans = new HashMap<>();
 
     public boolean isNotValidPayload() {
-        CollectionUtils.filter(users, notNullPredicate());
-        CollectionUtils.filter(accounts, notNullPredicate());
-        CollectionUtils.filter(balancesList, notNullPredicate());
-
-        return CollectionUtils.isEmpty(users)
-                   || CollectionUtils.isEmpty(balancesList)
-                   || CollectionUtils.isEmpty(accounts);
+        return CollectionUtils.filter(users, notNullPredicate()) ||
+                   CollectionUtils.filter(accounts, notNullPredicate()) ||
+                   CollectionUtils.filter(balancesList, notNullPredicate());
     }
 
     public DataPayload updateIbanForBranch(String branch) {
-        emptyIfNull(accounts).forEach(a -> a.setIban(doUpdateIban(a.getIban(), branch)));
-        emptyIfNull(balancesList).forEach(b -> b.setIban(doUpdateIban(b.getIban(), branch)));
+        emptyIfNull(accounts).forEach(a -> a.setIban(generateIban(a.getIban(), branch)));
+        emptyIfNull(balancesList).forEach(b -> b.setIban(generateIban(b.getIban(), branch)));
         emptyIfNull(users).forEach(u -> updateUserIbans(u, branch));
 
         return this;
@@ -53,10 +49,10 @@ public class DataPayload {
         user.getScaUserData()
             .forEach(d -> d.setMethodValue(buildValue(branch, d.getMethodValue())));
         user.getAccountAccesses()
-            .forEach(a -> a.setIban(doUpdateIban(a.getIban(), branch)));
+            .forEach(a -> a.setIban(generateIban(a.getIban(), branch)));
     }
 
-    private String doUpdateIban(String iban, String branch) {
+    private String generateIban(String iban, String branch) {
         if (generatedIbans.containsKey(iban)) {
             return generatedIbans.get(iban);
         }
@@ -65,7 +61,7 @@ public class DataPayload {
         return generatedIban;
     }
 
-    private String buildValue(String branch, String prefix) {
-        return branch + SEPARATOR + prefix;
+    private String buildValue(String branch, String suffix) {
+        return branch + SEPARATOR + suffix;
     }
 }
