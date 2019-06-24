@@ -16,5 +16,5 @@ public interface TppUsersRestApi {
         notes = "Endpoint to create a user for a given TPP",
         authorizations = @Authorization(value = "apiKey"))
     @PostMapping
-    ResponseEntity<Void> createUser(@RequestBody UserTO account);
+    ResponseEntity<UserTO> createUser(@RequestBody UserTO account);
 }
