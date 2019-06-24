@@ -1,6 +1,7 @@
 package de.adorsys.psd2.sandbox.tpp.rest.api.resource;
 
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
+import de.adorsys.ledgers.middleware.api.domain.payment.AmountTO;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,4 +46,18 @@ public interface TppAccountsRestApi {
     })
     @GetMapping(value = "/{accountId}")
     ResponseEntity<AccountDetailsTO> getSingleAccount(@PathVariable("accountId") String accountId);
+
+    /**
+     * Returns a single account by its ID if it belong to the same branch as STAFF user.
+     *
+     * @return single account by its ID if it belong to the same branch as STAFF user.
+     */
+    @ApiOperation(value = "Deposit cash to an account by its ID",
+        notes = "Deposits cash to the account by its ID if it belongs to the TPP",
+        authorizations = @Authorization(value = "apiKey"))
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, response = AccountDetailsTO[].class, message = "Deposits cash to the account by its ID")
+    })
+    @GetMapping(value = "/{accountId}/deposit-cash")
+    ResponseEntity<Void> depositCash(@PathVariable("accountId") String accountId, @RequestBody AmountTO amount);
 }
