@@ -1,6 +1,7 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.controller;
 
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
+import de.adorsys.ledgers.middleware.api.domain.payment.AmountTO;
 import de.adorsys.ledgers.middleware.client.rest.AccountMgmtStaffRestClient;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppAccountsRestApi;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,10 @@ public class TppAccountsController implements TppAccountsRestApi {
     @Override
     public ResponseEntity<AccountDetailsTO> getSingleAccount(String accountId) {
         return accountMgmtStaffRestClient.getAccountDetailsById(accountId);
+    }
+
+    @Override
+    public ResponseEntity<Void> depositCash(String accountId, AmountTO amount) {
+        return accountMgmtStaffRestClient.depositCash(accountId, amount);
     }
 }
