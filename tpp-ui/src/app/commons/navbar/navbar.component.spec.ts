@@ -5,26 +5,25 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {IconModule} from "../icon/icon.module";
 import {AuthService} from "../../services/auth.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {LoginComponent} from "../../components/auth/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
     let fixture: ComponentFixture<NavbarComponent>;
-    let authService: AuthService;
     let router: Router;
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['isLoggedIn', 'logout']);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule.withRoutes([{path: 'logout', component: LoginComponent}]),
+                RouterTestingModule,
                 HttpClientTestingModule,
                 ReactiveFormsModule,
                 IconModule,
             ],
-            providers: [AuthService],
-            declarations: [NavbarComponent, LoginComponent]
+            providers: [TestBed.overrideProvider(AuthService, {useValue: authServiceSpy})],
+            declarations: [NavbarComponent]
         })
             .compileComponents();
     }));
@@ -32,13 +31,13 @@ describe('NavbarComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(NavbarComponent);
         component = fixture.componentInstance;
+        authServiceSpy.isLoggedIn.and.returnValue(true);
         fixture.detectChanges();
-        authService = TestBed.get(AuthService);
         router = TestBed.get(Router);
     });
 
     it('should create', () => {
-        spyOn(authService, 'isLoggedIn').and.returnValue(true);
         expect(component).toBeTruthy();
+        expect(authServiceSpy.isLoggedIn).toHaveBeenCalled();
     });
 });
