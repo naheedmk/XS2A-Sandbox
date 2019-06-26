@@ -25,18 +25,14 @@
       *ngIf="activeSegment === 'documentation';else play_with_data"
     >
       <p>
-        12. Try GET endpoint
-        <app-line-command
-          title="/v1/{payment-service}/{payment-product}/{paymentId}/cancellation-authorisations/{cancellationId}"
-        ></app-line-command>
-        to check current status of the cancellation authorisation.
+        {{'TEST_CASES.COMPONENTS.EMB_CANS_GET.PART_1' | translate}}
+        <app-line-command title="/v1/{payment-service}/{payment-product}/{paymentId}/cancellation-authorisations/{cancellationId}"></app-line-command>
+        {{'TEST_CASES.COMPONENTS.EMB_CANS_GET.PART_2' | translate}}
       </p>
       <p>
-        13. Try GET endpoint
-        <app-line-command
-          title="/v1/{payment-service}/{payment-product}/{paymentId}/status"
-        ></app-line-command>
-        to get current payment status (it should be `CANC`, cancelled).
+        {{'TEST_CASES.COMPONENTS.EMB_CANS_GET.PART_3' | translate}}
+        <app-line-command title="/v1/{payment-service}/{payment-product}/{paymentId}/status"></app-line-command>
+        {{'TEST_CASES.COMPONENTS.EMB_CANS_GET.PART_4' | translate}}
       </p>
     </div>
 
