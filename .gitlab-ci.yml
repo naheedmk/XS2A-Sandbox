@@ -14,7 +14,6 @@ stages:
   - "Code Compilation"      # build jar and provide as artifact
   - "Unit Testing"          # run tests and code quality checks
   - "Docker Testing"        # test building docker images, on success pass docker image
-  - "Docker Tagging"        # re-tag docker images from "test" to actual tag
   - "Docker Publishing"     # push to DockerHub
   - "OpenShift Deployment"  # deploy to OpenShift
   - "Maven Release"         # release to Maven Central
@@ -25,6 +24,7 @@ stages:
 
 variables:
 
+  # Sub-directory of Dockerfile
   DOCKER_DIR_ONLINE_BANKING: "online-banking/online-banking-app"
   DOCKER_DIR_CERTIFICATE_GENERATOR: "certificate-generator"
   DOCKER_DIR_POSTMAN_TESTS: "postman-scripts"
@@ -32,6 +32,7 @@ variables:
   DOCKER_DIR_TPP_UI: "tpp-ui"
   DOCKER_DIR_DEVPORTAL_UI: "developer-portal-ui"
 
+  # Image name on DockerHub and in OpenShift
   DOCKER_IMAGE_ONLINE_BANKING: "xs2a-online-banking"
   DOCKER_IMAGE_CERTIFICATE_GENERATOR: "xs2a-certificate-generator"
   DOCKER_IMAGE_POSTMAN_TESTS: "xs2a-postman-tests"
@@ -44,7 +45,6 @@ variables:
   ###########################
 
   DOCKERHUB_REGISTRY: "docker.io"
-
   DOCKERHUB_NAMESPACE: "adorsys"
 
   ############################
@@ -81,14 +81,14 @@ variables:
 # args:
 #   ${DOCKER_DIR}
 #   ${DOCKER_IMAGE}
-.build_docker_image: &build_docker_image
+.build_dockerimage: &build_dockerimage
   script:
     - docker build -t "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:test" ${DOCKER_DIR}
 
 # args:
 #   ${DOCKER_IMAGE}
 #   ${DOCKER_TAG}
-.dockerhub_deployment: &dockerhub_deployment
+.publish_dockerhub: &publish_dockerhub
   script:
     - docker tag "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:test" "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:${DOCKER_TAG}"
 
@@ -99,6 +99,7 @@ variables:
 # args:
 #   ${DOCKER_IMAGE}
 #   ${DOCKER_TAG}
+#   $(OPENSHIFT_NAMESPACE)
 .deploy_openshift: &deploy_openshift
   script:
     - >-
@@ -115,7 +116,7 @@ variables:
 # Code Analysis #
 #################
 
-PMD report:
+PMD Report:
   stage: "Code Analysis"
   script:
     - mvn -Dmaven.test.skip=true package pmd:pmd
@@ -131,7 +132,7 @@ PMD report:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-pmd"
     expire_in: "10 day"
 
-Javadoc check:
+Javadoc Check:
   stage: "Code Analysis"
   except:
     - develop
@@ -153,7 +154,7 @@ Javadoc check:
 # Code Testing #
 ################
 
-PMD check:
+PMD Check:
   stage: "Code Testing"
   except:
     - develop
@@ -170,7 +171,7 @@ PMD check:
 
 # Backends #
 
-Backend (java8):
+Backends Java8:
   stage: "Code Compilation"
   <<: *build_java
   variables:
@@ -182,7 +183,7 @@ Backend (java8):
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
     expire_in: "1 day"
 
-Backend (java11):
+Backends Java11:
   stage: "Code Compilation"
   <<: *build_java
   variables:
@@ -191,7 +192,7 @@ Backend (java11):
 
 # Frontends #
 
-Frontend developer-portal-ui:
+devportal-ui:
   stage: "Code Compilation"
   script:
     - cd developer-portal-ui
@@ -207,7 +208,7 @@ Frontend developer-portal-ui:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
     expire_in: "1 day"
 
-Frontend oba-ui:
+oba-ui:
  stage: "Code Compilation"
  script:
     - cd oba-ui
@@ -223,7 +224,7 @@ Frontend oba-ui:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
     expire_in: "1 day"
 
-Frontend tpp-ui:
+tpp-ui:
   stage: "Code Compilation"
   script:
     - cd tpp-ui
@@ -245,7 +246,7 @@ Frontend tpp-ui:
 
 # Backends #
 
-backend_unit_tests:
+Backends:
   stage: "Unit Testing"
   except:
     - develop
@@ -265,18 +266,18 @@ backend_unit_tests:
 
 # Frontends #
 
-ttp_frontend_unit_tests:
+oba-ui:
   stage: "Unit Testing"
   script:
-  - cd tpp-ui
+  - cd oba-ui
   - nvm use 10
   - npm ci
   - npm run test-ci
 
-oba_frontend_unit_tests:
+tpp-ui:
   stage: "Unit Testing"
   script:
-  - cd oba-ui
+  - cd tpp-ui
   - nvm use 10
   - npm ci
   - npm run test-ci
@@ -287,51 +288,51 @@ oba_frontend_unit_tests:
 
 # Backends #
 
-test dockerbuild oba:
+oba:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_ONLINE_BANKING}
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
-  <<: *build_docker_image
+  <<: *build_dockerimage
 
-test dockerbuild cert gen:
+certgen:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_CERTIFICATE_GENERATOR}
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
-  <<: *build_docker_image
+  <<: *build_dockerimage
 
-test dockerbuild postman:
+postman:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_POSTMAN_TESTS}
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
-  <<: *build_docker_images
+  <<: *build_dockerimage
 
 # Frontends #
 
-test dockerbuild devportal ui:
+devportal-ui:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_DEVPORTAL_UI}
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
-  <<: *build_docker_image
+  <<: *build_dockerimage
 
-test dockerbuild oba ui:
+oba-ui:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_ONLINE_BANKING_UI}
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
-  <<: *build_docker_image
+  <<: *build_dockerimage
 
-test dockerbuild tpp ui:
+tpp-ui:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_TPP_UI}
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
-  <<: *build_docker_image
+  <<: *build_dockerimage
 
-# TODO: ADD postman Docker Testing
+# TODO: what happens with postman?
 
 #postman_tests:
 #  stage: "Test"
@@ -351,73 +352,370 @@ test dockerbuild tpp ui:
 #      - "postman-scripts/postman-tests-report.html"
 #    expire_in: "10 day"
 
-# TODO: go on here:
+#####################
+# Docker Publishing #
+#####################
 
-########################
-# DockerHub Deployment #
-########################
+# Backends #
 
-# develop #
-
-build_dockerhub_image_develop:
-  stage: "Package"
+oba develop:
+  stage: "Docker Publishing"
   only:
     - develop
   variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: develop
-  <<: *push_dockerhub_images
+  <<: *publish_dockerhub
 
-deploy_openshift_develop:
-  stage: "Deploy"
+oba nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+oba master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+certgen develop:
+  stage: "Docker Publishing"
   only:
     - develop
   variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+certgen nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+certgen master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+postman develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+postman nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+postman master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+# Frontends #
+
+devportal-ui develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+devportal-ui nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+devportal-ui master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+oba-ui develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+oba-ui nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+oba-ui master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+tpp-ui develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+tpp-ui nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+tpp-ui master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+########################
+# OpenShift Deployment #
+########################
+
+# Backends #
+
+oba develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
   <<: *deploy_openshift
 
-# nightly
-
-build_dockerhub_image_nightly:
-  stage: "Package"
+oba nightly:
+  stage: "OpenShift Deployment"
   only:
     - schedules
   variables:
-    DOCKER_TAG: nightly
-  <<: *push_dockerhub_images
-
-deploy_openshift_nightly:
-  stage: "Deploy"
-  only:
-    - schedules
-  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   <<: *deploy_openshift
 
-# master
-
-build_dockerhub_image_master:
-  stage: "Package"
+oba demo:
+  stage: "OpenShift Deployment"
   only:
     - master
   variables:
-    DOCKER_TAG: latest
-  <<: *push_dockerhub_images
-
-deploy_openshift_demo:
-  stage: "Deploy"
-  only:
-    - master
-  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
   <<: *deploy_openshift
 
-# tags
+certgen develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
 
-release_maven_central:
-  stage: "release"
+certgen nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+certgen demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
+
+postman develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+postman nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+postman demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
+
+# Frontends #
+
+devportal-ui develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+devportal-ui nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+devportal-ui demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
+
+oba-ui develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+oba-ui nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+oba-ui demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
+
+tpp-ui develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+tpp-ui nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+tpp-ui demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
+
+#################
+# Maven Release #
+#################
+
+Maven Central:
+  stage: "Maven Release"
   cache:
     key: "Java_${CI_COMMIT_REF_SLUG}"
     paths:
