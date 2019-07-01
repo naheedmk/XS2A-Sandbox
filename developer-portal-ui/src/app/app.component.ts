@@ -7,7 +7,8 @@ import {
   GlobalSettings,
   Theme,
 } from '../services/customize.service';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +17,13 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
   globalSettings: GlobalSettings;
-  lang = 'en';
+  lang = 'ua';
   langs: string[] = ['en', 'ua', 'es', 'de'];
   langIcons: object = {
     en: '../assets/icons/united-kingdom.png',
     de: '../assets/icons/germany.png',
     es: '../assets/icons/spain.png',
-    ua: '../assets/icons/ukraine.png'
+    ua: '../assets/icons/ukraine.png',
   };
   private langCollapsed: boolean;
 
@@ -32,9 +33,10 @@ export class AppComponent implements OnInit {
     public dataService: DataService,
     public loginService: LoginService,
     public customizeService: CustomizeService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private languageService: LanguageService
   ) {
-    this.initializeTranslation();
+    this.languageService.initializeTranslation();
     this.langCollapsed = true;
   }
 
@@ -48,15 +50,9 @@ export class AppComponent implements OnInit {
     ].snapshot.url;
   }
 
-  initializeTranslation() {
-    this.translateService.addLangs(this.langs);
-    this.translateService.setDefaultLang('en');
-    this.translateService.use('en');
-  }
-
   changeLang(lang: string) {
-    this.translateService.use(lang);
-    this.lang = lang;
+    this.languageService.setLang(lang);
+    this.lang = this.languageService.getLang();
     this.collapseThis();
   }
 

@@ -342,7 +342,7 @@
     "TEXT_3": "Both sections provide tests for REDIRECT Strong Customer Authorisation\n (SCA) approach and EMBEDDED SCA Approach for Payment Initiation Service\n (PIS), Account Information Service (AIS) and Payment Instrument Issuer\n Service (PIIS).",
     "INTRODUCTION": {
       "TITLE": "INTRODUCTION",
-      "REDIRECT":  "Redirect approach",
+      "REDIRECT": "Redirect approach",
       "EMBEDDED": "Embedded approach",
       "TESTING": "Testing flows",
       "MENU": {
@@ -596,18 +596,7 @@
         "BOLD_4": "Payment cancellation authorisation for user with multiple SCA methods"
       },
       "EMB_CANS_DELETE": {
-        "TITLE": "STEP 2: Payment cancellation authorisation",
-        "PART_1": "1. Initiate cancellation process with",
-        "PART_2": ". Choose the same",
-        "PART_3": "and",
-        "PART_4": "you chose in ",
-        "STEP": "STEP 1",
-        "PART_5": "2. Enter payment id you have got from the previous response in",
-        "PART_6": "in the field",
-        "PART_7": "3. After choosing payment service and payment product, fill the header\n fields with the following values:",
-        "PART_8": "4. Hit ",
-        "ITALIC": "\"Execute\"",
-        "PART_9": "button and get 200 HTTP\n code and related information."
+        "TITLE": "STEP 2: Payment cancellation authorisation"
       },
       "EMB_CANS_POST": {
         "TITLE": "STEP 2: Payment cancellation authorisation",
@@ -681,15 +670,6 @@
         "PART_2": "to check current status of the cancellation authorisation.",
         "PART_3": "13. Try GET endpoint",
         "PART_4": "to get current payment status (it should be `CANC`, cancelled)."
-      },
-      "EMB_CONS_CR": {
-        "PART_10": "5. Start with the authorisation process.",
-        "PART_11": "Pay attention to the amount of SCA methods user has: if user has no SCA\n methods, test consent initiation with the flow described below in",
-        "ITALIC_1": "\"Consent authorisation for user with no SCA methods\"",
-        "PART_12": ". For user with single SCA method check",
-        "ITALIC_2": "\"Consent authorisation for user with single SCA method\"",
-        "PART_13": ", and for user with multiple SCA methods check",
-        "ITALIC_3": "\"Consent authorisation for user with multiple SCA methods\""
       },
       "EMB_CONS_AUTH": {
         "TITLE": "STEP 2: Consent authorisation",
