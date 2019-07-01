@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LanguageService} from "../../../../../services/language.service";
 
 @Component({
   selector: 'app-emb-consent-create-post',
@@ -52,7 +53,9 @@ export class EmbConsentCreatePostComponent implements OnInit {
     combinedServiceIndicator: false,
   };
 
-  constructor() {}
+  constructor(
+    public languageService: LanguageService
+  ) {}
 
   changeSegment(segment) {
     this.activeSegment = segment;
