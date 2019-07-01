@@ -5,13 +5,12 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root',
 })
 export class LanguageService {
-  lang = 'ua';
-  langs: string[] = ['en', 'ua', 'es', 'de'];
+  lang = 'en';
 
   constructor(private translateService: TranslateService) {}
 
   initializeTranslation() {
-    this.translateService.addLangs(this.langs);
+    this.translateService.addLangs(['en', 'ua', 'es', 'de']);
     this.translateService.setDefaultLang(this.lang);
     this.translateService.use(this.lang);
   }
