@@ -1,9 +1,9 @@
 {
   "HEADER": {
     "GETTING_STARTED": "Getting started",
-    "TEST_CASES": "Test cases",
-    "FAQ": "FAQs",
-    "CONTACT": "Contact"
+    "TEST_CASES": "Casos de prueba",
+    "FAQ": "P+F",
+    "CONTACT": "Contactos"
   },
   "FOOTER": {
     "GETTING_STARTED": "Getting started",
@@ -13,39 +13,41 @@
   },
   "HOME": {
     "HEADER": {
-      "TITLE_1": "Developer Portal",
-      "TITLE_2": "by adorsys",
-      "SUBTITLE_1": "Creating new, digital",
-      "SUBTITLE_2": "services through Open",
+      "TITLE_1": "Portal de desarrolladores",
+      "TITLE_2": "por adorsys",
+      "SUBTITLE_1": "Creando nuevos, digitales",
+      "SUBTITLE_2": "servicios a través de Open",
       "SUBTITLE_3": "Banking"
     },
     "WHAT_IS": {
-      "TITLE": "What is XS2ASandbox?",
+      "TITLE": "¿Qué es XS2A Sandbox?",
       "CONTENT": {
+        "THE": "El",
         "XS2A": "XS2ASandbox",
-        "PART_1": "is a dynamic sandbox\n  environment that fully meets the PSD2 requirements for providing APIs for\n  Third-Party Providers (TPP). Based on the Berlin Group’s NextGen PSD2\n  specification for access to accounts (XS2A),",
-        "PART_2": "meets all the regulatory\n  requirements and is NISP compliant. This developer portal is created to help\n  TPP developers start working with XS2ASandbox."
+        "PART_1": "es un entorno dinámico de sandbox que cumple completamente con los requisitos de PSD2 para proporcionar API para terceros proveedores (TPP). Basado en la especificación NextGen PSD2 de Berlin Group para el acceso a las cuentas (XS2A),",
+        "PART_2": "cumple todos los requisitos reglamentarios y cumple con NISP. Este portal de desarrolladores se crea para ayudar a los desarrolladores de TPP a comenzar a trabajar con XS2A Sandbox."
       }
     },
     "HOW_TO": {
-      "TITLE": "How to use XS2ASandbox",
+      "TITLE": "Cómo usar el XS2A Sandbox",
       "STEP_1": {
-        "TITLE": "Step 1",
-        "CONTENT": "Read «Getting started» manual"
+        "TITLE": "Paso 1",
+        "CONTENT": "Leer el manual de «Cómo empezar»."
       },
       "STEP_2": {
-        "TITLE": "Step 2",
-        "CONTENT": "Download, install and run XS2ASandbox"
+        "TITLE": "Paso 2",
+        "CONTENT": "Descargar, instalar y ejecutar XS2A Sandbox"
       },
       "STEP_3": {
-        "TITLE": "Step 3",
-        "CONTENT": "Read «Testing flows» and start testing!"
+        "TITLE": "Paso 3",
+        "CONTENT": "¡Lea «Prueba de flujos» y comience a probar!"
       }
     },
     "PSD2": {
-      "TITLE": "PSD2 and Open Banking",
-      "LINK": "Payment Service Directive 2 (PSD2)",
-      "CONTENT": "instructs banks (Account Servicing Payment Service Providers or ASPSPs) to\n provide a fully productive Access-to-Account (XS2A) interface to Third Party\n Providers (TPPs) until September 2019. XS2A itself consists of banking\n services to initiate payments (PIS), request account data (AIS) and get the\n confirmation of the availability of funds (PIIS). In order to guarantee the\n compliance of this deadline due to adaptations and bugs, PSD2 claims the\n banks to provide a functional dynamic sandbox offering the XS2A services in\n a non-productive environment until June 2019."
+      "TITLE": "PSD2 y Open Banking",
+      "THE": "La",
+      "LINK": "Directiva de Servicios de Pago 2 (PSD2)",
+      "CONTENT": "instruye a los bancos (Proveedores de Servicios de Pago de Servicio de Cuentas o ASPSP) para que proporcionen una interfaz de Acceso a la Cuenta (XS2A) completamente productiva a Terceros Proveedores (TPP) hasta septiembre de 2019. El propio XS2A consiste en servicios bancarios para iniciar pagos (PIS), solicitar datos de cuenta (AIS) y obtener la confirmación de la disponibilidad de fondos (PIIS). Para garantizar el cumplimiento de este plazo debido a las adaptaciones y los errores, PSD2 reclama a los bancos que proporcionen un Sandbox dinámica y funcional que ofrece los servicios XS2A en un entorno no productivo hasta junio de 2019."
     },
     "FEATURES": {
       "TITLE": "XS2ASandbox Features",
@@ -117,89 +119,91 @@
   },
   "GETTING_STARTED": {
     "INTRODUCTION": {
-      "TITLE": "Introduction",
+      "TITLE": "Empezando",
       "CONTENT": {
-        "LINK": "Payment Service Directive 2 (PSD2)",
-        "PART_1": "instructs banks (Account Servicing Payment Service Providers or ASPSPs) to\n provide a fully productive Access-to-Account (XS2A) interface to Third\n Party Providers (TPPs) until September 2019. XS2A itself consists of\n banking services to initiate payments (PIS), request account data (AIS)\n and get the confirmation of the availability of funds (PIIS). In order to\n guarantee the compliance of this deadline due to adaptions and bugs, PSD2\n claims the banks to provide a functional dynamic sandbox offering the XS2A\n services in a non-productive environment until June 2019.",
+        "THE_1": "La",
+        "LINK": "Directiva de Servicios de Pago 2 (PSD2)",
+        "PART_1": "instruye a los bancos (Proveedores de Servicios de Pago de Servicio de Cuentas o ASPSP) para que proporcionen una interfaz de Acceso a la Cuenta (XS2A) completamente productiva a Terceros Proveedores (TPP) hasta septiembre de 2019. El propio XS2A consiste en servicios bancarios para iniciar pagos (PIS), solicitar datos de cuenta (AIS) y obtener la confirmación de la disponibilidad de fondos (PIIS). Para garantizar el cumplimiento de este plazo debido a las adaptaciones y los errores, PSD2 reclama a los bancos que proporcionen un Sandbox dinámica y funcional que ofrece los servicios XS2A en un entorno no productivo hasta junio de 2019.",
+        "THE_2": "El",
         "XS2A": "XS2ASandbox",
-        "PART_2": "is a dynamic sandbox environment\n that fully meets the PSD2 requirements for providing APIs for Third-Party\n Providers (TPP). Based on the Berlin Group’s NextGen PSD2 specification\n for access to accounts (XS2A),",
-        "PART_3": "This developer portal is created to help TPP developers start working with\n XS2ASandbox."
+        "PART_2": "es un entorno de entorno de pruebas dinámico que cumple completamente los requisitos de PSD2 para proporcionar API a Terceros Proveedores(TPP). Basado en la especificación NextGen PSD2 del Grupo de Berlín para el acceso a cuentas (XS2A),",
+        "PART_3": "Este portal de desarrolladores se crea para ayudar a los desarrolladores de TPP a comenzar a trabajar con XS2ASandbox."
       }
     },
     "ARCHITECTURE": {
-      "TITLE": "XS2ASandbox architecture and modules",
-      "CONTENT": "Components of XS2ASandbox with their connections to each other are shown\n in Figure 1.1.",
-      "CAPTION": "Figure 1.1: Components of the XS2ASandbox"
+      "TITLE": "Arquitectura y módulos de XS2ASandbox",
+      "CONTENT": "Los componentes de XS2ASandbox con sus conexiones entre sí se muestran en la Figura 1.1.",
+      "CAPTION": "Figura 1.1: Componentes de la XS2ASandbox"
     },
     "INTERFACE": {
-      "TITLE": "XS2A Interface",
+      "TITLE": "Interfaz XS2A",
       "CONTENT": {
-        "PART_1": "Central component of the",
+        "PART_1": "El componente central de",
         "XS2A": "XS2ASandbox",
-        "PART_2": "is the XS2A\n interface which meets the requirements of the Berlin Group's specification",
-        "PART_3": "(Version 1.3) and is based on test data. You can visit our",
-        "PART_4": "or find full",
-        "LINK": "OpenSource XS2A Interface on Github."
+        "PART_2": "es la interfaz XS2A que cumple con los requisitos del Grupo de Berlín",
+        "PART_3": "(versión 1.3) y se basa en datos de prueba. Puede visitar nuestra interfaz de usuario",
+        "PART_4": "o encontrar la interfaz completa de ",
+        "LINK": "OpenSource XS2A en Github."
       }
     },
     "PROFILE": {
-      "TITLE": "ASPSP-Profile",
+      "TITLE": "Perfil ASPSP",
       "CONTENT": {
-        "PART_1": "Besides the actual interface, PSD2 instructs ASPSPs to offer a technical\n documentation free of charge containing amongst others, information about\n supported payment products and payment services. This information is\n stored in ",
+        "PART_1": "Además de la interfaz real, PSD2 instruye a los ASPSP para que ofrezcan una documentación técnica gratuita que contenga, entre otros, información sobre productos de pago admitidos y servicios de pago. Esta información se almacena en",
         "ASPSP": "ASPSP-profile",
-        "PART_2": "(bank profile), a\n service based on yaml file where a bank can provide available payment\n products, payment services, supported SCA approaches and other\n bank-specific settings."
+        "PART_2": " (perfil de banco), un servicio basado en el archivo yaml donde un banco puede proporcionar productos de pago, servicios de pago, enfoques SCA compatibles y otras configuraciones específicas del banco."
       },
-      "SUBTITLE_1": "Active XS2A Configuration (Bank Profile)",
+      "SUBTITLE_1": "Configuración activa de XS2A (perfil del banco)",
       "LIST": {
-        "LI_1": "Supported SCA-Approach: Redirect, Embedded",
-        "LI_2": "Available payment types and payment products for each type:",
+        "LI_1": "Enfoque SCA soportado: Redirect y Embeded",
+        "LI_2": "Tipos de pago disponibles y productos de pago para cada tipo:",
         "UL_1": {
-          "LI_1": "Single (sepa-credit-transfers)",
-          "LI_2": "Future-Dated (sepa-credit-transfers)",
-          "LI_3": "Bulk (sepa-credit-transfers)",
-          "LI_4": "Periodic (sepa-credit-transfers)"
+          "LI_1": "Soltero (sepa-credit-transfers)",
+          "LI_2": "Fechado en el futuro (sepa-credit-transfers)",
+          "LI_3": "Masivo (sepa-credit-transfers)",
+          "LI_4": "Periódico (sepa-credit-transfers)"
         },
-        "LI_3": "Confirmation of Funds: supported",
-        "LI_4": "Redirect URLs to Online Banking:",
+        "LI_3": "Confirmación de Fondos: apoyado",
+        "LI_4": "Redireccionar URLs a la Banca en Línea",
         "UL_2": {
           "LI_1": "Redirect URL for Payment confirmation: **\n http://localhost:4400/payment-initiation/login?paymentId=encrypted-payment-id&redirectId=redirect-id\n **",
           "LI_2": "Redirect URL for Payment cancellation: **\n http://localhost:4400/payment-cancellation/login?paymentId=encrypted-payment-id&redirectId=redirect-id\n **",
           "LI_3": "Redirect URL for Account Consent confirmation: **\n http://localhost:4400/account-information/login?encryptedConsentId=encrypted-consent-id&redirectId=redirect-id\n **"
         },
-        "LI_5": "Supported types of Consents:",
+        "LI_5": "Tipos de Consentimientos soportados:",
         "UL_3": {
-          "LI_1": "Dedicated: Yes",
-          "LI_2": "Bank-Offered: Yes",
-          "LI_3": "Global: Yes",
-          "LI_4": "Available Accounts: Yes"
+          "LI_1": "Dedicado: si",
+          "LI_2": "Ofrecido por el Banco: si",
+          "LI_3": "Global: si",
+          "LI_4": "Cuentas disponibles: si"
         },
-        "DISABLED": "Currently disabled features:",
-        "LI_6": "Signing Basket",
-        "LI_7": "Delta-Reports"
+        "DISABLED": "Características actualmente deshabilitadas:",
+        "LI_6": "Cesta de firma",
+        "LI_7": "Informes delta"
       },
-      "SUBTITLE_2": "Corresponding ASPSP-Profile settings in .yaml file:"
+      "SUBTITLE_2": "Configuración de perfil ASPSP correspondiente en el archivo .yaml:"
     },
     "CERTIFICATE": {
-      "TITLE": "TPP Certificate Service",
+      "TITLE": "Servicio de Certificación TPP",
       "CONTENT": {
-        "PART_1": "Usually, before accessing the XS2A services a TPP would need to register\n at its National Competent Authority (NCA) and request an",
-        "PART_2": "certificate at an appropriate Trust Service Provider (TSP). Issuing a real\n certificate just for testing purposes would be too much effort, which is\n why the ",
+        "PART_1": "Generalmente, antes de acceder a los servicios XS2A, un TPP tendría que registrarse en su Autoridad Nacional Competente (NCA) y solicitar un certificado",
+        "PART_2": "en un Proveedor de Servicios de Fideicomiso (TSP) apropiado. Sería demasiado esfuerzo emitir un certificado real solo para fines de prueba, por lo que",
         "XS2A": "XS2ASandbox",
-        "PART_3": "is additionally simulating a\n fictional TSP issuing Qualified Website Authentication Certificates\n (QWAC). A QWAC is part of eIDAS and might be better known",
-        "PART_4": "certificate. For PSD2-purposes the certificate gets extended by the\n QcStatement containing appropriate values such as the role(s) of the PSP\n (see",
-        "PART_5": "After embedding the QWAC in the actual XS2A request, the role and the\n signature get validated at a central reverse proxy before it gets finally\n passed to the interface where the banking logic happens."
+        "PART_3": "simula además un TSP ficticio que emite Certificados de autenticación de sitios web calificados (QWAC). Un QWAC es parte de eIDAS y podría ser mejor conocido como certificado",
+        "PART_4": "Para propósitos de PSD2, el certificado se extiende por QcStatement que contiene los valores apropiados, como los roles del PSP (consulte",
+        "PART_5": "Después de incrustar el QWAC en la solicitud XS2A real, el rol y la firma se validan en un proxy central inverso antes de pasar finalmente a la interfaz donde tiene lugar la lógica bancaria."
       }
     },
     "UI": {
-      "TITLE": "TPP User Interface",
-      "CONTENT": "TPP developers can register themselves into the system, obtain certificate\n and download test data for their TPP application using generated\n certificate and prepared data in TPP UI."
+      "TITLE": "Interfaz de usuario TPP",
+      "CONTENT": "Los desarrolladores de TPP pueden registrarse en el sistema, obtener certificados y descargar datos de prueba para su aplicación TPP utilizando el certificado generado y los datos preparados en la interfaz de usuario de TPP."
     },
     "OBA": {
-      "TITLE": "Online banking",
-      "CONTENT": "In case of REDIRECT SCA approach a user wants to provide consent for using\n their account information or for payment confirmation/cancellation. Online\n banking is a user interface to provide consent to a bank. Links for a\n consent confirmation and payment confirmation or cancellation are provided\n in the response of the corresponding endpoints."
+      "TITLE": "Online Banking",
+      "CONTENT": "En el caso de un enfoque de REDIRECT SCA, un usuario desea dar su consentimiento para utilizar la información de su cuenta o para confirmar / cancelar el pago. La banca en línea es una interfaz de usuario para proporcionar consentimiento a un banco. Los enlaces para la confirmación de consentimiento y la confirmación o cancelación de pago se proporcionan en la respuesta de los puntos finales correspondientes."
     },
     "LINKS_TO": {
-      "TITLE": "Links to environments",
+      "TITLE": "Enlaces a entornos",
       "TABLE": {
         "R1_C1": "Service",
         "R1_C2": "Local environment",
@@ -216,60 +220,60 @@
       }
     },
     "HOW_TO_DOWN": {
-      "TITLE": "How to download, setup and run the project",
-      "SUBTITLE_1": "Prerequisites",
+      "TITLE": "Cómo descargar, configurar y ejecutar el proyecto",
+      "SUBTITLE_1": "Prerrequisitos",
       "CONTENT": {
-        "PART_1": "This sandbox runs with the docker-compose that can be found at\n docker-compose.yml and Makefile in project directory. But before you run\n XS2ASandbox, first check if all build dependencies are installed:",
-        "PART_2": "If something is missing, install it to your local machine, otherwise the\n build will fail. List of dependencies that are required to use\n XS2ASandbox: Java 8, NodeJs, Angular CLI, Asciidoctor, jq, Docker, Docker\n Compose, Maven, PlantUML. Here are links where you can install needed\n dependencies:",
+        "PART_1": "Este sandbox se ejecuta con el docker-compose que se puede encontrar en docker-compose.yml y Makefile en el directorio del proyecto. Pero antes de ejecutar XS2ASandbox, primero verifique si todas las dependencias de compilación están instaladas:",
+        "PART_2": "Si falta algo, instálelo en su máquina local, de lo contrario la compilación fallará. Lista de dependencias que se requieren para usar XS2ASandbox: Java 8, NodeJs, CLI angular, Asciidoctor, jq, Docker, Docker Compose, Maven, PlantUML. Aquí están los enlaces donde puede instalar las dependencias necesarias:",
         "TH_1": "Dependency",
         "TH_2": "Link",
-        "PART_3": "Stop running containers in terminal with key combination Control + C.",
-        "PART_4": "You can remove all the Sandbox containers from Docker with the following\n      command:"
+        "PART_3": "Dejar de correr contenedores en terminal con combinación de teclas Control + C.",
+        "PART_4": "Puede eliminar todos los contenedores de Sandbox de Docker con el siguiente comando:"
       },
-      "SUBTITLE_2": "Note 1",
-      "TEXT_1": "Please, use Node.js version lower than 12 (e.g. 10.x.x or 11.x.x).\n Otherwise angular applications would not be built due to version\n conflicts.",
-      "SUBTITLE_3": "Note 2",
-      "TEXT_2": "Check amount of memory given to Docker (Open Docker Desktop -> Preferences\n -> Advanced -> Memory). For a fast and painless start of all the services\n it should be not less than 5 GB.",
+      "SUBTITLE_2": "Nota 1",
+      "TEXT_1": "Utilice la versión Node.js inferior a 12 (por ejemplo, 10.x.x o 11.x.x). De lo contrario, las aplicaciones angular no se construirían debido a conflictos de versión.",
+      "SUBTITLE_3": "Nota 2",
+      "TEXT_2": "Verifique la cantidad de memoria asignada a Docker (Abra Docker Desktop -> Preferencias -> Avanzado -> Memoria). Para un inicio rápido e indoloro de todos los servicios, no debe ser inferior a 5 GB",
       "SUBSECTION_1": {
-        "TITLE": "Download XS2ASandbox",
-        "PART_1": "Download the project directly",
-        "LINK": "from GitHub",
-        "PART_2": "or use command:"
+        "TITLE": "Descargar XS2ASandbox",
+        "PART_1": "Descargue el proyecto directamente",
+        "LINK": "desde GitHub",
+        "PART_2": "o use el comando:"
       },
       "SUBSECTION_2": {
-        "TITLE": "Build and run XS2ASandbox",
-        "PART_1": "After downloading the project go to the project directory:",
-        "PART_2": "Build all the services with the command:",
-        "PART_3": "After building services you can run XS2ASandbox in two ways - with a\n simple docker command:",
-        "PART_4": "Or with Makefile commands:",
-        "PART_5": "1. Build and run services",
-        "PART_6": "2. Run services without build"
+        "TITLE": "Construye y ejecuta XS2ASandbox",
+        "PART_1": "Después de descargar el proyecto vaya al directorio del proyecto:",
+        "PART_2": "Construye todos los servicios con el comando:",
+        "PART_3": "Después de crear los servicios, puede ejecutar XS2ASandbox de dos maneras, con un simple comando acoplable:",
+        "PART_4": "O con los comandos de Makefile:",
+        "PART_5": "1. Construir y ejecutar servicios",
+        "PART_6": "2. Ejecutar servicios sin construir"
       }
     },
     "TROUBLES": {
-      "TITLE": "Troubleshooting",
-      "PART_1": "These are common mistakes you can get during the start of XS2ASandbox and\n an instruction how to get rid of it:",
-      "SUBTITLE_1": "Liquibase changelog error",
-      "PART_2": "This error can be produced if you had unsuccessful start of XS2ASandbox\n earlier. Example of possible stack trace:",
-      "PART_3": "Possible solution:",
-      "PART_4": "Find and delete all folders \"ledgerdbs\" and \"xs2adbs\". Clear all docker\n containers with command:",
-      "PART_5": "Restart all services.",
-      "SUBTITLE_2": "Node version error",
-      "PART_6": "This error can be produced because of wrong NodeJs version (version higher\n than 11.x). Example of possible stack trace:",
-      "PART_7": "Possible solution:",
-      "PART_8": "First, check your version of NodeJs with the command:",
-      "PART_9": "If version is higher than 11.x - change version of NodeJs to earlier one."
+      "TITLE": "Solución de problemas",
+      "PART_1": "Estos son errores comunes que puede obtener durante el inicio de XS2ASandbox y una instrucción sobre cómo deshacerse de él:",
+      "SUBTITLE_1": "Error de lista de cambios de liquibase",
+      "PART_2": "Este error puede producirse si tuvo un inicio incorrecto de XS2ASandbox anteriormente. Ejemplo de posible stack trace:",
+      "PART_3": "Solución posible:",
+      "PART_4": "Busque y elimine todas las carpetas \"ledgerdbs\" y \"xs2adbs\". Borrar todos los contenedores docker con el comando:",
+      "PART_5": "Reinicie todos los servicios.",
+      "SUBTITLE_2": "Error de versión del nodo",
+      "PART_6": "Este error se puede producir debido a una versión incorrecta de NodeJs (versión superior a 11.x). Ejemplo de posible  stack trace:",
+      "PART_7": "Solución posible:",
+      "PART_8": "Primero, verifique su versión de NodeJs con el comando:",
+      "PART_9": "Si la versión es superior a 11.x, cambie la versión de NodeJs a una anterior."
     },
     "HOW_TO_REG": {
-      "TITLE": "How to register TPP and start testing",
+      "TITLE": "Cómo registrar TPP y comenzar testing",
       "LIST": {
-        "LI_1": "Open",
-        "LINK": "TPP User Interface login page",
-        "LI_2": "If you have no login and password - register yourself by clicking\n \"Register\" button.",
-        "LI_3": "Register yourself, create a certificate and log into the system. Note:\n  TPP ID should consist of at least 8 digits, no letters or other signs\n allowed.",
-        "LI_4": "Upload the test data and start testing.",
-        "TEXT_1": "Whole flow for TPPs to start their work with XS2ASandbox is displayed in\n Figure 1.2:",
-        "TEXT_2": "Figure 1.2: TPP flow step-by-step"
+        "LI_1": "Abra la página de inicio de sesión",
+        "LINK": "de la interfaz de usuario de TPP",
+        "LI_2": "Si Usted no tiene nombre de usuario y contraseña, regístrese Usted mismo haciendo clic en el botón \"Registrarse\".",
+        "LI_3": "Regístrese, cree un certificado e inicie sesión en el sistema. Nota: la identificación de TPP debe constar de al menos 8 dígitos, no se permiten letras ni otros signos.",
+        "LI_4": "Sube los datos de prueba y comienza a probar.",
+        "TEXT_1": "El flujo completo para que los TPP comiencen su trabajo con XS2ASandbox se muestra en la Figura 1.2:",
+        "TEXT_2": "Figura 1.2: flujo de TPP paso a paso"
       }
     },
     "HOW_TO_CST": {
@@ -324,14 +328,14 @@
       }
     },
     "WHAT_NEXT": {
-      "TITLE": "What's next?",
-      "PART_1": "When you are done with all steps from",
-      "LINK_1": "Getting started",
-      "PART_2": "manual, check",
-      "LINK_2": "Test cases",
-      "PART_3": "section for further testing. There\n you will find prepared ",
-      "POSTMAN": "Postman tests",
-      "PART_4": ", XS2A\n Interface API description and instructions how to test XS2ASandbox with"
+      "TITLE": "¿Que sigue?",
+      "PART_1": "Cuando haya terminado con todos los pasos",
+      "LINK_1": "del Manual de introducción",
+      "PART_2": "consulte la sección",
+      "LINK_2": "Casos de prueba",
+      "PART_3": "para realizar más pruebas. Allí encontrará las pruebas preparadas ",
+      "POSTMAN": "de Postman",
+      "PART_4": ", la descripción de la interfaz de la interfaz XS2A y las instrucciones para probar XS2ASandbox con"
     }
   },
   "TEST_CASES": {
@@ -782,57 +786,57 @@
     }
   },
   "FAQ": {
-    "TITLE": "Frequently Asked Questions",
+    "TITLE": "P+F(preguntas mas frequentes)",
     "CONSENTS": {
-      "TITLE": "Consents",
-      "SUBTITLE_1": "Why can't I create a consent?",
-      "PART_1": "The role within the QWAC Certificate does not contain the role AIS. In\n this case you should receive a similar error:",
-      "PART_2": "Solution: Either create a new certificate containing the role AIS and\n embed this certificate in your request or decode your certificate and\n check the qcStatement which should contain \"PSP_AI\".",
-      "PART_3": "Another possibility is that the attribute \"recurringIndicator\" within your\n request is set to \"false\", while the attribute \"frequencyPerDay\" does not\n equal \"1\". By default the \"recurringIndicator\" should be \"true\" since a\n TPP wants to access the account data in the addressed period of time. When\n the TPP however wants to just display a list of possible accounts to the\n PSU, a one-time access is enough. In this case you should receive the\n following Error:",
-      "PART_4": "Solution: If you want to access the account data using this consent just\n once, change the value of \"frequencyPerDay\" to \"1\". Otherwise assign\n \"true\" to the \"recurringIndicator\".",
-      "SUBTITLE_2": "Why can't I access my account data?",
-      "PART_5": "It is possible that the issued consent does not permit this operation. An\n AIS-Consent defines three levels of access. The first level allows access\n to \"accounts\", the second to \"balances\" and the third to \"transactions\".\n Combinations are possible and a selection of either \"balances\" or\n \"transactions\" grants access to \"accounts\" as well. A consent granting\n access to e.g. accounts and transactions does not allow to call the\n balance endpoint.",
-      "PART_6": "In this case you should receive the following error:",
+      "TITLE": "Consentimientos",
+      "SUBTITLE_1": "¿Por qué no puedo crear un consentimiento?",
+      "PART_1": "La función dentro del Certificado QWAC no contiene la función AIS. En este caso debería recibir un error similar:",
+      "PART_2": "Solución: cree un nuevo certificado que contenga la función AIS e inserte este certificado en su solicitud o decodifique su certificado y verifique la qcStatement que debe contener “PSP_AI\".",
+      "PART_3": "Otra posibilidad es que el atributo \"recurringIndicator\" dentro de su solicitud esté configurado en \"false\", mientras que el atributo \"frequencyPerDay\" no es igual a \"1\". De forma predeterminada, el \"recurringIndicator\" debe ser \"true\", ya que un TPP desea acceder a los datos de la cuenta en el período de tiempo indicado. Sin embargo, cuando el TPP solo quiere mostrar una lista de posibles cuentas para la PSU, basta con un acceso único. En este caso debería recibir el siguiente error:",
+      "PART_4": "Solución: Si desea acceder a los datos de la cuenta con este consentimiento solo una vez, cambie el valor de \"frequencyPerDay\" a \"1\". De lo contrario, asigne \"true\" al “\"recurringIndicator\".",
+      "SUBTITLE_2": "¿Por qué no puedo acceder a los datos de mi cuenta?",
+      "PART_5": "Es posible que el consentimiento emitido no permita esta operación. Un AIS-Consent define tres niveles de acceso. El primer nivel permite el acceso a \"accounts\", el segundo a \"balances\" y el tercero a “transactions\". Hay algunas posibles combinaciones y una selección de \"balances\" o \"transactions\" también otorga acceso a \"accounts\". Un consentimiento que otorga acceso a las cuentas y transacciones no permite llamar al punto final de saldo.",
+      "PART_6": "En este caso debería recibir el siguiente error:",
       "TODO": "TODO",
-      "PART_7": "Solution: Ask the PSU to create a new consent allowing you access the\n appropriate endpoints.",
-      "PART_8": "Another reason might be that the consent status is not valid. A status\n will e.g. expire automatically when the \"expirationDate\" defined within\n the consent is exceeded. It might also be possible that an error occurred\n while performing SCA. For more detailed information see FAQs on Strong\n Customer Authentication."
+      "PART_7": "Solución: solicite a la PSU que cree un nuevo consentimiento que le permita acceder a los puntos finales apropiados.",
+      "PART_8": "Otra razón podría ser que el estado de consentimiento no es válido. Un estado será, por ejemplo, expira automáticamente cuando se excede la \"expirationDate\" definida en el consentimiento. También podría ser posible que se haya producido un error al realizar SCA. Para obtener información más detallada, consulte las P+F sobre autenticación fuerte de clientes(Strong Customer Authentication)"
     },
     "STRONG": {
-      "TITLE": "Strong Customer Authentication",
-      "SUBTITLE_1": "How can I change the transaction/consent status?",
-      "PART_1": "By default a new created transaction/consent has the status",
+      "TITLE": "Strong Customer Authentication (Autenticación de cliente fuerte)",
+      "SUBTITLE_1": "¿Cómo puedo cambiar el estado de la transacción / consentimiento?",
+      "PART_1": "Por defecto, una nueva transacción / consentimiento creado tiene el estado",
       "RECEIVED": "\"received\"",
-      "PART_2": ". In order to perform SCA using\n REDIRECT approach, the sandbox provides a Redirect Server where the status\n gets updated depending on the PSU. Since SCA for REDIRECT is simplified\n for this sandbox, it is enough to pass a PSU-ID via Query-Parameter to\n simulate the whole SCA. An example is provided in the following:",
-      "PART_3": "The Query Parameter psu-id is mandatory. If it is not provided, the\n Redirect Server will display a default error message.",
-      "SUBTITLE_2": "Why can't I change the transaction/consent status using a specific PSU?",
-      "PART_4": "If the transaction/consent status is \"received\", it can be possible that\n the PSU-ID does not match IBAN in the payment initiation or consent\n creation request. The mapping between PSU-ID and IBAN(s) is documented in\n the developer portal. If the status doesn't change even though SCA was\n performed and the IBAN matches the PSU-ID, check the PSU-ID for typos and\n case sensitivity."
+      "PART_2": ". Para realizar SCA utilizando el enfoque REDIRECT, el sandbox proporciona un Redirect Server donde el estado se actualiza según la PSU. Como SCA para REDIRECT está simplificado para este entorno limitado, es suficiente pasar un PSU-ID a través de Query-Parameter para simular todo el SCA. A continuación se proporciona un ejemplo:",
+      "PART_3": "El Query Parameter psu-id es obligatorio. Si no se proporciona, el servidor de redirección mostrará un mensaje de error predeterminado.",
+      "SUBTITLE_2": "¿Por qué no puedo cambiar el estado de la transacción / consentimiento con una PSU específica?",
+      "PART_4": "Si el estado de la transacción / consentimiento es “recieved\", es posible que el PSU-ID no coincida con el IBAN en el inicio de pago o la solicitud de creación de consentimiento. La asignación entre PSU-ID y IBAN (s) se documenta en el portal del desarrollador. Si el estado no cambia a pesar de que se realizó SCA y el IBAN coincide con la ID de la PSU, verifique la ID de la PSU para detectar errores tipográficos y la sensibilidad de las mayúsculas y minúsculas."
     },
     "CERTIFICATES": {
-      "TITLE": "Certificates",
-      "SUBTITLE_1": "How can I create a valid certificate?",
-      "PART_1": "In order to access the XS2A API, a TPP needs to have a valid Qualified\n Website Authentication Certificate (QWAC) which usually gets issued by a\n registered Trust Service Provider. For the use of this sandbox you can\n issue test certificates here:",
-      "PART_2": ". You get a self signed certificate",
-      "PART_3": "nd a\n corresponding private key",
-      "PART_4": "embedded in a",
-      "PART_5": " file.",
-      "SUBTITLE_2": "How can I embed a certificate in a request?",
-      "PART_6": "Once you received a QWAC you need to embed it to your request. There are\n many tools to perform REST calls. We explain configuration with two of the\n most common ones - cURL and Postman. cURL: add the",
-      "PART_7": " file\n using",
-      "PART_8": "and the private key using",
-      "PART_9": ". Note that you may need to adapt the relative path to your files.\n Postman: Navigate to",
-      "PART_10": "and set the host url (in our examples this would be",
-      "PART_11": "). Note that ",
-      "PART_12": " as well as the\n port 443 are already set. Then add your",
-      "PART_13": " and",
-      "PART_14": " file.\n The passphrase must be left empty.",
-      "SUBTITLE_3": "Why does my QWAC certificate not work?",
-      "PART_15": "Requests might still not work even though a certificate is added. This\n happens when certificates expire. Each certificate has an attribute\n \"validUntil\" with the expiration date. In this case you should receive the\n following error:",
-      "PART_16": "You need the PSU to create a new consent and use the new consentId.\n Another possibility is that the certificate does not contain the role you\n need for your request. E.g. having the role \"PIS\" does not permit you to\n create consents. In such a case you should receive the following error:"
+      "TITLE": "Certificados",
+      "SUBTITLE_1": "\n¿Cómo puedo crear un certificado válido?",
+      "PART_1": "Para acceder a la XS2A API, un TPP debe tener un Qualified Website Authentication Certificate  (QWAC, por sus siglas en inglés) válido que generalmente es emitido por un registrado Trust Service Provider.\nPara el uso de este sandbox, puede emitir certificados de prueba aquí:",
+      "PART_2": ". Obtendrá un certificado autofirmado",
+      "PART_3": "y una clave privada correspondiente",
+      "PART_4": "incrustadas en un archivo",
+      "PART_5": "",
+      "SUBTITLE_2": "¿Cómo puedo incrustar un certificado en una solicitud?",
+      "PART_6": "Después de recibir un QWAC, debe integrarlo a su solicitud. Hay muchas herramientas para realizar llamadas REST. Explicamos la configuración con dos de los más comunes: cURL y Postman. cURL: agregue el archivo",
+      "PART_7": " usando",
+      "PART_8": "y la clave privada usando",
+      "PART_9": ". Tenga en cuenta que es posible que deba adaptar la ruta relativa a sus archivos. Postman: vaya a",
+      "PART_10": "y configure la URL del host (en nuestros ejemplos, esto sería",
+      "PART_11": "). Tenga en cuenta que ",
+      "PART_12": " así como el puerto 443 ya están configurados. Luego agrega tu archivo",
+      "PART_13": " y",
+      "PART_14": " La frase de contraseña debe dejarse vacía.",
+      "SUBTITLE_3": "¿Por qué mi certificado QWAC no funciona?",
+      "PART_15": "Es posible que las solicitudes aún no funcionen aunque se agregue un certificado. Esto sucede cuando los certificados expiran. Cada certificado tiene un atributo \"validUntil\" con la fecha de vencimiento. En este caso debería recibir el siguiente error:",
+      "PART_16": "Necesita la PSU para crear un nuevo consentimiento y utilizar el nuevo ID de consentimiento. Otra posibilidad es que el certificado no contenga la función que necesita para su solicitud. P.ej. tener el rol \"PIS\" no le permite crear consentimientos. En tal caso, debería recibir el siguiente error:"
     }
   },
   "CONTACT": {
-    "TITLE_1": "Any Questions?",
-    "SUBTITLE": "Ask this person.",
-    "TITLE_2": "Contact"
+    "TITLE_1": "Tienes algunas preguntas?",
+    "SUBTITLE": "Pregunta a este hombre",
+    "TITLE_2": "Contactos"
   }
 }

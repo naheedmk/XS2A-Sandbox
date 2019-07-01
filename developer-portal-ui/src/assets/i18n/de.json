@@ -22,6 +22,7 @@
     "WHAT_IS": {
       "TITLE": "What is XS2ASandbox?",
       "CONTENT": {
+        "THE": "The",
         "XS2A": "XS2ASandbox",
         "PART_1": "is a dynamic sandbox\n  environment that fully meets the PSD2 requirements for providing APIs for\n  Third-Party Providers (TPP). Based on the Berlin Group’s NextGen PSD2\n  specification for access to accounts (XS2A),",
         "PART_2": "meets all the regulatory\n  requirements and is NISP compliant. This developer portal is created to help\n  TPP developers start working with XS2ASandbox."
@@ -44,6 +45,7 @@
     },
     "PSD2": {
       "TITLE": "PSD2 and Open Banking",
+      "THE": "The",
       "LINK": "Payment Service Directive 2 (PSD2)",
       "CONTENT": "instructs banks (Account Servicing Payment Service Providers or ASPSPs) to\n provide a fully productive Access-to-Account (XS2A) interface to Third Party\n Providers (TPPs) until September 2019. XS2A itself consists of banking\n services to initiate payments (PIS), request account data (AIS) and get the\n confirmation of the availability of funds (PIIS). In order to guarantee the\n compliance of this deadline due to adaptations and bugs, PSD2 claims the\n banks to provide a functional dynamic sandbox offering the XS2A services in\n a non-productive environment until June 2019."
     },

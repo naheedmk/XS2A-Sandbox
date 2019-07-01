@@ -17,7 +17,7 @@ import { LanguageService } from '../services/language.service';
 })
 export class AppComponent implements OnInit {
   globalSettings: GlobalSettings;
-  lang = 'en';
+  lang = 'es';
   langs: string[] = ['en', 'ua', 'es', 'de'];
   langIcons: object = {
     en: '../assets/icons/united-kingdom.png',
