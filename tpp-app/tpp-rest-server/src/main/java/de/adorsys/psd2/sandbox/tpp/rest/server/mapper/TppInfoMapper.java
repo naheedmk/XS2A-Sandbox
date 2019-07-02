@@ -9,5 +9,5 @@ public interface TppInfoMapper {
 
     UserTO ttpInfoToUserTO(TppInfo tppInfo);
 
-    TppInfo userToToTppInfo(UserTO userTO);
+    TppInfo userTOtoTppInfo(UserTO userTO);
 }

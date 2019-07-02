@@ -1,6 +1,7 @@
 package de.adorsys.psd2.sandbox.tpp.rest.api.resource;
 
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
+import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -19,7 +20,7 @@ public interface TppUsersRestApi {
         notes = "Endpoint to create a user for a given TPP",
         authorizations = @Authorization(value = "apiKey"))
     @PostMapping
-    ResponseEntity<UserTO> createUser(@RequestBody UserTO account);
+    ResponseEntity<UserTO> createUser(@RequestBody User user);
 
     @ApiOperation(value = "List users for a given TPP",
         notes = "Endpoint to lists users for a given TPP",
