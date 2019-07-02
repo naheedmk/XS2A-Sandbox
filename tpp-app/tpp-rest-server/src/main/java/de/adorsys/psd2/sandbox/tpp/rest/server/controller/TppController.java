@@ -6,6 +6,7 @@ import de.adorsys.psd2.sandbox.tpp.rest.api.domain.TppInfo;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.TppInfoMapper;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 @RequestMapping(TppRestApi.BASE_PATH)
 public class TppController implements TppRestApi {
-    private final TppInfoMapper tppInfoMapper;
+    private final TppInfoMapper tppInfoMapper = Mappers.getMapper(TppInfoMapper.class);
     private final UserMgmtStaffRestClient userMgmtStaffRestClient;
 
     @Override
@@ -25,7 +26,7 @@ public class TppController implements TppRestApi {
 
     @Override
     public ResponseEntity<Void> register(TppInfo tppInfo) {
-        ResponseEntity<UserTO> response = userMgmtStaffRestClient.register(tppInfo.getId(), tppInfoMapper.fromTppInfo(tppInfo));
+        ResponseEntity<UserTO> response = userMgmtStaffRestClient.register(tppInfo.getId(), tppInfoMapper.ttpInfoToUserTO(tppInfo));
 
         return HttpStatus.OK == response.getStatusCode()
                    ? ResponseEntity.status(CREATED).build()
