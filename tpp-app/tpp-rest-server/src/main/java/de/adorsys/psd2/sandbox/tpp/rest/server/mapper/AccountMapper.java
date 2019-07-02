@@ -7,6 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface AccountMapper {
 
-    AccountDetailsTO accountToAccountDetailsTO (DepositAccount depositAccount);
-    DepositAccount accountDetailsTOtoDepositAccount (AccountDetailsTO accountDetailsTO);
+    AccountDetailsTO toAccountDetailsTO (DepositAccount depositAccount);
 }

@@ -8,6 +8,4 @@ import org.mapstruct.Mapper;
 public interface TppInfoMapper {
 
     UserTO ttpInfoToUserTO(TppInfo tppInfo);
-
-    TppInfo userTOtoTppInfo(UserTO userTO);
 }
