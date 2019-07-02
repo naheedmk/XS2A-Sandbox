@@ -8,5 +8,4 @@ import org.mapstruct.Mapper;
 public interface AccountMapper {
 
     AccountDetailsTO accountToAccountDetailsTO (DepositAccount depositAccount);
-    DepositAccount accountDetailsTOtoDepositAccount (AccountDetailsTO accountDetailsTO);
 }
