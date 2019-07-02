@@ -2,6 +2,7 @@ package de.adorsys.psd2.sandbox.tpp.rest.api.resource;
 
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.middleware.api.domain.payment.AmountTO;
+import de.adorsys.psd2.sandbox.tpp.rest.api.domain.DepositAccount;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public interface TppAccountsRestApi {
         notes = "Endpoint to a deposit account for a user with given ID",
         authorizations = @Authorization(value = "apiKey"))
     @PostMapping
-    ResponseEntity<Void> createAccount(@RequestParam(value = "userId") String userId, @RequestBody AccountDetailsTO account);
+    ResponseEntity<Void> createAccount(@RequestParam(value = "userId") String userId, @RequestBody DepositAccount account);
 
     /**
      * Returns the list of accounts that belong to the same branch as STAFF user.
