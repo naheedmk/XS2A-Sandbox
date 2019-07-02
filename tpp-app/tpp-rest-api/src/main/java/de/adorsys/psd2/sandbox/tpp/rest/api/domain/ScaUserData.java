@@ -6,5 +6,5 @@ import lombok.Data;
 public class ScaUserData {
     private String id;
     private String methodValue;
-    private String scaMethod;
+    private ScaMethodType scaMethod;
 }
