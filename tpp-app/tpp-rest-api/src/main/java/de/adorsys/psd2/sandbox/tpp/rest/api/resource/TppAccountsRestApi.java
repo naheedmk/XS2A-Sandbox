@@ -59,6 +59,6 @@ public interface TppAccountsRestApi {
     @ApiResponses(value = {
         @ApiResponse(code = 200, response = AccountDetailsTO[].class, message = "Deposits cash to the account by its ID")
     })
-    @GetMapping(value = "/{accountId}/deposit-cash")
+    @PostMapping(value = "/{accountId}/deposit-cash")
     ResponseEntity<Void> depositCash(@PathVariable("accountId") String accountId, @RequestBody AmountTO amount);
 }

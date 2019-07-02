@@ -7,7 +7,6 @@ import de.adorsys.psd2.sandbox.tpp.rest.api.domain.DepositAccount;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppAccountsRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
