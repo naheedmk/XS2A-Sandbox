@@ -7,9 +7,9 @@ import java.util.Currency;
 @Data
 public class DepositAccount {
     private String id;
-    private String accountType;
-    private String usageType;
+    private AccountType accountType;
+    private AccountUsage usageType;
     private Currency currency;
     private String iban;
-    private String accountStatus;
+    private AccountStatus accountStatus;
 }

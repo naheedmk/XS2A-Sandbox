@@ -11,4 +11,5 @@ public class User {
     private String login;
     private String pin;
     private List<ScaUserData> scaUserData;
+    private List<String> userRoles;
 }
