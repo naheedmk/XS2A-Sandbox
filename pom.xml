@@ -295,6 +295,8 @@
                         </excludeRoot>
                         <excludeRoot>../online-banking-app/target/generated-sources/annotations
                         </excludeRoot>
+                        <excludeRoot>../tpp-app/target/generated-sources/annotations
+                        </excludeRoot>
                         <excludeRoot>target/generated-sources/plugin
                         </excludeRoot>
                     </excludeRoots>
