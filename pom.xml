@@ -293,6 +293,10 @@
                         </excludeRoot>
                         <excludeRoot>../online-banking-app/target/generated-sources/annotations
                         </excludeRoot>
+                        <excludeRoot>../online-banking-app/target/generated-sources/annotations
+                        </excludeRoot>
+                        <excludeRoot>../tpp-app/target/generated-sources/annotations
+                        </excludeRoot>
                     </excludeRoots>
                 </configuration>
             </plugin>
