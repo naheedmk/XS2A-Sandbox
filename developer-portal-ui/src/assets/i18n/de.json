@@ -360,13 +360,13 @@
             "LI_3": "Einwilligungsbestätigung"
           },
           "LI_2": "Embedded:",
-          "LI_3": "Account Information:",
+          "LI_3": " Kontoinformationen:",
           "LIST_2": {
-            "LI_1": "Read Account List",
-            "LI_2": "Read Account Details",
-            "LI_3": "Read Balance",
-            "LI_4": "Read List of Transactions",
-            "LI_5": "Read Transaction Details"
+            "LI_1": "Ausgeben der Kontoliste",
+            "LI_2": "Ausgeben der Kontodetails",
+            "LI_3": "Ausgeben des Saldos",
+            "LI_4": "Ausgeben der Transaktionsliste",
+            "LI_5": "Ausgeben der Transaktionsdetails"
           }
         },
         "LI_2": "Postman testing"
@@ -754,34 +754,34 @@
         "PART_6": ", um den aktuellen Status der Autorisierung zu erhalten."
       },
       "AC_INF_ACS": {
-        "PART_1": "1. Try GET endpoint",
-        "PART_2": "to get account with chosen consent-id",
-        "PART_3": "Put in ",
-        "PART_4": " the consent-id of accounts\n that you want to get(you can view users and their information in TPP-UI)."
+        "PART_1": "1. Nutzen Sie den GET Endpunkt",
+        "PART_2": ", um die Konten mit der entsprechenden consent-id zu erhalten.",
+        "PART_3": "Geben Sie anstelle von ",
+        "PART_4": " die consent-id der Konten an, die Sie erhalten möchten. (Sie können Nutzer und deren Daten in der TPP-UI einsehen)."
       },
       "AC_INF_AC": {
-        "PART_1": "1. Try GET endpoint",
-        "PART_2": "to get account with chosen account-id",
-        "PART_3": "Put in ",
-        "PART_4": " the consent-id of account\n that you want to get(you can view users and their information in TPP-UI)."
+        "PART_1": "1. Nutzen Sie den GET Endpunkt ",
+        "PART_2": ", um das Konto mit der entsprechenden account-id zu erhalten. ",
+        "PART_3": "Geben Sie anstelle von ",
+        "PART_4": " die consent-id der Konten an, die Sie erhalten möchten. (Sie können Nutzer und deren Daten in der TPP-UI einsehen)."
       },
       "AC_INF_BAL": {
-        "PART_1": "1. Try GET endpoint",
-        "PART_2": "to get account's list of balances",
-        "PART_3": "Put in ",
-        "PART_4": " the consent-id of account\n that you want to get(you can view users and their information in TPP-UI)."
+        "PART_1": "1. Nutzen Sie den GET Endpunkt",
+        "PART_2": ", um die Liste der Salden des Kontos zu erhalten.",
+        "PART_3": "Geben Sie anstelle von ",
+        "PART_4": " die consent-id der Konten an, die Sie erhalten möchten. (Sie können Nutzer und deren Daten in der TPP-UI einsehen)."
       },
       "AC_INF_TRS": {
-        "PART_1": "1. Try GET endpoint",
-        "PART_2": "to get account's list of transactions with chosen booking status.",
-        "PART_3": "Put in ",
-        "PART_4": " the consent-id of account\n that you want to get(you can view users and their information in TPP-UI)."
+        "PART_1": "1. Nutzen Sie den GET Endpunkt",
+        "PART_2": ", um von diesem Konto eine Liste aller Transaktionen und deren Buchungsstatus zu erhalten.",
+        "PART_3": "Geben Sie anstelle von ",
+        "PART_4": " die consent-id der Konten an, die Sie erhalten möchten. (Sie können Nutzer und deren Daten in der TPP-UI einsehen). "
       },
       "AC_INF_TR": {
-        "PART_1": "1. Try GET endpoint",
-        "PART_2": "to get account's transaction with current id.",
-        "PART_3": "Put in ",
-        "PART_4": " the consent-id of account\n that you want to get(you can view users and their information in TPP-UI)."
+        "PART_1": "1. Nutzen Sie den GET Endpunkt",
+        "PART_2": ", um die Transaktion des Kontos mit der angegebenen ID zu erhalten.",
+        "PART_3": "Geben Sie anstelle von ",
+        "PART_4": " die consent-id der Konten an, die Sie erhalten möchten. (Sie können Nutzer und deren Daten in der TPP-UI einsehen). "
       }
     }
   },
