@@ -1,7 +1,6 @@
 # Release notes v.1.2
 
-Internal Project Updates:
-1. Developer portal:
+ Developer portal:
  - Added redirect button for REDIRECT endpoints
  - Implemented customization functional
  - Added customization section on Getting started page
