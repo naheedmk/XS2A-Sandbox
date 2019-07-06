@@ -7,26 +7,28 @@ import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppUsersRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(TppUsersRestApi.BASE_PATH)
 public class TppUsersController implements TppUsersRestApi {
 
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    private final UserMapper userMapper;
 
     private final UserMgmtStaffRestClient userMgmtStaffRestClient;
 
     @Override
-    public ResponseEntity<UserTO> createUser(User user) {
-        return userMgmtStaffRestClient.createUser(userMapper.userToUserTO(user));
+    public ResponseEntity<User> createUser(User user) {
+        ResponseEntity<UserTO> response = userMgmtStaffRestClient.createUser(userMapper.toUserTO(user));
+        User newUser = userMapper.toUser(response.getBody());
+        return ResponseEntity.of(Optional.of(newUser));
     }
 
     @Override
