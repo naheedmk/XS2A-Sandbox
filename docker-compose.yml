@@ -190,6 +190,18 @@ services:
     depends_on:
       - ledgers
 
+  # TPP-REST-SERVER
+  xs2a-tpp-rest-server:
+    image: adorsys/tpp-rest-server
+    restart: on-failure
+    build:
+      context: tpp-app/tpp-rest-server
+      dockerfile: Dockerfile
+    ports:
+      - "8093:8000"
+    networks:
+      - xs2a-net
+
   # Developer portal ui
   developer-portal-ui:
     image: adorsys/developer-portal-ui
