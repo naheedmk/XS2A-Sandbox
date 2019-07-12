@@ -1,0 +1,107 @@
+####################
+# Code Compilation #
+####################
+
+tpp-ui:
+  stage: "Code Compilation"
+  script:
+    - cd tpp-ui
+    - npm install
+    - npm run build --prod
+  cache:
+    key: "TPP_UI_${CI_COMMIT_REF_SLUG}"
+    paths:
+      - tpp-ui/node_modules
+  artifacts:
+    paths:
+      - "tpp-ui/dist"
+    name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
+    expire_in: "1 day"
+
+################
+# Unit Testing #
+################
+
+tpp-ui:
+  stage: "Unit Testing"
+  script:
+  - cd tpp-ui
+  - nvm use 10
+  - npm ci
+  - npm run test-ci
+
+##################
+# Docker Testing #
+##################
+
+tpp-ui:
+  stage: "Docker Testing"
+  variables:
+    DOCKER_DIR: ${DOCKER_DIR_TPP_UI}
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+  <<: *build_dockerimage
+
+#####################
+# Docker Publishing #
+#####################
+
+tpp-ui develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+tpp-ui nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+tpp-ui master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+########################
+# OpenShift Deployment #
+########################
+
+tpp-ui develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+tpp-ui nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+tpp-ui demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift

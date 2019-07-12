@@ -1,0 +1,95 @@
+####################
+# Code Compilation #
+####################
+
+devportal-ui:
+  stage: "Code Compilation"
+  script:
+    - cd developer-portal-ui
+    - npm install
+    - npm run build --prod
+  cache:
+    key: "DEVPORTAL_${CI_COMMIT_REF_SLUG}"
+    paths:
+      - developer-portal-ui/node_modules
+  artifacts:
+    paths:
+      - "developer-portal-ui/dist"
+    name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
+    expire_in: "1 day"
+
+##################
+# Docker Testing #
+##################
+
+devportal-ui:
+  stage: "Docker Testing"
+  variables:
+    DOCKER_DIR: ${DOCKER_DIR_DEVPORTAL_UI}
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+  <<: *build_dockerimage
+
+#####################
+# Docker Publishing #
+#####################
+
+devportal-ui develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+devportal-ui nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+devportal-ui master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+########################
+# OpenShift Deployment #
+########################
+
+devportal-ui develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+devportal-ui nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+devportal-ui demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift

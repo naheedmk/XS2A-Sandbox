@@ -1,0 +1,34 @@
+#################
+# Code Analysis #
+#################
+
+PMD Report:
+  stage: "Code Analysis"
+  script:
+    - mvn -Dmaven.test.skip=true package pmd:pmd
+  cache:
+    key: "Java_${CI_COMMIT_REF_SLUG}"
+    paths:
+      - /builds/adorsys/xs2a/psd2-dynamic-sandbox/.m2/repository
+  artifacts:
+    paths:
+      - "qa/pmd/pmd-ruleset.xml"
+      - "**/**/*/pmd.html"
+      - "**/*/pmd.xml"
+    name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-pmd"
+    expire_in: "10 day"
+
+################
+# Code Testing #
+################
+
+PMD Check:
+  stage: "Code Testing"
+  except:
+    - develop
+  cache:
+    key: "Java_${CI_COMMIT_REF_SLUG}"
+    paths:
+      - /builds/adorsys/xs2a/psd2-dynamic-sandbox/.m2/repository
+  script:
+    - mvn -Dmaven.test.skip=true package pmd:check

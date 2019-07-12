@@ -1,0 +1,75 @@
+##################
+# Docker Testing #
+##################
+
+postman:
+  stage: "Docker Testing"
+  variables:
+    DOCKER_DIR: ${DOCKER_DIR_POSTMAN_TESTS}
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+  <<: *build_dockerimage
+
+#####################
+# Docker Publishing #
+#####################
+
+postman develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+postman nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+postman master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+########################
+# OpenShift Deployment #
+########################
+
+postman develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+postman nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+postman demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
