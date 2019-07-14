@@ -9,13 +9,12 @@ image: "adorsys/ci-build"
 # ------------------------------------------------------------------
 
 include:
-  - /.gitlab/ci/oba.yml
-  - /.gitlab/ci/certgen.yml
-  - /.gitlab/ci/devportal.yml
-  - /.gitlab/ci/javadoc.yml
+  - /.gitlab/ci/backends.yml
+  - /.gitlab/ci/oba-ui.yml
+  - /.gitlab/ci/devportal-ui.yml
+  - /.gitlab/ci/tpp-ui.yml
   - /.gitlab/ci/pmd.yml
   - /.gitlab/ci/postman.yml
-  - /.gitlab/ci/tpp.yml
 
 # ------------------------------------------------------------------
 # stages
@@ -120,31 +119,3 @@ variables:
       --dest-creds=openshift:${OPENSHIFT_TOKEN}
       "docker://${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:${DOCKER_TAG}"
       "docker://${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/${DOCKER_IMAGE}:latest"
-
-# ------------------------------------------------------------------
-# jobs
-# ------------------------------------------------------------------
-
-##################
-# Docker Testing #
-##################
-
-# TODO: what happens with postman?
-
-#postman_tests:
-#  stage: "Test"
-#  image:
-#    name: postman/newman_alpine33
-#    entrypoint: [""]
-#  only:
-#    - schedules
-#  script:
-#    - npm config set unsafe-perm true
-#    - npm install -g newman-reporter-html
-#    - cd postman-scripts
-#    - newman run postman_collection.json -e postman_environment_dev.json -g postman_global_variable.json --reporters cli,html --reporter-html-template html_report_template.hbs --reporter-html-export postman-tests-report.html --suppress-exit-code
-#  artifacts:
-#    when: always
-#    paths:
-#      - "postman-scripts/postman-tests-report.html"
-#    expire_in: "10 day"
