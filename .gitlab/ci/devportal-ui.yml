@@ -4,6 +4,7 @@
 
 devportal-ui:
   stage: "Code Compilation"
+  image: "adorsys/ci-build"
   script:
     - cd developer-portal-ui
     - npm install

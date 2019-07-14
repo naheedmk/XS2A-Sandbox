@@ -4,6 +4,7 @@
 
 tpp-ui:
   stage: "Code Compilation"
+  image: "adorsys/ci-build"
   script:
     - cd tpp-ui
     - npm install
@@ -24,6 +25,7 @@ tpp-ui:
 
 tpp-ui:
   stage: "Unit Testing"
+  image: "adorsys/ci-build"
   script:
   - cd tpp-ui
   - nvm use 10

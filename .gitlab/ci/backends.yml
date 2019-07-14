@@ -4,6 +4,7 @@
 
 Javadoc Check:
   stage: "Code Analysis"
+  image: "adorsys/ci-build"
   except:
     - develop
   cache:
@@ -53,6 +54,7 @@ Backends Java11:
 
 Backends:
   stage: "Unit Testing"
+  image: "adorsys/ci-build"
   except:
     - develop
   cache:
@@ -111,6 +113,7 @@ oba nightly:
 
 oba master:
   stage: "Docker Publishing"
+  image: "adorsys/ci-build"
   only:
     - master
   variables:
@@ -215,6 +218,7 @@ certgen demo:
 
 Maven Central:
   stage: "Maven Release"
+  image: "adorsys/ci-build"
   cache:
     key: "Java_${CI_COMMIT_REF_SLUG}"
     paths:

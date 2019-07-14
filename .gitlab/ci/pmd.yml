@@ -4,6 +4,7 @@
 
 PMD Report:
   stage: "Code Analysis"
+  image: "adorsys/ci-build"
   script:
     - mvn -Dmaven.test.skip=true package pmd:pmd
   cache:
@@ -24,6 +25,7 @@ PMD Report:
 
 PMD Check:
   stage: "Code Testing"
+  image: "adorsys/ci-build"
   except:
     - develop
   cache:
