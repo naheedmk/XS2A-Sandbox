@@ -110,7 +110,7 @@ variables:
 #   ${DOCKER_TAG}
 #   $(OPENSHIFT_NAMESPACE)
 .deploy_openshift: &deploy_openshift
-  image: "adorsys/ci-build"
+  image: "twistedvines/skopeo"
   script:
     - >-
       skopeo copy
