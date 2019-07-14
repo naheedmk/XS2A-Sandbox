@@ -1,0 +1,205 @@
+####################
+# Code Compilation #
+####################
+
+Backends #
+
+Backends Java8:
+  stage: "Code Compilation"
+  <<: *build_java
+  variables:
+    BUILD_JAVA_VERSION: system@1.8
+  artifacts:
+    paths:
+      - "online-banking/online-banking-app/target/online-banking-app.jar"
+      - "certificate-generator/target/certificate-generator.jar"
+    name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
+    expire_in: "1 day"
+
+Backends Java11:
+  stage: "Code Compilation"
+  <<: *build_java
+  variables:
+    BUILD_JAVA_VERSION: system@1.11
+    JAVA_TOOL_OPTIONS: "-Djavax.net.ssl.trustStorePassword=changeit -XX:MaxRAM=3G"
+
+################
+# Unit Testing #
+################
+
+# Backends #
+
+Backends:
+  stage: "Unit Testing"
+  except:
+    - develop
+  cache:
+    key: "Java_${CI_COMMIT_REF_SLUG}"
+    paths:
+      - /builds/adorsys/xs2a/psd2-dynamic-sandbox/.m2/repository
+  script:
+    - cat /sys/fs/cgroup/memory/memory.limit_in_bytes
+    - java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize|maxram"
+    - mvn --fail-at-end clean install
+  artifacts:
+    paths:
+      - "**/target/surefire-reports/*"
+    name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-*"
+    expire_in: "10 day"
+
+##################
+# Docker Testing #
+##################
+
+oba:
+  stage: "Docker Testing"
+  variables:
+    DOCKER_DIR: ${DOCKER_DIR_ONLINE_BANKING}
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+  <<: *build_dockerimage
+
+certgen:
+  stage: "Docker Testing"
+  variables:
+    DOCKER_DIR: ${DOCKER_DIR_CERTIFICATE_GENERATOR}
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+  <<: *build_dockerimage
+
+#####################
+# Docker Publishing #
+#####################
+
+oba develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+oba nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+oba master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+certgen develop:
+  stage: "Docker Publishing"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: develop
+  <<: *publish_dockerhub
+
+certgen nightly:
+  stage: "Docker Publishing"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: nightly
+  <<: *publish_dockerhub
+
+certgen master:
+  stage: "Docker Publishing"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: latest
+  <<: *publish_dockerhub
+
+########################
+# OpenShift Deployment #
+########################
+
+oba develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+oba nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+oba demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
+
+certgen develop:
+  stage: "OpenShift Deployment"
+  only:
+    - develop
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: develop # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+  <<: *deploy_openshift
+
+certgen nightly:
+  stage: "OpenShift Deployment"
+  only:
+    - schedules
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: nightly # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
+  <<: *deploy_openshift
+
+certgen demo:
+  stage: "OpenShift Deployment"
+  only:
+    - master
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
+  <<: *deploy_openshift
+
+##############################
+# Maven Release of xs2a-impl #
+##############################
+
+Maven Central:
+  stage: "Maven Release"
+  cache:
+    key: "Java_${CI_COMMIT_REF_SLUG}"
+    paths:
+      - /builds/adorsys/xs2a/psd2-dynamic-sandbox/.m2/repository
+  only:
+    - tags
+  script:
+    - echo $SONATYPE_GPG_SECRET_KEY | base64 --decode | $SONATYPE_GPG_EXECUTABLE --import
+    - echo $SONATYPE_GPG_OWNERTRUST | base64 --decode | $SONATYPE_GPG_EXECUTABLE --import-ownertrust
+    - mvn --settings scripts/mvn-release-settings.xml -Prelease -DskipTests -B -U deploy
