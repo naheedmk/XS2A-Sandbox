@@ -3,12 +3,12 @@
 # ------------------------------------------------------------------
 
 include:
-  - /.gitlab/ci/backends.yml
-  - /.gitlab/ci/oba-ui.yml
-  - /.gitlab/ci/devportal-ui.yml
-  - /.gitlab/ci/tpp-ui.yml
-  - /.gitlab/ci/pmd.yml
-  - /.gitlab/ci/postman.yml
+  - ".gitlab/ci/backends.yml"
+  - ".gitlab/ci/oba-ui.yml"
+  - ".gitlab/ci/devportal-ui.yml"
+  - ".gitlab/ci/tpp-ui.yml"
+  - ".gitlab/ci/pmd.yml"
+  - ".gitlab/ci/postman.yml"
 
 # ------------------------------------------------------------------
 # stages
