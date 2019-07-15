@@ -25,8 +25,6 @@ Javadoc Check:
 # Code Compilation #
 ####################
 
-Backends #
-
 Backends Java8:
   stage: "Code Compilation"
   <<: *build_java
@@ -49,8 +47,6 @@ Backends Java11:
 ################
 # Unit Testing #
 ################
-
-# Backends #
 
 Backends:
   stage: "Unit Testing"
