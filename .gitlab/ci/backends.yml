@@ -99,7 +99,7 @@ VT certgen:
   before_script:
     - /clair -config=/config/config.yaml -log-level=warn &
     - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-#   - docker pull $CI_REGISTRY_IMAGE:latest
+    - docker pull ${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE_CERTIFICATE_GENERATOR}:test
     - wait-for-clair
   script:
     - clair-scanner -c http://localhost:6060 --ip $(hostname -i) "${DOCKER_IMAGE_CERTIFICATE_GENERATOR}:test"
