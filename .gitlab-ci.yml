@@ -100,7 +100,10 @@ variables:
   image: "adorsys/ci-build"
   script:
     - docker build -t "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test" ${DOCKER_DIR}
+
+    - docker login gitlab-registry.adorsys.de
     - docker push "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test"
+    - docker logout gitlab-registry.adorsys.de
 
 # args:
 #   ${DOCKER_IMAGE}
