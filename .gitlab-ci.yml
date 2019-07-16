@@ -20,6 +20,7 @@ stages:
   - "Code Compilation"      # build jar and provide as artifact
   - "Unit Testing"          # run tests and code quality checks
   - "Docker Testing"        # test building docker images, on success pass docker image
+  - "Vulnerability Testing" # test containers for known vulnerabilities
   - "Docker Publishing"     # push to DockerHub
   - "OpenShift Deployment"  # deploy to OpenShift
   - "Maven Release"         # release to Maven Central
