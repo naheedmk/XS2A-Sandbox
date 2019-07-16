@@ -2,7 +2,7 @@
 # Code Analysis #
 #################
 
-Javadoc Check:
+CA javadoc check:
   stage: "Code Analysis"
   image: "adorsys/ci-build"
   except:
@@ -25,7 +25,7 @@ Javadoc Check:
 # Code Compilation #
 ####################
 
-Backends Java8:
+CC backends Java8:
   stage: "Code Compilation"
   extends: .build_java
   variables:
@@ -37,7 +37,7 @@ Backends Java8:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
     expire_in: "1 day"
 
-Backends Java11:
+CC backends Java11:
   stage: "Code Compilation"
   extends: .build_java
   variables:
@@ -48,7 +48,7 @@ Backends Java11:
 # Unit Testing #
 ################
 
-Backends:
+UT backends:
   stage: "Unit Testing"
   image: "adorsys/ci-build"
   except:
@@ -71,14 +71,14 @@ Backends:
 # Docker Testing #
 ##################
 
-oba:
+DT oba:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_ONLINE_BANKING}
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
   extends: .build_dockerimage
 
-certgen:
+DT certgen:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_CERTIFICATE_GENERATOR}
@@ -89,7 +89,7 @@ certgen:
 # Docker Publishing #
 #####################
 
-oba develop:
+DP oba develop:
   stage: "Docker Publishing"
   only:
     - develop
@@ -98,7 +98,7 @@ oba develop:
     DOCKER_TAG: develop
   extends: .publish_dockerhub
 
-oba nightly:
+DP oba nightly:
   stage: "Docker Publishing"
   only:
     - schedules
@@ -107,7 +107,7 @@ oba nightly:
     DOCKER_TAG: nightly
   extends: .publish_dockerhub
 
-oba master:
+DP oba master:
   stage: "Docker Publishing"
   image: "adorsys/ci-build"
   only:
@@ -117,7 +117,7 @@ oba master:
     DOCKER_TAG: latest
   extends: .publish_dockerhub
 
-certgen develop:
+DP certgen develop:
   stage: "Docker Publishing"
   only:
     - develop
@@ -126,7 +126,7 @@ certgen develop:
     DOCKER_TAG: develop
   extends: .publish_dockerhub
 
-certgen nightly:
+DP certgen nightly:
   stage: "Docker Publishing"
   only:
     - schedules
@@ -135,7 +135,7 @@ certgen nightly:
     DOCKER_TAG: nightly
   extends: .publish_dockerhub
 
-certgen master:
+DP certgen master:
   stage: "Docker Publishing"
   only:
     - master
@@ -148,7 +148,7 @@ certgen master:
 # OpenShift Deployment #
 ########################
 
-oba develop:
+OD oba develop:
   stage: "OpenShift Deployment"
   only:
     - develop
@@ -158,7 +158,7 @@ oba develop:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
   extends: .deploy_openshift
 
-oba nightly:
+OD oba nightly:
   stage: "OpenShift Deployment"
   only:
     - schedules
@@ -168,7 +168,7 @@ oba nightly:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   extends: .deploy_openshift
 
-oba demo:
+OD oba demo:
   stage: "OpenShift Deployment"
   only:
     - master
@@ -178,7 +178,7 @@ oba demo:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
   extends: .deploy_openshift
 
-certgen develop:
+OD certgen develop:
   stage: "OpenShift Deployment"
   only:
     - develop
@@ -188,7 +188,7 @@ certgen develop:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
   extends: .deploy_openshift
 
-certgen nightly:
+OD certgen nightly:
   stage: "OpenShift Deployment"
   only:
     - schedules
@@ -198,7 +198,7 @@ certgen nightly:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   extends: .deploy_openshift
 
-certgen demo:
+OD certgen demo:
   stage: "OpenShift Deployment"
   only:
     - master
@@ -212,7 +212,7 @@ certgen demo:
 # Maven Release of xs2a-impl #
 ##############################
 
-Maven Central:
+MR maven central:
   stage: "Maven Release"
   image: "adorsys/ci-build"
   cache:

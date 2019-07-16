@@ -2,7 +2,7 @@
 # Docker Testing #
 ##################
 
-postman:
+DT postman:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_POSTMAN_TESTS}
@@ -33,7 +33,7 @@ postman:
 # Docker Publishing #
 #####################
 
-postman develop:
+DP postman develop:
   stage: "Docker Publishing"
   only:
     - develop
@@ -42,7 +42,7 @@ postman develop:
     DOCKER_TAG: develop
   extends: .publish_dockerhub
 
-postman nightly:
+DP postman nightly:
   stage: "Docker Publishing"
   only:
     - schedules
@@ -51,7 +51,7 @@ postman nightly:
     DOCKER_TAG: nightly
   extends: .publish_dockerhub
 
-postman master:
+DP postman master:
   stage: "Docker Publishing"
   only:
     - master
@@ -64,7 +64,7 @@ postman master:
 # OpenShift Deployment #
 ########################
 
-postman develop:
+OD postman develop:
   stage: "OpenShift Deployment"
   only:
     - develop
@@ -74,7 +74,7 @@ postman develop:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
   extends: .deploy_openshift
 
-postman nightly:
+OD postman nightly:
   stage: "OpenShift Deployment"
   only:
     - schedules
@@ -84,7 +84,7 @@ postman nightly:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   extends: .deploy_openshift
 
-postman demo:
+OD postman demo:
   stage: "OpenShift Deployment"
   only:
     - master

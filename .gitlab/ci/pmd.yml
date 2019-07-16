@@ -2,7 +2,7 @@
 # Code Analysis #
 #################
 
-PMD Report:
+CA pmd report:
   stage: "Code Analysis"
   image: "adorsys/ci-build"
   script:
@@ -23,7 +23,7 @@ PMD Report:
 # Code Testing #
 ################
 
-PMD Check:
+CT pmd check:
   stage: "Code Testing"
   image: "adorsys/ci-build"
   except:

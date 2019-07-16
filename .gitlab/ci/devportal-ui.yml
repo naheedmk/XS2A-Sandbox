@@ -2,7 +2,7 @@
 # Code Compilation #
 ####################
 
-devportal-ui:
+CC devportal-ui:
   stage: "Code Compilation"
   image: "adorsys/ci-build"
   script:
@@ -23,7 +23,7 @@ devportal-ui:
 # Docker Testing #
 ##################
 
-devportal-ui:
+DT devportal-ui:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_DEVPORTAL_UI}
@@ -34,7 +34,7 @@ devportal-ui:
 # Docker Publishing #
 #####################
 
-devportal-ui develop:
+DP devportal-ui develop:
   stage: "Docker Publishing"
   only:
     - develop
@@ -43,7 +43,7 @@ devportal-ui develop:
     DOCKER_TAG: develop
   extends: .publish_dockerhub
 
-devportal-ui nightly:
+DP devportal-ui nightly:
   stage: "Docker Publishing"
   only:
     - schedules
@@ -52,7 +52,7 @@ devportal-ui nightly:
     DOCKER_TAG: nightly
   extends: .publish_dockerhub
 
-devportal-ui master:
+DP devportal-ui master:
   stage: "Docker Publishing"
   only:
     - master
@@ -65,7 +65,7 @@ devportal-ui master:
 # OpenShift Deployment #
 ########################
 
-devportal-ui develop:
+OD devportal-ui develop:
   stage: "OpenShift Deployment"
   only:
     - develop
@@ -75,7 +75,7 @@ devportal-ui develop:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
   extends: .deploy_openshift
 
-devportal-ui nightly:
+OD devportal-ui nightly:
   stage: "OpenShift Deployment"
   only:
     - schedules
@@ -85,7 +85,7 @@ devportal-ui nightly:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   extends: .deploy_openshift
 
-devportal-ui demo:
+OD devportal-ui demo:
   stage: "OpenShift Deployment"
   only:
     - master

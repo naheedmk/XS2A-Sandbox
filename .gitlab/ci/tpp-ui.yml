@@ -2,7 +2,7 @@
 # Code Compilation #
 ####################
 
-tpp-ui:
+CC tpp-ui:
   stage: "Code Compilation"
   image: "adorsys/ci-build"
   script:
@@ -23,7 +23,7 @@ tpp-ui:
 # Unit Testing #
 ################
 
-tpp-ui:
+UT tpp-ui:
   stage: "Unit Testing"
   image: "adorsys/ci-build"
   script:
@@ -36,7 +36,7 @@ tpp-ui:
 # Docker Testing #
 ##################
 
-tpp-ui:
+DT tpp-ui:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_TPP_UI}
@@ -47,7 +47,7 @@ tpp-ui:
 # Docker Publishing #
 #####################
 
-tpp-ui develop:
+DP tpp-ui develop:
   stage: "Docker Publishing"
   only:
     - develop
@@ -56,7 +56,7 @@ tpp-ui develop:
     DOCKER_TAG: develop
   extends: .publish_dockerhub
 
-tpp-ui nightly:
+DP tpp-ui nightly:
   stage: "Docker Publishing"
   only:
     - schedules
@@ -65,7 +65,7 @@ tpp-ui nightly:
     DOCKER_TAG: nightly
   extends: .publish_dockerhub
 
-tpp-ui master:
+DP tpp-ui master:
   stage: "Docker Publishing"
   only:
     - master
@@ -78,7 +78,7 @@ tpp-ui master:
 # OpenShift Deployment #
 ########################
 
-tpp-ui develop:
+OD tpp-ui develop:
   stage: "OpenShift Deployment"
   only:
     - develop
@@ -88,7 +88,7 @@ tpp-ui develop:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
   extends: .deploy_openshift
 
-tpp-ui nightly:
+OD tpp-ui nightly:
   stage: "OpenShift Deployment"
   only:
     - schedules
@@ -98,7 +98,7 @@ tpp-ui nightly:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   extends: .deploy_openshift
 
-tpp-ui demo:
+OD tpp-ui demo:
   stage: "OpenShift Deployment"
   only:
     - master

@@ -2,7 +2,7 @@
 # Code Compilation #
 ####################
 
-oba-ui:
+CC oba-ui:
  stage: "Code Compilation"
  image: "adorsys/ci-build"
  script:
@@ -23,7 +23,7 @@ oba-ui:
 # Unit Testing #
 ################
 
-oba-ui:
+UT oba-ui:
   stage: "Unit Testing"
   image: "adorsys/ci-build"
   script:
@@ -36,7 +36,7 @@ oba-ui:
 # Docker Testing #
 ##################
 
-oba-ui:
+DT oba-ui:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_ONLINE_BANKING_UI}
@@ -47,7 +47,7 @@ oba-ui:
 # Docker Publishing #
 #####################
 
-oba-ui develop:
+DP oba-ui develop:
   stage: "Docker Publishing"
   only:
     - develop
@@ -56,7 +56,7 @@ oba-ui develop:
     DOCKER_TAG: develop
   extends: .publish_dockerhub
 
-oba-ui nightly:
+DP oba-ui nightly:
   stage: "Docker Publishing"
   only:
     - schedules
@@ -65,7 +65,7 @@ oba-ui nightly:
     DOCKER_TAG: nightly
   extends: .publish_dockerhub
 
-oba-ui master:
+DP oba-ui master:
   stage: "Docker Publishing"
   only:
     - master
@@ -78,7 +78,7 @@ oba-ui master:
 # OpenShift Deployment #
 ########################
 
-oba-ui develop:
+OD oba-ui develop:
   stage: "OpenShift Deployment"
   only:
     - develop
@@ -88,7 +88,7 @@ oba-ui develop:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
   extends: .deploy_openshift
 
-oba-ui nightly:
+OD oba-ui nightly:
   stage: "OpenShift Deployment"
   only:
     - schedules
@@ -98,7 +98,7 @@ oba-ui nightly:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
   extends: .deploy_openshift
 
-oba-ui demo:
+OD oba-ui demo:
   stage: "OpenShift Deployment"
   only:
     - master
