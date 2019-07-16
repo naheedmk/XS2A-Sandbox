@@ -28,7 +28,7 @@ devportal-ui:
   variables:
     DOCKER_DIR: ${DOCKER_DIR_DEVPORTAL_UI}
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
-  <<: *build_dockerimage
+  extends: .build_dockerimage
 
 #####################
 # Docker Publishing #
@@ -41,7 +41,7 @@ devportal-ui develop:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
     DOCKER_TAG: develop
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 devportal-ui nightly:
   stage: "Docker Publishing"
@@ -50,7 +50,7 @@ devportal-ui nightly:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
     DOCKER_TAG: nightly
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 devportal-ui master:
   stage: "Docker Publishing"
@@ -59,7 +59,7 @@ devportal-ui master:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
     DOCKER_TAG: latest
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 ########################
 # OpenShift Deployment #
@@ -73,7 +73,7 @@ devportal-ui develop:
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 devportal-ui nightly:
   stage: "OpenShift Deployment"
@@ -83,7 +83,7 @@ devportal-ui nightly:
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
     DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 devportal-ui demo:
   stage: "OpenShift Deployment"
@@ -93,4 +93,4 @@ devportal-ui demo:
     DOCKER_IMAGE: ${DOCKER_IMAGE_DEVPORTAL_UI}
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift

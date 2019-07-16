@@ -41,7 +41,7 @@ tpp-ui:
   variables:
     DOCKER_DIR: ${DOCKER_DIR_TPP_UI}
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
-  <<: *build_dockerimage
+  extends: .build_dockerimage
 
 #####################
 # Docker Publishing #
@@ -54,7 +54,7 @@ tpp-ui develop:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
     DOCKER_TAG: develop
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 tpp-ui nightly:
   stage: "Docker Publishing"
@@ -63,7 +63,7 @@ tpp-ui nightly:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
     DOCKER_TAG: nightly
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 tpp-ui master:
   stage: "Docker Publishing"
@@ -72,7 +72,7 @@ tpp-ui master:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
     DOCKER_TAG: latest
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 ########################
 # OpenShift Deployment #
@@ -86,7 +86,7 @@ tpp-ui develop:
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 tpp-ui nightly:
   stage: "OpenShift Deployment"
@@ -96,7 +96,7 @@ tpp-ui nightly:
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
     DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 tpp-ui demo:
   stage: "OpenShift Deployment"
@@ -106,4 +106,4 @@ tpp-ui demo:
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift

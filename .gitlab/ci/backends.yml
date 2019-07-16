@@ -27,7 +27,7 @@ Javadoc Check:
 
 Backends Java8:
   stage: "Code Compilation"
-  <<: *build_java
+  extends: .build_java
   variables:
     BUILD_JAVA_VERSION: system@1.8
   artifacts:
@@ -39,7 +39,7 @@ Backends Java8:
 
 Backends Java11:
   stage: "Code Compilation"
-  <<: *build_java
+  extends: .build_java
   variables:
     BUILD_JAVA_VERSION: system@1.11
     JAVA_TOOL_OPTIONS: "-Djavax.net.ssl.trustStorePassword=changeit -XX:MaxRAM=3G"
@@ -76,14 +76,14 @@ oba:
   variables:
     DOCKER_DIR: ${DOCKER_DIR_ONLINE_BANKING}
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
-  <<: *build_dockerimage
+  extends: .build_dockerimage
 
 certgen:
   stage: "Docker Testing"
   variables:
     DOCKER_DIR: ${DOCKER_DIR_CERTIFICATE_GENERATOR}
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
-  <<: *build_dockerimage
+  extends: .build_dockerimage
 
 #####################
 # Docker Publishing #
@@ -96,7 +96,7 @@ oba develop:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: develop
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 oba nightly:
   stage: "Docker Publishing"
@@ -105,7 +105,7 @@ oba nightly:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: nightly
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 oba master:
   stage: "Docker Publishing"
@@ -115,7 +115,7 @@ oba master:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: latest
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 certgen develop:
   stage: "Docker Publishing"
@@ -124,7 +124,7 @@ certgen develop:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
     DOCKER_TAG: develop
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 certgen nightly:
   stage: "Docker Publishing"
@@ -133,7 +133,7 @@ certgen nightly:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
     DOCKER_TAG: nightly
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 certgen master:
   stage: "Docker Publishing"
@@ -142,7 +142,7 @@ certgen master:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
     DOCKER_TAG: latest
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 ########################
 # OpenShift Deployment #
@@ -156,7 +156,7 @@ oba develop:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 oba nightly:
   stage: "OpenShift Deployment"
@@ -166,7 +166,7 @@ oba nightly:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 oba demo:
   stage: "OpenShift Deployment"
@@ -176,7 +176,7 @@ oba demo:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 certgen develop:
   stage: "OpenShift Deployment"
@@ -186,7 +186,7 @@ certgen develop:
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 certgen nightly:
   stage: "OpenShift Deployment"
@@ -196,7 +196,7 @@ certgen nightly:
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
     DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 certgen demo:
   stage: "OpenShift Deployment"
@@ -206,7 +206,7 @@ certgen demo:
     DOCKER_IMAGE: ${DOCKER_IMAGE_CERTIFICATE_GENERATOR}
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 ##############################
 # Maven Release of xs2a-impl #

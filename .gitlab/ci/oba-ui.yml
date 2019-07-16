@@ -41,7 +41,7 @@ oba-ui:
   variables:
     DOCKER_DIR: ${DOCKER_DIR_ONLINE_BANKING_UI}
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
-  <<: *build_dockerimage
+  extends: .build_dockerimage
 
 #####################
 # Docker Publishing #
@@ -54,7 +54,7 @@ oba-ui develop:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
     DOCKER_TAG: develop
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 oba-ui nightly:
   stage: "Docker Publishing"
@@ -63,7 +63,7 @@ oba-ui nightly:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
     DOCKER_TAG: nightly
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 oba-ui master:
   stage: "Docker Publishing"
@@ -72,7 +72,7 @@ oba-ui master:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
     DOCKER_TAG: latest
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 ########################
 # OpenShift Deployment #
@@ -86,7 +86,7 @@ oba-ui develop:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 oba-ui nightly:
   stage: "OpenShift Deployment"
@@ -96,7 +96,7 @@ oba-ui nightly:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
     DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 oba-ui demo:
   stage: "OpenShift Deployment"
@@ -106,5 +106,5 @@ oba-ui demo:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 

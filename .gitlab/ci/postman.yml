@@ -7,7 +7,7 @@ postman:
   variables:
     DOCKER_DIR: ${DOCKER_DIR_POSTMAN_TESTS}
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
-  <<: *build_dockerimage
+  extends: .build_dockerimage
 
 # TODO: what happens with postman?
 
@@ -40,7 +40,7 @@ postman develop:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
     DOCKER_TAG: develop
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 postman nightly:
   stage: "Docker Publishing"
@@ -49,7 +49,7 @@ postman nightly:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
     DOCKER_TAG: nightly
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 postman master:
   stage: "Docker Publishing"
@@ -58,7 +58,7 @@ postman master:
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
     DOCKER_TAG: latest
-  <<: *publish_dockerhub
+  extends: .publish_dockerhub
 
 ########################
 # OpenShift Deployment #
@@ -72,7 +72,7 @@ postman develop:
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 postman nightly:
   stage: "OpenShift Deployment"
@@ -82,7 +82,7 @@ postman nightly:
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
     DOCKER_TAG: nightly # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
 
 postman demo:
   stage: "OpenShift Deployment"
@@ -92,4 +92,4 @@ postman demo:
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
+  extends: .deploy_openshift
