@@ -9,7 +9,7 @@ import {GrantAccountAccess} from "../models/grant-account-access.model";
 })
 export class AccountService {
 
-    private url = `${environment.tppBackend}`;
+    private url = `${environment.staffAccessResourceEndPoint}`;
 
     constructor(private http: HttpClient) {
     }

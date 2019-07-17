@@ -22,7 +22,7 @@ export const environment = {
     production: false,
     staffAccessResourceEndPoint: '/ledgers/staff-access',
     certificateGenerationServer: '/certgen',
-    tppBackend: '/tpp-proxy/tpp'
+    tppBackend: '/tpp'
 };
 
 /*

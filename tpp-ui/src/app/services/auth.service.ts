@@ -24,6 +24,7 @@ export class AuthService {
     }
 
     authorize(credentials: Credentials): Observable<string> {
+        console.log(this.url + '/login');
         return this.http.post<any>(this.url + '/login', {}, {
             headers: new HttpHeaders({
                 login: credentials.login,
@@ -69,6 +70,7 @@ export class AuthService {
     }
 
     register(tppInfo: TppInfo): Observable<any> {
+        console.log(this.url + '/register');
         return this.http.post(this.url + '/register', tppInfo);
     }
 }
