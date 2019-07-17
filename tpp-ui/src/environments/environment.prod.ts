@@ -19,5 +19,5 @@ export const environment = {
     server: '/ledgers',
     staffAccessResourceEndPoint: '/ledgers/staff-access',
     certificateGenerationServer: '/certgen',
-    tppBackend: '/tpp'
+    tppBackend: '/tpp-proxy/tpp'
 };

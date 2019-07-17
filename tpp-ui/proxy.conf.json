@@ -19,13 +19,13 @@
     }
   },
 
-  "/tpp/*": {
+  "/tpp-proxy/*": {
     "target": "http://localhost:8093",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/tpp": "/tpp"
+      "^/tpp-proxy": ""
     }
   }
 }
