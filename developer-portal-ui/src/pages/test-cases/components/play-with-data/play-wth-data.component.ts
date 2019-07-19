@@ -25,6 +25,7 @@ export class PlayWthDataComponent implements OnInit {
   @Input() authorisationIdFlag: boolean;
   @Input() variablePathEnd: string;
   @Input() fieldsToCopy: string[];
+  @Input() dateFromFlag: boolean;
 
   response: object = {};
   finalUrl: string;
@@ -38,6 +39,7 @@ export class PlayWthDataComponent implements OnInit {
   transactionId = '';
   bookingStatus = '';
   redirectUrl = '';
+  dateFrom = '';
 
   paymentServiceSelect = ['payments', 'bulk-payments', 'periodic-payments'];
   paymentProductSelect = [
@@ -90,8 +92,9 @@ export class PlayWthDataComponent implements OnInit {
       this.finalUrl += '/' + this.accountId;
 
       this.finalUrl += this.variablePathEnd ? this.variablePathEnd : '';
+      this.finalUrl += this.dateFrom ? '?dateFrom=' + this.dateFrom : '';
       this.finalUrl += this.bookingStatus
-        ? '?bookingStatus=' + this.bookingStatus
+        ? '&bookingStatus=' + this.bookingStatus
         : '';
       this.finalUrl += this.transactionId ? '/' + this.transactionId : '';
     }
@@ -106,8 +109,13 @@ export class PlayWthDataComponent implements OnInit {
         .subscribe(
           resp => {
             this.response = Object.assign(resp);
-            if (this.response['body']._links.hasOwnProperty('scaRedirect')) {
+            if (
+              this.response['body'].hasOwnProperty('_links') &&
+              this.response['body']._links.hasOwnProperty('scaRedirect')
+            ) {
               this.redirectUrl += this.response['body']._links.scaRedirect.href;
+            } else {
+              console.log(this.response['body'].hasOwnProperty('_links'));
             }
             this.dataService.setIsLoading(false);
             this.dataService.showToast('Request sent', 'Success!', 'success');
@@ -146,7 +154,9 @@ export class PlayWthDataComponent implements OnInit {
 
   ngOnInit() {
     this.paymentService = this.paymentServiceFlag ? 'payments' : '';
-    this.paymentProduct = this.paymentProductFlag ? '/sepa-credit-transfers' : '';
+    this.paymentProduct = this.paymentProductFlag
+      ? '/sepa-credit-transfers'
+      : '';
     this.paymentId = this.paymentIdFlag ? 'paymentId' : '';
     this.cancellationId = this.cancellationIdFlag ? 'cancellationId' : '';
     this.consentId = this.consentIdFlag ? 'consentId' : '';
@@ -154,6 +164,7 @@ export class PlayWthDataComponent implements OnInit {
     this.accountId = this.accountIdFlag ? 'accountId' : '';
     this.transactionId = this.transactionIdFlag ? 'transactionId' : '';
     this.bookingStatus = this.bookingStatusFlag ? 'booked' : '';
+    this.dateFrom = this.dateFromFlag ? '2010-10-10' : '';
     this.fieldsToCopy = this.fieldsToCopy ? this.fieldsToCopy : [];
   }
 }
