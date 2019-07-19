@@ -114,8 +114,6 @@ export class PlayWthDataComponent implements OnInit {
               this.response['body']._links.hasOwnProperty('scaRedirect')
             ) {
               this.redirectUrl += this.response['body']._links.scaRedirect.href;
-            } else {
-              console.log(this.response['body'].hasOwnProperty('_links'));
             }
             this.dataService.setIsLoading(false);
             this.dataService.showToast('Request sent', 'Success!', 'success');
