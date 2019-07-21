@@ -91,9 +91,11 @@ DT certgen:
 
 VT oba:
   stage: "Vulnerability Testing"
-  image: "adorsys/ci-build"
+  image:
+    name: anchore/anchore-engine:v0.3.0
+    entrypoint: [""]
   services:
-  - name: "anchore/engine-db-preload:latest"
+  - name: "anchore/engine-db-preload:v0.3.0"
     alias: anchore-db
 
   variables:
@@ -107,9 +109,10 @@ VT oba:
     ANCHORE_TIMEOUT: 500
 
   script:
-    - curl -o /tmp/anchore_ci_tools.py https://raw.githubusercontent.com/anchore/ci-tools/master/scripts/anchore_ci_tools.py
-    - chmod +x /tmp/anchore_ci_tools.py
-    - mv /tmp/anchore_ci_tools.py /usr/local/bin/anchore_ci_tools
+    - |
+        curl -o /tmp/anchore_ci_tools.py https://raw.githubusercontent.com/anchore/ci-tools/v0.3.0/scripts/anchore_ci_tools.py
+        chmod +x /tmp/anchore_ci_tools.py
+        ln -s /tmp/anchore_ci_tools.py /usr/local/bin/anchore_ci_tools
     - anchore_ci_tools --setup
     - anchore-cli registry add "$CI_REGISTRY" gitlab-ci-token "$CI_JOB_TOKEN" --skip-validate
     - anchore_ci_tools --analyze --report --image "$IMAGE_NAME" --timeout "$ANCHORE_TIMEOUT"
