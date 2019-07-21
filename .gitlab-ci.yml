@@ -119,6 +119,8 @@ variables:
 #   $(OPENSHIFT_NAMESPACE)
 .deploy_openshift:
   image: "adorsys/ci-build"
+  cache: {}
+  dependencies: []
   script:
     - >-
       skopeo copy
