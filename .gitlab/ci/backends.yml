@@ -91,9 +91,7 @@ DT certgen:
 
 VT oba:
   stage: "Vulnerability Testing"
-  image:
-    name: anchore/anchore-engine:latest
-    entrypoint: [""]
+  image: "adorsys/ci-build"
   services:
   - name: "anchore/engine-db-preload:latest"
     alias: anchore-db
