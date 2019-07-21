@@ -115,13 +115,13 @@ VT oba:
         ln -s /tmp/anchore_ci_tools.py /usr/local/bin/anchore_ci_tools
     - anchore_ci_tools --setup
     - anchore-cli registry add "$CI_REGISTRY" gitlab-ci-token "$CI_JOB_TOKEN" --skip-validate
-    - anchore_ci_tools --analyze --report --image "$IMAGE_NAME" --timeout "$ANCHORE_TIMEOUT"
-    - >
-        if ; then
-            anchore-cli evaluate check "${DOCKER_IMAGE}"
+    - anchore_ci_tools --analyze --report --image "${DOCKER_IMAGE}" --timeout "$ANCHORE_TIMEOUT"
+    - |
+        if [ "$ANCHORE_FAIL_ON_POLICY" == "true" ]; then
+          anchore-cli evaluate check "${DOCKER_IMAGE}"
         else
-            set +o pipefail
-            anchore-cli evaluate check "${DOCKER_IMAGE}" | tee /dev/null
+          set +o pipefail
+          anchore-cli evaluate check "${DOCKER_IMAGE}" | tee /dev/null
         fi
 
   artifacts:
