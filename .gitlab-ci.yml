@@ -99,7 +99,7 @@ variables:
 .build_dockerimage:
   image: "adorsys/ci-build"
   script:
-    - docker build -t "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:test" ${DOCKER_DIR}
+    - docker build -t "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test" ${DOCKER_DIR}
 
 # args:
 #   ${DOCKER_IMAGE}
