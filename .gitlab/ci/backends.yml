@@ -95,8 +95,8 @@ VT oba:
     name: anchore/anchore-engine:latest
     entrypoint: [""]
   services:
-    - anchore/engine-db-preload:latest
-    - alias: anchore-db
+  - name: "anchore/engine-db-preload:latest"
+    alias: anchore-db
 
   variables:
     GIT_STRATEGY: none
