@@ -20,7 +20,7 @@ stages:
   - "Code Compilation"      # build jar and provide as artifact
   - "Unit Testing"          # run tests and code quality checks
   - "Docker Testing"        # test building docker images, on success pass docker image
-  - "Vulnerability Testing" # test containers for known vulnerabilities
+# - "Vulnerability Testing" # test containers for known vulnerabilities
   - "Docker Publishing"     # push to DockerHub
   - "OpenShift Deployment"  # deploy to OpenShift
   - "Maven Release"         # release to Maven Central
@@ -99,11 +99,7 @@ variables:
 .build_dockerimage:
   image: "adorsys/ci-build"
   script:
-    - docker build -t "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test" ${DOCKER_DIR}
-
-    - docker login gitlab-registry.adorsys.de
-    - docker push "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test"
-    - docker logout gitlab-registry.adorsys.de
+    - docker build -t "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:test" ${DOCKER_DIR}
 
 # args:
 #   ${DOCKER_IMAGE}
@@ -111,7 +107,7 @@ variables:
 .publish_dockerhub:
   image: "adorsys/ci-build"
   script:
-    - docker tag "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test" "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+    - docker tag "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:test" "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:${DOCKER_TAG}"
 
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASS
     - docker push "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE}:${DOCKER_TAG}"
