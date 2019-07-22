@@ -91,18 +91,10 @@ DT certgen:
 
 VT oba:
   stage: "Vulnerability Testing"
-  image: 
-    name: adorsys/ci-clair
-  services:
-    - name: arminc/clair-db:latest
-      alias: postgres
-  before_script:
-    - /clair -config=/config/config.yaml -log-level=warn &
-    - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - docker pull "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE_ONLINE_BANKING}:test"
-    - wait-for-clair
-  script:
-    - clair-scanner -c http://localhost:6060 --ip $(hostname -i) "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE_ONLINE_BANKING}:test"
+    variables:
+      DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+      DOCKER_TAG: test
+  extends: .scan_cve
 
 #####################
 # Docker Publishing #

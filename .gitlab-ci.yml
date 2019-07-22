@@ -108,6 +108,23 @@ variables:
 # args:
 #   ${DOCKER_IMAGE}
 #   ${DOCKER_TAG}
+.scan_cve:
+  image: 
+    name: adorsys/ci-clair
+  services:
+    - name: arminc/clair-db:latest
+      alias: postgres
+  before_script:
+    - /clair -config=/config/config.yaml -log-level=warn &
+    - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+    - docker pull "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+    - wait-for-clair
+  script:
+    - clair-scanner -c http://localhost:6060 --ip $(hostname -i) "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+
+# args:
+#   ${DOCKER_IMAGE}
+#   ${DOCKER_TAG}
 .publish_dockerhub:
   image: "adorsys/ci-build"
   script:
