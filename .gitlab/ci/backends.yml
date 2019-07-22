@@ -91,9 +91,9 @@ DT certgen:
 
 VT oba:
   stage: "Vulnerability Testing"
-    variables:
-      DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
-      DOCKER_TAG: test
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING}
+    DOCKER_TAG: test
   extends: .scan_cve
 
 #####################
