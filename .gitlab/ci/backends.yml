@@ -107,7 +107,7 @@ VT oba:
     ANCHORE_CLI_SSL_VERIFY: "n"
     ANCHORE_FAIL_ON_POLICY: "true"
     ANCHORE_TIMEOUT: 500
-    
+
   script:
     - |
         curl -o /tmp/anchore_ci_tools.py https://raw.githubusercontent.com/anchore/ci-tools/v0.3.0/scripts/anchore_ci_tools.py
@@ -115,7 +115,7 @@ VT oba:
         ln -s /tmp/anchore_ci_tools.py /usr/local/bin/anchore_ci_tools
     - anchore_ci_tools --setup
     - anchore-cli registry add "${GITLAB_REGISTRY}" gitlab-ci-token "$CI_JOB_TOKEN" --skip-validate
-    - anchore_ci_tools --analyze --report --image "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test" --timeout "$ANCHORE_TIMEOUT"
+    - anchore_ci_tools --analyze --report --image "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE_ONLINE_BANKING}:test" --timeout "$ANCHORE_TIMEOUT"
     - |
         if [ "$ANCHORE_FAIL_ON_POLICY" == "true" ]; then
           anchore-cli evaluate check "${DOCKER_IMAGE}"
