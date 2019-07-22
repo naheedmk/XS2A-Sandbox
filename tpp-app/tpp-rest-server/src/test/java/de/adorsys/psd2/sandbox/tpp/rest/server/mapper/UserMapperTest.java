@@ -1,6 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.mapper;
 
-import de.adorsys.ledgers.middleware.api.domain.um.AccessTypeTO;
+import de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.*;
 import org.junit.Assert;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Objects;
 
 public class UserMapperTest {
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
@@ -35,18 +35,20 @@ public class UserMapperTest {
         user.setLogin("vne");
         user.setPin("12345");
 
-        ScaUserData sca =  new ScaUserData();
-        sca.setMethodValue("vne@adorsys.de");
-        sca.setScaMethod(ScaMethodType.EMAIL);
+        // SCA EMAIL
+        ScaUserData scaEmail = new ScaUserData();
+        scaEmail.setMethodValue("vne@adorsys.de");
+        scaEmail.setScaMethod(ScaMethodType.EMAIL);
 
-//        AccountAccess accountAccess = new AccountAccess();
-//        accountAccess.setIban("DE1234567890");
-//        accountAccess.setAccessType(AccessTypeTO.OWNER);
-//        accountAccess.setScaWeight(50);
+        // SCA Mobile
+        ScaUserData scaMobile = new ScaUserData();
+        scaMobile.setScaMethod(ScaMethodType.MOBILE);
+        scaMobile.setMethodValue("0123456789");
 
-        user.setScaUserData(Arrays.asList(sca));
-        user.setUserRoles(Arrays.asList(UserRole.CUSTOMER));
+        user.setScaUserData(Arrays.asList(scaEmail, scaMobile));
 
+        // Assign all roles to the user
+        user.setUserRoles(Arrays.asList(UserRole.CUSTOMER, UserRole.STAFF, UserRole.TECHNICAL, UserRole.SYSTEM));
 
         UserTO userTO = userMapper.toUserTO(user);
 
@@ -54,7 +56,21 @@ public class UserMapperTest {
         Assert.assertEquals(userTO.getLogin(), user.getLogin());
         Assert.assertEquals(userTO.getPin(), user.getPin());
         Assert.assertEquals(userTO.getScaUserData().size(), user.getScaUserData().size());
-        Assert.assertEquals(userTO.getScaUserData().get(0).getMethodValue(), user.getScaUserData().get(0).getMethodValue());
-        Assert.assertEquals(userTO.getScaUserData().get(0).getScaMethod().toString(), user.getScaUserData().get(0).getScaMethod().toString());
+        Assert.assertEquals(userTO.getUserRoles().size(), user.getUserRoles().size());
+
+
+        for (int i = 0; i < userTO.getAccountAccesses().size(); i++)
+        {
+            Assert.assertEquals(userTO.getScaUserData().get(i).getMethodValue(), user.getScaUserData().get(i).getMethodValue());
+            Assert.assertEquals(userTO.getScaUserData().get(i).getScaMethod().toString(), user.getScaUserData().get(i).getScaMethod().toString());
+        }
+
+        int i = 0;
+        for (UserRoleTO role: userTO.getUserRoles())
+        {
+            Assert.assertEquals(role.toString(), user.getUserRoles().get(i).toString());
+            i++;
+        }
+
     }
 }
