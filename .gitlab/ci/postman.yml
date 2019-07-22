@@ -29,6 +29,17 @@ DT postman:
 #      - "postman-scripts/postman-tests-report.html"
 #    expire_in: "10 day"git
 
+#########################
+# Vulnerability Testing #
+#########################
+
+VT devportal-ui:
+  stage: "Vulnerability Testing"
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}
+    DOCKER_TAG: test
+  extends: .scan_cve
+
 #####################
 # Docker Publishing #
 #####################

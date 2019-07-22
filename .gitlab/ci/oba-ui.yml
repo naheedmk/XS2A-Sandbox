@@ -43,6 +43,17 @@ DT oba-ui:
     DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
   extends: .build_dockerimage
 
+#########################
+# Vulnerability Testing #
+#########################
+
+VT oba-ui:
+  stage: "Vulnerability Testing"
+  variables:
+    DOCKER_IMAGE: ${DOCKER_IMAGE_ONLINE_BANKING_UI}
+    DOCKER_TAG: test
+  extends: .scan_cve
+
 #####################
 # Docker Publishing #
 #####################
