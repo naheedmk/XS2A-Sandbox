@@ -3,8 +3,9 @@ setting:
   frequencyPerDay: 5
   combinedServiceIndicator: false
   scaApproaches:
-    - EMBEDDED
     - REDIRECT
+    - EMBEDDED
+    - DECOUPLED
   tppSignatureRequired: false
   bankOfferedConsentSupport: true
   pisRedirectUrlToAspsp: http://localhost:4400/payment-initiation/login?paymentId={encrypted-payment-id}&redirectId={redirect-id}
@@ -16,8 +17,8 @@ setting:
     - BOOKED
     - PENDING
   supportedAccountReferenceFields:
-    - IBAN
     - MSISDN
+    - IBAN
   consentLifetime: 0
   transactionLifetime: 0
   allPsd2Support: true
@@ -25,7 +26,6 @@ setting:
   signingBasketSupported: false
   paymentCancellationAuthorizationMandated: true
   piisConsentSupported: true
-  deltaReportSupported: false
   redirectUrlExpirationTimeMs: 600000
   authorisationExpirationTimeMs: 86400000
   notConfirmedConsentExpirationPeriodMs: 86400000
@@ -44,3 +44,9 @@ setting:
   availableAccountsConsentSupported: true
   scaByOneTimeAvailableAccountsConsentRequired: true
   psuInInitialRequestMandated: false
+  scaRedirectFlow: REDIRECT
+  deltaListSupported: false
+  entryReferenceFromSupported: false
+  supportedTransactionApplicationTypes:
+    - JSON
+  startAuthorisationMode: auto
