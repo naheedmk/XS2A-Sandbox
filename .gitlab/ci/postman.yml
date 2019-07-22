@@ -33,7 +33,7 @@ DT postman:
 # Vulnerability Testing #
 #########################
 
-VT devportal-ui:
+VT postman:
   stage: "Vulnerability Testing"
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_POSTMAN_TESTS}

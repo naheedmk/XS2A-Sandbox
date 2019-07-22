@@ -47,7 +47,7 @@ DT tpp-ui:
 # Vulnerability Testing #
 #########################
 
-VT devportal-ui:
+VT tpp-ui:
   stage: "Vulnerability Testing"
   variables:
     DOCKER_IMAGE: ${DOCKER_IMAGE_TPP_UI}
