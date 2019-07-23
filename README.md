@@ -2,14 +2,6 @@
 
 Implementation of the dynamic sandbox based on the adorsys ledgers core banking system and XS2A services.
 
-## Recommended hardware requirements
-
-- CPU 2Cores
-- Memory 4.3GB
-- Free disk space 10GB
-
-![](/images/cpu_memory_load.png)
-
 ## Running the XS2ASandbox
 
 0.For build and run XS2ASandbox requires GNU Make to be installed on your local machine. Please, make sure it is installed.
