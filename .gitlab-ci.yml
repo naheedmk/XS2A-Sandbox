@@ -98,8 +98,6 @@ variables:
 #   ${DOCKER_IMAGE}
 .build_dockerimage:
   image: "adorsys/ci-build"
-  variables:
-    GIT_STRATEGY: none
   script:
     - docker build -t "${GITLAB_REGISTRY}/${GITLAB_NAMESPACE}/${DOCKER_IMAGE}:test" ${DOCKER_DIR}
 
