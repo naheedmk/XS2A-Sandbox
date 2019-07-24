@@ -8,7 +8,10 @@ import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class UserMapperTest {
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
@@ -30,6 +33,41 @@ public class UserMapperTest {
 
     @Test
     public void toUserTO() {
+
+        User user = createUser();
+
+        UserTO userTO = userMapper.toUserTO(user);
+
+        Assert.assertEquals(userTO.getEmail(), user.getEmail());
+        Assert.assertEquals(userTO.getLogin(), user.getLogin());
+        Assert.assertEquals(userTO.getPin(), user.getPin());
+        Assert.assertEquals(userTO.getScaUserData().size(), user.getScaUserData().size());
+        Assert.assertEquals(userTO.getUserRoles().size(), user.getUserRoles().size());
+
+
+        // asserting that account accesses are the same after mapping
+        for (int i = 0; i < userTO.getAccountAccesses().size(); i++)
+        {
+            Assert.assertEquals(userTO.getScaUserData().get(i), user.getScaUserData().get(i));
+        }
+
+        // getting user roles before mapping as list
+        List<String> userRoles = user.getUserRoles()
+                                            .stream()
+                                            .map(Enum::toString)
+                                            .collect(Collectors.toList());
+
+        // getting user roles before mapping as list
+        List<String> userToRoles = userTO.getUserRoles()
+                                             .stream()
+                                             .map(Enum::toString)
+                                             .collect(Collectors.toList());
+
+        // comparing two lists and asserting that they are the equal
+        Assert.assertEquals(userRoles, userToRoles);
+    }
+
+    private User createUser() {
         User user = new User();
         user.setEmail("vne@adorsys.de");
         user.setLogin("vne");
@@ -50,27 +88,6 @@ public class UserMapperTest {
         // Assign all roles to the user
         user.setUserRoles(Arrays.asList(UserRole.CUSTOMER, UserRole.STAFF, UserRole.TECHNICAL, UserRole.SYSTEM));
 
-        UserTO userTO = userMapper.toUserTO(user);
-
-        Assert.assertEquals(userTO.getEmail(), user.getEmail());
-        Assert.assertEquals(userTO.getLogin(), user.getLogin());
-        Assert.assertEquals(userTO.getPin(), user.getPin());
-        Assert.assertEquals(userTO.getScaUserData().size(), user.getScaUserData().size());
-        Assert.assertEquals(userTO.getUserRoles().size(), user.getUserRoles().size());
-
-
-        for (int i = 0; i < userTO.getAccountAccesses().size(); i++)
-        {
-            Assert.assertEquals(userTO.getScaUserData().get(i).getMethodValue(), user.getScaUserData().get(i).getMethodValue());
-            Assert.assertEquals(userTO.getScaUserData().get(i).getScaMethod().toString(), user.getScaUserData().get(i).getScaMethod().toString());
-        }
-
-        int i = 0;
-        for (UserRoleTO role: userTO.getUserRoles())
-        {
-            Assert.assertEquals(role.toString(), user.getUserRoles().get(i).toString());
-            i++;
-        }
-
+        return user;
     }
 }
