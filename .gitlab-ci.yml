@@ -42,10 +42,10 @@ variables:
   # Private Openshift Images #
   ############################
 
-  OPENSHIFT_NAMESPACE_DEV: "adorsys-dynamic-sandbox-dev"
-  OPENSHIFT_NAMESPACE_INTEG: "adorsys-dynamic-sandbox-integ"
-  OPENSHIFT_NAMESPACE_DEMO: "adorsys-dynamic-sandbox-demo"
-
+  #OPENSHIFT_NAMESPACE_DEV: "adorsys-dynamic-sandbox-dev"
+  #OPENSHIFT_NAMESPACE_INTEG: "adorsys-dynamic-sandbox-integ"
+  #OPENSHIFT_NAMESPACE_DEMO: "adorsys-dynamic-sandbox-demo"
+  OPENSHIFT_NAMESPACE_KOA_TEST_DEPLOY_DYNAMIC_SANDBOX: "koa-test-deploy-dynamic-sandbox"
   ###########################
   # Build variables         #
   ###########################
@@ -274,7 +274,15 @@ backend_unit_tests:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-*"
     expire_in: "10 day"
 
-ttp_frontend_unit_tests:
+devportal_frontend_unit_tests:
+  stage: "Test"
+  script:
+  - cd developer-portal-ui
+  - nvm use 10
+  - npm ci
+  - npm run test-ci
+
+tpp_frontend_unit_tests:
   stage: "Test"
   script:
   - cd tpp-ui
@@ -296,91 +304,22 @@ test building docker images:
     DOCKER_TAG: test
   <<: *build_docker_images
 
-postman_tests:
-  stage: "Test"
-  image:
-    name: postman/newman_alpine33
-    entrypoint: [""]
-  only:
-    - schedules
-  script:
-    - npm config set unsafe-perm true
-    - npm install -g newman-reporter-html
-    - cd postman-scripts
-    - newman run postman_collection.json -e postman_environment_dev.json -g postman_global_variable.json --reporters cli,html --reporter-html-template html_report_template.hbs --reporter-html-export postman-tests-report.html --suppress-exit-code
-  artifacts:
-    when: always
-    paths:
-      - "postman-scripts/postman-tests-report.html"
-    expire_in: "10 day"
 # develop
 
 build_dockerhub_image_develop:
   stage: "Package"
   only:
-    - develop
+    - koa-test-deploy-dynamic-sandbox
   variables:
-    DOCKER_TAG: develop
+    DOCKER_TAG: koa-test-deploy-dynamic-sandbox
   <<: *push_dockerhub_images
 
 deploy_openshift_develop:
   stage: "Deploy"
   only:
-    - develop
+    - koa-test-deploy-dynamic-sandbox
   variables:
-    DOCKER_TAG: develop # Dockerhub source tag
-    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
+    DOCKER_TAG: koa-test-deploy-dynamic-sandbox # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_KOA_TEST_DEPLOY_DYNAMIC_SANDBOX} # Openshift target namespace
   <<: *deploy_openshift
 
-# nightly
-
-build_dockerhub_image_nightly:
-  stage: "Package"
-  only:
-    - schedules
-  variables:
-    DOCKER_TAG: nightly
-  <<: *push_dockerhub_images
-
-deploy_openshift_nightly:
-  stage: "Deploy"
-  only:
-    - schedules
-  variables:
-    DOCKER_TAG: nightly # Dockerhub source tag
-    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
-
-# master
-
-build_dockerhub_image_master:
-  stage: "Package"
-  only:
-    - master
-  variables:
-    DOCKER_TAG: latest
-  <<: *push_dockerhub_images
-
-deploy_openshift_demo:
-  stage: "Deploy"
-  only:
-    - master
-  variables:
-    DOCKER_TAG: latest # Dockerhub source tag
-    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
-
-# tags
-
-release_maven_central:
-  stage: "release"
-  cache:
-    key: "Java_${CI_COMMIT_REF_SLUG}"
-    paths:
-      - /builds/adorsys/xs2a/psd2-dynamic-sandbox/.m2/repository
-  only:
-    - tags
-  script:
-    - echo $SONATYPE_GPG_SECRET_KEY | base64 --decode | $SONATYPE_GPG_EXECUTABLE --import
-    - echo $SONATYPE_GPG_OWNERTRUST | base64 --decode | $SONATYPE_GPG_EXECUTABLE --import-ownertrust
-    - mvn --settings scripts/mvn-release-settings.xml -Prelease -DskipTests -B -U deploy
