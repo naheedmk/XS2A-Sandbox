@@ -1,6 +1,5 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.mapper;
 
-import de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.*;
 import org.junit.Assert;
@@ -8,10 +7,10 @@ import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserMapperTest {
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
@@ -46,25 +45,24 @@ public class UserMapperTest {
 
 
         // asserting that account accesses are the same after mapping
-        for (int i = 0; i < userTO.getAccountAccesses().size(); i++)
-        {
+        for (int i = 0; i < userTO.getAccountAccesses().size(); i++) {
             Assert.assertEquals(userTO.getScaUserData().get(i), user.getScaUserData().get(i));
         }
 
         // getting user roles before mapping as list
         List<String> userRoles = user.getUserRoles()
-                                            .stream()
-                                            .map(Enum::toString)
-                                            .collect(Collectors.toList());
+                                     .stream()
+                                     .map(Enum::toString)
+                                     .collect(Collectors.toList());
 
         // getting user roles before mapping as list
         List<String> userToRoles = userTO.getUserRoles()
-                                             .stream()
-                                             .map(Enum::toString)
-                                             .collect(Collectors.toList());
+                                       .stream()
+                                       .map(Enum::toString)
+                                       .collect(Collectors.toList());
 
         // comparing two lists and asserting that they are the equal
-        Assert.assertEquals(userRoles, userToRoles);
+        assertThat(userRoles).containsExactlyInAnyOrderElementsOf(userToRoles);
     }
 
     private User createUser() {
@@ -86,7 +84,7 @@ public class UserMapperTest {
         user.setScaUserData(Arrays.asList(scaEmail, scaMobile));
 
         // Assign all roles to the user
-        user.setUserRoles(Arrays.asList(UserRole.CUSTOMER, UserRole.STAFF, UserRole.TECHNICAL, UserRole.SYSTEM));
+        user.setUserRoles(Arrays.asList(UserRole.values()));
 
         return user;
     }
