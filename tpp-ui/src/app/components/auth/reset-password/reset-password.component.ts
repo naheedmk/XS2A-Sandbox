@@ -9,9 +9,7 @@ import {Router} from "@angular/router";
     styleUrls: ['../auth.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-    switchTemplate: boolean;
     resetPasswordForm: FormGroup;
-    confirmNewPasswordForm: FormGroup;
     public submitted: boolean;
     public errorMessage: string;
 
@@ -26,11 +24,6 @@ export class ResetPasswordComponent implements OnInit {
             email: ['', [Validators.required, Validators.pattern(new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)),]],
             login: ['', Validators.required],
         });
-
-        this.confirmNewPasswordForm = this.formBuilder.group({
-            newPassword: ['', Validators.required],
-            code: [''],
-        });
     }
 
     onSubmit() {
@@ -41,30 +34,6 @@ export class ResetPasswordComponent implements OnInit {
         }
 
         this.authService.requestCodeForResetPassword(this.resetPasswordForm.value)
-            .subscribe(success => {
-                if (success) {
-                    console.log(success);
-                    this.switchTemplate = true;
-                    this.confirmNewPasswordForm.get('code').setValue(success.code);
-                    //this.router.navigate(['/']);
-                } else {
-                    this.errorMessage = 'Invalid credentials'
-                }
-            });
-    }
-
-    onPasswordSubmit() {
-        if (this.confirmNewPasswordForm.invalid) {
-            this.submitted = true;
-            return;
-        }
-
-        this.authService.changePassword(this.confirmNewPasswordForm.value)
-            .subscribe(success => {
-                if (success) {
-                    console.log(success);
-                    this.router.navigate(['/login']);
-                }
-            });
+            .subscribe(() => this.router.navigate(['/confirm-password']));
     }
 }

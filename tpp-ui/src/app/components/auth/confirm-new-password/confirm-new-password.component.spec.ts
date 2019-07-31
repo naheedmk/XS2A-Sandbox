@@ -1,17 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResetPasswordComponent } from './reset-password.component';
+import { ConfirmNewPasswordComponent } from './confirm-new-password.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {DebugElement} from "@angular/core";
 import {By} from "@angular/platform-browser";
 import {AuthService} from "../../../services/auth.service";
-import {DebugElement} from "@angular/core";
 
-describe('ResetPasswordComponent', () => {
-  let component: ResetPasswordComponent;
-  let fixture: ComponentFixture<ResetPasswordComponent>;
+
+describe('ConfirmNewPasswordComponent', () => {
+  let component: ConfirmNewPasswordComponent;
+  let fixture: ComponentFixture<ConfirmNewPasswordComponent>;
   let authService: AuthService;
   let authServiceSpy;
   let de: DebugElement;
@@ -25,13 +26,14 @@ describe('ResetPasswordComponent', () => {
         RouterTestingModule,
         BrowserAnimationsModule,
       ],
-      declarations: [ ResetPasswordComponent ]
+      providers: [ AuthService ],
+      declarations: [ ConfirmNewPasswordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResetPasswordComponent);
+    fixture = TestBed.createComponent(ConfirmNewPasswordComponent);
     component = fixture.componentInstance;
     authService = fixture.debugElement.injector.get(AuthService);
 
@@ -42,55 +44,55 @@ describe('ResetPasswordComponent', () => {
     component.ngOnInit();
   });
 
-  it('should call login on the service', () => {
-    authServiceSpy = spyOn(authService, 'requestCodeForResetPassword').and.callThrough();
-
-    const form = component.resetPasswordForm;
-    form.controls['login'].setValue('test');
-    form.controls['email'].setValue('test@test.de');
-
-    el = fixture.debugElement.query(By.css('button')).nativeElement;
-    el.click();
-
-    expect(authServiceSpy).toHaveBeenCalledWith({login: 'test', email: 'test@test.de'});
-    expect(authServiceSpy).toHaveBeenCalled();
-  });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('loginForm should be invalid when at least one field is empty', () => {
-    expect(component.resetPasswordForm.valid).toBeFalsy();
+  it('should call changePassword on the service', () => {
+    authServiceSpy = spyOn(authService, 'changePassword').and.callThrough();
+
+    const form = component.confirmNewPasswordForm;
+    form.controls['newPassword'].setValue('12345');
+    form.controls['code'].setValue('12345678');
+
+    el = fixture.debugElement.query(By.css('button')).nativeElement;
+    el.click();
+
+    expect(authServiceSpy).toHaveBeenCalledWith({newPassword: '12345', code: '12345678'});
+    expect(authServiceSpy).toHaveBeenCalled();
   });
 
-  it('email field validity', () => {
-    let errors = {};
-    const email = component.resetPasswordForm.controls['email'];
-    expect(email.valid).toBeFalsy();
+  it('confirmNewPasswordForm should be invalid when at least one field is empty', () => {
+    expect(component.confirmNewPasswordForm.valid).toBeFalsy();
+  });
 
-    // email field is required
-    errors = email.errors || {};
+  it('New password field validity', () => {
+    let errors = {};
+    const confirmNewPassword = component.confirmNewPasswordForm.controls['newPassword'];
+    expect(confirmNewPassword.valid).toBeFalsy();
+
+    // confirmNewPassword field is required
+    errors = confirmNewPassword.errors || {};
     expect(errors['required']).toBeTruthy();
 
-    // set email to something correct
-    email.setValue('test@test.de');
-    errors = email.errors || {};
+    // set confirmNewPassword to something correct
+    confirmNewPassword.setValue('123345');
+    errors = confirmNewPassword.errors || {};
     expect(errors['required']).toBeFalsy();
   });
 
-  it('login field validity', () => {
+  it('code field validity', () => {
     let errors = {};
-    const login = component.resetPasswordForm.controls['login'];
-    expect(login.valid).toBeFalsy();
+    const code = component.confirmNewPasswordForm.controls['code'];
+    expect(code.valid).toBeFalsy();
 
-    // login field is required
-    errors = login.errors || {};
+    // code field is required
+    errors = code.errors || {};
     expect(errors['required']).toBeTruthy();
 
-    // set login to something correct
-    login.setValue('foo');
-    errors = login.errors || {};
+    // set code to something correct
+    code.setValue('12345678');
+    errors = code.errors || {};
     expect(errors['required']).toBeFalsy();
   });
 

@@ -16,6 +16,7 @@ import {UploadFileComponent} from './uploadFile/uploadFile.component';
 import {TestDataGenerationComponent} from './components/testDataGeneration/test-data-generation.component'
 import {AccountAccessManagementComponent} from "./components/account-access-management/account-access-management.component";
 import {ResetPasswordComponent} from "./components/auth/reset-password/reset-password.component";
+import {ConfirmNewPasswordComponent} from "./components/auth/confirm-new-password/confirm-new-password.component";
 
 const routes: Routes = [
     {
@@ -82,6 +83,10 @@ const routes: Routes = [
     {
         path: 'reset-password',
         component: ResetPasswordComponent
+    },
+    {
+        path: 'confirm-password',
+        component: ConfirmNewPasswordComponent
     },
     {
         path: 'register',
