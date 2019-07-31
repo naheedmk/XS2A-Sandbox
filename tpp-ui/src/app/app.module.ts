@@ -34,6 +34,7 @@ import {FilterPipeModule} from "ngx-filter-pipe";
 import {GlobalErrorsHandler} from "./interceptors/global-errors-handler";
 import {AutoLogoutService} from "./services/auto-logout.service";
 import { AccountAccessManagementComponent } from './components/account-access-management/account-access-management.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import { AccountAccessManagementComponent } from './components/account-access-ma
         DocumentUploadComponent,
         TestDataGenerationComponent,
         CertificateComponent,
-        AccountAccessManagementComponent
+        AccountAccessManagementComponent,
+        ResetPasswordComponent
     ],
     imports: [
         BrowserModule,
