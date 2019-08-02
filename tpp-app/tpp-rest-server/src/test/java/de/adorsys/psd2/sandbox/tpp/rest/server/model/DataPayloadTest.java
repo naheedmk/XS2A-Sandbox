@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DataPayloadTest {
 
     @Test
-    public void isValidPayloadValid() {
+    public void isValidPayload_valid() {
         DataPayload data = getData(false, false, false);
         boolean result = data.isValidPayload();
         assertThat(result).isTrue();
