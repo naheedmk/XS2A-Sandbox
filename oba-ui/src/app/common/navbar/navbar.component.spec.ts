@@ -1,12 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {NavbarComponent} from './navbar.component';
-import {RouterTestingModule} from "@angular/router/testing";
-import {IconModule} from "../icon/icon.module";
-import {AuthService} from "../../services/auth.service";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {ReactiveFormsModule} from "@angular/forms";
-import {Router} from "@angular/router";
+import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ReactiveFormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -19,8 +18,7 @@ describe('NavbarComponent', () => {
             imports: [
                 RouterTestingModule,
                 HttpClientTestingModule,
-                ReactiveFormsModule,
-                IconModule,
+                ReactiveFormsModule
             ],
             providers: [TestBed.overrideProvider(AuthService, {useValue: authServiceSpy})],
             declarations: [NavbarComponent]
@@ -38,6 +36,5 @@ describe('NavbarComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-        expect(authServiceSpy.isLoggedIn).toHaveBeenCalled();
     });
 });
