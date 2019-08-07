@@ -7,13 +7,16 @@ import {AppComponent} from './app.component';
 import {AuthInterceptor} from './common/interceptors/AuthInterceptor';
 import {AisService} from './common/services/ais.service';
 import {ShareDataService} from './common/services/share-data.service';
-import {ObaErrorsHandler} from "./common/interceptors/ObaErrorsHandler";
-import {NgHttpLoaderModule} from "ng-http-loader";
-import {ApiModule} from "./api/api.module";
+import {ObaErrorsHandler} from './common/interceptors/ObaErrorsHandler';
+import {NgHttpLoaderModule} from 'ng-http-loader';
+import {ApiModule} from './api/api.module';
 import {InternalServerErrorComponent} from './internal-server-error/internal-server-error.component';
-import {InfoModule} from "./common/info/info.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {SettingsHttpService} from "./common/services/settings-http.service";
+import {InfoModule} from './common/info/info.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SettingsHttpService} from './common/services/settings-http.service';
+import {LoginComponent} from './login/login.component';
+import {ConsentsComponent} from './consents/consents.component';
+import {AuthGuard} from './common/guards/auth.guard';
 
 export function app_Init(settingsHttpService: SettingsHttpService) {
   return () => settingsHttpService.initializeApp();
@@ -22,6 +25,8 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
+    ConsentsComponent,
     InternalServerErrorComponent
   ],
   imports: [
@@ -38,6 +43,7 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
   providers: [
     AisService,
     ShareDataService,
+    AuthGuard,
     { provide: APP_INITIALIZER, useFactory: app_Init, deps: [SettingsHttpService], multi: true },
     {
       provide: HTTP_INTERCEPTORS,
