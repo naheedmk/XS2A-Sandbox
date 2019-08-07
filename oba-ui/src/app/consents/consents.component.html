@@ -1,3 +1,32 @@
-<div *ngFor="let consent of consents">
-  {{consent}}
+<div class="container-fluid">
+  <div class="header__title">Consents</div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Status</th>
+            <th scope="col">frequencyPerDay</th>
+            <th scope="col">lastActionDate</th>
+            <th scope="col">validUntil</th>
+            <th scope="col">recurringIndicator</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let consent of consents; index as i">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{consent.consentStatus}}</td>
+            <td>{{consent.frequencyPerDay}}</td>
+            <td>{{consent.lastActionDate}}</td>
+            <td>{{consent.validUntil}}</td>
+            <td>{{consent.recurringIndicator}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
