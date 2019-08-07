@@ -17,6 +17,9 @@ import {SettingsHttpService} from './common/services/settings-http.service';
 import {LoginComponent} from './login/login.component';
 import {ConsentsComponent} from './consents/consents.component';
 import {AuthGuard} from './common/guards/auth.guard';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {NavbarComponent} from './common/navbar/navbar.component';
+import {SidebarComponent} from './common/sidebar/sidebar.component';
 
 export function app_Init(settingsHttpService: SettingsHttpService) {
   return () => settingsHttpService.initializeApp();
@@ -26,6 +29,9 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
   declarations: [
     AppComponent,
     LoginComponent,
+    DashboardComponent,
+    NavbarComponent,
+    SidebarComponent,
     ConsentsComponent,
     InternalServerErrorComponent
   ],

@@ -10,7 +10,7 @@ import { AuthService } from '../common/services/auth.service';
 })
 export class ConsentsComponent implements OnInit {
 
-  consents: AisAccountConsent[];
+  consents: AisAccountConsent[] = [];
 
   constructor(
     private onlineBankingAISService: OnlineBankingAISService,

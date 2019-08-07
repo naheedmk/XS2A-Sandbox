@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {ConsentsComponent} from './consents/consents.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from './common/guards/auth.guard';
 
 export const routes: Routes = [
@@ -10,9 +11,15 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'consents',
-    component: ConsentsComponent,
-    canActivate: [AuthGuard]
+    path: '',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'consents',
+        component: ConsentsComponent
+      }
+    ]
   },
   {
     path: 'account-information',
@@ -28,7 +35,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/account-information/login'
+    redirectTo: '/login'
   }
 
 ];
