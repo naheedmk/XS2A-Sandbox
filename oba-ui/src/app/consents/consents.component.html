@@ -10,6 +10,8 @@
             <th scope="col">#</th>
             <th scope="col">ID</th>
             <th scope="col">Accounts</th>
+            <th scope="col">Balances</th>
+            <th scope="col">Transactions</th>
             <th scope="col">Status</th>
             <th scope="col">frequencyPerDay</th>
             <th scope="col">lastActionDate</th>
@@ -25,6 +27,18 @@
               <div *ngFor="let account of consent.access.accounts; index as i; last as isLast" [ngClass]="{'mb-2': !isLast}">
                 IBAN: {{account.iban}}<br/>
                 Currency: {{account.currency}}
+              </div>
+            </td>
+            <td>
+              <div *ngFor="let balance of consent.access.balances; index as i; last as isLast" [ngClass]="{'mb-2': !isLast}">
+                IBAN: {{balance.iban}}<br/>
+                Currency: {{balance.currency}}
+              </div>
+            </td>
+            <td>
+              <div *ngFor="let transaction of consent.access.transactions; index as i; last as isLast" [ngClass]="{'mb-2': !isLast}">
+                IBAN: {{transaction.iban}}<br/>
+                Currency: {{transaction.currency}}
               </div>
             </td>
             <td>{{consent.consentStatus}}</td>
