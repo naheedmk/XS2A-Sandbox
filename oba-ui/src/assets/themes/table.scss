@@ -1,8 +1,12 @@
 @import "~src/assets/themes/variables";
 
-tr {
+.table-clickable {
+  tr {
     cursor: pointer;
+  }
+}
 
+tr {
     &:hover {
         background-color: #f3f3f3;
         transition: .4s;
