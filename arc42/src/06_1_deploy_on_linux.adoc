@@ -49,7 +49,7 @@ For a fast and painless start of all the services it should be not less than 5 G
 > make all
 ```
 
-3. Table of services and dependencies:
+3.Table of services and dependencies:
 
 | Service                             | Dependency                              |  Env variables               | Ports     |
 |-------------------------------------|-----------------------------------------|------------------------------|-----------|
@@ -57,7 +57,7 @@ For a fast and painless start of all the services it should be not less than 5 G
 |       			      | 					| ASPSP-PROFILE_BASEURL        |           |
 | xs2a-asps--profile 		      | Java 8					| JAVA_TOOL_OPTIONS="-Xmx256M" |           |
 |				      |						|			       |	   |
-|xs2a-consent-management-db	      | Postgresql 9.5				| 			       | 5432      | 
+| xs2a-consent-management-db	      | Postgresql 9.5				| 			       | 5432      | 
 
 
 
