@@ -105,7 +105,7 @@ For a fast and painless start of all the services it should be not less than 5 G
 
 ...
 
-15. Prepare and run fakesmtp:
+15.Prepare and run fakesmtp:
 
 ...
 
