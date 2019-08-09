@@ -62,30 +62,55 @@ For a fast and painless start of all the services it should be not less than 5 G
 
 
 4.Prepare and  run  xs2a-connector-examples:
+
 ...
+
 5.Prepare and run xs2a-asps-profile:
+
 ...
+
 6.Prepare and run xs2a-consent-management:
+
 ...
+
 7.Prepare and run xs2a-consent-management-db:
+
 ...
+
 8.Prepare and run xs2a-online-banking: 
+
 ...
+
 9.Prepare and run ledgers:
+
 ...
+
 10.Prepare and run xs2a-online-banking-ui:
+
 ...
+
 11.Prepare and run xs2a-tpp-ui:
+
 ...
+
 12.Prepare and run xs2a-tpp-rest-server:
+
 ...
+
 13.Prepare and run developer-portal-ui:
+
 ...
+
 14.Prepare and run certificate-generator:
+
 ...
+
 15. Prepare and run fakesmtp:
+
 ...
+
 16.Prepare and run ledgers-db:
+
 ...
 
 17.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.
