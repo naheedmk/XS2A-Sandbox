@@ -49,7 +49,7 @@ For a fast and painless start of all the services it should be not less than 5 G
 > make all
 ```
 
-3. Table of services and dependencies
+3. Table of services and dependencies:
 
 | Service                             | Dependency                              |  Env variables               | Ports     |
 |-------------------------------------|-----------------------------------------|------------------------------|-----------|
@@ -59,33 +59,33 @@ For a fast and painless start of all the services it should be not less than 5 G
 |				      |						|			       |	   |
 |xs2a-consent-management-db	      | Postgresql 9.5				| 			       | 5432      | 
 
-....
 
-4. Prepare and  run  xs2a-connector-examples
-.....
-5. Prepare and run xs2a-asps-profile
+
+4.Prepare and  run  xs2a-connector-examples
 ...
-6. Prepare and run xs2a-consent-management
+5.Prepare and run xs2a-asps-profile
 ...
-7. Prepare and run xs2a-consent-management-db
-....
-8. Prepare and run xs2a-online-banking 
+6.Prepare and run xs2a-consent-management
 ...
-9. Prepare and run ledgers
+7.Prepare and run xs2a-consent-management-db
 ...
-10. Prepare and run xs2a-online-banking-ui
+8.Prepare and run xs2a-online-banking 
 ...
-11. Prepare and run xs2a-tpp-ui
+9.Prepare and run ledgers
 ...
-12. Prepare and run xs2a-tpp-rest-server
+10.Prepare and run xs2a-online-banking-ui
 ...
-13. Prepare and run developer-portal-ui
+11.Prepare and run xs2a-tpp-ui
 ...
-14. Prepare and run certificate-generator
+12.Prepare and run xs2a-tpp-rest-server
+...
+13.Prepare and run developer-portal-ui
+...
+14.Prepare and run certificate-generator
 ...
 15. Prepare and run fakesmtp
 ...
-16. Prepare and run ledgers-db
+16.Prepare and run ledgers-db
 ...
 
 17.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.
