@@ -31,8 +31,8 @@ Here are links where you can install needed dependencies:
 | Angular CLI 7.x     | https://angular.io/guide/quickstart    |                                                                                                        
 | Asciidoctor 2.0    | https://asciidoctor.org                 |
 | jq 1.6             | https://stedolan.github.io/jq/download  |
-| Docker    1.17     | https://www.docker.com/get-started      |
-| Docker Compose 1.24| https://docs.docker.com/compose/install |
+| NGINX 1.15.5       | http://nginx.org/download/              |
+| PostgreSQL | https://docs.docker.com/compose/install |
 | Maven    3.5       | https://maven.apache.org/download.cgi   |
 | PlantUML 1.2019.3  | http://plantuml.com/en/starting         |
 
@@ -46,18 +46,49 @@ For a fast and painless start of all the services it should be not less than 5 G
 3.Build and run the project with Makefile:
   
 ```sh 
-> make run
+> make all
 ```
 
-4.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.
+3. Table of services and dependencies
+| Service                             | Dependency                              |  Env variables               | Ports     |
+|-------------------------------------|-----------------------------------------|------------------------------|-----------|
+| xs2a-connector-examples             | Java 8 				        | SPRING_PROFILES_ACTIVE       | 8089,8189 |
+|       			      | 					| ASPSP-PROFILE_BASEURL        |           |
+| xs2a-asps--profile 		      | Java 8					| JAVA_TOOL_OPTIONS="-Xmx256M" |           |
+|				      |						|			       |	   |
+|xs2a-consent-management-db	      | Postgresql 9.5				| 			       | 5432      | 
 
-5.Stop running containers in terminal with key combination **Control + C**.
+....
 
-6.Afterwards you can remove all the Sandbox containers from Docker with the following command:
+4. Prepare and  run  xs2a-connector-examples
+.....
+5. Prepare and run xs2a-asps-profile
+...
+6. Prepare and run xs2a-consent-management
+...
+7. Prepare and run xs2a-consent-management-db
+....
+8. Prepare and run xs2a-online-banking 
+...
+9. Prepare and run ledgers
+...
+10. Prepare and run xs2a-online-banking-ui
+...
+11. Prepare and run xs2a-tpp-ui
+...
+12. Prepare and run xs2a-tpp-rest-server
+...
+13. Prepare and run developer-portal-ui
+...
+14. Prepare and run certificate-generator
+...
+15. Prepare and run fakesmtp
+...
+16. Prepare and run ledgers-db
+...
 
-```sh 
-> docker-compose rm -s -f -v
-```
+17.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.
+
 
 ## Links to local Swagger Interfaces
 
