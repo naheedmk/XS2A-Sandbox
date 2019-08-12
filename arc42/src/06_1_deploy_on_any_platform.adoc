@@ -9,31 +9,57 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 |===
 |Service |Dependencies |Environment variables |Ports 
 
-|xs2a-connector-examples |Java 8 | SPRING_PROFILES_ACTIVE +
+|xs2a-connector-examples |Java 8 | TZ + 
+SPRING_PROFILES_ACTIVE +
 ASPSP-PROFILE_BASEURL + 
 CMS_URL +
-LEDGERS_URL | 8089,8189 
-|xs2a-asps--profile |Java 8 | SPRING_PROFILES_ACTIVE +  
-JAVA_TOOL_OPTIONS +
-BANK_PROFILE_PATH | 48080           
-|xs2a-consent-management |Java 8 |ASPSP-PROFILE_BASEURL +
+LEDGERS_URL +
+CONSENT_SERVICE_BASEURL +
+SPRING_PROFILES_ACTIVE +
+skip_ssl_certificate_verification +
+DB_PASSWORD +
+DB_USER +
+DB_DATABASE +
+DB_HOST +
+JAVA_OPTS | 8089,8189 
+|xs2a-asps--profile |Java 8 | TZ +
+SPRING_PROFILES_ACTIVE +  
+BANK_PROFILE_PATH +
+JAVA_OPTS 
+| 48080           
+|xs2a-consent-management |Java 8 |TZ + 
+ASPSP-PROFILE_BASEURL +
 SPRING_DATASOURCE_URL +
 SPRING_DATASOURCE_USERNAME +
 SPRING_DATASOURCE_PASSWORD +
 SERVER_KEY +
 SPRING_LIQUIBASE_ENABLED +
-USED-NON-RECURRING-CONSENT-EXPIRATION.CRON.EXPRESSION | 38080          
-| xs2a-consent-management-db | Postgresql 9.5 | POSTGRESQL_ADMIN_PASSWORD +
+SPRING_LIQUIBASE_URL +
+SPRING_LIQUIBASE_DEFAULT_SCHEMA +
+SPRING_LIQUIBASE_USER +
+SPRING_LIQUIBASE_PASSWORD +
+USED-NON-RECURRING-CONSENT-EXPIRATION.CRON.EXPRESSION +
+SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA +
+skip_ssl_certificate_verification +
+JAVA_OPTS
+| 38080          
+| xs2a-consent-management-db | Postgresql 9.5 | TZ + 
+POSTGRESQL_ADMIN_PASSWORD +
 POSTGRESQL_DATABASE +
 POSTGRESQL_USER +
 POSTGRESQL_PASSWORD | 5432
-|xs2a-online-banking | NGINX 1.15.5
-|XS2A_URL +
+|xs2a-online-banking | NGINX 1.15.5 | TZ + 
+XS2A_URL +
 LEDGERS_URL +
 CMS_URL +
 ONLINE_BANKING_SCA_LOGINPAGE +
-ONLINE_BANKING_SCA_UIREDIRECT | 8090,8190
-|ledgers | Java 8 | SPRING_PROFILES_ACTIVE +
+ONLINE_BANKING_SCA_UIREDIRECT +
+MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_METHODS +
+MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_ORIGINS + 
+JAVA_OPTS
+| 8090,8190
+|ledgers | Java 8 | TZ + 
+SPRING_PROFILES_ACTIVE +
 SPRING_JPA_SHOW_SQL +
 DB_HOST +
 DB_URL +
@@ -43,37 +69,57 @@ DB_PASSWORD +
 LIQUIBASE_ENABLED +
 SCA_MULTILEVEL_ENABLED +
 SPRING_MAIL_HOST +
-SPRING_MAIL_PORT 
+SPRING_MAIL_PORT +
+SPRING_MAIL_PROPERTIES_MAIL_FROM +
+SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH +
+SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE 
 | 8088,8188
-|xs2a-online-banking-ui |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL +
-DEV_PORTAL_URL_EXT | 4400
-|xs2a-tpp-ui | NGINX 1.15.5 |  TPP_REST_SERVER_URL +
-CERT_GEN_URL | 4205
-| xs2a-tpp-rest-server |Java 8 |  LEDGERS_URL +
+|xs2a-online-banking-ui |NGINX 1.15.5 | TZ + 
+ONLINE_BANKING_SERVER_URL +
+DEV_PORTAL_URL_EXT +
+JAVA_OPTS| 4400
+|xs2a-tpp-ui | NGINX 1.15.5 |  TZ +
+LEDGERS_URL +
+TPP_REST_SERVER_URL +
+CERT_GEN_URL 
+| 4205
+| xs2a-tpp-rest-server |Java 8 |  TZ +
+LEDGERS_URL +
 SPRING_DATASOURCE_URL +
 SPRING_DATASOURCE_USERNAME +
 SPRING_DATASOURCE_PASSWORD +
 SERVER_KEY +
 USED-NON-RECURRING-CONSENT-EXPIRATION.CRON.EXPRESSION +
- NOT-CONFIRMED-CONSENT-EXPIRATION.CRON.EXPRESSION +
+NOT-CONFIRMED-CONSENT-EXPIRATION.CRON.EXPRESSION +
 NOT-CONFIRMED-PAYMENT-EXPIRATION.CRON.EXPRESSION +
 CONSENT.CRON.EXPRESSION +
 STOPLIST.CRON.EXPRESSION +
-ENCRYPTION.CRON.EXPRESSION| 8093
-|developer-portal-ui | NGINX 1.15.5 |  XS2A_URL | 4206
-|ledgers-db |  Postgresql 9.5  | POSTGRESQL_ADMIN_PASSWORD +
+ENCRYPTION.CRON.EXPRESSION +
+IBAN_GENERATOR_BANKCODE_NISP +
+IBAN_GENERATOR_BANKCODE_RANDOM + 
+IBAN_GENERATOR_COUNTRYCODE +
+JAVA_OPTS | 8093
+|developer-portal-ui | NGINX 1.15.5 |  TZ + 
+XS2A_URL | 4206
+|ledgers-db |  Postgresql 9.5  | TZ +
+POSTGRESQL_ADMIN_PASSWORD +
 POSTGRESQL_DATABASE +
 POSTGRESQL_USER +
 POSTGRESQL_PASSWORD 
 |  5432
-|certificate-generator |Java 8 | | 8092
-| fakesmtp | Docker | |
+|certificate-generator |Java 8 | TZ + 
+JAVA_OPTS| 8092
+| smtp server | any mail server to accept and send smtp messages | |
 |===
 
 
 *1.Prepare and run xs2a-asps-profile:*
 
-* Run java application with correct ENV variables
+* Run java application with correct ENV variables 
+
+```sh
+$ $JAVA_HOME/bin/java $JAVA_OPTS -jar /opt/profile/aspsp-profile.jar
+```
 
 *2.Prepare and run xs2a-consent-management-db:*
 
@@ -83,11 +129,19 @@ POSTGRESQL_PASSWORD
 
 *3.Prepare and run xs2a-consent-management:*
 
-* Run java application with correct ENV variables, when application will create all data structure in cms database byself 
+* Run java application with correct ENV variables, when application will create all data structure in cms database byself
+
+```sh
+$ $JAVA_HOME/bin/java $JAVA_OPTS -jar /opt/consents/consent-management.jar
+```
 
 *4.Prepare and  run  xs2a-connector-examples:*
 
 * Run java application with correct ENV variables
+
+```sh
+$ $JAVA_HOME/bin/java $JAVA_OPTS -jar /opt/gateway-app/gateway-app.jar
+```
 
 *5.Prepare and run ledgers-db:*
  
@@ -98,33 +152,50 @@ POSTGRESQL_PASSWORD
 
 * Run java application with correct ENV variables, when application will create all data structure in ledgers database byself
 
+```sh
+$ $JAVA_HOME/bin/java $JAVA_OPTS -jar /opt/ledgers/ledgers-app.jar
+```
+
 *7.Prepare and run xs2a-online-banking:*
 
 * Run java application with correct ENV variables
 
+```sh
+$ $JAVA_HOME/bin/java $JAVA_OPTS -jar /opt/xs2a-connector-examples/xs2a-online-banking.jar
+```
+
 *8.Prepare and run xs2a-online-banking-ui:*
 
-* move files to appropriate webserver directory and open correct port for web interface
+* move files to appropriate webserver directory and open correct ports for web interface
 
 *9.Prepare and run xs2a-tpp-rest-server:*
 
 * Run java application with correct ENV variables
 
+
+```sh
+$ $JAVA_HOME/bin/java $JAVA_OPTS -jar /opt/tpp-app/tpp-rest-server.jar
+```
+
 *10.Prepare and run xs2a-tpp-ui:*
 
-* move files to appropriate webserver directory and open correct port for web interface
+* move files to appropriate webserver directory and open correct ports for web interface
 
 *11.Prepare and run developer-portal-ui:*
 
- * move files to appropriate webserver directory and open correct port for web interface
+ * move files to appropriate webserver directory and open correct ports for web interface
 
 *12.Prepare and run certificate-generator:*
 
 * Run java application
 
-*13.Prepare and run fakesmtp:*
+```sh
+$ $JAVA_HOME/bin/java $JAVA_OPTS -jar /opt/certificate-generator/certificate-generator.jar
+```
 
-* ???
+*13.SMTP server:*
+
+* You can use any mail server which able to accept and send smtp messages from XS2A Sandbox 
 
 *14.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.*
 
