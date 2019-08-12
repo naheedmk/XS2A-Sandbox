@@ -50,7 +50,7 @@ For a fast and painless start of all the services it should be not less than 5 G
 > make all
 ```
 
-4.Table of services and dependencies:
+.Table of services and dependencies:
 [%autowidth.stretch]
 |===
 |Service |Dependency |Env variables |Ports     
@@ -116,11 +116,12 @@ POSTGRESQL_PASSWORD
 |===
 
 
-4.Prepare and  run  xs2a-connector-examples:
+4.Prepare and run xs2a-asps-profile:
+
 
 ...
 
-5.Prepare and run xs2a-asps-profile:
+5.Prepare and run xs2a-consent-management-db:
 
 ...
 
@@ -128,23 +129,23 @@ POSTGRESQL_PASSWORD
 
 ...
 
-7.Prepare and run xs2a-consent-management-db:
+7.Prepare and  run  xs2a-connector-examples:
 
 ...
 
-8.Prepare and run xs2a-online-banking: 
-
+8.Prepare and run ledgers-db:
+ 
 ...
 
 9.Prepare and run ledgers:
 
 ...
 
-10.Prepare and run xs2a-online-banking-ui:
+10.Prepare and run xs2a-online-banking:
 
 ...
 
-11.Prepare and run xs2a-tpp-ui:
+11.Prepare and run xs2a-online-banking-ui:
 
 ...
 
@@ -152,19 +153,19 @@ POSTGRESQL_PASSWORD
 
 ...
 
-13.Prepare and run developer-portal-ui:
+13.Prepare and run xs2a-tpp-ui:
 
 ...
 
-14.Prepare and run certificate-generator:
+14.Prepare and run developer-portal-ui:
 
 ...
 
-15.Prepare and run fakesmtp:
+15.Prepare and run certificate-generator:
 
 ...
 
-16.Prepare and run ledgers-db:
+16.Prepare and run fakesmtp:
 
 ...
 
