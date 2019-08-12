@@ -2,9 +2,10 @@
 
 This is description of services,dependencies and steps  to run XS2ASandbox on any operation system.
 
-
 .Table of services and dependencies:
+
 [%autowidth.stretch]
+
 |===
 |Service |Dependencies |Environment variables |Ports 
 
@@ -70,59 +71,62 @@ POSTGRESQL_PASSWORD
 |===
 
 
-1.Prepare and run xs2a-asps-profile:
+*1.Prepare and run xs2a-asps-profile:*
 
-...
+* Run java application with correct ENV variables
 
-2.Prepare and run xs2a-consent-management-db:
+*2.Prepare and run xs2a-consent-management-db:*
 
-...
+* create database cms
+* create schema cms
+* create user and password
 
-3.Prepare and run xs2a-consent-management:
+*3.Prepare and run xs2a-consent-management:*
 
-...
+* Run java application with correct ENV variables, when application will create all data structure in cms database byself 
 
-4.Prepare and  run  xs2a-connector-examples:
+*4.Prepare and  run  xs2a-connector-examples:*
 
-...
+* Run java application with correct ENV variables
 
-5.Prepare and run ledgers-db:
+*5.Prepare and run ledgers-db:*
  
-...
+* create database ledgers
+* create user and password
 
-6.Prepare and run ledgers:
+*6.Prepare and run ledgers:*
 
-...
+* Run java application with correct ENV variables, when application will create all data structure in ledgers database byself
 
-7.Prepare and run xs2a-online-banking:
+*7.Prepare and run xs2a-online-banking:*
 
-...
+* Run java application with correct ENV variables
 
-8.Prepare and run xs2a-online-banking-ui:
+*8.Prepare and run xs2a-online-banking-ui:*
 
-...
+* move files to appropriate webserver directory and open correct port for web interface
 
-9.Prepare and run xs2a-tpp-rest-server:
+*9.Prepare and run xs2a-tpp-rest-server:*
 
-...
+* Run java application with correct ENV variables
 
-10.Prepare and run xs2a-tpp-ui:
+*10.Prepare and run xs2a-tpp-ui:*
 
-...
+* move files to appropriate webserver directory and open correct port for web interface
 
-11.Prepare and run developer-portal-ui:
+*11.Prepare and run developer-portal-ui:*
 
-...
+ * move files to appropriate webserver directory and open correct port for web interface
 
-12.Prepare and run certificate-generator:
+*12.Prepare and run certificate-generator:*
 
-...
+* Run java application
 
-13.Prepare and run fakesmtp:
+*13.Prepare and run fakesmtp:*
 
-...
+* ???
 
-14.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.
+*14.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.*
 
 
 ## Links to local Swagger Interfaces
