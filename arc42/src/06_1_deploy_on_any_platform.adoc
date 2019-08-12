@@ -1,0 +1,172 @@
+# XS2ASandbox
+
+This is description of services,dependencies and steps  to run XS2ASandbox on any operation system.
+
+
+.Table of services and dependencies:
+[%autowidth.stretch]
+|===
+|Service |Dependencies |Environment variables |Ports 
+
+|xs2a-connector-examples |Java 8 | SPRING_PROFILES_ACTIVE +
+ASPSP-PROFILE_BASEURL + 
+CMS_URL +
+LEDGERS_URL | 8089,8189 
+|xs2a-asps--profile |Java 8 | SPRING_PROFILES_ACTIVE +  
+JAVA_TOOL_OPTIONS +
+BANK_PROFILE_PATH | 48080           
+|xs2a-consent-management |Java 8 |ASPSP-PROFILE_BASEURL +
+SPRING_DATASOURCE_URL +
+SPRING_DATASOURCE_USERNAME +
+SPRING_DATASOURCE_PASSWORD +
+SERVER_KEY +
+SPRING_LIQUIBASE_ENABLED +
+USED-NON-RECURRING-CONSENT-EXPIRATION.CRON.EXPRESSION | 38080          
+| xs2a-consent-management-db | Postgresql 9.5 | POSTGRESQL_ADMIN_PASSWORD +
+POSTGRESQL_DATABASE +
+POSTGRESQL_USER +
+POSTGRESQL_PASSWORD | 5432
+|xs2a-online-banking | NGINX 1.15.5
+|XS2A_URL +
+LEDGERS_URL +
+CMS_URL +
+ONLINE_BANKING_SCA_LOGINPAGE +
+ONLINE_BANKING_SCA_UIREDIRECT | 8090,8190
+|ledgers | Java 8 | SPRING_PROFILES_ACTIVE +
+SPRING_JPA_SHOW_SQL +
+DB_HOST +
+DB_URL +
+DB_DATABASE +
+DB_USER +
+DB_PASSWORD +
+LIQUIBASE_ENABLED +
+SCA_MULTILEVEL_ENABLED +
+SPRING_MAIL_HOST +
+SPRING_MAIL_PORT 
+| 8088,8188
+|xs2a-online-banking-ui |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL +
+DEV_PORTAL_URL_EXT | 4400
+|xs2a-tpp-ui | NGINX 1.15.5 |  TPP_REST_SERVER_URL +
+CERT_GEN_URL | 4205
+| xs2a-tpp-rest-server |Java 8 |  LEDGERS_URL +
+SPRING_DATASOURCE_URL +
+SPRING_DATASOURCE_USERNAME +
+SPRING_DATASOURCE_PASSWORD +
+SERVER_KEY +
+USED-NON-RECURRING-CONSENT-EXPIRATION.CRON.EXPRESSION +
+ NOT-CONFIRMED-CONSENT-EXPIRATION.CRON.EXPRESSION +
+NOT-CONFIRMED-PAYMENT-EXPIRATION.CRON.EXPRESSION +
+CONSENT.CRON.EXPRESSION +
+STOPLIST.CRON.EXPRESSION +
+ENCRYPTION.CRON.EXPRESSION| 8093
+|developer-portal-ui | NGINX 1.15.5 |  XS2A_URL | 4206
+|ledgers-db |  Postgresql 9.5  | POSTGRESQL_ADMIN_PASSWORD +
+POSTGRESQL_DATABASE +
+POSTGRESQL_USER +
+POSTGRESQL_PASSWORD 
+|  5432
+|certificate-generator |Java 8 | | 8092
+| fakesmtp | Docker | |
+|===
+
+
+1.Prepare and run xs2a-asps-profile:
+
+...
+
+2.Prepare and run xs2a-consent-management-db:
+
+...
+
+3.Prepare and run xs2a-consent-management:
+
+...
+
+4.Prepare and  run  xs2a-connector-examples:
+
+...
+
+5.Prepare and run ledgers-db:
+ 
+...
+
+6.Prepare and run ledgers:
+
+...
+
+7.Prepare and run xs2a-online-banking:
+
+...
+
+8.Prepare and run xs2a-online-banking-ui:
+
+...
+
+9.Prepare and run xs2a-tpp-rest-server:
+
+...
+
+10.Prepare and run xs2a-tpp-ui:
+
+...
+
+11.Prepare and run developer-portal-ui:
+
+...
+
+12.Prepare and run certificate-generator:
+
+...
+
+13.Prepare and run fakesmtp:
+
+...
+
+14.Open [Developer Portal](http://localhost:4206) and follow the manual to start working with XS2ASandbox.
+
+
+## Links to local Swagger Interfaces
+
+Following urls will access the swagger interfaces:
+
+### XS2A Interface
+
+```
+http://localhost:8089/swagger-ui.html
+```
+
+### ASPSP-profile
+
+ASPSP-profile is a module where bank-specific settings are stored.
+
+```
+http://localhost:48080/swagger-ui.html
+```
+
+## Links to local User Interfaces
+
+### Developer portal UI
+
+Developer portal is the main information resource on how to get started, how to test and work with XS2ASandbox.
+
+```
+http://localhost:4206
+```
+
+### Online banking UI
+
+Online banking UI is an Angular application, developed to provide consents, payment confirmations and cancellation from PSU to ASPSP
+ in case of redirect SCA approach.
+
+```
+http://localhost:4400
+```
+
+### TPP UI
+
+TPP UI is an Angular application, which provides a user interface to TPP and allows to register, get test certificate and 
+manage users and accounts.
+
+```
+http://localhost:4205
+```
