@@ -22,20 +22,20 @@ But before you run this, first of all you should check if all build dependencies
 
 If something is missing, install it to your local machine, otherwise the build will fail. 
 List of dependencies that are required to use XS2ASandbox: **Java 8**, **nodeJs**, **AngularCLI**, **asciidoctor**, **jq**, **docker**, **docker-compose**, **maven**, **plantuml**.
-Here are links where you can install needed dependencies:
 
-| Dependency         | Link                                    |                                                     
-|--------------------|-----------------------------------------|
-| Java 8             | https://openjdk.java.net/install/       | 
-| Node.js 11.x       | https://nodejs.org/en/download          | 
-| Angular CLI 7.x    | https://angular.io/guide/quickstart     |                                                                                                        
-| Asciidoctor 2.0    | https://asciidoctor.org                 |
-| jq 1.6             | https://stedolan.github.io/jq/download  |
-| NGINX 1.15.5       | http://nginx.org/download/              |
-| PostgreSQL         | https://docs.docker.com/compose/install |
-| Maven    3.5       | https://maven.apache.org/download.cgi   |
-| PlantUML 1.2019.3  | http://plantuml.com/en/starting         |
-
+.Here are links where you can install needed dependencies:
+|=== 
+|Dependency |Link 
+|Java 8 | https://openjdk.java.net/install/
+|Node.js 11.x       | https://nodejs.org/en/download 
+|Angular CLI 7.x    | https://angular.io/guide/quickstart                        
+|Asciidoctor 2.0    | https://asciidoctor.org
+|jq 1.6 | https://stedolan.github.io/jq/download  
+|NGINX 1.15.5       | http://nginx.org/download/
+|PostgreSQL         | https://docs.docker.com/compose/install
+|Maven    3.5       | https://maven.apache.org/download.cgi
+|PlantUML 1.2019.3  | http://plantuml.com/en/starting
+|===
 
 **Note 1**: please, use **Node.js** version lower than **12** (e.g. **10.x.x** or **11.x.x**). Otherwise angular applications would not be built due to
 version conflicts.
@@ -49,16 +49,15 @@ For a fast and painless start of all the services it should be not less than 5 G
 > make all
 ```
 
-3.Table of services and dependencies:
-
-| Service                             | Dependency                              |  Env variables               | Ports     |
-|-------------------------------------|-----------------------------------------|------------------------------|-----------|
-| xs2a-connector-examples             | Java 8 				        | SPRING_PROFILES_ACTIVE       | 8089,8189 |
-|       			      | 					| ASPSP-PROFILE_BASEURL        |           |
-| xs2a-asps--profile 		      | Java 8					| JAVA_TOOL_OPTIONS="-Xmx256M" |           |
-|				      |						|			       |	   |
-| xs2a-consent-management-db	      | Postgresql 9.5				| 			       | 5432      | 
-
+4.Table of services and dependencies:
+|===
+| Service                             | Dependency                              |  Env variables               | Ports     
+| xs2a-connector-examples             | Java 8 				        | SPRING_PROFILES_ACTIVE       | 8089,8189 
+|       			      | 					| ASPSP-PROFILE_BASEURL        |           
+| xs2a-asps--profile 		      | Java 8					| JAVA_TOOL_OPTIONS="-Xmx256M" |           
+|				      |						|			       |	   
+| xs2a-consent-management-db	      | Postgresql 9.5				| 			       | 5432       
+|===
 
 
 4.Prepare and  run  xs2a-connector-examples:
