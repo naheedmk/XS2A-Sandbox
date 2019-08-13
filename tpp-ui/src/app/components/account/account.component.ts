@@ -12,13 +12,13 @@ import {InfoService} from "../../commons/info/info.service";
 })
 export class AccountComponent implements OnInit {
 
-    public account: Account;
+    account: Account;
     accountID: string;
 
     constructor(
         private accountService: AccountService,
         private activatedRoute: ActivatedRoute,
-        public infoService: InfoService,
+        private infoService: InfoService,
         private router: Router) {
     }
 
@@ -35,18 +35,18 @@ export class AccountComponent implements OnInit {
             });
     }
 
-    public isAccountEnabled(account: Account): boolean {
-        return account.accountStatus !== "DELETED" && account.accountStatus !== "BLOCKED";
+    public isAccountEnabled(): boolean {
+        return this.account.accountStatus !== "DELETED" && this.account.accountStatus !== "BLOCKED";
     }
 
-    public isAccountDeleted(account: Account): boolean {
-        if (account.accountStatus === "DELETED") {
+    public isAccountDeleted(): boolean {
+        if (this.account.accountStatus === "DELETED" || this.account.accountStatus === "BLOCKED") {
             this.infoService.openFeedback('You can not Grant Accesses to a Deleted/Blocked account', {
                 severity: 'error'
             });
             return false;
         }
-        this.router.navigate(['/accounts/' + account.id + '/access']);
+        this.router.navigate(['/accounts/' + this.account.id + '/access']);
         return true;
     }
 
