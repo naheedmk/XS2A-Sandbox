@@ -23,9 +23,9 @@ export class AccountListComponent implements OnInit, OnDestroy {
     getAccounts(): void {
         this.subscription.add(
             this.accountService.getAccounts()
-                .subscribe((accounts: Account[]) => {
-                    this.accounts = accounts;
-                }));
+            .subscribe((accounts: Account[]) => {
+                this.accounts = accounts;
+            }));
 
     }
 

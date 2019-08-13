@@ -23,7 +23,6 @@ describe('AccountComponent', () => {
                 RouterTestingModule,
                 HttpClientTestingModule,
                 InfoModule,
-                HttpClientTestingModule,
                 IconModule
             ],
             declarations: [AccountComponent],
