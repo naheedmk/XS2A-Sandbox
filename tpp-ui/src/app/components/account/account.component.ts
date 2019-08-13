@@ -35,10 +35,6 @@ export class AccountComponent implements OnInit {
             });
     }
 
-    public isAccountEnabled(): boolean {
-        return this.account.accountStatus !== "DELETED" && this.account.accountStatus !== "BLOCKED";
-    }
-
     public isAccountDeleted(): boolean {
         if (this.account.accountStatus === "DELETED" || this.account.accountStatus === "BLOCKED") {
             this.infoService.openFeedback('You can not Grant Accesses to a Deleted/Blocked account', {
