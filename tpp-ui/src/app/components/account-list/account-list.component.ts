@@ -25,13 +25,18 @@ export class AccountListComponent implements OnInit, OnDestroy {
     getAccounts(): void {
         this.subscription.add(
             this.accountService.getAccounts()
-            .subscribe((accounts: Account[]) => {
-                this.accounts = accounts;
-            }));
+                .subscribe((accounts: Account[]) => {
+                    this.accounts = accounts;
+                }));
 
     }
 
-     isAccountEnabled(account: Account): boolean {
+    goToDepositCash(account: Account) {
+        if (!this.isAccountEnabled(account)) return false;
+        this.router.navigate(['/accounts/' + account.id + '/deposit-cash']);
+    }
+
+    isAccountEnabled(account: Account): boolean {
         return (account.accountStatus !== "DELETED");
     }
 
