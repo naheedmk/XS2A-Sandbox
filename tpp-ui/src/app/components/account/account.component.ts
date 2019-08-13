@@ -35,15 +35,18 @@ export class AccountComponent implements OnInit {
             });
     }
 
-    public isAccountDeleted(): boolean {
-        if (this.account.accountStatus === "DELETED" || this.account.accountStatus === "BLOCKED") {
+    public goToAccountDetail() {
+        if(this.isAccountDeleted) {
             this.infoService.openFeedback('You can not Grant Accesses to a Deleted/Blocked account', {
                 severity: 'error'
             });
-            return false;
+        } else {
+            this.router.navigate(['/accounts/' + this.account.id + '/access']);
         }
-        this.router.navigate(['/accounts/' + this.account.id + '/access']);
-        return true;
+    }
+
+    get isAccountDeleted(): boolean {
+        return this.account.accountStatus === "DELETED" || this.account.accountStatus === "BLOCKED";
     }
 
     getAccount() {
