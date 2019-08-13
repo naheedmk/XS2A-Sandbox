@@ -1,6 +1,6 @@
 package de.adorsys.ledgers.oba.rest.server.resource.oba;
 
-import de.adorsys.ledgers.oba.rest.api.resource.oba.ObaAisApi;
+import de.adorsys.ledgers.oba.rest.api.resource.oba.ObaConsentApi;
 import de.adorsys.ledgers.oba.rest.server.service.AisService;
 import de.adorsys.psd2.consent.api.ais.AisAccountConsent;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,9 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(ObaAisController.BASE_PATH)
+@RequestMapping(ObaConsentController.BASE_PATH)
 @RequiredArgsConstructor
-public class ObaAisController implements ObaAisApi {
+public class ObaConsentController implements ObaConsentApi {
     private final AisService aisService;
 
     @Override
