@@ -156,8 +156,7 @@ variables:
 # Copy Dockerhub images to harbor (Only for banking-gateway)
 .deploy_harbor_banking_gateway: &deploy_harbor_banking_gateway
   script:
-    - echo "harbor registry=${HARBOR_REGISTRY}  User=${HARBOR_USER}"
-    - echo "harbor=${HARBOR_TOKEN}"
+    - echo "User=${HARBOR_USER}"
     - docker login ${HARBOR_REGISTRY} -u ${HARBOR_USER} -p ${HARBOR_TOKEN}
     - TAG=$(date +%Y%m%d%H%M)
     - echo "Deploy ${DOCKER_IMAGE_NAME_XS2A_ONLINE_BANKING}"
