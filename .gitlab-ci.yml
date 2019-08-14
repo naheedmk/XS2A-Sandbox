@@ -439,7 +439,7 @@ deploy_to_harbor_banking_gateway:
   cache: {}
   dependencies: []
   only:
-    - KOA_add_deploy_to_harbor
+    - master
   variables:
     GIT_STRATEGY: none
     DOCKER_TAG: latest # Dockerhub source tag
