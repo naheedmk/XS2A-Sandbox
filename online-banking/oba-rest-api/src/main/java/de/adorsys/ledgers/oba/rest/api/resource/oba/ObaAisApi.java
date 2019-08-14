@@ -33,10 +33,10 @@ public interface ObaAisApi {
      * @param accountId selected accounts id
      * @param dateFrom  date from which the user requests to see transactions
      * @param dateTo    date until which user requests to see transactions
-     * @return List of accounts for user
+     * @return List of transactions for account
      */
     @GetMapping(path = "/transactions/{accountId}")
-    @ApiOperation(value = "Get List of valid AIS Consents", authorizations = @Authorization(value = "apiKey"))
+    @ApiOperation(value = "Get List of transactions for queried account per dates selected", authorizations = @Authorization(value = "apiKey"))
     ResponseEntity<List<TransactionTO>> transactions(@PathVariable(name = "accountId") String accountId,
                                                      @RequestParam(name = DATE_FROM_QUERY_PARAM, required = false) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDate dateFrom,
                                                      @RequestParam(name = DATE_TO_QUERY_PARAM, required = false) @DateTimeFormat(pattern = LOCAL_DATE_YYYY_MM_DD_FORMAT) LocalDate dateTo);

@@ -20,10 +20,11 @@ import static de.adorsys.ledgers.oba.rest.api.domain.AisErrorCode.AIS_BAD_REQUES
 @Service
 @RequiredArgsConstructor
 public class AisService {
-    private final AccountRestClient accountRestClient;
     private static final String RESPONSE_ERROR = "Error in response from Ledgers, please contact admin.";
     private static final String GET_ACCOUNTS_ERROR_MSG = "Failed to retrieve accounts for user: %s, code: %s, message: %s";
     private static final String GET_TRANSACTIONS_ERROR_MSG = "Failed to retrieve transactions for account: %s, code: %s, message: %s";
+
+    private final AccountRestClient accountRestClient;
 
     public List<AccountDetailsTO> getAccounts(String userLogin) {
         try {
@@ -38,10 +39,7 @@ public class AisService {
         }
     }
 
-    @SuppressWarnings("PMD.AvoidReassigningParameters")
     public List<TransactionTO> getTransactions(String accountId, LocalDate dateFrom, LocalDate dateTo) {
-        dateFrom = Optional.ofNullable(dateFrom).orElse(LocalDate.now().minusYears(3));
-        dateTo = Optional.ofNullable(dateTo).orElse(LocalDate.now());
         try {
             return Optional.ofNullable(accountRestClient.getTransactionByDates(accountId, dateFrom, dateTo).getBody())
                        .orElse(Collections.emptyList());
