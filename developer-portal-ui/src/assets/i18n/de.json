@@ -342,7 +342,7 @@
           },
           "LI_2": "Openshift environment Anpassung",
           "INNER_LIST_2": {
-            "LI_1": "Installieren Sie die Openshift Command Line Tools: ",
+            "LI_1": "Installieren Sie die Openshift Command Line Tools:",
             "LI_2": "Navigieren Sie zu dem lokalen Ursprungsordner (in dem die personalisierten Dateien gespeichert sind):",
             "LI_3": "Einloggen bei Openshift:",
             "LI_4": "Navigieren Sie zu dem Openshift Projekt.",
