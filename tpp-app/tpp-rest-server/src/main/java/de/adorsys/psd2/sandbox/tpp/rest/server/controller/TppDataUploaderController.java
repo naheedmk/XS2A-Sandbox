@@ -62,7 +62,7 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
 
     @Override
     public ResponseEntity<Void> uploadTransactions(MultipartFile multipart) {
-        transactionService.uploadUserTransaction(parseService.convertMultiPartToFile(multipart));
+        transactionService.uploadUserTransaction(multipart);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

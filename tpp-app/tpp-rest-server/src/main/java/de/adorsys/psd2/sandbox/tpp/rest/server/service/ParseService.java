@@ -3,7 +3,8 @@ package de.adorsys.psd2.sandbox.tpp.rest.server.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,17 +13,15 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ParseService {
-    private static final String MSG_MULTIPART_FILE_MUST_BE_PRESENTED = "Miltipart file is not presented";
+    private static final String MSG_MULTIPART_FILE_MUST_BE_PRESENTED = "Multipart file is not presented";
     private static final String DEFAULT_TEMPLATE_YML = "classpath:NISP_Testing_Default_Template.yml";
     private static final ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 
@@ -68,7 +67,7 @@ public class ParseService {
     @SuppressWarnings("ConstantConditions")
     public File convertMultiPartToFile(MultipartFile multipartFile) {
         if (multipartFile == null) {
-            throw new TppException(MSG_MULTIPART_FILE_MUST_BE_PRESENTED, 400);
+            throw new IllegalArgumentException(MSG_MULTIPART_FILE_MUST_BE_PRESENTED);
         }
         File result = new File(multipartFile.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(result)) {
@@ -78,5 +77,18 @@ public class ParseService {
             throw new IllegalArgumentException("Can't convert csv to file");
         }
         return result;
+    }
+
+    public <T> List<T> convertFileToTargetObject(File file, Class<T> target) {
+        try (Reader reader = new FileReader(file)) {
+            CsvToBean<T> csvToBean = new CsvToBeanBuilder<T>(reader)
+                                                       .withType(target)
+                                                       .withIgnoreLeadingWhiteSpace(true)
+                                                       .build();
+            return csvToBean.parse();
+        } catch (IOException e) {
+            log.error("Can't convert file to target class: {}", target.getSimpleName(), e);
+            throw new IllegalArgumentException("Can't convert file to target class");
+        }
     }
 }

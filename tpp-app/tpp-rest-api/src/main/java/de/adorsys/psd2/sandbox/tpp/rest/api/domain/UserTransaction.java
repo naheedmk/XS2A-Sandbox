@@ -18,7 +18,7 @@ public class UserTransaction {
     private String text;
 
     @CsvBindByName(column = "Verwendungszweck", required = true)
-    private String uase;
+    private String usage;
 
     @CsvBindByName(column = "Beguenstigter/Zahlungspflichtiger", required = true)
     private String payer;
