@@ -20,6 +20,7 @@ coverage
 target
 *.iml
 **/pom.xml.versionsBackup
+*.csv
 
 # IDE - VSCode
 .vscode/*

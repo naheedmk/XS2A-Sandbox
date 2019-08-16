@@ -114,6 +114,7 @@
         <validation-api.version>2.0.1.Final</validation-api.version>
         <fasterxml.version>2.9.9</fasterxml.version>
         <fasterxml-data-format.version>2.9.8</fasterxml-data-format.version>
+        <opencsv.version>4.5</opencsv.version>
         <!--Sonar -->
         <sonar.core.coveragePlugin>jacoco</sonar.core.coveragePlugin>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -208,6 +209,11 @@
             </dependency>
 
             <!-- other dependencies -->
+            <dependency>
+                <groupId>com.opencsv</groupId>
+                <artifactId>opencsv</artifactId>
+                <version>${opencsv.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.mapstruct</groupId>
