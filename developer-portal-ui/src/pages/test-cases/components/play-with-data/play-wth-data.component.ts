@@ -28,7 +28,7 @@ export class PlayWthDataComponent implements OnInit {
   @Input() fieldsToCopy: string[];
   @Input() dateFromFlag: boolean;
 
-  response: HttpResponse<any> = {};
+  response: HttpResponse<any>;
   finalUrl: string;
   paymentService = '';
   paymentProduct = '';
@@ -103,18 +103,18 @@ export class PlayWthDataComponent implements OnInit {
     console.log(this.variablePathEnd);
     console.log('path: ', this.finalUrl);
     const respBodyEl = document.getElementById('textArea');
-    if (!respBodyEl || this.isValidJSONString(respBodyEl['value'])) {
-      const bodyValue = respBodyEl ? JSON.parse(respBodyEl['value']) : {};
+    if (!respBodyEl || this.isValidJSONString(respBodyEl.value)) {
+      const bodyValue = respBodyEl ? JSON.parse(respBodyEl.value) : {};
       this.restService
         .sendRequest(this.method, this.finalUrl, this.headers, bodyValue)
         .subscribe(
           resp => {
             this.response = Object.assign(resp);
             if (
-              this.response['body'].hasOwnProperty('_links') &&
-              this.response['body']._links.hasOwnProperty('scaRedirect')
+              this.response.body.hasOwnProperty('_links') &&
+              this.response.body._links.hasOwnProperty('scaRedirect')
             ) {
-              this.redirectUrl += this.response['body']._links.scaRedirect.href;
+              this.redirectUrl += this.response.body._links.scaRedirect.href;
             }
             this.dataService.setIsLoading(false);
             this.dataService.showToast('Request sent', 'Success!', 'success');
