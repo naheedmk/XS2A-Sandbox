@@ -102,7 +102,7 @@ export class PlayWthDataComponent implements OnInit {
 
     console.log(this.variablePathEnd);
     console.log('path: ', this.finalUrl);
-    const respBodyEl = document.getElementById('textArea');
+    const respBodyEl: any = document.getElementById('textArea');
     if (!respBodyEl || this.isValidJSONString(respBodyEl.value)) {
       const bodyValue = respBodyEl ? JSON.parse(respBodyEl.value) : {};
       this.restService
