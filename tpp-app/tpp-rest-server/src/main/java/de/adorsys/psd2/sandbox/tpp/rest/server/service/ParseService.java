@@ -17,12 +17,15 @@ import java.io.*;
 import java.util.List;
 import java.util.Optional;
 
+import static org.apache.commons.io.FilenameUtils.getExtension;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ParseService {
     private static final String MSG_MULTIPART_FILE_MUST_BE_PRESENTED = "Multipart file is not presented";
     private static final String DEFAULT_TEMPLATE_YML = "classpath:NISP_Testing_Default_Template.yml";
+    private static final String FILE_NAME = "uploaded_file.";
     private static final ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 
     private final ResourceLoader resourceLoader;
@@ -69,12 +72,12 @@ public class ParseService {
         if (multipartFile == null) {
             throw new IllegalArgumentException(MSG_MULTIPART_FILE_MUST_BE_PRESENTED);
         }
-        File result = new File(multipartFile.getOriginalFilename());
+        File result = new File(FILE_NAME + getExtension(multipartFile.getOriginalFilename()));
         try (FileOutputStream fos = new FileOutputStream(result)) {
             fos.write(multipartFile.getBytes());
         } catch (IOException e) {
-            log.error("Can't convert csv to file", e);
-            throw new IllegalArgumentException("Can't convert csv to file");
+            log.error("Can't convert to file", e);
+            throw new IllegalArgumentException("Can't convert to file");
         }
         return result;
     }
