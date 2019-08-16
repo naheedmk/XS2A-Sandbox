@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { RestService } from '../../../../services/rest.service';
 import { DataService } from '../../../../services/data.service';
@@ -27,7 +28,7 @@ export class PlayWthDataComponent implements OnInit {
   @Input() fieldsToCopy: string[];
   @Input() dateFromFlag: boolean;
 
-  response: object = {};
+  response: HttpResponse<any> = {};
   finalUrl: string;
   paymentService = '';
   paymentProduct = '';
