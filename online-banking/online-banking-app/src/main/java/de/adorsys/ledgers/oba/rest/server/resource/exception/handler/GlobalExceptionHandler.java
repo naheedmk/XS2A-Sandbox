@@ -16,25 +16,20 @@ import org.springframework.web.method.HandlerMethod;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
-    private static final String MESSAGE = "message";
     private static final String DEV_MESSAGE = "devMessage";
-    private static final String CODE = "code";
-    private static final String DATE_TIME = "dateTime";
 
     private final ObjectMapper objectMapper;
 
     @ExceptionHandler(AisException.class)
     public ResponseEntity<Map> handleAisException(AisException e) {
         HttpStatus status = AisExceptionStatusResolver.resolveHttpStatusByCode(e.getAisErrorCode());
-        Map message = getHandlerContent(status, e.getDevMessage(), e.getDevMessage());
+        Map message = buildContentMap(status.value(), e.getDevMessage());
         return ResponseEntity.status(status).body(message);
     }
 
@@ -62,14 +57,5 @@ public class GlobalExceptionHandler {
             log.warn("Couldn't read json content");
         }
         return ex.getMessage();
-    }
-
-    private Map<String, String> getHandlerContent(HttpStatus status, String message, String devMessage) {
-        Map<String, String> error = new HashMap<>();
-        error.put(CODE, String.valueOf(status.value()));
-        error.put(MESSAGE, message);
-        error.put(DEV_MESSAGE, devMessage);
-        error.put(DATE_TIME, LocalDateTime.now().toString());
-        return error;
     }
 }
