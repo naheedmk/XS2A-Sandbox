@@ -1,9 +1,9 @@
-#################
-# Code Analysis #
-#################
+########################
+# Application Building #
+########################
 
-CA pmd report:
-  stage: "Code Analysis"
+AB pmd report:
+  stage: "Application Building"
   image: "adorsys/ci-build"
   script:
     - mvn -Dmaven.test.skip=true package pmd:pmd

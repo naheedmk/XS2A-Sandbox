@@ -1,9 +1,9 @@
-#################
-# Code Analysis #
-#################
+########################
+# Application Building #
+########################
 
-CA javadoc check:
-  stage: "Code Analysis"
+AB javadoc check:
+  stage: "Application Building"
   image: "adorsys/ci-build"
   except:
     - develop
@@ -21,12 +21,8 @@ CA javadoc check:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-javadoc"
     expire_in: "10 day"
 
-####################
-# Code Compilation #
-####################
-
-CC backends Java8:
-  stage: "Code Compilation"
+AB backends Java8:
+  stage: "Application Building"
   extends: .build_java
   variables:
     BUILD_JAVA_VERSION: system@1.8
@@ -37,8 +33,8 @@ CC backends Java8:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}"
     expire_in: "1 day"
 
-CC backends Java11:
-  stage: "Code Compilation"
+AB backends Java11:
+  stage: "Application Building"
   extends: .build_java
   variables:
     BUILD_JAVA_VERSION: system@1.11

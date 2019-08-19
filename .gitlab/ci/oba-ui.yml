@@ -1,9 +1,9 @@
-####################
-# Code Compilation #
-####################
+########################
+# Application Building #
+########################
 
-CC oba-ui:
- stage: "Code Compilation"
+AB oba-ui:
+ stage: "Application Building"
  image: "adorsys/ci-build"
  script:
     - cd oba-ui

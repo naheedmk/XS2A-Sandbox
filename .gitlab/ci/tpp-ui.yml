@@ -1,9 +1,9 @@
 ####################
-# Code Compilation #
+# Application Building #
 ####################
 
-CC tpp-ui:
-  stage: "Code Compilation"
+AB tpp-ui:
+  stage: "Application Building"
   image: "adorsys/ci-build"
   script:
     - cd tpp-ui

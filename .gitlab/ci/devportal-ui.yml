@@ -1,9 +1,9 @@
-####################
-# Code Compilation #
-####################
+########################
+# Application Building #
+########################
 
-CC devportal-ui:
-  stage: "Code Compilation"
+AB devportal-ui:
+  stage: "Application Building"
   image: "adorsys/ci-build"
   script:
     - cd developer-portal-ui
