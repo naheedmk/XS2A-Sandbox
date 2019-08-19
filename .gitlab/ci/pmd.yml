@@ -19,12 +19,8 @@ AB pmd report:
     name: "$CI_PROJECT_NAME-${CI_BUILD_REF_NAME#*v}-pmd"
     expire_in: "10 day"
 
-################
-# Code Testing #
-################
-
-CT pmd check:
-  stage: "Code Testing"
+AB pmd check:
+  stage: "Application Building"
   image: "adorsys/ci-build"
   except:
     - develop
