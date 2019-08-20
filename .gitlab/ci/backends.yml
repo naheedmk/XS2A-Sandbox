@@ -4,7 +4,7 @@
 
 AB javadoc check:
   stage: "Application Building"
-  image: "adorsys/ci-build"
+  image: "adorsys/ci-build:light"
   except:
     - develop
   cache:
@@ -46,7 +46,7 @@ AB backends Java11:
 
 UT backends:
   stage: "Unit Testing"
-  image: "adorsys/ci-build"
+  image: "adorsys/ci-build:light"
   except:
     - develop
   cache:

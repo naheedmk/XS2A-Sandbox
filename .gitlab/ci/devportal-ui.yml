@@ -4,7 +4,7 @@
 
 AB devportal-ui:
   stage: "Application Building"
-  image: "adorsys/ci-build"
+  image: "adorsys/ci-build:light"
   script:
     - cd developer-portal-ui
     - npm install

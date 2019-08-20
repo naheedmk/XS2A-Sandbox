@@ -80,7 +80,7 @@ variables:
 # ------------------------------------------------------------------
 
 .build_java:
-  image: "adorsys/ci-build"
+  image: "adorsys/ci-build:light"
   script:
     - jabba use $BUILD_JAVA_VERSION
     - cat /sys/fs/cgroup/memory/memory.limit_in_bytes

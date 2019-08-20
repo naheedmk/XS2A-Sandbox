@@ -4,7 +4,7 @@
 
 AB oba-ui:
  stage: "Application Building"
- image: "adorsys/ci-build"
+ image: "adorsys/ci-build:light"
  script:
     - cd oba-ui
     - npm install
@@ -25,7 +25,7 @@ AB oba-ui:
 
 UT oba-ui:
   stage: "Unit Testing"
-  image: "adorsys/ci-build"
+  image: "adorsys/ci-build:light"
   script:
   - cd oba-ui
   - nvm use 10
