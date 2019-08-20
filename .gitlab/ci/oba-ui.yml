@@ -25,7 +25,7 @@ AB oba-ui:
 
 UT oba-ui:
   stage: "Unit Testing"
-  image: "adorsys/ci-build:light"
+  image: "adorsys/ci-build:latest"
   script:
   - cd oba-ui
   - nvm use 10
