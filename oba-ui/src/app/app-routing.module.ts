@@ -6,11 +6,16 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from './common/guards/auth.guard';
 import {AccountsComponent} from "./accounts/accounts.component";
 import {AccountDetailsComponent} from "./accounts/account-details/account-details.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'reset-password',
+        component: ResetPasswordComponent
     },
     {
         path: '',

@@ -22,6 +22,7 @@ import {NavbarComponent} from './common/navbar/navbar.component';
 import {SidebarComponent} from './common/sidebar/sidebar.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AccountDetailsComponent } from './accounts/account-details/account-details.component';
+import { ResetPasswordComponent} from './reset-password/reset-password.component';
 
 export function app_Init(settingsHttpService: SettingsHttpService) {
   return () => settingsHttpService.initializeApp();
@@ -37,7 +38,8 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
     ConsentsComponent,
     InternalServerErrorComponent,
     AccountsComponent,
-    AccountDetailsComponent
+    AccountDetailsComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
