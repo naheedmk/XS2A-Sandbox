@@ -43,15 +43,15 @@ export const routes: Routes = [
     },
     {
         path: 'account-information',
-        loadChildren: './ais/ais.module#AisModule'
+        loadChildren: () => import('./ais/ais.module').then(m => m.AisModule)
     },
     {
         path: 'payment-initiation',
-        loadChildren: './pis/pis.module#PisModule'
+        loadChildren: () => import('./pis/pis.module').then(m => m.PisModule)
     },
     {
         path: 'payment-cancellation',
-        loadChildren: './payment-cancellation/payment-cancellation.module#PaymentCancellationModule'
+        loadChildren: () => import('./payment-cancellation/payment-cancellation.module').then(m => m.PaymentCancellationModule)
     },
     {
         path: '**',
