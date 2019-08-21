@@ -23,6 +23,7 @@ import {SidebarComponent} from './common/sidebar/sidebar.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AccountDetailsComponent } from './accounts/account-details/account-details.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { ClipboardModule } from 'ngx-clipboard';
 
 export function app_Init(settingsHttpService: SettingsHttpService) {
   return () => settingsHttpService.initializeApp();
@@ -50,7 +51,8 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
     FormsModule,
     HttpClientModule,
     ApiModule.forRoot({rootUrl: '/oba-proxy'}),
-    NgHttpLoaderModule.forRoot()
+    NgHttpLoaderModule.forRoot(),
+    ClipboardModule
   ],
   providers: [
     AisService,
