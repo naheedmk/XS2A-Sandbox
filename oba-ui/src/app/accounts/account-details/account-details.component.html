@@ -32,16 +32,28 @@
 
       <div class="row">
         <div class="col">
-          <div class="form-group">
+          <form class="form-group">
             <label for="dateFrom">Date from</label>
-            <input id="dateFrom" class="form-control" [value]="transactionsParams.dateFrom" />
-          </div>
+              <div class="input-group">
+                  <input id="dateFrom" class="form-control" placeholder="yyyy-mm-dd" [value]="transactionsParams.dateFrom"
+                         name="dp" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker">
+                  <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                  </div>
+              </div>
+          </form>
         </div>
         <div class="col">
-          <div class="form-group">
+          <form class="form-group">
             <label for="dateTo">Date to</label>
-            <input id="dateTo" class="form-control" [value]="transactionsParams.dateTo" />
-          </div>
+              <div class="input-group">
+                  <input id="dateTo" class="form-control" placeholder="yyyy-mm-dd" [value]="transactionsParams.dateTo"
+                         name="dp" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">
+                  <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+                  </div>
+              </div>
+          </form>
         </div>
         <div class="col-2">
           <label>&nbsp;</label>
@@ -54,25 +66,29 @@
           <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Booking date</th>
             <th scope="col">Debtor Account</th>
+            <th scope="col">Booking date</th>
+            <th scope="col">Amount</th>
             <th scope="col">Debtor Name</th>
-            <th scope="col">purpose Code</th>
-            <th scope="col">Entry Reference</th>
             <th scope="col">Value Date</th>
+            <th scope="col">Creditor Account</th>
+            <th scope="col">Remittance</th>
+            <th scope="col">transactionId</th>
+            <th scope="col">endToEndId</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let transaction of transactions; index as i">
             <th scope="row">{{i + 1}}</th>
-            <td>{{transaction.amount?.amount}} {{transaction.amount?.currency}}</td>
+            <td>{{transaction.debtorAccount?.iban}}</td>
             <td>{{transaction.bookingDate}}</td>
-            <td>{{transaction.debtorAccount}}</td>
+            <td>{{transaction.amount?.amount}} {{transaction.amount?.currency}}</td>
             <td>{{transaction.debtorName}}</td>
-            <td>{{transaction.purposeCode}}</td>
-            <td>{{transaction.entryReference}}</td>
             <td>{{transaction.valueDate}}</td>
+            <td>{{transaction.creditorAccount?.iban}}</td>
+            <td>{{transaction.remittanceInformationUnstructured}}</td>
+            <td>{{transaction.transactionId}}</td>
+            <td>{{transaction.endToEndId}}</td>
           </tr>
           </tbody>
         </table>

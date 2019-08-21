@@ -143,40 +143,40 @@ services:
       - fakesmtp
 
   # Xs2a online banking frontend
-  xs2a-online-banking-ui:
-    image: adorsys/xs2a-online-banking-ui
-    restart: on-failure
-    build:
-      context: oba-ui
-      dockerfile: Dockerfile
-    ports:
-      - "4400:4400"
-    networks:
-      - xs2a-net
-    environment:
-      ONLINE_BANKING_SERVER_URL: "http://xs2a-online-banking:8090"
-      DEV_PORTAL_URL_EXT: "http://localhost:4206"
-    depends_on:
-      - xs2a-online-banking
-      - developer-portal-ui
+#  xs2a-online-banking-ui:
+#    image: adorsys/xs2a-online-banking-ui
+#    restart: on-failure
+#    build:
+#      context: oba-ui
+#      dockerfile: Dockerfile
+#    ports:
+#      - "4400:4400"
+#    networks:
+#      - xs2a-net
+#    environment:
+#      ONLINE_BANKING_SERVER_URL: "http://xs2a-online-banking:8090"
+#      DEV_PORTAL_URL_EXT: "http://localhost:4206"
+#    depends_on:
+#      - xs2a-online-banking
+#      - developer-portal-ui
 
   # TPP-UI
-  xs2a-tpp-ui:
-    image: adorsys/tpp-ui
-    restart: on-failure
-    environment:
-      - TPP_REST_SERVER_URL=http://xs2a-tpp-rest-server:8093
-      - CERT_GEN_URL=http://certificate-generator:8092
-    build:
-      context: tpp-ui
-      dockerfile: Dockerfile
-    ports:
-      - "4205:4205"
-    networks:
-      - xs2a-net
-    depends_on:
-      - certificate-generator
-      - xs2a-tpp-rest-server
+#  xs2a-tpp-ui:
+#    image: adorsys/tpp-ui
+#    restart: on-failure
+#    environment:
+#      - TPP_REST_SERVER_URL=http://xs2a-tpp-rest-server:8093
+#      - CERT_GEN_URL=http://certificate-generator:8092
+#    build:
+#      context: tpp-ui
+#      dockerfile: Dockerfile
+#    ports:
+#      - "4205:4205"
+#    networks:
+#      - xs2a-net
+#    depends_on:
+#      - certificate-generator
+#      - xs2a-tpp-rest-server
 
   # TPP-REST-SERVER
   xs2a-tpp-rest-server:
