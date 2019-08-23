@@ -38,6 +38,7 @@ public class TppUsersController implements TppUsersRestApi {
         return userMgmtStaffRestClient.getBranchUsersByRoles(Arrays.asList(UserRoleTO.CUSTOMER));
     }
 
+    // TODO resolve 'branch' on Ledgers side
     @Override
     public ResponseEntity<Void> updateUser(User user) {
         if (StringUtils.isBlank(user.getId())) {
