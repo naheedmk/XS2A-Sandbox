@@ -57,7 +57,7 @@
     "karma-coverage-istanbul-reporter": "^2.0.5",
     "karma-jasmine": "^1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "ng-swagger-gen": "^1.6.1",
+    "ng-swagger-gen": "^1.8.1",
     "popper.js": "^1.15.0",
     "prettier": "^1.18.2",
     "prettier-check": "^2.0.0",
