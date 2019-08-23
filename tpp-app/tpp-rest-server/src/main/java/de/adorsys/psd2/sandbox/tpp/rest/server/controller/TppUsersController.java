@@ -40,13 +40,13 @@ public class TppUsersController implements TppUsersRestApi {
 
     @Override
     public ResponseEntity<Void> updateUser(User user) {
-        UserTO userTO = userMapper.toUserTO(user);
         if (StringUtils.isBlank(user.getId())) {
             throw new TppException("User id is not present in body!", 400);
         }
         String branch = Optional.ofNullable(userMgmtRestClient.getUser().getBody())
                             .map(UserTO::getBranch)
                             .orElseThrow(() -> new TppException("No tpp code present!", 400));
+        UserTO userTO = userMapper.toUserTO(user);
         userMgmtStaffRestClient.modifyUser(branch, userTO);
         return new ResponseEntity<>(OK);
     }
