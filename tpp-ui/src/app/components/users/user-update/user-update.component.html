@@ -12,7 +12,7 @@
                 </ng-template>
             </div>
         </div>
-        <form [formGroup]="updateUserForm" autocomplete="off">
+        <form novalidate [formGroup]="updateUserForm" (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="card-body pb-0">
                 <h5>Update user Information</h5>
             </div>
@@ -110,12 +110,12 @@
                             <div class="row">
                                 <div class="col-12 col-md-8">
                                     <div [formGroupName]="i" class="form-group">
-                                        <label class="control-label" for="scaData">SCA</label>
+                                        <label class="control-label" for="scaData{{i}}">SCA</label>
                                         <input [ngClass]="{ 'is-invalid': (scaDataItem.controls['methodValue'].touched || submitted) && scaDataItem.controls['methodValue'].errors }"
                                                aria-describedby="scaDataHelp"
                                                class="form-control"
                                                formControlName="methodValue"
-                                               id="scaData"
+                                               id="scaData{{i}}"
                                                placeholder="Please input SCA method for user"
                                                type="text">
                                         <div *ngIf="(scaDataItem.controls['methodValue'].touched || submitted) && scaDataItem.controls['methodValue'].hasError('required')"
@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="card-body text-right">
-                    <button [disabled]="updateUserForm.invalid" routerLink="/users/all"
+                    <button [disabled]="updateUserForm.invalid"
                             class="btn btn-primary"
                             type="submit">Update
                     </button>

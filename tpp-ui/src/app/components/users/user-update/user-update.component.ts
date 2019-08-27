@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../models/user.model";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-user-update',
@@ -10,19 +11,31 @@ import {Router} from "@angular/router";
     styleUrls: ['./user-update.component.scss']
 })
 export class UserUpdateComponent implements OnInit {
-    user: User;
+    user : User;
     updateUserForm: FormGroup;
+    userId: string;
     public submitted: boolean;
     public errorMessage: string;
 
-
     constructor(private userService: UserService,
                 private formBuilder: FormBuilder,
-                private router: Router) {
+                private router: Router,
+                private activatedRoute: ActivatedRoute) {
+        this.user = new User();
     }
 
     ngOnInit() {
         this.setupUserFormControl();
+        this.activatedRoute.params
+            .pipe(
+                map(response => {
+                    return response.id;
+                })
+            )
+            .subscribe((id: string) => {
+                this.userId = id;
+                this.getUserDetails();
+            });
     }
 
     setupUserFormControl(): void {
@@ -34,6 +47,10 @@ export class UserUpdateComponent implements OnInit {
             login: ['', Validators.required],
             pin: ['', [Validators.required, Validators.minLength(5)]],
         });
+
+        this.updateUserForm.valueChanges.subscribe(val => {
+            this.submitted = false;
+        });
     }
 
     get formControl() {
@@ -41,13 +58,21 @@ export class UserUpdateComponent implements OnInit {
     }
 
     onSubmit() {
+        this.submitted = true;
         if (this.updateUserForm.invalid) {
-            this.submitted = true;
             this.errorMessage = 'Please verify your credentials';
             return;
         }
 
-        this.userService.updateUserDetails(this.updateUserForm.value)
+        const updatedUser: User = {
+            ...this.user,
+            email: this.updateUserForm.get('email').value,
+            login: this.updateUserForm.get('login').value,
+            pin: this.updateUserForm.get('pin').value,
+            scaUserData: this.updateUserForm.get('scaUserData').value
+        };
+
+        this.userService.updateUserDetails(updatedUser)
             .subscribe(() => this.router.navigate(['/users/all'])
         )
     }
@@ -61,6 +86,25 @@ export class UserUpdateComponent implements OnInit {
         });
     }
 
+    getUserDetails() {
+        this.userService.getUser(this.userId).subscribe((item: User) => {
+            this.user = item;
+            this.updateUserForm.patchValue({
+                email: this.user.email,
+                pin: this.user.pin,
+                login: this.user.login
+            });
+
+            const scaUserData = <FormArray>this.updateUserForm.get('scaUserData');
+            this.user.scaUserData.forEach((value, i) => {
+                if (scaUserData.length < i + 1) {
+                    scaUserData.push(this.initScaData());
+                }
+                scaUserData.at(i).patchValue(value);
+            });
+        });
+    }
+
     addScaDataItem() {
         const control = <FormArray>this.updateUserForm.controls['scaUserData'];
         control.push(this.initScaData());
@@ -70,6 +114,5 @@ export class UserUpdateComponent implements OnInit {
         const control = <FormArray>this.updateUserForm.controls['scaUserData'];
         control.removeAt(i);
     }
-
 
 }
