@@ -14,7 +14,7 @@
         </div>
         <form [formGroup]="updateUserForm" autocomplete="off">
             <div class="card-body pb-0">
-                <h5>User Information</h5>
+                <h5>Update user Information</h5>
             </div>
             <div class="border-bottom">
                 <div class="card-body">
@@ -152,7 +152,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-8">
-                                    <div [FormGroupName]="i" class="form-group">
+                                    <div [formGroupName]="i" class="form-group">
                                         <label class="control-label" for="scaData">Static TAN</label>
                                         <input [ngClass]="{ 'is-invalid': (scaDataItem.controls['staticTan'].touched || submitted) && scaDataItem.controls['staticTan'].errors }"
                                                aria-describedby="scaDataHelp"
@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="card-body text-right">
-                    <button routerLink="/users/all"
+                    <button [disabled]="updateUserForm.invalid" routerLink="/users/all"
                             class="btn btn-primary"
                             type="submit">Update
                     </button>

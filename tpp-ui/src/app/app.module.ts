@@ -61,7 +61,8 @@ import { UserUpdateComponent } from './components/users/user-update/user-update.
         AccountAccessManagementComponent,
         ResetPasswordComponent,
         ConfirmNewPasswordComponent,
-        UserUpdateComponent
+        UserUpdateComponent,
+        CertificateComponent
     ],
     imports: [
         BrowserModule,
