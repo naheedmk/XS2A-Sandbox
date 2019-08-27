@@ -37,6 +37,7 @@ import { AccountAccessManagementComponent } from './components/account-access-ma
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { ConfirmNewPasswordComponent } from './components/auth/confirm-new-password/confirm-new-password.component';
 import { ConvertBalancePipe } from './pipes/convertBalance.pipe';
+import { ConvertBalancePipeHostComponent } from './pipes/convertBalancePipeHost.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import { ConvertBalancePipe } from './pipes/convertBalance.pipe';
         AccountAccessManagementComponent,
         ResetPasswordComponent,
         ConfirmNewPasswordComponent,
-        ConvertBalancePipe
+        ConvertBalancePipe,
+        ConvertBalancePipeHostComponent
     ],
     imports: [
         BrowserModule,
