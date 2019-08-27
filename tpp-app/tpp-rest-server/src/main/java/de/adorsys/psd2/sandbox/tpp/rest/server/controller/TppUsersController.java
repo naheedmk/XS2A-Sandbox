@@ -51,4 +51,9 @@ public class TppUsersController implements TppUsersRestApi {
         userMgmtStaffRestClient.modifyUser(branch, userTO);
         return new ResponseEntity<>(OK);
     }
+
+    @Override
+    public ResponseEntity<UserTO> getUser(String userId) {
+        return userMgmtRestClient.getUserById(userId);
+    }
 }
