@@ -4,12 +4,13 @@ import {UserUpdateComponent} from './user-update.component';
 import {UserService} from "../../../services/user.service";
 import {Router} from "@angular/router";
 import {InfoModule} from "../../../commons/info/info.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormArray, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
 import {IconModule} from "../../../commons/icon/icon.module";
 import {of} from "rxjs/internal/observable/of";
 import {InfoService} from "../../../commons/info/info.service";
+import {User} from "../../../models/user.model";
 
 describe('UserUpdateComponent', () => {
   let component: UserUpdateComponent;
@@ -145,29 +146,50 @@ describe('UserUpdateComponent', () => {
         expect(formGroup.value).toEqual(data);
     });
 
-    // it('should call user service when form is valid and submitted', () => {
-    //     component.ngOnInit();
-    //     expect(component.submitted).toBeFalsy();
-    //     expect(component.updateUserForm.valid).toBeFalsy();
-    //
-    //     // populate form
-    //     component.updateUserForm.controls['email'].setValue('dart.vader@dark-side.com');
-    //     component.updateUserForm.controls['login'].setValue('dart.vader');
-    //     component.updateUserForm.controls['pin'].setValue('12345678');
-    //     component.updateUserForm.controls['scaUserData']['controls'][0].controls['methodValue'].setValue('dart.vader@dark-side.com');
-    //     component.updateUserForm.controls['scaUserData']['controls'][0].controls['staticTan'].setValue('12345');
-    //     component.updateUserForm.controls['scaUserData']['controls'][0].controls['usesStaticTan'].setValue(true);
-    //
-    //
-    //     // create spies and fake call function
-    //     const sampleResponse = {value: 'sample response'};
-    //     let updateUserDetail = spyOn(userService, 'updateUserDetails').and.callFake(() => of(sampleResponse));
-    //     let navigateSpy = spyOn(router, 'navigateByUrl');
-    //     component.onSubmit();
-    //     expect(component.submitted).toBeTruthy();
-    //     expect(component.updateUserForm.valid).toBeTruthy();
-    //     expect(updateUserDetail).toHaveBeenCalled();
-    //     expect(navigateSpy).toHaveBeenCalledWith('/users/all');
-    // });
+    it('should load actual user and update its details', () => {
+        let mockUser: User =
+            {
+                id: 'XXXXXX',
+                email: 'tes@adorsys.de',
+                login: 'bob',
+                branch: '34256',
+                pin: '12345',
+                scaUserData: [],
+                accountAccesses: [{
+                    accessType: 'OWNER',
+                    iban: 'FR87760700254556545403'
+                }]
+            } as User;
+
+        let getUserSpy = spyOn(userService, 'getUser').and.returnValue(of(mockUser));
+
+        component.ngOnInit();
+        expect(component.submitted).toBeFalsy();
+        expect(component.updateUserForm.valid).toBeFalsy();
+
+        // populate form
+        const scaUserData = <FormArray>component.updateUserForm.get('scaUserData');
+        component.user = mockUser;
+        component.updateUserForm.get('email').setValue('dart.vader@dark-side.com');
+        component.updateUserForm.get('login').setValue('dart.vader');
+        component.updateUserForm.get('pin').setValue('12345678');
+        scaUserData.at(0).get('methodValue').setValue('dart.vader@dark-side.com');
+        scaUserData.at(0).get('staticTan').setValue('12345');
+        scaUserData.at(0).get('usesStaticTan').setValue(true);
+
+        // create spies and fake call function
+        const sampleResponse = {value: 'sample response'};
+        let updateUserDetail = spyOn(userService, 'updateUserDetails').and.callFake(() => of(sampleResponse));
+        let navigateSpy = spyOn(router, 'navigate');
+        component.onSubmit();
+        const submittedUser = updateUserDetail.calls.argsFor(0)[0] as User;
+        expect(submittedUser.email).toBe('dart.vader@dark-side.com');
+        expect(submittedUser.accountAccesses).toEqual(mockUser.accountAccesses);
+        expect(component.submitted).toBeTruthy();
+        expect(component.updateUserForm.valid).toBeTruthy();
+        expect(getUserSpy).toHaveBeenCalled();
+        expect(component.user).toEqual(mockUser);
+        expect(navigateSpy).toHaveBeenCalledWith(['/users/all']);
+    });
 
 });
