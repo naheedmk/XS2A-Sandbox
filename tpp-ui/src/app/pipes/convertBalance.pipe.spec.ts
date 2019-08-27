@@ -38,7 +38,7 @@ describe('ConvertBalancePipe inside a Component', () => {
         expect(div.textContent.trim()).toEqual('0,44');
     });
 
-    it('should Display 10.000.000', () => {
+    it('should Display 10.000.000,00', () => {
         component.balance = 10000000;
         fixture.detectChanges();
 
@@ -46,7 +46,7 @@ describe('ConvertBalancePipe inside a Component', () => {
             .query(By.css('div'))
             .nativeElement;
 
-        expect(div.textContent.trim()).toEqual('10.000.000');
+        expect(div.textContent.trim()).toEqual('10.000.000,00');
     });
 
     it('should Display 10.000.000,50', () => {
