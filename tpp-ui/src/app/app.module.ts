@@ -36,7 +36,7 @@ import {AutoLogoutService} from "./services/auto-logout.service";
 import { AccountAccessManagementComponent } from './components/account-access-management/account-access-management.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { ConfirmNewPasswordComponent } from './components/auth/confirm-new-password/confirm-new-password.component';
-import { ConvertBalance } from './components/account/converBalance.pipe';
+import { ConvertBalancePipe } from './pipes/convertBalance.pipe';
 
 @NgModule({
     declarations: [
@@ -62,7 +62,7 @@ import { ConvertBalance } from './components/account/converBalance.pipe';
         AccountAccessManagementComponent,
         ResetPasswordComponent,
         ConfirmNewPasswordComponent,
-        ConvertBalance
+        ConvertBalancePipe
     ],
     imports: [
         BrowserModule,

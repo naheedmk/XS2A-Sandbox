@@ -1,8 +1,8 @@
-import { Pipe, PipeTransform, LOCALE_ID } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 @Pipe({ name: 'convertBalance' })
-export class ConvertBalance implements PipeTransform {
+export class ConvertBalancePipe implements PipeTransform {
     transform(value: number):String {
         let pipe = new DecimalPipe("en-US");
         let balance = ""+pipe.transform(value, "1.2-2");
