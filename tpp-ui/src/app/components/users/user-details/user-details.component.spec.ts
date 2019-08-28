@@ -6,7 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
-import { of } from 'rxjs';
+import {of} from 'rxjs';
 import {User} from "../../../models/user.model";
 
 describe('UserDetailsComponent', () => {

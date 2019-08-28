@@ -6,10 +6,11 @@ import {Router} from "@angular/router";
 import {InfoModule} from "../../../commons/info/info.module";
 import {FormArray, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {RouterTestingModule} from "@angular/router/testing";
 import {of} from "rxjs";
 import {InfoService} from "../../../commons/info/info.service";
 import {User} from "../../../models/user.model";
+import {RouterTestingModule} from "@angular/router/testing";
+import {IconModule} from "../../../commons/icon/icon.module";
 
 describe('UserUpdateComponent', () => {
   let component: UserUpdateComponent;
@@ -23,7 +24,8 @@ describe('UserUpdateComponent', () => {
                 ReactiveFormsModule,
                 InfoModule,
                 RouterTestingModule.withRoutes([]),
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                IconModule
             ],
             providers: [UserService, InfoService],
             declarations: [UserUpdateComponent]
