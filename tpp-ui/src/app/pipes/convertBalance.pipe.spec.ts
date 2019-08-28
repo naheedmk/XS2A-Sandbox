@@ -1,8 +1,15 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing"
-import { ConvertBalancePipe } from "./convertBalance.pipe"
-import { ConvertBalancePipeHostComponent } from "./convertBalancePipeHost.component"
+import { Component } from "@angular/core";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ConvertBalancePipe } from "./convertBalance.pipe";
 import { DebugElement } from '@angular/core';
 import { By } from "@angular/platform-browser";
+
+@Component({
+    template: '<div> {{ balance | convertBalance }} </div>'
+})
+export class ConvertBalancePipeHostComponent {
+    balance: number;
+}
 
 describe('ConvertBalancePipe inside a Component', () => {
     beforeEach(async(() => {
