@@ -6,8 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
-import {IconModule} from "../../../commons/icon/icon.module";
-import {of} from "rxjs/internal/observable/of";
+import { of } from 'rxjs';
 import {User} from "../../../models/user.model";
 
 describe('UserDetailsComponent', () => {
@@ -21,10 +20,8 @@ describe('UserDetailsComponent', () => {
     TestBed.configureTestingModule({
         imports: [
             RouterTestingModule.withRoutes([]),
-            RouterTestingModule,
             ReactiveFormsModule,
             HttpClientTestingModule,
-            IconModule
         ],
         declarations: [ UserDetailsComponent ],
         providers: [UserService]

@@ -1,48 +1,48 @@
 <div class="container-fluid">
-    <h2>User Details</h2>
     <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table ">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Login</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Accounts</th>
-                        <th scope="col">Authentication methods</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <th scope="row">{{1}}</th>
-                    <td>{{user.login}}</td>
-                    <td>{{user.email}}</td>
-                        <td>
-                            <ul>
-                                <li *ngFor="let accountAccess of user?.accountAccesses" class="nav-item">
-                                    {{accountAccess.iban}}
-                                </li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast" [ngClass]="{'mb-2': !isLast}">
-                                    {{scaItem.methodValue}}
-                                    <div *ngIf="scaItem.usesStaticTan">
-                                        Static TAN: {{scaItem.staticTan}}
-                                    </div>
-                                </li>
-                            </ul>
-                        </td>
-                    </tbody>
-                </table>
+        <div class="card-body--large">
+            <div class="header__title mb-2">User details</div>
+
+            <div class="row">
+                <th class="col-12 col-md-3 mb-3">Login</th>
+                <ul>
+                    <li class="col-12 col-md-9 text-muted">{{user.login}}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <th class="col-12 col-md-3 mb-3">Email</th>
+                <ul>
+                    <li class="col-12 col-md-9 text-muted">{{user.email}}</li>
+                </ul>
+            </div>
+            <div class="row">
+                <th class="col-12 col-md-3 mb-3 ">Accounts</th>
+                <ul>
+                    <li *ngFor="let accountAccess of user?.accountAccesses" class="nav-item text-muted">
+                        {{accountAccess.iban}}
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <th class="col-12 col-md-3 mb-3">Authentication</th>
+                <ul>
+                    <li *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast"
+                        [ngClass]="{'mb-2': !isLast}" class="text-muted">
+                        {{scaItem.methodValue}}
+                        <div *ngIf="scaItem.usesStaticTan">
+                            Static TAN: {{scaItem.staticTan}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body text-right">
+                <button routerLink="/users/{{user.id}}/update-user-details"
+                        class="btn btn-primary"
+                        type="submit">Edit
+                </button>
             </div>
         </div>
     </div>
+
 </div>
-<div class="card-body text-right">
-    <button routerLink="/users/{{user.id}}/update-user-details"
-            class="btn btn-primary"
-            type="submit">Edit
-    </button>
-</div>
+

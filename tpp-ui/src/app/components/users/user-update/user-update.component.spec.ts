@@ -7,8 +7,7 @@ import {InfoModule} from "../../../commons/info/info.module";
 import {FormArray, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {RouterTestingModule} from "@angular/router/testing";
-import {IconModule} from "../../../commons/icon/icon.module";
-import {of} from "rxjs/internal/observable/of";
+import {of} from "rxjs";
 import {InfoService} from "../../../commons/info/info.service";
 import {User} from "../../../models/user.model";
 
@@ -24,8 +23,7 @@ describe('UserUpdateComponent', () => {
                 ReactiveFormsModule,
                 InfoModule,
                 RouterTestingModule.withRoutes([]),
-                HttpClientTestingModule,
-                IconModule
+                HttpClientTestingModule
             ],
             providers: [UserService, InfoService],
             declarations: [UserUpdateComponent]

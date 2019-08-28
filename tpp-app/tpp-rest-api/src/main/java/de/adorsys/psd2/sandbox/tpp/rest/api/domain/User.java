@@ -1,6 +1,5 @@
 package de.adorsys.psd2.sandbox.tpp.rest.api.domain;
 
-import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import lombok.Data;
 
 import java.util.ArrayList;
