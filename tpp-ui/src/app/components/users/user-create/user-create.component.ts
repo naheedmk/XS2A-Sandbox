@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user.model";
 import {InfoService} from "../../../commons/info/info.service";
+import {ScaMethods} from "../../../models/scaMethods";
 
 @Component({
     selector: 'app-user-create',
@@ -14,6 +15,7 @@ export class UserCreateComponent implements OnInit {
 
     id: string;
     user: User;
+    methods: any[];
 
     userForm: FormGroup;
     submitted: boolean;
@@ -31,6 +33,7 @@ export class UserCreateComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getMethodsValues();
         this.setupUserFormControl();
     }
 
@@ -80,6 +83,10 @@ export class UserCreateComponent implements OnInit {
                     severity: 'error'
                 })
             });
+    }
+
+    getMethodsValues() {
+        this.methods = Object.keys(ScaMethods)
     }
 
 }

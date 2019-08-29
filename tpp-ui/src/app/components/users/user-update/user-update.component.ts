@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../models/user.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {map} from "rxjs/operators";
+import {ScaMethods} from "../../../models/scaMethods";
 
 @Component({
     selector: 'app-user-update',
@@ -13,6 +14,8 @@ import {map} from "rxjs/operators";
 export class UserUpdateComponent implements OnInit {
     user : User;
     updateUserForm: FormGroup;
+    methods: any[];
+
     userId: string;
     public submitted: boolean;
     public errorMessage: string;
@@ -34,6 +37,7 @@ export class UserUpdateComponent implements OnInit {
             )
             .subscribe((id: string) => {
                 this.userId = id;
+                this.getMethodsValues();
                 this.getUserDetails();
             });
     }
@@ -57,6 +61,8 @@ export class UserUpdateComponent implements OnInit {
         return this.updateUserForm.controls;
     }
 
+    get take() { return this.formControl.scaUserData['scaMethod']; }
+
     onSubmit() {
         this.submitted = true;
         if (this.updateUserForm.invalid) {
@@ -79,7 +85,7 @@ export class UserUpdateComponent implements OnInit {
 
     initScaData() {
         return this.formBuilder.group({
-            scaMethod: ['EMAIL', Validators.required],
+            scaMethod: [ScaMethods.EMAIL, Validators.required],
             methodValue: ['', Validators.required],
             staticTan: [''],
             usesStaticTan: ['']
@@ -95,13 +101,6 @@ export class UserUpdateComponent implements OnInit {
                 login: this.user.login
             });
 
-            const scaUserData = <FormArray>this.updateUserForm.get('scaUserData');
-            this.user.scaUserData.forEach((value, i) => {
-                if (scaUserData.length < i + 1) {
-                    scaUserData.push(this.initScaData());
-                }
-                scaUserData.at(i).patchValue(value);
-            });
         });
     }
 
@@ -113,6 +112,10 @@ export class UserUpdateComponent implements OnInit {
     removeScaDataItem(i: number) {
         const control = <FormArray>this.updateUserForm.controls['scaUserData'];
         control.removeAt(i);
+    }
+
+     getMethodsValues() {
+         this.methods = Object.keys(ScaMethods)
     }
 
 }

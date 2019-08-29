@@ -4,30 +4,30 @@
             <div class="header__title mb-2">User details</div>
 
             <div class="row">
-                <th class="col-12 col-md-3 mb-3">Login</th>
+                <th class="col-12 col-md-3 sub__title">Login</th>
                 <ul>
-                    <li class="col-12 col-md-9 text-muted">{{user.login}}</li>
+                    <li class="col-12 text-muted sub__title">{{user.login}}</li>
                 </ul>
             </div>
             <div class="row">
-                <th class="col-12 col-md-3 mb-3">Email</th>
+                <th class="col-12 col-md-3 ">Email</th>
                 <ul>
-                    <li class="col-12 col-md-9 text-muted">{{user.email}}</li>
+                    <li class="col-12 text-muted">{{user.email}}</li>
                 </ul>
             </div>
             <div class="row">
-                <th class="col-12 col-md-3 mb-3 ">Accounts</th>
+                <th class="col-12 col-md-3 ">Accounts</th>
                 <ul>
-                    <li *ngFor="let accountAccess of user?.accountAccesses" class="nav-item text-muted">
+                    <li *ngFor="let accountAccess of user?.accountAccesses" class=" col-12 nav-item text-muted">
                         {{accountAccess.iban}}
                     </li>
                 </ul>
             </div>
             <div class="row">
-                <th class="col-12 col-md-3 mb-3">Authentication</th>
+                <th class="col-12 col-md-3 ">Authentication</th>
                 <ul>
                     <li *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast"
-                        [ngClass]="{'mb-2': !isLast}" class="text-muted">
+                        [ngClass]="{'mb-2': !isLast}" class=" col-12 text-muted">
                         {{scaItem.methodValue}}
                         <div *ngIf="scaItem.usesStaticTan">
                             Static TAN: {{scaItem.staticTan}}
