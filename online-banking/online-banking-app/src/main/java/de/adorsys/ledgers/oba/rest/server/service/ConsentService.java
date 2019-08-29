@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAConsentResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAResponseTO;
-import de.adorsys.ledgers.middleware.api.service.TokenStorageService;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
 import de.adorsys.ledgers.oba.rest.api.domain.AisErrorCode;
@@ -32,7 +31,6 @@ import java.util.stream.Collectors;
 import static de.adorsys.ledgers.oba.rest.api.domain.AisErrorCode.*;
 import static java.lang.String.format;
 import static java.util.Base64.getEncoder;
-import static org.apache.commons.lang3.ArrayUtils.EMPTY_BYTE_ARRAY;
 
 @Slf4j
 @Service
@@ -52,7 +50,6 @@ public class ConsentService {
     private final ConsentRestClient consentRestClient;
     private final AuthRequestInterceptor authInterceptor;
     private final ObjectMapper objectMapper;
-    private final TokenStorageService tokenStorageService;
     private final AspspDataService aspspDataService;
 
     public List<ObaAisConsent> getListOfConsents(String userLogin) {
@@ -173,7 +170,10 @@ public class ConsentService {
         try {
             byte[] decodedData = aspspDataService.readAspspConsentData(encryptedConsentId)
                                      .map(AspspConsentData::getAspspConsentData)
-                                     .orElse(EMPTY_BYTE_ARRAY);
+                                     .orElseThrow(() -> AisException.builder()
+                                                            .devMessage(COULD_NOT_RETRIEVE_ASPSP_CONSENT_DATA)
+                                                            .aisErrorCode(AIS_BAD_REQUEST)
+                                                            .build());
             token = Optional.ofNullable(objectMapper.readTree(decodedData).get("bearerToken"))
                         .map(t -> t.get("access_token"))
                         .map(JsonNode::asText)
