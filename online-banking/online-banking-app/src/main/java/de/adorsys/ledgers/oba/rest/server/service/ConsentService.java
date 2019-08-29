@@ -11,9 +11,11 @@ import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
 import de.adorsys.ledgers.oba.rest.api.domain.AisErrorCode;
 import de.adorsys.ledgers.oba.rest.api.domain.ObaAisConsent;
 import de.adorsys.ledgers.oba.rest.api.exception.AisException;
+import de.adorsys.psd2.consent.api.AspspDataService;
 import de.adorsys.psd2.consent.api.CmsAspspConsentDataBase64;
 import de.adorsys.psd2.consent.api.ais.AisAccountConsent;
 import de.adorsys.psd2.consent.service.security.SecurityDataService;
+import de.adorsys.psd2.xs2a.core.consent.AspspConsentData;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,6 @@ import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 import static de.adorsys.ledgers.oba.rest.api.domain.AisErrorCode.*;
 import static java.lang.String.format;
 import static java.util.Base64.getEncoder;
+import static org.apache.commons.lang3.ArrayUtils.EMPTY_BYTE_ARRAY;
 
 @Slf4j
 @Service
@@ -51,6 +53,7 @@ public class ConsentService {
     private final AuthRequestInterceptor authInterceptor;
     private final ObjectMapper objectMapper;
     private final TokenStorageService tokenStorageService;
+    private final AspspDataService aspspDataService;
 
     public List<ObaAisConsent> getListOfConsents(String userLogin) {
         try {
@@ -71,28 +74,15 @@ public class ConsentService {
                    .orElse(false);
     }
 
-    public void confirmAisConsentDecoupled(String userLogin, String consentId, String authorizationId, String tan) {
-        String encryptedConsentId = getEncryptedConsentId(consentId);
-        CmsAspspConsentDataBase64 aspspConsentData = getAspspConsentDataFromCms(consentId);
-        setActiveAccessTokenFromConsentData(aspspConsentData);
+    public void confirmAisConsentDecoupled(String userLogin, String encryptedConsentId, String authorizationId, String tan) {
+        //String encryptedConsentId = getEncryptedConsentId(consentId);
+        setActiveAccessTokenFromConsentData(encryptedConsentId);
 
-        SCAConsentResponseTO ledgerValidateTanConsentResponse = authorizeConsentAtLedgers(consentId, authorizationId, tan);
-        confirmConsentAtCms(userLogin, consentId, encryptedConsentId);
+        SCAConsentResponseTO ledgerValidateTanConsentResponse = authorizeConsentAtLedgers(encryptedConsentId, authorizationId, tan);
+        confirmConsentAtCms(userLogin, encryptedConsentId, encryptedConsentId);
         updateCmsAuthorization(userLogin, authorizationId, encryptedConsentId);
-        updateAspspConsentDataForConsent(consentId, encryptedConsentId, ledgerValidateTanConsentResponse);
+        updateAspspConsentDataForConsent(encryptedConsentId, encryptedConsentId, ledgerValidateTanConsentResponse);
         authInterceptor.setAccessToken(null);
-    }
-
-    private CmsAspspConsentDataBase64 getAspspConsentDataFromCms(String consentId) {
-        try {
-            return consentDataClient.getAspspConsentData(consentId).getBody();
-        } catch (FeignException e) {
-            log.error(COULD_NOT_RETRIEVE_ASPSP_CONSENT_DATA);
-            throw AisException.builder()
-                      .devMessage(COULD_NOT_RETRIEVE_ASPSP_CONSENT_DATA)
-                      .aisErrorCode(AIS_BAD_REQUEST)
-                      .build();
-        }
     }
 
     private void updateCmsAuthorization(String userLogin, String authorizationId, String encryptedConsentId) {
@@ -178,10 +168,12 @@ public class ConsentService {
         }
     }
 
-    private void setActiveAccessTokenFromConsentData(CmsAspspConsentDataBase64 aspspConsentData) {
+    private void setActiveAccessTokenFromConsentData(String encryptedConsentId) {
         String token;
         try {
-            byte[] decodedData = Base64.getDecoder().decode(aspspConsentData.getAspspConsentDataBase64());
+            byte[] decodedData = aspspDataService.readAspspConsentData(encryptedConsentId)
+                                     .map(AspspConsentData::getAspspConsentData)
+                                     .orElse(EMPTY_BYTE_ARRAY);
             token = Optional.ofNullable(objectMapper.readTree(decodedData).get("bearerToken"))
                         .map(t -> t.get("access_token"))
                         .map(JsonNode::asText)
