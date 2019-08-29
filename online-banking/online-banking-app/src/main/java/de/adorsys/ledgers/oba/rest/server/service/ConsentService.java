@@ -75,19 +75,19 @@ public class ConsentService {
     }
 
     public void confirmAisConsentDecoupled(String userLogin, String encryptedConsentId, String authorizationId, String tan) {
-        //String encryptedConsentId = getEncryptedConsentId(consentId);
+        String consentId = getDecryptedConsentId(encryptedConsentId);
         setActiveAccessTokenFromConsentData(encryptedConsentId);
 
-        SCAConsentResponseTO ledgerValidateTanConsentResponse = authorizeConsentAtLedgers(encryptedConsentId, authorizationId, tan);
-        confirmConsentAtCms(userLogin, encryptedConsentId, encryptedConsentId);
-        updateCmsAuthorization(userLogin, authorizationId, encryptedConsentId);
-        updateAspspConsentDataForConsent(encryptedConsentId, encryptedConsentId, ledgerValidateTanConsentResponse);
+        SCAConsentResponseTO ledgerValidateTanConsentResponse = authorizeConsentAtLedgers(consentId, authorizationId, tan);
+        confirmConsentAtCms(userLogin, consentId);
+        updateCmsAuthorization(userLogin, authorizationId, consentId);
+        updateAspspConsentDataForConsent(encryptedConsentId, ledgerValidateTanConsentResponse);
         authInterceptor.setAccessToken(null);
     }
 
-    private void updateCmsAuthorization(String userLogin, String authorizationId, String encryptedConsentId) {
+    private void updateCmsAuthorization(String userLogin, String authorizationId, String consentId) {
         try {
-            cmsPsuAisClient.updateAuthorisationStatus(encryptedConsentId, "FINALISED", authorizationId, userLogin, null, null, null, DEFAULT_SERVICE_INSTANCE_ID);
+            cmsPsuAisClient.updateAuthorisationStatus(consentId, "FINALISED", authorizationId, userLogin, null, null, null, DEFAULT_SERVICE_INSTANCE_ID);
         } catch (FeignException e) {
             String msg = format(UPDATE_FAILED_MSG, "authorization", e.getMessage());
             log.error(msg);
@@ -98,8 +98,8 @@ public class ConsentService {
         }
     }
 
-    private void updateAspspConsentDataForConsent(String consentId, String encryptedConsentId, SCAConsentResponseTO ledgerValidateTanConsentResponse) {
-        CmsAspspConsentDataBase64 updatedConsentData = new CmsAspspConsentDataBase64(consentId, writeScaResponseAsString(ledgerValidateTanConsentResponse));
+    private void updateAspspConsentDataForConsent(String encryptedConsentId, SCAConsentResponseTO ledgerValidateTanConsentResponse) {
+        CmsAspspConsentDataBase64 updatedConsentData = new CmsAspspConsentDataBase64(encryptedConsentId, writeScaResponseAsString(ledgerValidateTanConsentResponse));
         try {
             consentDataClient.updateAspspConsentData(encryptedConsentId, updatedConsentData);
         } catch (FeignException e) {
@@ -112,9 +112,9 @@ public class ConsentService {
         }
     }
 
-    private void confirmConsentAtCms(String userLogin, String consentId, String encryptedConsentId) {
+    private void confirmConsentAtCms(String userLogin, String consentId) {
         try {
-            cmsPsuAisClient.confirmConsent(encryptedConsentId, userLogin, null, null, null, DEFAULT_SERVICE_INSTANCE_ID).getBody();
+            cmsPsuAisClient.confirmConsent(consentId, userLogin, null, null, null, DEFAULT_SERVICE_INSTANCE_ID).getBody();
         } catch (FeignException e) {
             String msg = e.status() == 404
                              ? format(CONSENT_COULD_NOT_BE_FOUND, consentId)
@@ -130,10 +130,10 @@ public class ConsentService {
         }
     }
 
-    private String getEncryptedConsentId(String consentId) {
-        return securityDataService.encryptId(consentId)
+    private String getDecryptedConsentId(String encryptedConsentId) {
+        return securityDataService.decryptId(encryptedConsentId)
                    .orElseThrow(() -> AisException.builder()
-                                          .devMessage("Error encoding consent id")
+                                          .devMessage("Error decrypting consent id")
                                           .aisErrorCode(AIS_BAD_REQUEST)
                                           .build());
     }
