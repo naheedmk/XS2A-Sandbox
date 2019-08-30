@@ -21,13 +21,3 @@ describe("ngb-datepicker-utils",() => {
     expect(date).toEqual(dateInNumber);
   })
 });
-
-beforeEach(async(() => {
-  TestBed
-    .configureTestingModule({
-    })
-    .compileComponents();
-
-
-
-}));
