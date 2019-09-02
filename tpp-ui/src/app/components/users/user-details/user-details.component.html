@@ -5,35 +5,35 @@
 
             <div class="row">
                 <th class="col-12 col-md-3 sub__title">Login</th>
-                <ul>
-                    <li class="col-12 text-muted sub__title">{{user.login}}</li>
-                </ul>
+                <div>
+                    <div class="col-12 text-muted sub__title">{{user.login}}</div>
+                </div>
             </div>
             <div class="row">
                 <th class="col-12 col-md-3 ">Email</th>
-                <ul>
-                    <li class="col-12 text-muted">{{user.email}}</li>
-                </ul>
+                <div>
+                    <div class="col-12 text-muted">{{user.email}}</div>
+                </div>
             </div>
             <div class="row">
                 <th class="col-12 col-md-3 ">Accounts</th>
-                <ul>
-                    <li *ngFor="let accountAccess of user?.accountAccesses" class=" col-12 nav-item text-muted">
+                <div>
+                    <div *ngFor="let accountAccess of user?.accountAccesses" class=" col-12 nav-item text-muted">
                         {{accountAccess.iban}}
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <th class="col-12 col-md-3 ">Authentication</th>
-                <ul>
-                    <li *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast"
+                <div>
+                    <div *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast"
                         [ngClass]="{'mb-2': !isLast}" class=" col-12 text-muted">
                         {{scaItem.methodValue}}
                         <div *ngIf="scaItem.usesStaticTan">
                             Static TAN: {{scaItem.staticTan}}
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
             <div class="">
                 <button routerLink="/users/{{user.id}}/update-user-details"
