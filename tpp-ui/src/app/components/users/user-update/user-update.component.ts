@@ -14,7 +14,7 @@ import {ScaMethods} from "../../../models/scaMethods";
 export class UserUpdateComponent implements OnInit {
     user : User;
     updateUserForm: FormGroup;
-    methods: any[];
+    methods: string[];
 
     userId: string;
     public submitted: boolean;
@@ -61,8 +61,6 @@ export class UserUpdateComponent implements OnInit {
         return this.updateUserForm.controls;
     }
 
-    get take() { return this.formControl.scaUserData['scaMethod']; }
-
     onSubmit() {
         this.submitted = true;
         if (this.updateUserForm.invalid) {
@@ -80,7 +78,7 @@ export class UserUpdateComponent implements OnInit {
 
         this.userService.updateUserDetails(updatedUser)
             .subscribe(() => this.router.navigate(['/users/all'])
-        )
+        );
     }
 
     initScaData() {
@@ -98,7 +96,14 @@ export class UserUpdateComponent implements OnInit {
             this.updateUserForm.patchValue({
                 email: this.user.email,
                 pin: this.user.pin,
-                login: this.user.login
+                login: this.user.login,
+            });
+            const scaUserData = <FormArray>this.updateUserForm.get('scaUserData');
+            this.user.scaUserData.forEach((value, i) => {
+                if (scaUserData.length < i + 1) {
+                    scaUserData.push(this.initScaData());
+                }
+                scaUserData.at(i).patchValue(value);
             });
 
         });
@@ -115,7 +120,7 @@ export class UserUpdateComponent implements OnInit {
     }
 
      getMethodsValues() {
-         this.methods = Object.keys(ScaMethods)
+         this.methods = Object.keys(ScaMethods);
     }
 
 }

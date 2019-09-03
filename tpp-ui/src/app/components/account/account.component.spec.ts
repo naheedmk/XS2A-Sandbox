@@ -75,7 +75,7 @@ describe('AccountComponent', () => {
         spyOn(accountService, 'getAccount').and.returnValue(of(mockAccount));
         component.getAccount();
         expect(component.account).not.toBeUndefined();
-    });
+    })
 
 
 });
