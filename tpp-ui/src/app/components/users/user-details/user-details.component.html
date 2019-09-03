@@ -1,33 +1,29 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-body--large">
-            <div class="header__title mb-2">User details</div>
+            <div class="header__title">User details</div>
 
             <div class="row">
-                <th class="col-12 col-md-3 sub__title">Login</th>
-                <div>
-                    <div class="col-12 text-muted sub__title">{{user.login}}</div>
-                </div>
+                <div class="col-12 col-md-3">Login</div>
+                <div class="col-12 col-md-9 text-muted">{{user.login}}</div>
             </div>
             <div class="row">
-                <th class="col-12 col-md-3 ">Email</th>
-                <div>
-                    <div class="col-12 text-muted">{{user.email}}</div>
-                </div>
+                <div class="col-12 col-md-3 ">Email</div>
+                <div class="col-12 col-md-9 text-muted">{{user.email}}</div>
             </div>
             <div class="row">
-                <th class="col-12 col-md-3 ">Accounts</th>
-                <div>
-                    <div *ngFor="let accountAccess of user?.accountAccesses" class=" col-12 nav-item text-muted">
+                <div class="col-12 col-md-3 ">Accounts</div>
+                <div class=" col-12 col-md-9 text-muted">
+                    <div *ngFor="let accountAccess of user?.accountAccesses">
                         {{accountAccess.iban}}
                     </div>
                 </div>
             </div>
             <div class="row">
-                <th class="col-12 col-md-3 ">Authentication</th>
-                <div>
+                <div class="col-12 col-md-3 ">Authentication</div>
+                <div class="col-12 col-md-9  text-muted">
                     <div *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast"
-                        [ngClass]="{'mb-2': !isLast}" class=" col-12 text-muted">
+                         [ngClass]="{'mb-2': !isLast}">
                         {{scaItem.methodValue}}
                         <div *ngIf="scaItem.usesStaticTan">
                             Static TAN: {{scaItem.staticTan}}
@@ -43,5 +39,4 @@
             </div>
         </div>
     </div>
-
 </div>
