@@ -15,7 +15,7 @@ export class UserCreateComponent implements OnInit {
 
     id: string;
     user: User;
-    methods: any[];
+    methods: string[];
 
     userForm: FormGroup;
     submitted: boolean;
@@ -81,12 +81,11 @@ export class UserCreateComponent implements OnInit {
             }, () => {
                 this.infoService.openFeedback("Provided Login or Email are already taken", {
                     severity: 'error'
-                })
+                });
             });
     }
 
     getMethodsValues() {
-        this.methods = Object.keys(ScaMethods)
+        this.methods = Object.keys(ScaMethods);
     }
-
 }
