@@ -2,8 +2,8 @@
   padding: 2vw;
   p {
     color: #46494c;
-    font-size: 1.2vw;
-    line-height: 2vw;
+    font-size: calc(0.7vw + 1rem);
+    line-height: calc(1.5vw + 1rem);
     font-weight: 800;
   }
 }

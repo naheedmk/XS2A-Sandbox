@@ -16,6 +16,9 @@
     justify-content: space-between;
     align-items: center;
   }
+  .header-wrapper {
+    display: flex;
+  }
   .header-item {
     color: #000;
     opacity: 0.3;
@@ -38,17 +41,17 @@
     position: relative;
 
     .lang-img {
-      height: 14px;
-      width: 14px;
+      height: 0.8vw;
+      width: 0.8vw;
     }
     .lang-span {
       display: block;
       text-transform: uppercase;
-      margin-left: 5px;
+      margin-left: 0.2vw;
       color: #212529;
       opacity: 0.3;
       transition: 0.3s;
-      font-size: 12px;
+      font-size: 0.8vw;
     }
 
     .lang-wrapper div:hover {
@@ -62,7 +65,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-left: 20px;
+      margin-left: 0.8vw;
     }
     #langs,
     .collapse-menu {
@@ -72,10 +75,10 @@
       flex-direction: column;
       position: absolute;
 
-      padding: 0 10px;
+      padding: 0 0.4vw;
 
-      top: 35px;
-      right: -10px;
+      top: 1.4vw;
+      right: -0.4vw;
 
       background-color: white;
       box-shadow: 0 1px 4px 0 rgba(98, 98, 98, 0.5);
@@ -88,9 +91,9 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          width: 36px;
+          width: 1.8vw;
         }
-        margin: 6px 0;
+        margin: 0.2vw 0;
       }
     }
 
@@ -101,11 +104,11 @@
         position: absolute;
         width: 0;
         max-height: 0;
-        margin-left: 0.75em;
+        margin-left: 0.4vw;
         top: 0;
         left: 50%;
         box-sizing: border-box;
-        border: 8px solid black;
+        border: 0.3vw solid black;
         border-color: transparent transparent #fff #fff;
         transform-origin: 0 0;
         transform: rotate(135deg);

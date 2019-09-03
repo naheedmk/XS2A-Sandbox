@@ -64,8 +64,8 @@ a:focus {
   color: #ffffff;
   background-color: #272822;
   white-space: pre-wrap;
-  font-size: 1vw;
-  line-height: 1.3vw !important;
+  font-size: calc(0.5vw + 1rem);
+  line-height: calc(0.8vw + 1rem) !important;
 }
 
 .btn {

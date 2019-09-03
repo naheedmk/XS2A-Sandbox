@@ -1,5 +1,5 @@
 .collapse-content {
-  min-height: 3.7vw;
+  min-height: calc(3.5vw + 1rem);
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }

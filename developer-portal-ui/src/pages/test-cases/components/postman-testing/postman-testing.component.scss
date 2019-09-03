@@ -2,16 +2,16 @@
   padding: 2vw;
   p {
     color: #46494c;
-    font-size: 1.2vw;
-    line-height: 2vw;
+    font-size: calc(0.7vw + 1rem);
+    line-height: calc(1.5vw + 1rem);
     font-weight: 800;
   }
   button {
-    height: 3vw;
+    height: calc(2.5vw + 1rem);
     color: #fff;
     outline: none;
-    width: 10vw;
-    font-size: 1vw;
+    width: calc(9.5vw + 1rem);
+    font-size: calc(0.7vw + 0.5rem);
     background-color: #1575a2;
     cursor: pointer;
     border-radius: 5px;

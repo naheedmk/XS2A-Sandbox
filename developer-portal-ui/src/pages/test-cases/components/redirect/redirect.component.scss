@@ -2,12 +2,12 @@
   padding: 2vw;
   h1 {
     font-weight: 600;
-    font-size: 2vw;
+    font-size: calc(1.5vw + 1rem);
     color: var(--colorPrimary);
   }
   li {
-    line-height: 2vw;
-    font-size: 1vw;
+    line-height: calc(1.5vw + 1rem);
+    font-size: calc(0.5vw + 1rem);
   }
   img {
     width: 100%;
