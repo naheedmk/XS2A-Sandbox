@@ -46,7 +46,6 @@ variables:
   OPENSHIFT_NAMESPACE_DEMO: "adorsys-dynamic-sandbox-demo"
 
   OPENSHIFT_NAMESPACE_BANKING_GATEWAY_DEV: "banking-gateway-dev"
-  OPENSHIFT_NAMESPACE_BANKING_GATEWAY_INTEG: "banking-gateway-integ"
 
   OPENSHIFT_NAMESPACE_ASPSP_XS2A_DEV: "adorsys-psd2-develop"
 
@@ -393,18 +392,6 @@ deploy_openshift_demo:
   variables:
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
-  <<: *deploy_openshift
-
-deploy_openshift_banking_gateway_integ:
-  stage: "Deploy"
-  cache: {}
-  dependencies: []
-  only:
-    - master
-  variables:
-    GIT_STRATEGY: none
-    DOCKER_TAG: latest # Dockerhub source tag
-    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_BANKING_GATEWAY_INTEG} # Openshift target namespace
   <<: *deploy_openshift
 
 deploy_openshift_aspsp_xs2a_dev:
