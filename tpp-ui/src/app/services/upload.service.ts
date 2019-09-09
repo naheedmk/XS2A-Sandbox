@@ -29,10 +29,12 @@ export class UploadService {
 }
 
 export interface UploadOptions {
+    header: string;
     method: string;
     url: string;
     queueLimit?: number;
     allowedMimeType?: string[];
+    exampleFileUrl: string;
 
     methodAfterSuccess?(item?: FileItem, response?: string, status?: number, headers?: ParsedResponseHeaders): any;
 }
