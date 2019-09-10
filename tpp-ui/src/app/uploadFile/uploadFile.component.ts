@@ -22,19 +22,22 @@ export class UploadFileComponent implements OnInit {
     public ngOnInit(): void {
         this.uploadDataConfigs = [
             {
-                header: 'Upload Users/Accounts/Balances/Payments',
+                exampleFileName: 'Users-Accounts-Balances-Payments',
+                title: 'Upload Users/Accounts/Balances/Payments',
                 method: 'PUT',
                 url: this.url + '/data/upload',
                 exampleFileUrl: '/accounts/example'
             },
             {
-                header: 'Upload Consents',
+                exampleFileName: 'Consents',
+                title: 'Upload Consents',
                 method: 'PUT',
                 url: this.url + '/consent',
                 exampleFileUrl: '/consent/example',
             },
             {
-                header: 'Upload Transactions',
+                exampleFileName: 'Transactions',
+                title: 'Upload Transactions',
                 method: 'PUT',
                 url: this.url + '/data/upload/transactions',
                 exampleFileUrl: '/data/example'
@@ -49,7 +52,7 @@ export class UploadFileComponent implements OnInit {
                 const blob = new Blob([data], {type: 'plain/text'});
                 let link = document.createElement("a");
                 link.setAttribute("href", window.URL.createObjectURL(blob));
-                link.setAttribute("download", uploadDataConfig.header + '-Example.yml');
+                link.setAttribute("download", uploadDataConfig.exampleFileName + '-Example.yml');
                 document.body.appendChild(link);
                 link.click();
             });
