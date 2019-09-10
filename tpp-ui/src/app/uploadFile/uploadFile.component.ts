@@ -13,11 +13,11 @@ export class UploadFileComponent implements OnInit {
 
     uploadDataConfigs: UploadOptions[];
     private url = `${environment.tppBackend}`;
-    private message = 'Test data has been successfully generated. The automatic download of the test yml file will start within some seconds.';
+    private message = 'Test data has been successfully generated.';
 
     constructor(private generationService: TestDataGenerationService,
-                private infoService: InfoService,
-                ) {}
+                private infoService: InfoService
+    ) {}
 
     public ngOnInit(): void {
         this.uploadDataConfigs = [
@@ -42,22 +42,16 @@ export class UploadFileComponent implements OnInit {
         ];
     }
 
-    generateFileExample(uploadDataConfig){
-        console.log('****', uploadDataConfig.exampleFileUrl);
-
-            return this.generationService.generateTestData(false, uploadDataConfig.exampleFileUrl)
-                .subscribe(data => {
-                    this.infoService.openFeedback(this.message);
-
-                    setTimeout(() => {
-                        const blob = new Blob([data], {type: 'plain/text'});
-                        let link = document.createElement("a");
-                        link.setAttribute("href", window.URL.createObjectURL(blob));
-                        link.setAttribute("download", uploadDataConfig.header +'-Example.yml');
-                        document.body.appendChild(link);
-                        link.click();
-                    }, 3000);
-                });
-        }
-
+    generateFileExample(uploadDataConfig) {
+        return this.generationService.generateTestData(false, uploadDataConfig.exampleFileUrl)
+            .subscribe(data => {
+                this.infoService.openFeedback(this.message);
+                const blob = new Blob([data], {type: 'plain/text'});
+                let link = document.createElement("a");
+                link.setAttribute("href", window.URL.createObjectURL(blob));
+                link.setAttribute("download", uploadDataConfig.header + '-Example.yml');
+                document.body.appendChild(link);
+                link.click();
+            });
+    }
 }
