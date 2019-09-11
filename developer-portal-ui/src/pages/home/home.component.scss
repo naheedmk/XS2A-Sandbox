@@ -232,7 +232,6 @@
 
     button {
       cursor: pointer;
-      width: 7vw;
       margin: 0 auto;
       z-index: 1;
       border: 3px solid var(--colorPrimary);
@@ -243,7 +242,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0.3vw 1vw;
+      padding: 0.2em 1em;
     }
 
     .start-vertical-divider {
@@ -258,15 +257,18 @@
       margin-top: 3vw;
 
       .main-info-wrapper {
-        width: 100%;
+        width: 50%;
         display: flex;
         position: relative;
+
+        &.flex-end {
+          margin-left: 50%;
+        }
 
         .info-wrapper {
           width: 27vw;
           display: flex;
           flex-direction: column;
-          position: relative;
 
           span {
             color: var(--colorPrimary);
@@ -299,9 +301,9 @@
             align-items: center;
 
             .circle {
-              width: 0.5vw;
               z-index: 1;
-              height: 0.5vw;
+              width: 9px;
+              height: 9px;
               border-radius: 100%;
               background-color: #fff;
               border: 3px solid #0984bf;
@@ -347,7 +349,6 @@
 
         button {
           cursor: pointer;
-          width: 7vw;
           position: relative;
           margin: 0 auto 0 auto;
           z-index: 1;
@@ -359,7 +360,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 0.3vw 1vw;
+          padding: 0.2em 1em;
         }
 
         .vertical-divider {
@@ -633,8 +634,6 @@
         margin-top: 1vw;
 
         .main-info-wrapper {
-          width: 100%;
-
           .info-wrapper {
             h1 {
               font-size: 12px;
@@ -642,13 +641,6 @@
 
             span {
               font-size: 9px;
-            }
-
-            .circle-divider {
-              .circle {
-                width: 2px;
-                height: 2px;
-              }
             }
 
             .text-wrapper {
