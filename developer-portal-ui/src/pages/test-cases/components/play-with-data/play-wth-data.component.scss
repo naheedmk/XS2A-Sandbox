@@ -19,13 +19,13 @@
     outline: unset !important;
   }
   .payment-id {
+    font-size: 1em;
     margin-top: -0.15vw;
     width: 8vw;
-    height: 0.75vw;
     padding: 0.3vw 0.6vw 0.35vw 0.6vw;
 
     border: none;
-    border-radius: 0.25vw;
+    border-radius: 0.25em;
     background: #f7f7f7;
     color: #3b4151;
   }
@@ -66,8 +66,7 @@
   .play-with-data-table {
     display: flex;
     align-items: center;
-    padding-left: 1vw;
-    height: 3vw;
+    padding: 0.8em 1em;
     span {
       width: 40%;
     }
@@ -102,7 +101,6 @@
       background-color: #f3f3f3;
       padding: 0.5vw 0 0.5vw 1vw;
       span {
-        font-size: 1vw;
         &:first-of-type {
           margin-right: 2vw;
           font-weight: 800;

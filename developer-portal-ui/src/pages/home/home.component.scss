@@ -27,10 +27,6 @@
 /*=== What is XS2ASandbox block ===*/
 
 .what-sandbox-wrapper {
-  max-width: 880px;
-  margin-left: auto;
-  margin-right: auto;
-
   p {
     margin: 0;
   }
@@ -56,6 +52,7 @@
 /*=== How to use APIs ===*/
 
 .how-use-api {
+  padding: 0 25px;
   margin: 102px 0;
 
   .how-use-api-title {
@@ -95,12 +92,6 @@
       border-left: 19px solid #1d5f7f;
     }
   }
-}
-
-.divider {
-  height: 6px;
-  width: 77px;
-  background-color: var(--colorSecondary);
 }
 
 /*=== Open banking ===*/
@@ -145,7 +136,7 @@
     position: absolute;
     pointer-events: none;
     text-align: center;
-    width: 640px;
+    max-width: 640px;
 
     p {
       margin-top: 0;
@@ -169,7 +160,7 @@
       justify-content: center;
 
       span {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
         color: #606060;
       }
     }
@@ -197,7 +188,7 @@
   }
 
   .features-description {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     text-align: center;
     width: 80%;
     margin: 0 0 2em;
@@ -212,6 +203,7 @@
 /*=== Product history section ===*/
 
 .product-history-wrapper {
+  padding: 0 25px;
   margin: 64px 0;
 
   .product-history-header-wrapper {
@@ -384,6 +376,7 @@
 /*=== Any questions section ===*/
 
 .any-questions {
+  padding: 0 25px;
   width: 50%;
   margin: 0 auto;
 
@@ -413,6 +406,7 @@
       height: 100%;
       display: flex;
       justify-content: center;
+      overflow: hidden;
 
       img {
         max-height: 100%;
@@ -421,7 +415,7 @@
 
     .person-card-info {
       color: #212529;
-      width: 44%;
+      width: 50%;
       padding: 5% 3%;
       display: flex;
       justify-content: space-between;
@@ -501,21 +495,13 @@
     .what-sandbox-title {
       margin: 40px 0;
     }
-
-    .what-sandbox-desc {
-      font-size: 15px;
-    }
   }
 }
 @media screen and (max-width: 720px) {
   .what-sandbox-wrapper {
     .what-sandbox-title {
       margin: 20px 0;
-      font-size: 24px;
-    }
-
-    .what-sandbox-desc {
-      font-size: 10px;
+      font-size: 1.8rem;
     }
   }
 }
@@ -563,17 +549,16 @@
 
     .open-banking-title {
       margin: 26px 0 13px 0;
-      font-size: 36px;
     }
   }
 }
 @media screen and (max-width: 720px) {
   .open-banking {
-    padding: 20px 35px;
+    padding: 20px 25px;
 
     .open-banking-title {
       margin: 10px 0 0 0;
-      font-size: 24px;
+      font-size: 1.8rem;
     }
   }
 }
@@ -719,23 +704,13 @@
 
     .person-card {
       height: 150px;
-      width: 80%;
+      width: 100%;
       align-self: center;
 
       .person-card-info {
         .main-personal-info {
-          span {
-            font-size: 8px;
-          }
-
           span:first-of-type {
-            font-size: 18px;
-          }
-
-          .sub-personal-info {
-            a {
-              font-size: 8px;
-            }
+            font-size: 1.2rem;
           }
         }
       }

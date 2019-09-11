@@ -1,13 +1,8 @@
 /*=== Any questions section ===*/
 
-.divider {
-  height: 0.5vw;
-  width: 6vw;
-  background-color: var(--colorSecondary);
-}
-
 .any-questions {
-  width: 50vw;
+  max-width: 880px;
+  padding: 0 25px;
   margin: 5vw auto 0 auto;
   .any-questions-title {
     margin: 2vw 0 1vw 0;
@@ -32,6 +27,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
       img {
         height: 100%;
       }
@@ -72,7 +68,7 @@
 /*===Contact section ===*/
 .contacts-wrapper {
   max-width: 880px;
-  width: 50vw;
+  padding: 0 25px;
   margin: 5vw auto 0 auto;
   .contacts-title {
     margin: 2vw 0 1vw 0;
@@ -83,7 +79,6 @@
   .contacts-card {
     display: flex;
     justify-content: space-between;
-    height: 16vw;
     color: #212529;
     box-shadow: 0 1px 18px -12px #524c52;
     margin: 3vw 0;
@@ -135,6 +130,32 @@
           }
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .any-questions {
+    .any-questions-title {
+      font-size: 1.8rem;
+    }
+    .any-questions-subtitle {
+      font-size: 1.4rem;
+    }
+    .person-card {
+      height: 150px;
+    }
+  }
+  .contacts-wrapper {
+    margin-top: 3rem;
+    .contacts-title {
+      font-size: 1.8rem;
+    }
+    .contacts-card {
+      flex-direction: column;
+    }
+    .contacts-content + .contacts-content {
+      margin-top: 2vw;
     }
   }
 }
