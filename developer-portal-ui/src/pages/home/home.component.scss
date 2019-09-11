@@ -1,6 +1,6 @@
 .hero {
   background: var(--heroBG);
-  padding: 128px 0 64px 64px;
+  padding: 128px 64px 64px 64px;
 
   .hero-subheader {
     margin-top: 38px;
@@ -27,28 +27,29 @@
 /*=== What is XS2ASandbox block ===*/
 
 .what-sandbox-wrapper {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+
   p {
     margin: 0;
   }
 
   .black {
-    color: #000;
+    color: #3b4151;
   }
 
   .what-sandbox-title {
     margin: 64px 0;
     text-align: center;
     font-weight: 600;
-    font-size: 35px;
+    font-size: 2rem;
     color: var(--colorPrimary);
   }
 
   .what-sandbox-desc {
     text-align: center;
-    color: #868e96;
-    font-weight: 800;
-    font-size: 18px;
-    line-height: 30px;
+    font-weight: 600;
   }
 }
 
@@ -60,7 +61,7 @@
   .how-use-api-title {
     text-align: center;
     font-weight: 600;
-    font-size: 35px;
+    font-size: 2rem;
     color: var(--colorPrimary);
   }
 
@@ -116,8 +117,7 @@
   }
 
   .open-banking-desc {
-    font-size: 15px;
-    line-height: 22px;
+    font-size: 0.85rem;
     color: #606060;
   }
 }
@@ -127,23 +127,21 @@
 #slider {
   background-color: #fff;
   position: relative;
-  height: 563px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 64px 0 19px 0;
+  padding: 64px 0 2rem 0;
 
   h1 {
     margin-top: 0;
     font-weight: 600;
-    font-size: 36px;
+    font-size: 1.75rem;
     color: var(--colorPrimary);
   }
 
   .slide {
     opacity: 0;
-    //transition: opacity 0.2s;
     position: absolute;
     pointer-events: none;
     text-align: center;
@@ -151,9 +149,9 @@
 
     p {
       margin-top: 0;
-      margin-bottom: 13px;
+      margin-bottom: 1em;
       color: var(--colorPrimary);
-      font-size: 17px;
+      font-size: 1rem;
       font-weight: bold;
     }
 
@@ -171,13 +169,15 @@
       justify-content: center;
 
       span {
-        font-size: 10px;
+        font-size: 0.6rem;
         color: #606060;
       }
     }
   }
 
   .button-block {
+    margin-top: 1rem;
+
     button {
       cursor: pointer;
       outline: none;
@@ -197,12 +197,10 @@
   }
 
   .features-description {
-    font-size: 13px;
-    color: #868e96;
+    font-size: 0.7rem;
     text-align: center;
     width: 80%;
-    line-height: 22px;
-    margin: 0 0 13px;
+    margin: 0 0 2em;
   }
 }
 
@@ -248,7 +246,7 @@
       border: 3px solid var(--colorPrimary);
       border-radius: 19px;
       background-color: var(--colorPrimary);
-      font-size: 0.9vw;
+      font-size: 0.8rem;
       color: #fff;
       display: flex;
       justify-content: center;
@@ -299,7 +297,6 @@
             p {
               color: #606060;
               font-size: 12px;
-              line-height: 19px;
               margin: 0;
             }
           }
@@ -365,7 +362,7 @@
           border: 3px solid #0984bf;
           border-radius: 19px;
           background-color: #0984bf;
-          font-size: 0.9vw;
+          font-size: 0.8rem;
           color: #fff;
           display: flex;
           justify-content: center;
@@ -423,6 +420,7 @@
     }
 
     .person-card-info {
+      color: #212529;
       width: 44%;
       padding: 5% 3%;
       display: flex;
@@ -440,20 +438,19 @@
 
       .main-personal-info {
         span {
-          &:first-of-type {
-            font-size: 26px;
-            font-weight: 600;
-            color: #212529;
-          }
-
-          font-size: 12px;
+          font-size: 0.8rem;
           color: var(--colorPrimary);
+
+          &:first-of-type {
+            font-size: 1.5rem;
+            font-weight: 600;
+          }
         }
       }
 
       .sub-personal-info {
         a {
-          font-size: 13px;
+          font-size: 0.8rem;
         }
       }
     }
@@ -464,7 +461,7 @@
 
 @media screen and (max-width: 1080px) {
   .hero {
-    padding: 64px 0 48px 48px;
+    padding: 64px 48px 48px 48px;
 
     .hero-subheader {
       margin-top: 18px;
@@ -481,7 +478,7 @@
 }
 @media screen and (max-width: 720px) {
   .hero {
-    padding: 40px 0 40px 30px;
+    padding: 40px 30px;
 
     .hero-title {
       font-size: 35px;
@@ -507,7 +504,6 @@
 
     .what-sandbox-desc {
       font-size: 15px;
-      line-height: 25px;
     }
   }
 }
@@ -520,7 +516,6 @@
 
     .what-sandbox-desc {
       font-size: 10px;
-      line-height: 15px;
     }
   }
 }
@@ -570,11 +565,6 @@
       margin: 26px 0 13px 0;
       font-size: 36px;
     }
-
-    .open-banking-desc {
-      font-size: 15px;
-      line-height: 22px;
-    }
   }
 }
 @media screen and (max-width: 720px) {
@@ -585,11 +575,6 @@
       margin: 10px 0 0 0;
       font-size: 24px;
     }
-
-    .open-banking-desc {
-      font-size: 10px;
-      line-height: 15px;
-    }
   }
 }
 
@@ -597,34 +582,15 @@
 
 @media screen and (max-width: 1080px) {
   #slider {
-    height: 400px;
     padding-top: 0;
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 0;
-    }
-
-    .features-description {
-      margin: 0;
-    }
   }
 }
 @media screen and (max-width: 720px) {
   #slider {
-    height: 240px;
     padding-top: 0;
-
-    h1 {
-      font-size: 21px;
-      margin-bottom: 0;
-    }
 
     .features-description {
       width: 90%;
-      font-size: 10px;
-      line-height: 15px;
-      margin-bottom: 0;
     }
 
     .slide {
@@ -632,17 +598,6 @@
         margin-bottom: 0;
         height: 30px;
         width: 30px;
-      }
-
-      p {
-        font-size: 14px;
-        margin-bottom: 5px;
-      }
-
-      .slide-image-wrapper {
-        span {
-          font-size: 9px;
-        }
       }
     }
   }
@@ -714,7 +669,6 @@
             .text-wrapper {
               p {
                 font-size: 8px;
-                line-height: 11px;
               }
 
               i {
