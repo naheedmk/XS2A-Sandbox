@@ -10,7 +10,6 @@
       }}</a>
       {{ 'TEST_CASES.TEXT_2' | translate }}
     </p>
-    <p>{{ 'TEST_CASES.TEXT_3' | translate }}</p>
   </div>
 </div>
 
@@ -18,9 +17,6 @@
   <div class="left-section">
     <div class="introduction">
       <p>{{ 'TEST_CASES.INTRODUCTION.TITLE' | translate }}</p>
-      <span routerLink="/test-cases/redirect">{{
-        'TEST_CASES.INTRODUCTION.REDIRECT' | translate
-      }}</span>
       <span routerLink="/test-cases/embedded">{{
         'TEST_CASES.INTRODUCTION.EMBEDDED' | translate
       }}</span>
@@ -40,11 +36,6 @@
               </span>
             </li>
             <li>
-              <span class="clickable-item" (click)="collapseThis('redirect')">
-                <span *ngIf="!redirectFlag">+ </span>
-                <span *ngIf="redirectFlag" class="minus">- </span>
-                {{ 'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LI_1' | translate }}
-              </span>
               <ul class="collapse-content" id="redirect-content">
                 <li>
                   <span>{{

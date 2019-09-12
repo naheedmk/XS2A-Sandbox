@@ -8,7 +8,6 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./test-cases.component.scss'],
 })
 export class TestCasesComponent implements OnInit {
-  redirectFlag = false;
   embeddedFlag = false;
   accountFlag = false;
 
@@ -23,15 +22,12 @@ export class TestCasesComponent implements OnInit {
   }
 
   collapseThis(collapseId: string): void {
-    if (collapseId === 'redirect' || collapseId === 'embedded' || collapseId === 'account') {
+    if (collapseId === 'embedded' || collapseId === 'account') {
       const collapsibleItemContent = document.getElementById(
         `${collapseId}-content`
       );
 
       switch (collapseId) {
-        case 'redirect':
-          this.redirectFlag = !this.redirectFlag;
-          break;
         case 'embedded':
           this.embeddedFlag = !this.embeddedFlag;
           break;
@@ -53,8 +49,6 @@ export class TestCasesComponent implements OnInit {
       this.collapseThis('account');
     } else if (this.dataService.getRouterUrl().includes('embedded')) {
       this.collapseThis('embedded');
-    } else {
-      this.collapseThis('redirect');
     }
   }
 }

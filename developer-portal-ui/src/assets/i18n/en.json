@@ -14,7 +14,6 @@
   "HOME": {
     "HEADER": {
       "TITLE_1": "Developer Portal",
-      "TITLE_2": "by adorsys",
       "SUBTITLE_1": "Creating new, digital",
       "SUBTITLE_2": "services through Open",
       "SUBTITLE_3": "Banking"
@@ -51,7 +50,7 @@
     },
     "FEATURES": {
       "TITLE": "XS2ASandbox Features",
-      "CONTENT": "XS2ASandbox is a dynamic sandbox environment: you can create users, payments\n    and consents, play with data for testing purposes. With dynamic sandbox TPP\n    UI you can access banking API directly, get TPP certificate and manage\n    testing accounts. The developer portal contains testing instructions and all\n    needed test-cases. All XS2ASandbox services can be installed and run in one\n    simple command. Two main SCA approaches are supported: REDIRECT and\n    EMBEDDED. For redirect approach online banking demo UI was created.",
+      "CONTENT": "XS2ASandbox is a dynamic sandbox environment: you can create users, payments\n    and consents, play with data for testing purposes. With dynamic sandbox TPP\n    UI you can access banking API directly, get TPP certificate and manage\n    testing accounts. The developer portal contains testing instructions and all\n    needed test-cases. All XS2ASandbox services can be installed and run in one\n    simple command.",
       "SLIDES": {
         "SLIDE_1": {
           "TITLE": "Plug and Play",
@@ -130,11 +129,6 @@
         "PART_3": "This developer portal is created to help TPP developers start working with\n XS2ASandbox."
       }
     },
-    "ARCHITECTURE": {
-      "TITLE": "XS2ASandbox architecture and modules",
-      "CONTENT": "Components of XS2ASandbox with their connections to each other are shown\n in Figure 1.1.",
-      "CAPTION": "Figure 1.1: Components of the XS2ASandbox"
-    },
     "INTERFACE": {
       "TITLE": "XS2A Interface",
       "CONTENT": {
@@ -155,7 +149,6 @@
       },
       "SUBTITLE_1": "Active XS2A Configuration (Bank Profile)",
       "LIST": {
-        "LI_1": "Supported SCA-Approach: Redirect, Embedded",
         "LI_2": "Available payment types and payment products for each type:",
         "UL_1": {
           "LI_1": "Single (sepa-credit-transfers)",
@@ -164,12 +157,6 @@
           "LI_4": "Periodic (sepa-credit-transfers)"
         },
         "LI_3": "Confirmation of Funds: supported",
-        "LI_4": "Redirect URLs to Online Banking:",
-        "UL_2": {
-          "LI_1": "Redirect URL for Payment confirmation: **\n http://localhost:4400/payment-initiation/login?paymentId=encrypted-payment-id&redirectId=redirect-id\n **",
-          "LI_2": "Redirect URL for Payment cancellation: **\n http://localhost:4400/payment-cancellation/login?paymentId=encrypted-payment-id&redirectId=redirect-id\n **",
-          "LI_3": "Redirect URL for Account Consent confirmation: **\n http://localhost:4400/account-information/login?encryptedConsentId=encrypted-consent-id&redirectId=redirect-id\n **"
-        },
         "LI_5": "Supported types of Consents:",
         "UL_3": {
           "LI_1": "Dedicated: Yes",
@@ -197,10 +184,6 @@
     "UI": {
       "TITLE": "TPP User Interface",
       "CONTENT": "TPP developers can register themselves into the system, obtain certificate\n and download test data for their TPP application using generated\n certificate and prepared data in TPP UI."
-    },
-    "OBA": {
-      "TITLE": "Online banking",
-      "CONTENT": "In case of REDIRECT SCA approach a user wants to provide consent for using\n their account information or for payment confirmation/cancellation. Online\n banking is a user interface to provide consent to a bank. Links for a\n consent confirmation and payment confirmation or cancellation are provided\n in the response of the corresponding endpoints."
     },
     "LINKS_TO": {
       "TITLE": "Links to environments",
@@ -271,9 +254,7 @@
         "LINK": "TPP User Interface login page",
         "LI_2": "If you have no login and password - register yourself by clicking\n \"Register\" button.",
         "LI_3": "Register yourself, create a certificate and log into the system. Note:\n  TPP ID should consist of at least 8 digits, no letters or other signs\n allowed.",
-        "LI_4": "Upload the test data and start testing.",
-        "TEXT_1": "Whole flow for TPPs to start their work with XS2ASandbox is displayed in\n Figure 1.2:",
-        "TEXT_2": "Figure 1.2: TPP flow step-by-step"
+        "LI_4": "Upload the test data and start testing."
       }
     },
     "HOW_TO_CST": {
@@ -370,22 +351,14 @@
     "TEXT_1": "After loading test data into the system, TPP developer can test\n XS2ASandbox endpoints with Swagger or Postman tests. In Swagger section\n you can find information about usage of Swagger, prepared test data\n (Jsons) for testing and short API documentation.",
     "LINK": "In Postman tests section",
     "TEXT_2": " you\n can find information about usage of Postman for testing and download\n prepared Postman tests with testing data.",
-    "TEXT_3": "Both sections provide tests for REDIRECT Strong Customer Authorisation\n (SCA) approach and EMBEDDED SCA Approach for Payment Initiation Service\n (PIS), Account Information Service (AIS) and Payment Instrument Issuer\n Service (PIIS).",
     "INTRODUCTION": {
       "TITLE": "INTRODUCTION",
-      "REDIRECT": "Redirect approach",
       "EMBEDDED": "Embedded approach",
       "TESTING": "Testing flows",
       "MENU": {
         "LI_1": "Swagger testing",
         "SUBMENU": {
           "LI_0": "Predefined test values for all tests (TAN and PIN):",
-          "LI_1": "Redirect:",
-          "LIST_1": {
-            "LI_1": "Payment Initiation Flow",
-            "LI_2": "Payment Cancellation Flow",
-            "LI_3": "Consent Initiation Flow"
-          },
           "LI_2": "Embedded:",
           "LI_3": "Account Information:",
           "LIST_2": {
@@ -399,20 +372,13 @@
         "LI_2": "Postman testing"
       }
     },
-    "REDIRECT": {
-      "TITLE": "Short overview of REDIRECT approach:",
-      "LI_1": "The whole SCA process with two different factors (e.g. username/password\n as proof of knowledge and a one time password (TAN) as proof of\n possession) is provided by the ASPSP and executed directly between PSU and\n ASPSP.",
-      "LI_2": "Therefore, the PSU needs to gets redirected from PISP to ASPSP.",
-      "LI_3": "The SCA of the PSU is executed directly between the ASPSP and the PSU.",
-      "LI_4": "After completion of the SCA the PSU gets redirected back to the PISP."
-    },
     "EMBEDDED": {
       "TITLE": "Short overview of EMBEDDED approach:",
       "LI_1": "The whole SCA process with two different factors (e.g. username/password\n as proof of knowledge and a one time password (TAN) as proof of\n possession) is provided by the TPP and executed not directly between PSU\n and ASPSP, but with TPPs calls to XS2A Interface.",
       "LI_2": "TPP uses predefined XS2A endpoints to complete authorisation flow."
     },
     "TESTING": {
-      "TEXT_1": "You can use 3 typical testing flows for REDIRECT and EMBEDDED SCA approaches\n with Swagger.",
+      "TEXT_1": "You can use 3 typical testing flows for EMBEDDED SCA approaches\n with Swagger.",
       "TEXT_2": "To open Swagger page of XS2ASandbox locally start all the services with\n docker command from ",
       "LINK_1": "Getting Started.",
       "TEXT_3": "After starting all the\n services, go to your local",
@@ -421,7 +387,7 @@
       "LINK_3": "this link."
     },
     "TEST_VALUES": {
-      "TEXT_1": "For all the tests in Redirect and Embedded approaches it is required to use\n PIN for logging into the account and TAN number for SCA. Please, use available email addresses that you can access for your users, because generated TAN number will be sent to email of chosen user.",
+      "TEXT_1": "For all the Embedded tests approaches it is required to use\n PIN for logging into the account and TAN number for SCA. Please, use available email addresses that you can access for your users, because generated TAN number will be sent to email of chosen user.",
       "TEXT_2": "Test value for PIN for all automatically generated users:",
       "TEXT_3": "Test value for TAN (valid only if you run Sandbox locally with 'dev' profile):"
     },
@@ -830,11 +796,6 @@
     },
     "STRONG": {
       "TITLE": "Strong Customer Authentication",
-      "SUBTITLE_1": "How can I change the transaction/consent status?",
-      "PART_1": "By default a new created transaction/consent has the status",
-      "RECEIVED": "\"received\"",
-      "PART_2": ". In order to perform SCA using\n REDIRECT approach, the sandbox provides a Redirect Server where the status\n gets updated depending on the PSU. Since SCA for REDIRECT is simplified\n for this sandbox, it is enough to pass a PSU-ID via Query-Parameter to\n simulate the whole SCA. An example is provided in the following:",
-      "PART_3": "The Query Parameter psu-id is mandatory. If it is not provided, the\n Redirect Server will display a default error message.",
       "SUBTITLE_2": "Why can't I change the transaction/consent status using a specific PSU?",
       "PART_4": "If the transaction/consent status is \"received\", it can be possible that\n the PSU-ID does not match IBAN in the payment initiation or consent\n creation request. The mapping between PSU-ID and IBAN(s) is documented in\n the developer portal. If the status doesn't change even though SCA was\n performed and the IBAN matches the PSU-ID, check the PSU-ID for typos and\n case sensitivity."
     },

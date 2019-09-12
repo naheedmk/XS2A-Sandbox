@@ -14,7 +14,6 @@
   "HOME": {
     "HEADER": {
       "TITLE_1": "Portal de desarrolladores",
-      "TITLE_2": "por adorsys",
       "SUBTITLE_1": "Creando nuevos, digitales",
       "SUBTITLE_2": "servicios a través de Open",
       "SUBTITLE_3": "Banking"
@@ -51,7 +50,7 @@
     },
     "FEATURES": {
       "TITLE": "XS2ASandbox características",
-      "CONTENT": "XS2ASandbox es un entorno dinámico de sandbox: se puede crear usuarios, pagos y consentimientos, jugar con datos para propósitos de prueba. Con dinamica\n sandbox TPP UI se puede acceder directamente a la API de la banca, obtener el certificado de TPP y administrar las cuentas de prueba. El portal de desarrolladores contiene instrucciones de prueba y todos los casos de prueba necesarios. Todos los servicios de XS2ASandbox se pueden instalar y ejecutar en un solo comando. Se admiten dos enfoques principales de SCA:\n REDIRECTO E INTEGRADO. Para el enfoque redirecto  fue creado el online banking  demo UI.",
+      "CONTENT": "XS2ASandbox es un entorno dinámico de sandbox: se puede crear usuarios, pagos y consentimientos, jugar con datos para propósitos de prueba. Con dinamica\n sandbox TPP UI se puede acceder directamente a la API de la banca, obtener el certificado de TPP y administrar las cuentas de prueba. El portal de desarrolladores contiene instrucciones de prueba y todos los casos de prueba necesarios. Todos los servicios de XS2ASandbox se pueden instalar y ejecutar en un solo comando.",
       "SLIDES": {
         "SLIDE_1": {
           "TITLE": "Plug and Play",
@@ -130,11 +129,6 @@
         "PART_3": "Este portal de desarrolladores se crea para ayudar a los desarrolladores de TPP a comenzar a trabajar con XS2ASandbox."
       }
     },
-    "ARCHITECTURE": {
-      "TITLE": "Arquitectura y módulos de XS2ASandbox",
-      "CONTENT": "Los componentes de XS2ASandbox con sus conexiones entre sí se muestran en la Figura 1.1.",
-      "CAPTION": "Figura 1.1: Componentes de la XS2ASandbox"
-    },
     "INTERFACE": {
       "TITLE": "Interfaz XS2A",
       "CONTENT": {
@@ -155,7 +149,6 @@
       },
       "SUBTITLE_1": "Configuración activa de XS2A (perfil del banco)",
       "LIST": {
-        "LI_1": "Enfoque SCA soportado: Redirect y Embeded",
         "LI_2": "Tipos de pago disponibles y productos de pago para cada tipo:",
         "UL_1": {
           "LI_1": "Soltero (sepa-credit-transfers)",
@@ -164,12 +157,6 @@
           "LI_4": "Periódico (sepa-credit-transfers)"
         },
         "LI_3": "Confirmación de Fondos: apoyado",
-        "LI_4": "Redireccionar URLs a la Banca en Línea",
-        "UL_2": {
-          "LI_1": "Redirect URL for Payment confirmation: **\n http://localhost:4400/payment-initiation/login?paymentId=encrypted-payment-id&redirectId=redirect-id\n **",
-          "LI_2": "Redirect URL for Payment cancellation: **\n http://localhost:4400/payment-cancellation/login?paymentId=encrypted-payment-id&redirectId=redirect-id\n **",
-          "LI_3": "Redirect URL for Account Consent confirmation: **\n http://localhost:4400/account-information/login?encryptedConsentId=encrypted-consent-id&redirectId=redirect-id\n **"
-        },
         "LI_5": "Tipos de Consentimientos soportados:",
         "UL_3": {
           "LI_1": "Dedicado: si",
@@ -197,10 +184,6 @@
     "UI": {
       "TITLE": "Interfaz de usuario TPP",
       "CONTENT": "Los desarrolladores de TPP pueden registrarse en el sistema, obtener certificados y descargar datos de prueba para su aplicación TPP utilizando el certificado generado y los datos preparados en la interfaz de usuario de TPP."
-    },
-    "OBA": {
-      "TITLE": "Online Banking",
-      "CONTENT": "En el caso de un enfoque de REDIRECT SCA, un usuario desea dar su consentimiento para utilizar la información de su cuenta o para confirmar / cancelar el pago. La banca en línea es una interfaz de usuario para proporcionar consentimiento a un banco. Los enlaces para la confirmación de consentimiento y la confirmación o cancelación de pago se proporcionan en la respuesta de los puntos finales correspondientes."
     },
     "LINKS_TO": {
       "TITLE": "Enlaces a entornos",
@@ -271,9 +254,7 @@
         "LINK": "de la interfaz de usuario de TPP",
         "LI_2": "Si Usted no tiene nombre de usuario y contraseña, regístrese Usted mismo haciendo clic en el botón \"Registrarse\".",
         "LI_3": "Regístrese, cree un certificado e inicie sesión en el sistema. Nota: la identificación de TPP debe constar de al menos 8 dígitos, no se permiten letras ni otros signos.",
-        "LI_4": "Sube los datos de prueba y comienza a probar.",
-        "TEXT_1": "El flujo completo para que los TPP comiencen su trabajo con XS2ASandbox se muestra en la Figura 1.2:",
-        "TEXT_2": "Figura 1.2: flujo de TPP paso a paso"
+        "LI_4": "Sube los datos de prueba y comienza a probar."
       }
     },
     "HOW_TO_CST": {
@@ -370,22 +351,14 @@
     "TEXT_1": "Después de cargar los datos de prueba en el sistema, el desarrollador de TPP puede probar los puntos finales de XS2ASandbox con las pruebas de Swagger o Postman. En la sección Swagger puede encontrar información sobre el uso de Swagger, datos de prueba preparados (Jsons) para pruebas y documentación corta de API.",
     "LINK": "En la sección de pruebas de Postman",
     "TEXT_2": " puede encontrar información sobre el uso de Postman para las pruebas y descargar pruebas preparadas de Postman con datos de pruebas.",
-    "TEXT_3": "Ambas secciones proporcionan pruebas para el enfoque de REDIRECT Strong Authorization (SCA) y EMBEDDED SCA Approach for Payment Initiation Service (PIS), Account Information Service (AIS) y Payment Instrument Issuer Service (PIIS).",
     "INTRODUCTION": {
       "TITLE": "INTRODUCCIÓN",
-      "REDIRECT": "Enfoque redirecto",
       "EMBEDDED": "Enfoque integrado",
       "TESTING": "Flujos de prueba",
       "MENU": {
         "LI_1": "Pruebas Swagger",
         "SUBMENU": {
           "LI_0": "Predefined test values for all tests (TAN and PIN):",
-          "LI_1": "Redirect:",
-          "LIST_1": {
-            "LI_1": "Flujo de iniciación de pago",
-            "LI_2": "Flujo de cancelación de pago",
-            "LI_3": "Flujo de Iniciación del Consentimiento"
-          },
           "LI_2": "Embedded:",
           "LI_3": "Información de la cuenta:",
           "LIST_2": {
@@ -399,20 +372,13 @@
         "LI_2": "Postman testing"
       }
     },
-    "REDIRECT": {
-      "TITLE": "Breve resumen del enfoque REDIRECT:",
-      "LI_1": "Todo el proceso de SCA con dos factores diferentes (por ejemplo, nombre de usuario / contraseña como prueba de conocimiento y una contraseña única (TAN) como prueba de posesión) lo proporciona el ASPSP y se ejecuta directamente entre la PSU y el ASPSP.",
-      "LI_2": "Por lo tanto, la PSU debe redirigirse desde PISP a ASPSP.",
-      "LI_3": "El SCA de la PSU se ejecuta directamente entre el ASPSP y la PSU.",
-      "LI_4": "Después de completar el SCA, la PSU se redirige de nuevo al PISP."
-    },
     "EMBEDDED": {
       "TITLE": "Breve resumen de enfoque EMBEDDED:",
       "LI_1": "Todo el proceso de SCA con dos factores diferentes (por ejemplo, nombre de usuario / contraseña como prueba de conocimiento y una contraseña única (TAN) como prueba de posesión) proporciona por el TPP y se ejecuta no directamente entre PSU y ASPSP, pero con llamadas de TPP al XS2A Interfaz.",
       "LI_2": "TPP utiliza puntos finales XS2A predefinidos para completar el flujo de autorización."
     },
     "TESTING": {
-      "TEXT_1": "Puede usar 3 flujos de prueba típicos para los enfoques REDIRECT y EMBEDDED SCA con Swagger.",
+      "TEXT_1": "Puede usar 3 flujos de prueba típicos para los enfoques EMBEDDED SCA con Swagger.",
       "TEXT_2": "Para abrir la página Swagger de XS2ASandbox, inicie localmente todos los servicios con el comando de docker desde ",
       "LINK_1": "la Introducción.",
       "TEXT_3": "Después de iniciar todos los servicios, vaya a su página local",
@@ -421,7 +387,7 @@
       "LINK_3": "este enlace."
     },
     "TEST_VALUES": {
-      "TEXT_1": "Para todas las pruebas en los enfoques  Redirecto e Integrado, se requiere usar  n PIN para iniciar sesión en la cuenta y el número TAN para SCA. Utilice los correos electrónicos correctos para sus usuarios por favor, ya que el generado número TAN se enviará al correo electrónico del usuario elegido.",
+      "TEXT_1": "Para todas las pruebas en los enfoques Integrado, se requiere usar  n PIN para iniciar sesión en la cuenta y el número TAN para SCA. Utilice los correos electrónicos correctos para sus usuarios por favor, ya que el generado número TAN se enviará al correo electrónico del usuario elegido.",
       "TEXT_2": "Valor de prueba para PIN para todos los usuarios generados automáticamente:",
       "TEXT_3": "Valor de prueba para TAN (válido solo si ejecuta Sandbox localmente con perfil 'dev'):"
     },
@@ -830,11 +796,6 @@
     },
     "STRONG": {
       "TITLE": "Strong Customer Authentication (Autenticación de cliente fuerte)",
-      "SUBTITLE_1": "¿Cómo puedo cambiar el estado de la transacción / consentimiento?",
-      "PART_1": "Por defecto, una nueva transacción / consentimiento creado tiene el estado",
-      "RECEIVED": "\"received\"",
-      "PART_2": ". Para realizar SCA utilizando el enfoque REDIRECT, el sandbox proporciona un Redirect Server donde el estado se actualiza según la PSU. Como SCA para REDIRECT está simplificado para este entorno limitado, es suficiente pasar un PSU-ID a través de Query-Parameter para simular todo el SCA. A continuación se proporciona un ejemplo:",
-      "PART_3": "El Query Parameter psu-id es obligatorio. Si no se proporciona, el servidor de redirección mostrará un mensaje de error predeterminado.",
       "SUBTITLE_2": "¿Por qué no puedo cambiar el estado de la transacción / consentimiento con una PSU específica?",
       "PART_4": "Si el estado de la transacción / consentimiento es “recieved\", es posible que el PSU-ID no coincida con el IBAN en el inicio de pago o la solicitud de creación de consentimiento. La asignación entre PSU-ID y IBAN (s) se documenta en el portal del desarrollador. Si el estado no cambia a pesar de que se realizó SCA y el IBAN coincide con la ID de la PSU, verifique la ID de la PSU para detectar errores tipográficos y la sensibilidad de las mayúsculas y minúsculas."
     },
