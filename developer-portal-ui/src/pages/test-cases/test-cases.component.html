@@ -36,95 +36,10 @@
               </span>
             </li>
             <li>
-              <ul class="collapse-content" id="redirect-content">
-                <li>
-                  <span>{{
-                    'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LIST_1.LI_1'
-                      | translate
-                  }}</span>
-                  <ul>
-                    <li
-                      class="clickable-item post"
-                      routerLink="/test-cases/redirect-payment-initiation-post"
-                      [ngStyle]="
-                        dataService
-                          .getRouterUrl()
-                          .includes('redirect-payment-initiation-post')
-                          ? { 'font-weight': 'bold' }
-                          : null
-                      "
-                    >
-                      POST endpoint
-                      {{ '/v1/{payment-service}/{payment-product}' }}
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span>{{
-                    'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LIST_1.LI_2'
-                      | translate
-                  }}</span>
-                  <ul>
-                    <li
-                      class="clickable-item post"
-                      routerLink="/test-cases/redirect-cancellation-post"
-                      [ngStyle]="
-                        dataService
-                          .getRouterUrl()
-                          .includes('redirect-cancellation-post')
-                          ? { 'font-weight': 'bold' }
-                          : null
-                      "
-                    >
-                      POST endpoint
-                      {{ '/v1/{payment-service}/{payment-product}' }}
-                    </li>
-                    <li
-                      class="clickable-item delete"
-                      routerLink="/test-cases/redirect-cancellation-delete"
-                      [ngStyle]="
-                        dataService
-                          .getRouterUrl()
-                          .includes('redirect-cancellation-delete')
-                          ? { 'font-weight': 'bold' }
-                          : null
-                      "
-                    >
-                      DELETE endpoint
-                      {{
-                        '/v1/{payment-service}/{payment-product}/{paymentId}'
-                      }}
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span>{{
-                    'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LIST_1.LI_3'
-                      | translate
-                  }}</span>
-                  <ul>
-                    <li
-                      class="clickable-item post"
-                      routerLink="/test-cases/redirect-consent-post"
-                      [ngStyle]="
-                        dataService
-                          .getRouterUrl()
-                          .includes('redirect-consent-post')
-                          ? { 'font-weight': 'bold' }
-                          : null
-                      "
-                    >
-                      POST endpoint /v1/consents
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li>
               <span class="clickable-item" (click)="collapseThis('embedded')">
                 <span *ngIf="!embeddedFlag">+ </span>
                 <span *ngIf="embeddedFlag" class="minus">- </span>
-                {{ 'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LI_2' | translate }}
+                {{ 'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LI_1' | translate }}
               </span>
               <ul class="collapse-content" id="embedded-content">
                 <li>
@@ -355,7 +270,7 @@
               <span class="clickable-item" (click)="collapseThis('account')">
                 <span *ngIf="!accountFlag">+ </span>
                 <span *ngIf="accountFlag" class="minus">- </span>
-                {{ 'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LI_3' | translate }}
+                {{ 'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LI_2' | translate }}
               </span>
               <ul class="collapse-content" id="account-content">
                 <li>

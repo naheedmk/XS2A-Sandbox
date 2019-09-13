@@ -1,32 +1,26 @@
 {
   "globalSettings": {
-    "logo": "Logo_XS2ASandbox.png",
-    "facebook": "https://www.facebook.com/adorsysGmbH/",
-    "linkedIn": "https://www.linkedin.com/company/adorsys-gmbh-&-co-kg/"
+    "logo": "denizBank_logo.png"
   },
   "contactInfo": {
     "img": "Rene.png",
-    "name": "René Pongratz",
+    "name": "DenizBank AG",
     "position": "Software Architect & Expert for API Management",
-    "email": "psd2@adorsys.de"
+    "email": "service@denizbank.at"
   },
   "officesInfo": [
     {
-      "city": "Nürnberg",
-      "company": "adorsys GmbH & Co. KG",
-      "addressFirstLine": "Fürther Str. 246a, Gebäude 32 im 4.OG",
-      "addressSecondLine": "90429 Nürnberg",
-      "phone": "+49(0)911 360698-0",
-      "email": "psd2@adorsys.de"
-    },
-    {
-      "city": "Frankfurt",
-      "company": "adorsys GmbH & Co. KG",
-      "addressFirstLine": "Frankfurter Straße 63 - 69",
-      "addressSecondLine": "65760 Eschborn",
-      "email": "frankfurt@adorsys.de",
-      "facebook": "https://www.facebook.com/adorsysGmbH/",
-      "linkedIn": "https://www.linkedin.com/company/adorsys-gmbh-&-co-kg/"
+      "city": "Wien",
+      "company": "DenizBank AG",
+      "addressFirstLine": "Thomas-Klestil-Platz 1",
+      "addressSecondLine": "1030 Wien",
+      "phone": "+43(0)505 105200-0",
+      "email": "service@denizbank.at"
     }
-  ]
+  ],
+  "cssVariables": {
+    "colorPrimary": "#2c6586",
+    "fontFamily": "Tahoma",
+    "bodyBG": "#DAEDEE"
+  }
 }

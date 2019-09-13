@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RedirectComponent } from './components/redirect/redirect.component';
 import { TestCasesComponent } from './test-cases.component';
 import { TestCasesRoutingModule } from './test-cases-routing.module';
 import { EmbeddedComponent } from './components/embedded/embedded.component';
@@ -33,7 +32,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    RedirectComponent,
     TestCasesComponent,
     EmbeddedComponent,
     TestingFlowsComponent,
@@ -69,10 +67,6 @@ import { TranslateModule } from '@ngx-translate/core';
     }),
     TranslateModule,
   ],
-  exports: [
-    LineCommandComponent,
-    PlayWthDataComponent,
-    CodeAreaComponent
-  ]
+  exports: [LineCommandComponent, PlayWthDataComponent, CodeAreaComponent],
 })
 export class TestCasesModule {}

@@ -359,8 +359,13 @@
         "LI_1": "Swagger testing",
         "SUBMENU": {
           "LI_0": "Predefined test values for all tests (TAN and PIN):",
-          "LI_2": "Embedded:",
-          "LI_3": "Account Information:",
+          "LI_1": "Embedded:",
+          "LIST_1": {
+            "LI_1": "Payment Initiation Flow",
+            "LI_2": "Payment Cancellation Flow",
+            "LI_3": "Consent Initiation Flow"
+          },
+          "LI_2": "Account Information:",
           "LIST_2": {
             "LI_1": "Read Account List",
             "LI_2": "Read Account Details",

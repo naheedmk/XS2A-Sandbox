@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { TestCasesComponent } from './test-cases.component';
 import { TestingFlowsComponent } from './components/testing-flows/testing-flows.component';
 import { EmbeddedComponent } from './components/embedded/embedded.component';
-import { RedirectComponent } from './components/redirect/redirect.component';
 import { PostmanTestingComponent } from './components/postman-testing/postman-testing.component';
 import { RdctConsentPOSTComponent } from './components/api-endpoints/rdct-consent-post/rdct-consent-post.component';
 import { RdctPaymentCancellationPostComponent } from './components/api-endpoints/rdct-payment-cancellation-post/rdct-payment-cancellation-post.component';
@@ -50,10 +49,6 @@ const routes: Routes = [
       {
         path: 'embedded',
         component: EmbeddedComponent,
-      },
-      {
-        path: 'redirect',
-        component: RedirectComponent,
       },
       {
         path: 'postman-testing',
