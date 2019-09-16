@@ -19,11 +19,11 @@ public interface TppRestApi {
     @PostMapping("/register")
     ResponseEntity<Void> register(@RequestBody User user);
 
-    @ApiOperation(value = "Delete Tpp", authorizations = @Authorization(value = "apiKey"))
-    @DeleteMapping("/")
+    @ApiOperation(value = "Remove Tpp", authorizations = @Authorization(value = "apiKey"))
+    @DeleteMapping
     ResponseEntity<Void> remove();
 
-    @ApiOperation(value = "Delete transactions for account in Tpp", authorizations = @Authorization(value = "apiKey"))
+    @ApiOperation(value = "Remove transactions for account in Tpp", authorizations = @Authorization(value = "apiKey"))
     @DeleteMapping("/account/{iban}")
     ResponseEntity<Void> transactions(@PathVariable String iban);
 }
