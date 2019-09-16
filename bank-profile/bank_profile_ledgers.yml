@@ -3,7 +3,7 @@ setting:
   ais:
     consentTypes:
       bankOfferedConsentSupported: FALSE
-      globalConsentSupported: FALSE
+      globalConsentSupported: TRUE
       availableAccountsConsentSupported: TRUE
       accountAccessFrequencyPerDay: 4
       notConfirmedConsentExpirationTimeMs: 86400000
