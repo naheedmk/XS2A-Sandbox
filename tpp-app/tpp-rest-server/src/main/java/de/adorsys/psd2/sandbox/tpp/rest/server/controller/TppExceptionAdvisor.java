@@ -55,16 +55,15 @@ public class TppExceptionAdvisor {
 
     private String resolveErrorMessage(FeignException ex) {
         try {
-            if (ex.content() != null) {
-                JsonNode tree = objectMapper.readTree(ex.content());
-                return ofNullable(tree.get(DEV_MESSAGE))
-                           .map(JsonNode::asText)
-                           .orElseGet(() -> ofNullable(tree.get("message"))
-                                                .map(JsonNode::asText)
-                                                .orElse(ex.getMessage()));
-            } else {
+            if (ex.content() == null) {
                 return ex.getMessage();
             }
+            JsonNode tree = objectMapper.readTree(ex.content());
+            return ofNullable(tree.get(DEV_MESSAGE))
+                       .map(JsonNode::asText)
+                       .orElseGet(() -> ofNullable(tree.get("message"))
+                                            .map(JsonNode::asText)
+                                            .orElse(ex.getMessage()));
         } catch (IOException e) {
             log.warn("Couldn't read json content");
         }
