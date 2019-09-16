@@ -1,6 +1,24 @@
 {
   "globalSettings": {
-    "logo": "denizBank_logo.png"
+    "logo": "denizBank_logo.png",
+    "cssVariables": {
+      "colorPrimary": "#006BB0",
+      "colorSecondary": "#d63347",
+      "fontFamily": "Helvetica, Arial, sans-serif",
+      "headerBG": "#ffffff",
+      "headerFontColor": "#000000",
+      "footerBG": "#5ebac8",
+      "footerFontColor": "#ffffff",
+      "mainBG": "rgba(255,255,255,0.3)",
+      "bodyBG": "#e0f1f4",
+      "heroBG": "rgba(255,255,255,0.5)",
+      "stepBG": "rgba(255,255,255,0.5)",
+      "contactsCardBG": "rgba(255,255,255,0.5)",
+      "testCasesLeftSectionBG": "rgba(255,255,255,0.5)",
+      "testCasesRightSectionBG": "#fff",
+      "anchorFontColor": "#004B97",
+      "anchorFontColorHover": "#005580"
+    }
   },
   "contactInfo": {
     "img": "denizbank.png",
