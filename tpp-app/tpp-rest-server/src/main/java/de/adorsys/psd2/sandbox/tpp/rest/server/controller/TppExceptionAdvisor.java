@@ -15,7 +15,6 @@ import org.springframework.web.method.HandlerMethod;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -60,7 +59,7 @@ public class TppExceptionAdvisor {
                 JsonNode tree = objectMapper.readTree(ex.content());
                 return ofNullable(tree.get(DEV_MESSAGE))
                            .map(JsonNode::asText)
-                           .orElseGet(() -> Optional.ofNullable(tree.get("message"))
+                           .orElseGet(() -> ofNullable(tree.get("message"))
                                                 .map(JsonNode::asText)
                                                 .orElse(ex.getMessage()));
             } else {
