@@ -4,7 +4,7 @@
     "cssVariables": {
       "colorPrimary": "#006BB0",
       "colorSecondary": "#d63347",
-      "fontFamily": "Helvetica, Arial, sans-serif",
+      "fontFamily": "Tahoma, Verdana",
       "headerBG": "#ffffff",
       "headerFontColor": "#000000",
       "footerBG": "#5ebac8",

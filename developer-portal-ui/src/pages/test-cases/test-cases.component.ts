@@ -39,7 +39,7 @@ export class TestCasesComponent implements OnInit {
       if (collapsibleItemContent.style.maxHeight) {
         collapsibleItemContent.style.maxHeight = '';
       } else {
-        collapsibleItemContent.style.maxHeight = '50vw';
+        collapsibleItemContent.style.maxHeight = '100vw';
       }
     }
   }

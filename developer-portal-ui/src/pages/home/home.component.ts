@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       date: 1559336400000,
       isToday: false,
       orderNumber: 4,
-    }
+    },
   ];
 
   constructor(private customizeService: CustomizeService) {
@@ -187,6 +187,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.slider();
+    // this.slider();
   }
 }

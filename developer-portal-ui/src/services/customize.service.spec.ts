@@ -165,7 +165,7 @@ describe('CustomizeService', () => {
       const tmp = getComputedStyle(document.body).getPropertyValue(
         '--fontFamily'
       );
-      expect(tmp).toEqual(' Arial, sans-serif');
+      expect(tmp).toEqual(' Tahoma, Verdana');
       done();
     }, 100);
   });
