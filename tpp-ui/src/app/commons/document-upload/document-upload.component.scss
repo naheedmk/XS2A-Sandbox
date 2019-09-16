@@ -3,12 +3,12 @@
   DROP-ZONE
 *************************************/
 .drop-zone {
-    color: $light-grey;
+    color: $custom-blue;
     height: 200px;
     font-size: 1.5rem;
     text-align: center;
     width: 100%;
-    background-color: $light-grey-10;
+    background-color: $custom-blue-10;
 }
 
 .fileInput {
@@ -28,7 +28,7 @@ button {
 
 
 
-.my-drop-zone { border: dotted 3px $light-grey; }
+.my-drop-zone { border: dotted 3px $custom-blue; }
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
 .another-file-over-class { border: dotted 3px green; }
 
@@ -44,5 +44,5 @@ button {
 }
 
 label {
-    border: 2px dashed $light-grey;
+    border: 2px dashed $custom-blue;
 }

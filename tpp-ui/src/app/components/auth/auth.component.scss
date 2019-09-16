@@ -6,11 +6,14 @@ form {
 
 .card {
     max-width: 400px;
-    border: none;
+    border: .2rem solid #ffffff;
+    border-radius: 1rem;
     margin: 5vh auto 15vh auto;
+    background-color: #f1feff;
 
     &-title {
-        font-size: 1.8rem;
+        color: $primary-title;
+        font-size: 1.5rem;
         margin: 1.1rem;
     }
 
@@ -21,8 +24,7 @@ form {
     }
 
     &__subtitle {
-        font-size: 1.1rem;
-        color: $light-grey;
+        font-size: 1rem;
     }
 }
 
@@ -31,7 +33,7 @@ form {
 }
 
 .text-light-grey a{
-    color: $light-grey;
+    color: $custom-blue;
 }
 
 .btn {

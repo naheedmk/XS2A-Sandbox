@@ -12,20 +12,28 @@
     padding: 0;
 }
 
+body{
+    background-image:url('../src/assets/images/background.png');
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .logo {
     width: 200px;
     height: auto;
 }
 
 label {
-    color: $light-grey;
+    color: $custom-blue;
     font-size: 1.1rem;
     font-family: 'Verdana', sans-serif;
 }
 
 .header {
     &__title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        color: $primary-title;
     }
 }
 
@@ -110,7 +118,7 @@ a {
 .box {
     position: relative;
     padding: $grid-gutter-width;
-    background: $light-grey-10;
+    background: $custom-blue-10;
 
     &__close-icon {
         position: absolute;
@@ -122,6 +130,6 @@ a {
 
 @media (max-width: 767px) {
     .bg-sm-light {
-        background-color: $light-grey-10;
+        background-color: $custom-blue-10;
     }
 }
