@@ -3,11 +3,7 @@
   <h1 class="hero-title">{{ 'HOME.HEADER.TITLE_1' | translate }}</h1>
 
   <div class="hero-subheader">
-    <h2 class="hero-subtitle">
-      {{ 'HOME.HEADER.SUBTITLE_1' | translate }}<br />
-      {{ 'HOME.HEADER.SUBTITLE_2' | translate }}<br />
-      {{ 'HOME.HEADER.SUBTITLE_3' | translate }}
-    </h2>
+    <h2 class="hero-subtitle">{{ 'HOME.HEADER.SUBTITLE_1' | translate }}</h2>
   </div>
 </div>
 
@@ -22,6 +18,7 @@
     {{ 'HOME.WHAT_IS.CONTENT.PART_2' | translate }}
   </p>
 </div>
+<br />
 
 <!-- PSD2 and XS2A -->
 <div class="open-banking">
@@ -39,8 +36,37 @@
   </p>
 </div>
 
+<!-- How to use Sandbox -->
+<div class="how-use-api">
+  <h1 class="how-use-api-title">{{ 'HOME.HOW_TO.TITLE' | translate }}</h1>
+  <div class="steps-wrapper">
+    <div class="step">
+      <span>{{ 'HOME.HOW_TO.STEP_1.TITLE' | translate }}</span>
+      <span
+        >{{ 'HOME.HOW_TO.STEP_1.CONTENT' | translate }}
+        <a routerLink="/getting-started">
+          {{ 'HOME.HOW_TO.STEP_1.LINK_1' | translate }}
+        </a></span
+      >
+    </div>
+    <div class="arrow-right"></div>
+
+    <div class="step">
+      <span>{{ 'HOME.HOW_TO.STEP_2.TITLE' | translate }}</span>
+      <span
+        >{{ 'HOME.HOW_TO.STEP_2.CONTENT.PART_1' | translate }}
+        <a routerLink="/test-cases/embedded">
+          {{ 'HOME.HOW_TO.STEP_2.CONTENT.LINK_1' | translate }}
+        </a></span
+      >
+      <span>{{ 'HOME.HOW_TO.STEP_2.CONTENT.PART_2' | translate }}</span>
+    </div>
+  </div>
+</div>
+
 <!-- Any questions section -->
 <div class="any-questions">
+  <br />
   <div class="divider"></div>
   <h1 class="any-questions-title">{{ 'HOME.QUESTIONS.TITLE' | translate }}</h1>
   <span class="any-questions-subtitle">{{

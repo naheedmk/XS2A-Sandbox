@@ -18,7 +18,7 @@ export class TestCasesComponent implements OnInit {
   ) {}
 
   onActivate(ev) {
-    this.dataService.setRouterUrl(this.actRoute._routerState.snapshot.url);
+    this.dataService.setRouterUrl(this.actRoute['_routerState'].snapshot.url);
   }
 
   collapseThis(collapseId: string): void {

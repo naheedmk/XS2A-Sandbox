@@ -14,32 +14,31 @@
   "HOME": {
     "HEADER": {
       "TITLE_1": "Developer Portal",
-      "SUBTITLE_1": "Creating new, digital",
-      "SUBTITLE_2": "services through Open",
-      "SUBTITLE_3": "Banking"
+      "SUBTITLE_1": "of PSD2 XS2A sandbox environment"
     },
     "WHAT_IS": {
-      "TITLE": "What is XS2ASandbox?",
+      "TITLE": "What is PSD2 XS2A Sandbox environment?",
       "CONTENT": {
         "THE": "The",
-        "XS2A": "XS2ASandbox",
-        "PART_1": "is a dynamic sandbox\n  environment that fully meets the PSD2 requirements for providing APIs for\n  Third-Party Providers (TPP). Based on the Berlin Group’s NextGen PSD2\n  specification for access to accounts (XS2A),",
-        "PART_2": "meets all the regulatory\n  requirements and is NISP compliant. This developer portal is created to help\n  TPP developers start working with XS2ASandbox."
+        "XS2A": "DenizBank Sandbox",
+        "PART_1": "is a dynamic PSD2 XS2A sandbox\n  environment that fully meets the PSD2 requirements for providing APIs for\n  Third-Party Providers (TPP). Based on the Berlin Group’s NextGen PSD2\n  specification for access to accounts (XS2A),",
+        "PART_2": "meets all the regulatory\n  requirements and is NISP compliant. This developer portal is created to help\n  TPP developers start working with DenizBank Sandbox."
       }
     },
     "HOW_TO": {
-      "TITLE": "How to use XS2ASandbox",
+      "TITLE": "How to use DenizBank Sandbox",
       "STEP_1": {
         "TITLE": "Step 1",
-        "CONTENT": "Read «Getting started» manual"
+        "CONTENT": "Read",
+        "LINK_1": "«Getting started» manual"
       },
       "STEP_2": {
         "TITLE": "Step 2",
-        "CONTENT": "Download, install and run XS2ASandbox"
-      },
-      "STEP_3": {
-        "TITLE": "Step 3",
-        "CONTENT": "Read «Testing flows» and start testing!"
+        "CONTENT": {
+          "PART_1": "Read",
+          "LINK_1": "«Testing flows»",
+          "PART_2": "and start testing!"
+        }
       }
     },
     "PSD2": {
@@ -47,69 +46,6 @@
       "THE": "The",
       "LINK": "Payment Service Directive 2 (PSD2)",
       "CONTENT": "instructs banks (Account Servicing Payment Service Providers or ASPSPs) to\n provide a fully productive Access-to-Account (XS2A) interface to Third Party\n Providers (TPPs) until September 2019. XS2A itself consists of banking\n services to initiate payments (PIS), request account data (AIS) and get the\n confirmation of the availability of funds (PIIS). In order to guarantee the\n compliance of this deadline due to adaptations and bugs, PSD2 claims the\n banks to provide a functional dynamic sandbox offering the XS2A services in\n a non-productive environment until June 2019."
-    },
-    "FEATURES": {
-      "TITLE": "XS2ASandbox Features",
-      "CONTENT": "XS2ASandbox is a dynamic sandbox environment: you can create users, payments\n    and consents, play with data for testing purposes. With dynamic sandbox TPP\n    UI you can access banking API directly, get TPP certificate and manage\n    testing accounts. The developer portal contains testing instructions and all\n    needed test-cases. All XS2ASandbox services can be installed and run in one\n    simple command.",
-      "SLIDES": {
-        "SLIDE_1": {
-          "TITLE": "Plug and Play",
-          "CONTENT": "Ready to use solution, which can be easily installed"
-        },
-        "SLIDE_2": {
-          "TITLE": "Detailed Documentation",
-          "CONTENT": "Well described documentation on a developer portal"
-        },
-        "SLIDE_3": {
-          "TITLE": "Reliable test options",
-          "CONTENT": "TPP-Test certificate generation tool and NISP Tests"
-        },
-        "SLIDE_4": {
-          "TITLE": "Customizable User Interface",
-          "CONTENT": "TPP-UI for users and account management on the bank side"
-        },
-        "SLIDE_5": {
-          "TITLE": "Customer focused",
-          "CONTENT": "Client-oriented approach, flexible solution for customer needs and customer support"
-        },
-        "SLIDE_6": {
-          "TITLE": "Realistic Simulation",
-          "CONTENT": "Real bank system emulations with embedded XS2A API"
-        },
-        "SLIDE_7": {
-          "TITLE": "Wide range of services",
-          "CONTENT": "Accounting Service, Security Service and Payment Service"
-        },
-        "SLIDE_8": {
-          "TITLE": "Open source",
-          "CONTENT": "Open source project, available on GitHub and constantly updated"
-        }
-      }
-    },
-    "HISTORY": {
-      "TITLE": "Product History",
-      "PRODUCT": {
-        "POINT_1": {
-          "TITLE": "Project Kick-Off with two Team Members",
-          "CONTENT": ""
-        },
-        "POINT_2": {
-          "TITLE": "PreDemo of MVP 1.0",
-          "CONTENT": "Embedded approach: PIS, AIS, PIIS"
-        },
-        "POINT_3": {
-          "TITLE": "DEMO of MVP 1.0",
-          "CONTENT": "Embedded and redirected approaches"
-        },
-        "POINT_4": {
-          "TITLE": "Release of XS2ASandbox ver 1.0",
-          "CONTENT": "Support of Redirect and Embedded approach: TPP-UI, Online Banking"
-        },
-        "POINT_5": {
-          "TITLE": "Release ver 1.1",
-          "CONTENT": "Multilevel SCA, Multicurrency accounts"
-        }
-      }
     },
     "QUESTIONS": {
       "TITLE": "Any Questions?",
@@ -124,16 +60,16 @@
         "LINK": "Payment Service Directive 2 (PSD2)",
         "PART_1": "instructs banks (Account Servicing Payment Service Providers or ASPSPs) to\n provide a fully productive Access-to-Account (XS2A) interface to Third\n Party Providers (TPPs) until September 2019. XS2A itself consists of\n banking services to initiate payments (PIS), request account data (AIS)\n and get the confirmation of the availability of funds (PIIS). In order to\n guarantee the compliance of this deadline due to adaptions and bugs, PSD2\n claims the banks to provide a functional dynamic sandbox offering the XS2A\n services in a non-productive environment until June 2019.",
         "THE_2": "The",
-        "XS2A": "XS2ASandbox",
+        "XS2A": "Sandbox",
         "PART_2": "is a dynamic sandbox environment\n that fully meets the PSD2 requirements for providing APIs for Third-Party\n Providers (TPP). Based on the Berlin Group’s NextGen PSD2 specification\n for access to accounts (XS2A),",
-        "PART_3": "This developer portal is created to help TPP developers start working with\n XS2ASandbox."
+        "PART_3": "This developer portal is created to help TPP developers start working with\n DenizBank Sandbox."
       }
     },
     "INTERFACE": {
       "TITLE": "XS2A Interface",
       "CONTENT": {
         "PART_1": "Central component of the",
-        "XS2A": "XS2ASandbox",
+        "XS2A": "DenizBank Sandbox",
         "PART_2": "is the XS2A\n interface which meets the requirements of the Berlin Group's specification",
         "PART_3": "(Version 1.3) and is based on test data. You can visit our",
         "PART_4": "or find full",
@@ -146,36 +82,14 @@
         "PART_1": "Besides the actual interface, PSD2 instructs ASPSPs to offer a technical\n documentation free of charge containing amongst others, information about\n supported payment products and payment services. This information is\n stored in ",
         "ASPSP": "ASPSP-profile",
         "PART_2": "(bank profile), a\n service based on yaml file where a bank can provide available payment\n products, payment services, supported SCA approaches and other\n bank-specific settings."
-      },
-      "SUBTITLE_1": "Active XS2A Configuration (Bank Profile)",
-      "LIST": {
-        "LI_2": "Available payment types and payment products for each type:",
-        "UL_1": {
-          "LI_1": "Single (sepa-credit-transfers)",
-          "LI_2": "Future-Dated (sepa-credit-transfers)",
-          "LI_3": "Bulk (sepa-credit-transfers)",
-          "LI_4": "Periodic (sepa-credit-transfers)"
-        },
-        "LI_3": "Confirmation of Funds: supported",
-        "LI_5": "Supported types of Consents:",
-        "UL_3": {
-          "LI_1": "Dedicated: Yes",
-          "LI_2": "Bank-Offered: Yes",
-          "LI_3": "Global: Yes",
-          "LI_4": "Available Accounts: Yes"
-        },
-        "DISABLED": "Currently disabled features:",
-        "LI_6": "Signing Basket",
-        "LI_7": "Delta-Reports"
-      },
-      "SUBTITLE_2": "Corresponding ASPSP-Profile settings in .yaml file:"
+      }
     },
     "CERTIFICATE": {
       "TITLE": "TPP Certificate Service",
       "CONTENT": {
         "PART_1": "Usually, before accessing the XS2A services a TPP would need to register\n at its National Competent Authority (NCA) and request an",
         "PART_2": "certificate at an appropriate Trust Service Provider (TSP). Issuing a real\n certificate just for testing purposes would be too much effort, which is\n why the ",
-        "XS2A": "XS2ASandbox",
+        "XS2A": "DenizBank Sandbox",
         "PART_3": "is additionally simulating a\n fictional TSP issuing Qualified Website Authentication Certificates\n (QWAC). A QWAC is part of eIDAS and might be better known",
         "PART_4": "certificate. For PSD2-purposes the certificate gets extended by the\n QcStatement containing appropriate values such as the role(s) of the PSP\n (see",
         "PART_5": "After embedding the QWAC in the actual XS2A request, the role and the\n signature get validated at a central reverse proxy before it gets finally\n passed to the interface where the banking logic happens."
@@ -183,156 +97,26 @@
     },
     "UI": {
       "TITLE": "TPP User Interface",
-      "CONTENT": "TPP developers can register themselves into the system, obtain certificate\n and download test data for their TPP application using generated\n certificate and prepared data in TPP UI."
-    },
-    "LINKS_TO": {
-      "TITLE": "Links to environments",
-      "TABLE": {
-        "R1_C1": "Service",
-        "R1_C2": "Local environment",
-        "R1_C3": "XS2ASandbox Demo environment",
-        "DEVELOPER_PORTAL": "Developer portal",
-        "XS2A_INTERFACE_SWAGGER": "XS2A Interface Swagger",
-        "CONSENT_MANAGEMENT_SYSTEM": "Consent management system",
-        "LEDGERS": "Ledgers",
-        "ASPSP_PROFILE_SWAGGER": "ASPSP-Profile Swagger",
-        "TPP_UI": "TPP User Interface",
-        "ONLINE_BANKING_UI": "Online banking UI",
-        "ONLINE_BANKING_BACKEND": "Online banking backend",
-        "CERTIFICATE_GENERATOR": "Certificate Generator"
-      }
-    },
-    "HOW_TO_DOWN": {
-      "TITLE": "How to download, setup and run the project",
-      "SUBTITLE_1": "Prerequisites",
       "CONTENT": {
-        "PART_1": "This sandbox runs with the docker-compose that can be found at\n docker-compose.yml and Makefile in project directory. But before you run\n XS2ASandbox, first check if all build dependencies are installed:",
-        "PART_2": "If something is missing, install it to your local machine, otherwise the\n build will fail. List of dependencies that are required to use\n XS2ASandbox: Java 8, NodeJs, Angular CLI, Asciidoctor, jq, Docker, Docker\n Compose, Maven, PlantUML. Here are links where you can install needed\n dependencies:",
-        "TH_1": "Dependency",
-        "TH_2": "Link",
-        "PART_3": "Stop running containers in terminal with key combination Control + C.",
-        "PART_4": "You can remove all the Sandbox containers from Docker with the following\n      command:"
-      },
-      "SUBTITLE_2": "Note 1",
-      "TEXT_1": "Please, use Node.js version lower than 12 (e.g. 10.x.x or 11.x.x).\n Otherwise angular applications would not be built due to version\n conflicts.",
-      "SUBTITLE_3": "Note 2",
-      "TEXT_2": "Check amount of memory given to Docker (Open Docker Desktop -> Preferences\n -> Advanced -> Memory). For a fast and painless start of all the services\n it should be not less than 5 GB.",
-      "SUBSECTION_1": {
-        "TITLE": "Download XS2ASandbox",
-        "PART_1": "Download the project directly",
-        "LINK": "from GitHub",
-        "PART_2": "or use command:"
-      },
-      "SUBSECTION_2": {
-        "TITLE": "Build and run XS2ASandbox",
-        "PART_1": "After downloading the project go to the project directory:",
-        "PART_2": "Build all the services with the command:",
-        "PART_3": "After building services you can run XS2ASandbox in two ways - with a\n simple docker command:",
-        "PART_4": "Or with Makefile commands:",
-        "PART_5": "1. Build and run services",
-        "PART_6": "2. Run services without build"
-      }
-    },
-    "TROUBLES": {
-      "TITLE": "Troubleshooting",
-      "PART_1": "These are common mistakes you can get during the start of XS2ASandbox and\n an instruction how to get rid of it:",
-      "SUBTITLE_1": "Liquibase changelog error",
-      "PART_2": "This error can be produced if you had unsuccessful start of XS2ASandbox\n earlier. Example of possible stack trace:",
-      "PART_3": "Possible solution:",
-      "PART_4": "Find and delete all folders \"ledgerdbs\" and \"xs2adbs\". Clear all docker\n containers with command:",
-      "PART_5": "Restart all services.",
-      "SUBTITLE_2": "Node version error",
-      "PART_6": "This error can be produced because of wrong NodeJs version (version higher\n than 11.x). Example of possible stack trace:",
-      "PART_7": "Possible solution:",
-      "PART_8": "First, check your version of NodeJs with the command:",
-      "PART_9": "If version is higher than 11.x - change version of NodeJs to earlier one."
-    },
-    "HOW_TO_REG": {
-      "TITLE": "How to register TPP and start testing",
-      "LIST": {
-        "LI_1": "Open",
-        "LINK": "TPP User Interface login page",
-        "LI_2": "If you have no login and password - register yourself by clicking\n \"Register\" button.",
-        "LI_3": "Register yourself, create a certificate and log into the system. Note:\n  TPP ID should consist of at least 8 digits, no letters or other signs\n allowed.",
-        "LI_4": "Upload the test data and start testing."
-      }
-    },
-    "HOW_TO_CST": {
-      "TITLE": "How to customize UI of developer portal",
-      "TOP_LIST": {
-        "LI_1": "Create .json file with name UITheme.",
-        "LI_2": "Json example",
-        "LI_3": "Json fields.",
-        "LIST_1": {
-          "LI_1": "globalSettings - required",
-          "INNER_LIST_1": {
-            "LI_1": "logo - required, value: string, http url or file name with\n extension or ' '",
-            "LI_2": "favicon - optional",
-            "LI_2_INNER_LIST_1": {
-              "LI_1": "type - required, value: string",
-              "LI_2": "href - required, value: string, http url"
-            },
-            "LI_3": "facebook - optional, value: string, http url",
-            "LI_4": "linkedIn - optional, value: string, http url",
-            "LI_5": "cssVariables - optional",
-            "LI_5_INNER_LIST_1": {
-              "LI_1": "colorPrimary - optional, value: string, hex",
-              "LI_2": "colorSecondary - optional, value: string, hex",
-              "LI_3": "fontFamily - optional, value: string, font-name or font-name,\n font-family",
-              "LI_4": "bodyBG - optional, value: string, hex",
-              "LI_5": "headerBG - optional, value: string, hex",
-              "LI_6": "headerFontColor - optional, value: string, hex",
-              "LI_7": "mainBG - optional, value: string, hex",
-              "LI_8": "footerBG - optional, value: string, hex",
-              "LI_9": "footerFontColor - optional, value: string, hex",
-              "LI_10": "anchorFontColor - optional, value: string, hex",
-              "LI_11": "anchorFontColorHover - optional, value: string, hex",
-              "LI_12": "heroBG - optional, value: string, hex",
-              "LI_13": "stepBG - optional, value: string, hex",
-              "LI_14": "contactsCardBG - optional, value: string, hex",
-              "LI_15": "testCasesLeftSectionBG - optional, value: string, hex",
-              "LI_16": "testCasesRightSectionBG - optional, value: string, hex"
-            }
-          },
-          "LI_2": "contactInfo - required",
-          "INNER_LIST_2": {
-            "LI_1": "name - required, value: string",
-            "LI_2": "position - required, value: string",
-            "LI_3": "img - required, value: string, http url or file name with\n extension",
-            "LI_4": "email - optional, value: string",
-            "LI_5": "phone - optional, value: string"
-          },
-          "LI_3": "officesInfo - required. Array of 2 elements.",
-          "INNER_LIST_3": {
-            "LI_1": "city - required, value: string",
-            "LI_2": "company - required, value: string",
-            "LI_3": "addressFirstLine - required, value: string",
-            "LI_4": "addressSecondLine - required, value: string",
-            "LI_5": "phone - optional, value: string",
-            "LI_6": "email - optional, value: string",
-            "LI_7": "facebook - optional, value: string, http url",
-            "LI_8": "linkedIn - optional, value: string, http url"
-          }
-        },
-        "LI_4": "When you create .json (e.g. UITheme.json) file and fill all required\n fields, put this file with logo (e.g. logo.png) and contact person (e.g.\n contact.png) images in folder",
-        "LI_5": "Steps for putting files in this folder:",
-        "LIST_2": {
-          "LI_1": "Local environment customization",
-          "INNER_LIST_1": {
-            "LI_1": "Before running all services of the XS2A Sandbox local, put your files in folder"
-          },
-          "LI_2": "Openshift environment customization",
-          "INNER_LIST_2": {
-            "LI_1": "Install the Openshift Command Line Tools:",
-            "LI_2": "Navigate to local source folder (where the customisation files are\n stored):",
-            "LI_3": "Login to Openshift:",
-            "LI_4": "Navigate to the Openshift project.",
-            "LI_5": "We select the development environment for our example.",
-            "LI_6": "Please choose one of the following:",
-            "LI_7": "Copy the customisation files to the running Developer Portal UI\n application pod:"
-          }
-        },
-        "LI_6": "Customization completed, congratulations!"
+        "PART_0": "TPP developers can register themselves into the system, obtain certificate\n and download test data for their TPP application using generated\n certificate and prepared data in TPP UI.",
+        "SUBTITLE_1": "How to create an account for TPP:",
+        "PART_1": "1. Open TPP UI login page.",
+        "PART_2": "2. Choose option “Register” below.",
+        "PART_3": "3. Provide all needed information: TPP authorization number, email, login and password.",
+        "PART_4": "4. You can generate test QWAC certificate for using it with XS2A Interface if needed.",
+        "SUBTITLE_2": "How to create users:",
+        "PART_5": "Users could be created manually or via uploading .yaml file.",
+        "PART_6": "To create user with manually:",
+        "PART_7": "1. Go to “My users list” and click on “Create new user”.",
+        "PART_8": "2. Enter email, login and pin for a new user.",
+        "PART_9": "3. Choose authentication method (only email is valid for now) and enter a valid email. If you choose option \"Use Static TAN in SandboxMode\", mock static TAN would be used for testing. Then you have to enter your mock TAN also. You can add multiple SCA methods to every users",
+        "PART_10": "To create accounts manually: ",
+        "PART_11": "1 Choose a user in your list of users and click \"Create deposit account\"",
+        "PART_12": "2. Select account type, usage and account status. IBAN could be generated automatically. Please, note, that only valid ibans are accepted by XS2A Interface.",
+        "PART_13": "3. After account is created, you can use function \"Deposit cash\" to add any amount to the balances for testing purposes. All the created accounts are available in \"Users accounts\" tab",
+        "PART_14": "To create users and accounts automatically, generate test data with the tab \"Generate Test Data\", and NISP compliant test data would be generated. If you want to upload your owm .yaml testing file, use tab \"Upload files\".",
+        "SUBTITLE_3": "How to create test payments, consents and transactions:",
+        "PART_15": "To create test payments, you have to generate test payment data on tab \"Generate Test Data\", checking option \"Generate Payment Data\" as true. Also, the upload of a custom .yaml file with payments is possible in tab \"Upload files\". Consents and transactions could be created only with upload of the proper .yaml file."
       }
     },
     "WHAT_NEXT": {
@@ -343,12 +127,12 @@
       "LINK_2": "Test cases",
       "PART_3": "section for further testing. There\n you will find prepared ",
       "POSTMAN": "Postman tests",
-      "PART_4": ", XS2A\n Interface API description and instructions how to test XS2ASandbox with"
+      "PART_4": ", XS2A\n Interface API description and instructions how to test DenizBank Sandbox with"
     }
   },
   "TEST_CASES": {
     "TITLE": "Test cases",
-    "TEXT_1": "After loading test data into the system, TPP developer can test\n XS2ASandbox endpoints with Swagger or Postman tests. In Swagger section\n you can find information about usage of Swagger, prepared test data\n (Jsons) for testing and short API documentation.",
+    "TEXT_1": "After loading test data into the system, TPP developer can test\n DenizBank Sandbox endpoints with Swagger or Postman tests. In Swagger section\n you can find information about usage of Swagger, prepared test data\n (Jsons) for testing and short API documentation.",
     "LINK": "In Postman tests section",
     "TEXT_2": " you\n can find information about usage of Postman for testing and download\n prepared Postman tests with testing data.",
     "INTRODUCTION": {
@@ -384,7 +168,7 @@
     },
     "TESTING": {
       "TEXT_1": "You can use 3 typical testing flows for EMBEDDED SCA approaches\n with Swagger.",
-      "TEXT_2": "To open Swagger page of XS2ASandbox locally start all the services with\n docker command from ",
+      "TEXT_2": "To open Swagger page of DenizBank Sandbox locally start all the services with\n docker command from ",
       "LINK_1": "Getting Started.",
       "TEXT_3": "After starting all the\n services, go to your local",
       "LINK_2": "XS2A Interface Swagger Page",

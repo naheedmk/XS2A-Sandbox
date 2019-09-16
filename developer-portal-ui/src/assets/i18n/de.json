@@ -14,31 +14,25 @@
   "HOME": {
     "HEADER": {
       "TITLE_1": "Developer Portal",
-      "SUBTITLE_1": "Entwickeln neuer, digitaler",
-      "SUBTITLE_2": "Dienstleistungen durch",
-      "SUBTITLE_3": "Open Banking"
+      "SUBTITLE_1": "of PSD2 XS2A sandbox environment"
     },
     "WHAT_IS": {
-      "TITLE": "Was ist die XS2ASandbox?",
+      "TITLE": "Was ist die PSD2 XS2A Sandbox?",
       "CONTENT": {
         "THE": "Unsere",
-        "XS2A": "XS2ASandbox",
+        "XS2A": "DenizBank Sandbox",
         "PART_1": "ist eine dynamische Sandboxumgebung, die vollständig die PSD2-Anforderungen bezüglich API-Bereitstellung für Drittanbieter (TPPs = Third Payment Providers) erfüllt. Zusätzlich erfüllt sie auch alle regulatorischen Anforderungen der NextGen PSD2-Spezifikation der Berlin Group bezüglich Account Schnittstellen (XS2A = Access-to-Account) und ist NISP konform. Ziel des Developer-Portals ist es TPP-Entwicklern bei der Arbeit mit unserer ",
         "PART_2": "zu unterstützen."
       }
     },
     "HOW_TO": {
-      "TITLE": "Wie nutzt man die XS2ASandbox?",
+      "TITLE": "Wie nutzt man die DenizBank Sandbox?",
       "STEP_1": {
         "TITLE": "Schritt 1",
         "CONTENT": "Lesen der Anleitung «Erste Schritte»"
       },
       "STEP_2": {
         "TITLE": "Schritt 2",
-        "CONTENT": "Herunterladen, installieren und ausführen der XS2ASandbox"
-      },
-      "STEP_3": {
-        "TITLE": "Schritt 3",
         "CONTENT": "Lesen der Seite «Testabläufe» und die Tests starten!"
       }
     },
@@ -47,69 +41,6 @@
       "THE": "Die",
       "LINK": "Payment Service Directive 2 (PSD2)",
       "CONTENT": "schreibt Banken (ASPSPs = Account Servicing Payment Service Providers) vor bis September 2019 eine standardisierte und voll leistungsfähige Account-Schnittstelle für Drittanbieter (TPPs = Third Payment Providers) bereitzustellen. Diese wird Access-to-Account oder kurz \"XS2A\" genannt. XS2A setzt sich aus folgenden Banking-Funktionalitäten zusammen: Zahlungsinitiierung (PIS = Payment Initiation Service), Kontodatenabfrage (AIS = Account Information Service) und Abfrage von verfügbarem Kapital (PIIS = confirmation of the availability of funds). Um die Einhaltung der Frist zu gewährleisten und sowohl Fehlerbehebungen als auch Anpassungen berücksichtigen zu können, verpflichtet PSD2 die Banken eine Testversion der Schnittstelle bereits im Juni 2019 zur Verfügung zu stellen."
-    },
-    "FEATURES": {
-      "TITLE": "XS2ASandbox Features",
-      "CONTENT": "PSD2 Accelerator ist eine dynamische Sandbox-Umgebung: Sie können sowohl Benutzer, Zahlungen und Genehmigungen erstellen als auch mit Daten interagieren für Tests. Mit der dynamischen Sandbox TPP UI können Sie direkt auf die Bank-API zugreifen, TPP-Zertifikate erhalten und Testkonten verwalten. Das Entwicklerportal enthält Testanweisungen und alle benötigten Testfälle. Zusätzlich können alle PSD2 Accelerator Services mit einem einfachen Befehl installiert und ausgeführt werden.",
-      "SLIDES": {
-        "SLIDE_1": {
-          "TITLE": "Plug and Play",
-          "CONTENT": "Einfach zu installierende Lösung"
-        },
-        "SLIDE_2": {
-          "TITLE": "Detaillierte Dokumentation",
-          "CONTENT": "Ausführliche Dokumentation online"
-        },
-        "SLIDE_3": {
-          "TITLE": "Zuverlässige Testmöglichkeiten",
-          "CONTENT": "Erstellen von TPP-Testzertifikaten und unterstützen von NISP Tests"
-        },
-        "SLIDE_4": {
-          "TITLE": "Anpassbare UI",
-          "CONTENT": "TPP-UI für Nutzer und bankspezifische Kontenverwaltung"
-        },
-        "SLIDE_5": {
-          "TITLE": "Nutzer orientiert",
-          "CONTENT": "Kundenorientiert, flexible Lösung und Support"
-        },
-        "SLIDE_6": {
-          "TITLE": "Realistische Simulation",
-          "CONTENT": "Echte Bankensystemmodellierungen mit integrierter XS2A-API"
-        },
-        "SLIDE_7": {
-          "TITLE": "Vielseitiger Service",
-          "CONTENT": "Buchhaltungs-, Sicherheits- und Zahlungsdienst"
-        },
-        "SLIDE_8": {
-          "TITLE": "Open source",
-          "CONTENT": "Stetig sich weiterentwickelndes Open Source Projekt in GitHub"
-        }
-      }
-    },
-    "HISTORY": {
-      "TITLE": "Entwicklungsablauf",
-      "PRODUCT": {
-        "POINT_1": {
-          "TITLE": "Projekt Kick-Off mit zwei Teammitgliedern",
-          "CONTENT": ""
-        },
-        "POINT_2": {
-          "TITLE": "PreDemo von MVP 1.0",
-          "CONTENT": "Embedded Ansatz: PIS, AIS, PIIS"
-        },
-        "POINT_3": {
-          "TITLE": "DEMO von MVP 1.0",
-          "CONTENT": "Embedded und redirected Ansätze"
-        },
-        "POINT_4": {
-          "TITLE": "Release XS2ASandbox Ver. 1.0",
-          "CONTENT": "Unterstützen von embedded und redirected Ansätzen: TPP-UI, Online Banking"
-        },
-        "POINT_5": {
-          "TITLE": "Release XS2ASandbox Ver. 1.1",
-          "CONTENT": "Multilevel SCA, Multi-Währungs-Konto"
-        }
-      }
     },
     "QUESTIONS": {
       "TITLE": "Noch Fragen?",
@@ -124,16 +55,16 @@
         "LINK": "Payment Service Directive 2 (PSD2)",
         "PART_1": "schreibt Banken (ASPSPs = Account Servicing Payment Service Providers) vor bis September 2019 eine standardisierte und voll leistungsfähige Account-Schnittstelle für Drittanbieter (TPPs = Third Payment Providers) bereitzustellen. Diese wird Access-to-Account oder kurz \"XS2A\" genannt. XS2A setzt sich aus folgenden Banking-Funktionalitäten zusammen: Zahlungsinitiierung (PIS = Payment Initiation Service), Kontodatenabfrage (AIS = Account Information Service) und Abfrage von verfügbarem Kapital (PIIS = confirmation of the availability of funds). Um die Einhaltung der Frist zu gewährleisten und sowohl Fehlerbehebungen als auch Anpassungen berücksichtigen zu können, verpflichtet PSD2 die Banken eine Testversion der Schnittstelle bereits im Juni 2019 zur Verfügung zu stellen.",
         "THE_2": "Unsere",
-        "XS2A": "XS2ASandbox",
+        "XS2A": "DenizBank Sandbox",
         "PART_2": "ist eine dynamische Sandboxumgebung, die vollständig die PSD2-Anforderungen bezüglich API-Bereitstellung für Drittanbieter (TPPs = Third Payment Providers) erfüllt. Zusätzlich erfüllt sie auch alle regulatorischen Anforderungen der NextGen PSD2-Spezifikation der Berlin Group bezüglich Account Schnittstellen (XS2A = Access-to-Account) und ist NISP konform.",
-        "PART_3": "Ziel des Developer-Portals ist es TPP-Entwicklern bei der Arbeit mit unserer XS2ASandbox zu unterstützen."
+        "PART_3": "Ziel des Developer-Portals ist es TPP-Entwicklern bei der Arbeit mit unserer DenizBank Sandbox zu unterstützen."
       }
     },
     "INTERFACE": {
       "TITLE": "XS2A-Schnittstelle",
       "CONTENT": {
         "PART_1": "Der Zentrale Bestandteil der",
-        "XS2A": "XS2ASandbox",
+        "XS2A": "DenizBank Sandbox",
         "PART_2": "ist die XS2A-Schnittstelle, die gemäß der Spezifikation der Berlin Group",
         "PART_3": "(Version 1.3) implementiert wurde und auf Testdaten basiert. Mehr Details finden Sie in unsere",
         "PART_4": "und der",
@@ -146,36 +77,14 @@
         "PART_1": "Neben der Schnittstelle ist es für Banken ebenfalls vorgeschrieben eine kostenfreie technische Dokumentation zur Verfügung zu stellen, die über unterstützte Produkte und Zahlungsdienstleistungen informiert. Die Daten werden in ",
         "ASPSP": "ASPSP-bzw",
         "PART_2": "bank-Profilen gespeichert, einem Service, der es Banken ermöglicht durch eine .yaml-Datei verfügbare Zahlungsprodukte, Zahlungsdienste, unterstützte SCA-Ansätze und weitere bankspezifische Einstellungen bereitzustellen."
-      },
-      "SUBTITLE_1": "Aktive XS2A Konfiguration (Bank-Profil)",
-      "LIST": {
-        "LI_2": "Verfügbare Zahlungsarten und -produkte:",
-        "UL_1": {
-          "LI_1": "Einfach (sepa-credit-transfers)",
-          "LI_2": "Terminiert (sepa-credit-transfers)",
-          "LI_3": "Bündelung (sepa-credit-transfers)",
-          "LI_4": "Periodisch (sepa-credit-transfers)"
-        },
-        "LI_3": "Abfrage von verfügbarem Kapital: Unterstützt",
-        "LI_5": " Unterstützte Einwilligungen:",
-        "UL_3": {
-          "LI_1": "Zugewiesen: Ja",
-          "LI_2": "Bankberechtigt: Ja",
-          "LI_3": "Global: Ja",
-          "LI_4": "Verfügbare Konten: Ja"
-        },
-        "DISABLED": "Aktuell deaktivierte Features:",
-        "LI_6": "Signing Basket",
-        "LI_7": "Delta-Reports"
-      },
-      "SUBTITLE_2": "Beispiel für die entsprechenden ASPSP-Profileinstellungen in der .yaml-Datei:"
+      }
     },
     "CERTIFICATE": {
       "TITLE": "TPP Zertifikat-Service",
       "CONTENT": {
         "PART_1": "Zukünftig wird es für einen TPP notwendig sein, sich bei der BAFIN zu registrieren und von einem Treuhanddienstleister (TSP = Trust Service Provider) ein",
         "PART_2": "Zertifikat ausstellen zu lassen, um XS2A-Dienstleistungen bei Banken nutzen zu können.\nDa das Ausstellen eines echten Zertifikates für Testzwecke einen sehr hohen Aufwand bedeuten würde, wird im Rahmen der ",
-        "XS2A": "XS2ASandbox",
+        "XS2A": "DenizBank Sandbox",
         "PART_3": "ein TSP simuliert und eine Funktion zur Erstellung eines qualifizierten Website-Authentifizierungs-Zertifikates (QWAC) bereitgestellt. Ein QWAC ist Teil der eIDAS und wird auch als",
         "PART_4": "Zertifikat bezeichnet. Für PSD2-Zwecke wird das Zertifikat durch ein QcStatement erweitert, welche Informationen wie die Rolle des Drittanbieters beinhaltet (siehe auch",
         "PART_5": "Nach der Einbettung des QWAC in die eigentliche XS2A-Anfrage werden sowohl die Rolle als auch die Signatur in einem zentralen Reverse-Proxy validiert, bevor sie schließlich an die für die Banklogik verantwortliche Schnittstelle übergeben werden."
@@ -185,156 +94,6 @@
       "TITLE": "TPP Benutzerschnittstelle",
       "CONTENT": "TPP-Entwicklern können sich im System registrieren, Zertifikate erhalten und Testdaten für Ihre TPP-Anwendung herunterladen. Diese Testdaten werden anhand des generierten Zertifikats und angegebenen Daten in der TPP Benutzerschnittstelle erstellt."
     },
-    "LINKS_TO": {
-      "TITLE": "Links zu den Umgebungen",
-      "TABLE": {
-        "R1_C1": "Service",
-        "R1_C2": "Lokale Umgebung",
-        "R1_C3": "XS2ASandbox Umgebung",
-        "DEVELOPER_PORTAL": "Developer portal",
-        "XS2A_INTERFACE_SWAGGER": "XS2A Interface Swagger",
-        "CONSENT_MANAGEMENT_SYSTEM": "Consent management system",
-        "LEDGERS": "Ledgers",
-        "ASPSP_PROFILE_SWAGGER": "ASPSP-Profile Swagger",
-        "TPP_UI": "TPP User Interface",
-        "ONLINE_BANKING_UI": "Online banking UI",
-        "ONLINE_BANKING_BACKEND": "Online banking backend",
-        "CERTIFICATE_GENERATOR": "Certificate Generator"
-      }
-    },
-    "HOW_TO_DOWN": {
-      "TITLE": "Herunterladen, Einrichten und Ausführen des Projekts",
-      "SUBTITLE_1": "Voraussetzungen",
-      "CONTENT": {
-        "PART_1": "Das XS2ASandbox Projekt läuft mit docker-compose, das sich in docker-compose.yml und Makefile im Projektverzeichnis befindet. Bevor Sie das Projekt ausführen lassen, überprüfen Sie mit:",
-        "PART_2": "Ob Sie alle notwendigen Programme installiert haben. Die fehlenden müssen Sie lokal auf Ihren Rechner installieren, da die XS2ASandbox ansonsten nicht erfolgreich gebaut werden kann. Hier ist eine Liste aller Programme und derer Links die Sie installiert haben müssen:",
-        "TH_1": "Dependency",
-        "TH_2": "Link",
-        "PART_3": "Beenden Sie laufende Prozesse im Terminal mit der Tastenkombination Control +C.",
-        "PART_4": "Es empfiehlt sich bereits vorhandene Docker Container zu entfernen, um Fehler bezüglich der Ports zu vermeiden. Nutzen Sie dafür folgende Befehle:"
-      },
-      "SUBTITLE_2": "Anmerkung 1",
-      "TEXT_1": "Bitte, verwenden Sie eine Node.js unter Version 12 (z.B. 10.x.x oder 11.x.x). Andernfalls kann die Angular Anwendung wegen Versionskonflikten nicht gebaut werden.",
-      "SUBTITLE_3": "Anmerkung 2",
-      "TEXT_2": "Überprüfen Sie wie viel Speicher Docker zur Verfügung steht (öffnen Sie Docker Desktop -> Preferences -> Advanced -> Memory). Um einen schnellen und problemlosen Start aller Dienste zu ermöglichen, sollte Docker auf mindestens 5 GB Speicher Zugriff haben.",
-      "SUBSECTION_1": {
-        "TITLE": "Download XS2ASandbox",
-        "PART_1": "Laden Sie das Projekt direkt",
-        "LINK": "von GitHub",
-        "PART_2": "herunter oder nutzen Sie folgenden Befehl:"
-      },
-      "SUBSECTION_2": {
-        "TITLE": "Starten der XS2ASandbox",
-        "PART_1": "Nach dem erfolgreichen Herunterladen des Projektes gehen Sie in das Projektverzeichnis:",
-        "PART_2": "Bauen Sie alle Dienste mit folgendem Befehl:",
-        "PART_3": "Nachdem alle Dienste erfolgreich gebaut wurden, können Sie mit folgenden Docker Befehl XS2ASandbox starten:",
-        "PART_4": "Alternativ können Sie auch die Makefile Befehle verwenden:",
-        "PART_5": "1. Bauen und starten der Dienste",
-        "PART_6": "2. Starten der Dienste ohne Bauen"
-      }
-    },
-    "TROUBLES": {
-      "TITLE": "Fehlerbehebung",
-      "PART_1": "Hier erklären wir Ihnen mögliche Fehler, die beim Starten der XS2ASandbox auftreten können, und wie Sie diese beheben können.",
-      "SUBTITLE_1": "Liquibase changelog Fehler",
-      "PART_2": "Dieser Fehler kann auftreten, wenn ein vorheriger Start der XS2ASandbox fehlschlug. Hier ein Beispiel eines möglichen Stacktrace:",
-      "PART_3": "Mögliche Lösung:",
-      "PART_4": "Finden und löschen Sie alle Ordner mit Namen “ledgerdbs” und “xs2adbs”. Zusätzlich löschen Sie alle Docker Container mit folgenden Befehl:",
-      "PART_5": "Versuchen Sie nun alle Services erneut zu starten.",
-      "SUBTITLE_2": "Node Version Fehler",
-      "PART_6": "Wenn Sie eine NodeJs Version nutzen, die höher als 11.x ist, kann es zu diesem Fehler kommen. Hier ein Beispiel eines möglichen Stacktrace:",
-      "PART_7": "Mögliche Lösung:",
-      "PART_8": "Überprüfen mit folgenden Befehl Ihre NodeJs Version:",
-      "PART_9": "Sollte Ihre NodeJs Version höher als 11.x sein, ändern Sie diese zu einer früheren Version."
-    },
-    "HOW_TO_REG": {
-      "TITLE": "TPP registrieren und testen",
-      "LIST": {
-        "LI_1": "Öffnen Sie die",
-        "LINK": "TPP User Interface Login Seite",
-        "LI_2": "Falls Sie kein Konto haben, wechseln Sie mit Hilfe des \"Register\" Button zu der Registrierungsansicht.",
-        "LI_3": "Registrieren und loggen Sie sich ein.",
-        "LI_4": "Laden Sie Ihre Testdaten hoch und starten Sie Ihren Testlauf."
-      }
-    },
-    "HOW_TO_CST": {
-      "TITLE": "Anpassen der UI des Developer-Portals",
-      "TOP_LIST": {
-        "LI_1": "Erstellen Sie eine .json Datei mit dem Namen UITheme",
-        "LI_2": "Hier ein Json Beispiel:",
-        "LI_3": "Json Felder:",
-        "LIST_1": {
-          "LI_1": "globalSettings - benötigt",
-          "INNER_LIST_1": {
-            "LI_1": "logo - benötigt, Wert: string, http url oder Dateiname mit Endung oder ' '",
-            "LI_2": "favicon - optional",
-            "LI_2_INNER_LIST_1": {
-              "LI_1": "type - benötigt, Wert: string",
-              "LI_2": "href - benötigt, Wert: string, http url"
-            },
-            "LI_3": "facebook - optional, Wert: string, http url",
-            "LI_4": "linkedIn - optional, Wert: string, http url",
-            "LI_5": "cssVariables - optional",
-            "LI_5_INNER_LIST_1": {
-              "LI_1": "colorPrimary - optional, Wert: string, hex",
-              "LI_2": "colorSecondary - optional, Wert: string, hex",
-              "LI_3": "fontFamily - optional, Wert: string, font-name or font-name,\n font-family",
-              "LI_4": "bodyBG - optional, Wert: string, hex",
-              "LI_5": "headerBG - optional, Wert: string, hex",
-              "LI_6": "headerFontColor - optional, Wert: string, hex",
-              "LI_7": "mainBG - optional, Wert: string, hex",
-              "LI_8": "footerBG - optional, Wert: string, hex",
-              "LI_9": "footerFontColor - optional, Wert: string, hex",
-              "LI_10": "anchorFontColor - optional, Wert: string, hex",
-              "LI_11": "anchorFontColorHover - optional, Wert: string, hex",
-              "LI_12": "heroBG - optional, Wert: string, hex",
-              "LI_13": "stepBG - optional, Wert: string, hex",
-              "LI_14": "contactsCardBG - optional, Wert: string, hex",
-              "LI_15": "testCasesLeftSectionBG - optional, Wert: string, hex",
-              "LI_16": "testCasesRightSectionBG - optional, Wert: string, hex"
-            }
-          },
-          "LI_2": "contactInfo - benötigt",
-          "INNER_LIST_2": {
-            "LI_1": "name - benötigt, Wert: string",
-            "LI_2": "position - benötigt, Wert: string",
-            "LI_3": "img - benötigt, Wert: string, http url oder Dateiname mit Endung",
-            "LI_4": "email - optional, Wert: string",
-            "LI_5": "phone - optional, Wert: string"
-          },
-          "LI_3": "officesInfo - benötigt. Array mit 2 Elementen.",
-          "INNER_LIST_3": {
-            "LI_1": "city - benötigt, Wert: string",
-            "LI_2": "company - benötigt, Wert: string",
-            "LI_3": "addressFirstLine - benötigt, Wert: string",
-            "LI_4": "addressSecondLine - benötigt, Wert: string",
-            "LI_5": "phone - optional, Wert: string",
-            "LI_6": "email - optional, Wert: string",
-            "LI_7": "facebook - optional, Wert: string, http url",
-            "LI_8": "linkedIn - optional, Wert: string, http url"
-          }
-        },
-        "LI_4": "Wenn Sie die .json Datei erstellt haben (bsp.: UITheme.json) und alle Felder ausgefüllt bzw. angepasst haben, fügen Sie das Logo (bsp.: logo.png) und Kontaktperson (bsp.: contact.png) in den dafür vorgesehenen Bilderordner",
-        "LI_5": "Einfügen der Dateien in diesen Ordner:",
-        "LIST_2": {
-          "LI_1": "Local environment Anpassung",
-          "INNER_LIST_1": {
-            "LI_1": "Bevor Sie alle Services der XS2A Sandbox lokal starten, fügen Sie Ihre Dateien in den Ordner "
-          },
-          "LI_2": "Openshift environment Anpassung",
-          "INNER_LIST_2": {
-            "LI_1": "Installieren Sie die Openshift Command Line Tools:",
-            "LI_2": "Navigieren Sie zu dem lokalen Ursprungsordner (in dem die personalisierten Dateien gespeichert sind):",
-            "LI_3": "Einloggen bei Openshift:",
-            "LI_4": "Navigieren Sie zu dem Openshift Projekt.",
-            "LI_5": "Als Beispiel haben wir die Entwicklungsumgebung ausgewählt.",
-            "LI_6": "Bitte wählen Sie eine der folgenden aus:",
-            "LI_7": "Kopieren Sie die Anpassungsdateien in den laufenden Developer Portal UI Application Pod:"
-          }
-        },
-        "LI_6": "Herzlichen Glückwunsch, Sie haben Ihre Anpassung abgeschlossen!"
-      }
-    },
     "WHAT_NEXT": {
       "TITLE": "Nächsten Schritte",
       "PART_1": "Wenn Sie alle oben genannten",
@@ -343,12 +102,12 @@
       "LINK_2": "Testfälle",
       "PART_3": "weitergehende Tests nachlesen und durchführen. Dort finden Sie von uns erstellte",
       "POSTMAN": "Postman tests",
-      "PART_4": ", Beschreibung der XS2A Interface API und Erklärungen der XS2ASandbox Tests mit"
+      "PART_4": ", Beschreibung der XS2A Interface API und Erklärungen der DenizBank Sandbox Tests mit"
     }
   },
   "TEST_CASES": {
     "TITLE": "Testfälle",
-    "TEXT_1": "Nachdem das System die Testdaten geladen hat, können Sie die XS2ASandbox Endpunkte mit Swagger oder den Postman Tests testen. Der Abschnitt „Swagger testing“ beinhaltet eine API Dokumentation und Erklärungen bezüglich der Swagger Nutzung, das Vorbereiten von Testdaten (Jsons).",
+    "TEXT_1": "Nachdem das System die Testdaten geladen hat, können Sie die DenizBank Sandbox Endpunkte mit Swagger oder den Postman Tests testen. Der Abschnitt „Swagger testing“ beinhaltet eine API Dokumentation und Erklärungen bezüglich der Swagger Nutzung, das Vorbereiten von Testdaten (Jsons).",
     "LINK": "Der Abschnitt Postman tests",
     "TEXT_2": " befasst sich mit der Postman-Nutzung für Tests und dem Herunterladen von erstellten Postman Tests mit Testdaten.",
     "INTRODUCTION": {
@@ -379,7 +138,7 @@
     },
     "TESTING": {
       "TEXT_1": "Es können 3 klassische Testabläufe für EMBEDDED SCA-Ansätze mit Swagger durchgeführt werden.",
-      "TEXT_2": "Hierfür müssen Sie zuerst alle Services der XS2ASandbox wie in ",
+      "TEXT_2": "Hierfür müssen Sie zuerst alle Services der DenizBank Sandbox wie in ",
       "LINK_1": "Erste Schritte",
       "TEXT_3": "erklärt lokal starten und dann die",
       "LINK_2": "XS2A-Schnittstelle Swagger",
