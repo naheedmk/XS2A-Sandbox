@@ -3,9 +3,9 @@
     "logo": "denizBank_logo.png"
   },
   "contactInfo": {
-    "img": "Rene.png",
+    "img": "denizbank.png",
     "name": "DenizBank AG",
-    "position": "Software Architect & Expert for API Management",
+    "position": "Support Service",
     "email": "service@denizbank.at"
   },
   "officesInfo": [
@@ -17,10 +17,5 @@
       "phone": "+43(0)505 105200-0",
       "email": "service@denizbank.at"
     }
-  ],
-  "cssVariables": {
-    "colorPrimary": "#2c6586",
-    "fontFamily": "Tahoma",
-    "bodyBG": "#DAEDEE"
-  }
+  ]
 }

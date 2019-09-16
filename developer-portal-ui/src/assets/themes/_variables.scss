@@ -20,11 +20,11 @@ $dark-80: #2c2e2f;
  */
 :root {
   /* Fonts */
-  --fontFamily: Arial, sans-serif;
+  --fontFamily: Tahoma, Verdana;
 
   /* Colors */
-  --colorPrimary: #054f72;
-  --colorSecondary: #eed52f;
+  --colorPrimary: #2c6586;
+  --colorSecondary: #628da8;
 
   /* Body */
   --bodyBG: #fafafa;
@@ -34,11 +34,11 @@ $dark-80: #2c2e2f;
   --mainBG: transparent;
 
   /* Header */
-  --headerBG: #ffffff;
-  --headerFontColor: #000000;
+  --headerBG: #daedee;
+  --headerFontColor: #ffffff;
 
   /* Footer */
-  --footerBG: #054f72;
+  --footerBG: #daedee;
   --footerFontColor: #ffffff;
 
   /* Anchor */

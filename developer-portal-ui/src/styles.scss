@@ -39,6 +39,7 @@ body {
 
 main {
   background: var(--mainBG);
+
   &:before,
   &:after {
     content: '';

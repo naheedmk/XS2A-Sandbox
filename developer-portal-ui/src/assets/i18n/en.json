@@ -113,7 +113,7 @@
     },
     "QUESTIONS": {
       "TITLE": "Any Questions?",
-      "ASK": "Ask this person."
+      "ASK": "Ask our support."
     }
   },
   "GETTING_STARTED": {
@@ -829,7 +829,7 @@
   },
   "CONTACT": {
     "TITLE_1": "Any Questions?",
-    "SUBTITLE": "Ask this person.",
+    "SUBTITLE": "Ask our support.",
     "TITLE_2": "Contact"
   }
 }
