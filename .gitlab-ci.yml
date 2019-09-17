@@ -49,6 +49,7 @@ variables:
   OPENSHIFT_NAMESPACE_BANKING_GATEWAY_INTEG: "banking-gateway-integ"
 
   OPENSHIFT_NAMESPACE_ASPSP_XS2A_DEV: "adorsys-psd2-develop"
+  OPENSHIFT_NAMESPACE_ASPSP_XS2A_SUPPORT4X: "adorsys-psd2-support4x"
 
   ###########################
   # Build variables         #
@@ -395,18 +396,6 @@ deploy_openshift_demo:
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEMO} # Openshift target namespace
   <<: *deploy_openshift
 
-deploy_openshift_banking_gateway_integ:
-  stage: "Deploy"
-  cache: {}
-  dependencies: []
-  only:
-    - master
-  variables:
-    GIT_STRATEGY: none
-    DOCKER_TAG: latest # Dockerhub source tag
-    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_BANKING_GATEWAY_INTEG} # Openshift target namespace
-  <<: *deploy_openshift
-
 deploy_openshift_aspsp_xs2a_dev:
   stage: "Deploy"
   cache: {}
@@ -417,6 +406,18 @@ deploy_openshift_aspsp_xs2a_dev:
     GIT_STRATEGY: none
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_ASPSP_XS2A_DEV} # Openshift target namespace
+  <<: *deploy_openshift_tpp_rest_server
+
+deploy_openshift_aspsp_xs2a_support4x:
+  stage: "Deploy"
+  cache: {}
+  dependencies: []
+  only:
+    - KOA_deploy_to_xs2a_tpprest
+  variables:
+    GIT_STRATEGY: none
+    DOCKER_TAG: latest # Dockerhub source tag
+    OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_ASPSP_XS2A_SUPPORT4X} # Openshift target namespace
   <<: *deploy_openshift_tpp_rest_server
 
 # tags
