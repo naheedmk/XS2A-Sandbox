@@ -38,7 +38,7 @@ describe('CustomizeService', () => {
   });
 
   it('should get JSON theme', async () => {
-    service.getJSON().then(res => {
+    service.getJSON().subscribe(res => {
       if (!service.isCustom()) {
         expect(res).toEqual(defTheme);
       } else {
@@ -119,7 +119,7 @@ describe('CustomizeService', () => {
       const tmp = getComputedStyle(document.body).getPropertyValue(
         '--fontFamily'
       );
-      expect(tmp).toEqual(' Arial, sans-serif');
+      expect(tmp).toEqual(' Verdana, sans-serif');
       done();
     }, 100);
   });
