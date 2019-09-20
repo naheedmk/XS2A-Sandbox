@@ -1,0 +1,84 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="border-bottom">
+            <div class="card-body">
+                <div *ngIf="formControl['login'].value; else noUserLogin">
+                    <div class="header__title">{{formControl['login'].value}}</div>
+                </div>
+
+                <ng-template #noUserLogin>
+                    <div class="header__title">Update Tpp user details</div>
+                </ng-template>
+            </div>
+        </div>
+        <form novalidate [formGroup]="updateUserForm" (ngSubmit)="onSubmit()" autocomplete="off">
+            <div class="card-body pb-0">
+                <h5>Update user Information</h5>
+            </div>
+            <div class="border-bottom">
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12 col-md-6 form-group ">
+                                    <label class="control-label" for="login">Login</label>
+                                    <input [ngClass]="{ 'is-invalid': (formControl['login'].touched || submitted) && formControl['login'].errors }"
+                                           aria-describedby="emailHelp"
+                                           autocomplete="off"
+                                           class="form-control"
+                                           formControlName="login"
+                                           id="login"
+                                           placeholder="Enter your banking login"
+                                           type="text">
+                                    <div *ngIf="(formControl['login'].touched || submitted) && formControl['login'].hasError('required')"
+                                         class="invalid-feedback">
+                                        Login is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 form-group ">
+                        <label class="control-label" for="tppId">Tpp ID</label>
+                        <input [ngClass]="{ 'is-invalid': (formControl['tppId'].touched || submitted) && formControl['tppId'].errors }"
+                               aria-describedby="emailHelp"
+                               autocomplete="off"
+                               class="form-control"
+                               formControlName="tppId"
+                               id="tppId"
+                               placeholder="Enter tppId"
+                               type="text">
+                        <div *ngIf="(formControl['tppId'].touched || submitted) && formControl['tppId'].hasError('required')"
+                             class="invalid-feedback">
+                            Tpp ID is required
+                        </div>
+                        <div *ngIf="(formControl['tppId'].touched || submitted) && formControl['tppId'].hasError('email')"
+                             class="invalid-feedback">
+                            Tpp ID  is invalid
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 form-group ">
+                        <label class="control-label" for="email">Email</label>
+                        <input [ngClass]="{ 'is-invalid': (formControl['email'].touched || submitted) && formControl['email'].errors }"
+                               aria-describedby="emailHelp"
+                               autocomplete="off"
+                               class="form-control"
+                               formControlName="email"
+                               id="email"
+                               placeholder="Enter email"
+                               type="email">
+                        <div *ngIf="(formControl['email'].touched || submitted) && formControl['email'].hasError('required')"
+                             class="invalid-feedback">
+                            Email is required
+                        </div>
+                        <div *ngIf="(formControl['email'].touched || submitted) && formControl['email'].hasError('email')"
+                             class="invalid-feedback">
+                            Email is invalid
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

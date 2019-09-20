@@ -22,6 +22,7 @@ import { UserUpdateComponent } from './components/users/user-update/user-update.
 import { UsersComponent } from './components/users/users.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UploadFileComponent } from './uploadFile/uploadFile.component';
+import {UserProfileComponent} from "./components/user-profile/user-profile.component";
 
 const routes: Routes = [
     {
@@ -81,6 +82,10 @@ const routes: Routes = [
             {
                 path: 'generate-test-data',
                 component: TestDataGenerationComponent
+            },
+            {
+                path: 'user-profile',
+                component: UserProfileComponent
             },
             {
                 path: 'settings',
