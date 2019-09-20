@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class AccountReport {
     private AccountDetailsTO details;
-    List<UserAccess> accesses;
+    private List<UserAccess> accesses;
 }
