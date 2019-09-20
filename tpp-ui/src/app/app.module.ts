@@ -43,7 +43,7 @@ import { ConvertBalancePipe } from './pipes/convertBalance.pipe';
 import { AutoLogoutService } from './services/auto-logout.service';
 import { UploadFileComponent } from './uploadFile/uploadFile.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { UserProfileUpdateComponent } from './components/user-profile-update/user-profile-update.component';
+
 
 @NgModule({
     declarations: [
@@ -72,8 +72,7 @@ import { UserProfileUpdateComponent } from './components/user-profile-update/use
         UserUpdateComponent,
         CertificateComponent,
         ConvertBalancePipe,
-        UserProfileComponent,
-        UserProfileUpdateComponent
+        UserProfileComponent
     ],
     imports: [
         BrowserModule,
