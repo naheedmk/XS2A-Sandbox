@@ -13,11 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class DeserializerTest {
-    private static ObjectMapper mapper;
+    private static SimpleModule module = new SimpleModule();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     static {
-        SimpleModule module = new SimpleModule();
-        mapper = new ObjectMapper();
         module.addDeserializer(CmsPayment.class, new CmsPaymentDeserializer(mapper))
             .addDeserializer(CmsSinglePayment.class, new CmsSinglePaymentDeserializer(mapper));
         mapper.registerModule(module)

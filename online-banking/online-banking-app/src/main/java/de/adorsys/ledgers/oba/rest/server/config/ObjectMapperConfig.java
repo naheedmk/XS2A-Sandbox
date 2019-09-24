@@ -1,24 +1,22 @@
 package de.adorsys.ledgers.oba.rest.server.config;
 
-import javax.annotation.PostConstruct;
-
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.adorsys.ledgers.oba.rest.server.mapper.CmsSinglePaymentDeserializer;
-import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.adorsys.ledgers.oba.rest.server.mapper.CmsPaymentDeserializer;
+import de.adorsys.ledgers.oba.rest.server.mapper.CmsSinglePaymentDeserializer;
 import de.adorsys.psd2.consent.api.pis.CmsPayment;
+import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 
 @Configuration
+@RequiredArgsConstructor
 public class ObjectMapperConfig {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @PostConstruct
     public void postConstruct() {

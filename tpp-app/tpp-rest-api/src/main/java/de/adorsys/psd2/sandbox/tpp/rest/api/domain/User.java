@@ -13,5 +13,5 @@ public class User {
     private String pin;
     private List<ScaUserData> scaUserData = new ArrayList<>();
     private List<UserRole> userRoles = new ArrayList<>();
-    private List<AccountAccess> accountAccesses = new ArrayList();
+    private List<AccountAccess> accountAccesses = new ArrayList<>();
 }
