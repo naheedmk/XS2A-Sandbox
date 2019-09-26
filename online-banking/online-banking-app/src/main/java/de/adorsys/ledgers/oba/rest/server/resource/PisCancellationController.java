@@ -7,6 +7,8 @@ import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
 import de.adorsys.ledgers.middleware.client.rest.PaymentRestClient;
 import de.adorsys.ledgers.oba.rest.api.domain.PaymentAuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.PaymentWorkflow;
+import de.adorsys.ledgers.oba.rest.api.exception.AuthErrorCode;
+import de.adorsys.ledgers.oba.rest.api.exception.AuthorizationException;
 import de.adorsys.ledgers.oba.rest.api.exception.PaymentAuthorizeException;
 import de.adorsys.ledgers.oba.rest.api.resource.PisCancellationApi;
 import de.adorsys.ledgers.oba.rest.server.service.CommonPaymentService;
@@ -14,10 +16,12 @@ import feign.FeignException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.HttpStatus.valueOf;
 
 //TODO refactor and write tests https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/issues/33
 @RestController(PisCancellationController.BASE_PATH)
@@ -40,7 +44,12 @@ public class PisCancellationController extends AbstractXISController implements 
         String consentCookieString) throws PaymentAuthorizeException {
 
         PaymentWorkflow cancellationWorkflow = paymentService.identifyPayment(encryptedPaymentId, authorisationId, false, consentCookieString, login, response, null);
-
+        if (cancellationWorkflow.getPaymentStatus().equals("RECEIVED")) {
+            throw AuthorizationException.builder()
+                      .devMessage(String.format("Cancellation of Payment id: %s is not possible thought OnlineBanking as it's status is RECEIVED, cancellation of this payment is only possible though EMBEDDED route", encryptedPaymentId))
+                      .errorCode(AuthErrorCode.LOGIN_FAILED)
+                      .build();
+        }
         // Authorize
         boolean success = paymentService.loginForPaymentOperation(login, pin, cancellationWorkflow, OpTypeTO.CANCEL_PAYMENT);
 
@@ -62,7 +71,7 @@ public class PisCancellationController extends AbstractXISController implements 
             return paymentService.resolvePaymentWorkflow(cancellationWorkflow, response);
         } else {
             responseUtils.removeCookies(response);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(UNAUTHORIZED).build();
         }
     }
 
@@ -110,7 +119,7 @@ public class PisCancellationController extends AbstractXISController implements 
             SCAPaymentResponseTO paymentResponseTO = paymentRestClient.initiatePmtCancellation(paymentWorkflow.paymentId()).getBody();
             paymentService.processPaymentResponse(paymentWorkflow, paymentResponseTO);
         } catch (FeignException f) {
-            paymentWorkflow.setErrorCode(HttpStatus.valueOf(f.status()));
+            paymentWorkflow.setErrorCode(valueOf(f.status()));
             throw f;
         } finally {
             authInterceptor.setAccessToken(null);
