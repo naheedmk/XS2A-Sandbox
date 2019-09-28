@@ -1,7 +1,11 @@
 /* tslint:disable */
 import { AccountReferenceTO } from './account-reference-to';
 import { SinglePaymentTO } from './single-payment-to';
+import {AmountTO} from "./amount-to";
 export interface BulkPaymentTO {
+  creditorAccount?: AccountReferenceTO;
+  creditorName?: string;
+  instructedAmount?: AmountTO;
   batchBookingPreferred?: boolean;
   debtorAccount?: AccountReferenceTO;
   paymentId?: string;
