@@ -42,7 +42,7 @@ public class PisCancellationController extends AbstractXISController implements 
         String consentCookieString) throws PaymentAuthorizeException {
 
         PaymentWorkflow cancellationWorkflow = paymentService.identifyPayment(encryptedPaymentId, authorisationId, false, consentCookieString, login, response, null);
-        if (cancellationWorkflow.getPaymentStatus().equals("RCVD")) {
+        if (cancellationWorkflow.getPaymentStatus().equals(TransactionStatusTO.RCVD.name())) {
             throw AuthorizationException.builder()
                       .devMessage(String.format("Cancellation of Payment id: %s is not possible thought OnlineBanking as it's status is RECEIVED, cancellation of this payment is only possible though EMBEDDED route", encryptedPaymentId))
                       .errorCode(AuthErrorCode.LOGIN_FAILED)
@@ -55,12 +55,12 @@ public class PisCancellationController extends AbstractXISController implements 
             responseUtils.removeCookies(response);
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
-        String psuId = AuthUtils.psuId(cancellationWorkflow.bearerToken());
         initiateCancelPayment(cancellationWorkflow);
         if (cancellationWorkflow.singleScaMethod()) {
             ScaUserDataTO scaUserDataTO = cancellationWorkflow.scaMethods().iterator().next();
             paymentService.selectMethodAndUpdateWorkflow(scaUserDataTO.getId(), cancellationWorkflow, true);
         }
+        String psuId = AuthUtils.psuId(cancellationWorkflow.bearerToken());
         paymentService.updateScaStatusPaymentStatusConsentData(psuId, cancellationWorkflow, response);
         return paymentService.resolvePaymentWorkflow(cancellationWorkflow, response);
     }
