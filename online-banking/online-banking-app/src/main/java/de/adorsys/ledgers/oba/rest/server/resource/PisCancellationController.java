@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.HttpStatus.valueOf;
 
-//TODO refactor and write tests https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/issues/33
 @RestController(PisCancellationController.BASE_PATH)
 @RequestMapping(PisCancellationController.BASE_PATH)
 @Api(value = PisCancellationController.BASE_PATH, tags = "PSU PIS Cancellation", description = "Provides access to online banking payment functionality")
@@ -33,7 +32,6 @@ public class PisCancellationController extends AbstractXISController implements 
     @Autowired
     private CommonPaymentService paymentService;
 
-    @SuppressWarnings("PMD.CyclomaticComplexity")
     @Override
     @ApiOperation(value = "Identifies the user by login an pin. Return sca methods information")
     public ResponseEntity<PaymentAuthorizeResponse> login(
@@ -44,7 +42,7 @@ public class PisCancellationController extends AbstractXISController implements 
         String consentCookieString) throws PaymentAuthorizeException {
 
         PaymentWorkflow cancellationWorkflow = paymentService.identifyPayment(encryptedPaymentId, authorisationId, false, consentCookieString, login, response, null);
-        if (cancellationWorkflow.getPaymentStatus().equals("RECEIVED")) {
+        if (cancellationWorkflow.getPaymentStatus().equals("RCVD")) {
             throw AuthorizationException.builder()
                       .devMessage(String.format("Cancellation of Payment id: %s is not possible thought OnlineBanking as it's status is RECEIVED, cancellation of this payment is only possible though EMBEDDED route", encryptedPaymentId))
                       .errorCode(AuthErrorCode.LOGIN_FAILED)
@@ -53,26 +51,18 @@ public class PisCancellationController extends AbstractXISController implements 
         // Authorize
         boolean success = paymentService.loginForPaymentOperation(login, pin, cancellationWorkflow, OpTypeTO.CANCEL_PAYMENT);
 
-        if (success) {
-            String psuId = AuthUtils.psuId(cancellationWorkflow.bearerToken());
-            try {
-                paymentService.updateAuthorisationStatus(cancellationWorkflow, psuId, response);
-                initiateCancelPayment(cancellationWorkflow);
-
-                if (cancellationWorkflow.singleScaMethod()) {
-                    ScaUserDataTO scaUserDataTO = cancellationWorkflow.scaMethods().iterator().next();
-                    paymentService.selectMethod(scaUserDataTO.getId(), cancellationWorkflow, true);
-                }
-
-                paymentService.updateScaStatusPaymentStatusConsentData(psuId, cancellationWorkflow, response);
-            } catch (PaymentAuthorizeException e) {
-                return e.getError();
-            }
-            return paymentService.resolvePaymentWorkflow(cancellationWorkflow, response);
-        } else {
+        if (!success) {
             responseUtils.removeCookies(response);
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
+        String psuId = AuthUtils.psuId(cancellationWorkflow.bearerToken());
+        initiateCancelPayment(cancellationWorkflow);
+        if (cancellationWorkflow.singleScaMethod()) {
+            ScaUserDataTO scaUserDataTO = cancellationWorkflow.scaMethods().iterator().next();
+            paymentService.selectMethodAndUpdateWorkflow(scaUserDataTO.getId(), cancellationWorkflow, true);
+        }
+        paymentService.updateScaStatusPaymentStatusConsentData(psuId, cancellationWorkflow, response);
+        return paymentService.resolvePaymentWorkflow(cancellationWorkflow, response);
     }
 
     @Override
