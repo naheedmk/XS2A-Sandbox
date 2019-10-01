@@ -14,6 +14,25 @@
       <b><p>{{authResponse.singlePayment.instructedAmount.amount}} {{authResponse.singlePayment.instructedAmount.currency}}</p></b>
       <hr>
     </div>
+      <!--bulk payment-->
+    <div *ngIf="authResponse.bulkPayment">
+       <h4>Debtor account</h4>
+        <b><p>{{authResponse.bulkPayment.debtorAccount.iban}}</p></b>
+        <hr>
+        <div *ngFor="let payment of authResponse.bulkPayment.payments; last as isLast">
+            <h4>Creditor account</h4>
+              <b><p>{{payment.creditorAccount.iban}}</p></b>
+              <hr>
+
+              <h4>Creditor name</h4>
+              <b><p>{{payment.creditorName}}</p></b>
+              <hr>
+
+              <h4>Payment amount</h4>
+              <b><p>{{payment.instructedAmount.amount}} {{payment.instructedAmount.currency}}</p></b>
+              <hr>
+        </div>
+    </div>
 
     <!--periodic payment-->
     <div *ngIf="authResponse.periodicPayment">
