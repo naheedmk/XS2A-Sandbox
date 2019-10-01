@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { AccountReferenceTO } from './account-reference-to';
 import { SinglePaymentTO } from './single-payment-to';
-import {AmountTO} from "./amount-to";
+
 export interface BulkPaymentTO {
   batchBookingPreferred?: boolean;
   debtorAccount?: AccountReferenceTO;
