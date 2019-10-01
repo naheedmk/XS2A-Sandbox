@@ -21,7 +21,7 @@
 
     <!--bulk payment-->
     <div *ngIf="authResponse.bulkPayment">
-      <h4>DebtorAccount</h4>
+      <h4>Debtor account</h4>
       <b><p>{{authResponse.bulkPayment.debtorAccount.iban}}</p></b>
       <hr>
       <div *ngFor="let payment of authResponse.bulkPayment.payments; last as isLast">
