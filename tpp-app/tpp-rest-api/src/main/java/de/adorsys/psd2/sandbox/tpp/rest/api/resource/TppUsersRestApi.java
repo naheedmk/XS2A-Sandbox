@@ -6,7 +6,6 @@ import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public interface TppUsersRestApi {
         notes = "Endpoint to lists users for a given TPP",
         authorizations = @Authorization(value = "apiKey"))
     @GetMapping
-    ResponseEntity<CustomPageImpl<UserTO>> getAllUsers(Pageable pageable);
+    ResponseEntity<CustomPageImpl<UserTO>> getAllUsers(@RequestParam int page, @RequestParam int size);
 
     @ApiOperation(value = "Update user for a given TPP",
         notes = "Endpoint to update a user for a given TPP",

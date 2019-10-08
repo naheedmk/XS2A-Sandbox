@@ -10,7 +10,6 @@ import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +34,8 @@ public class TppUsersController implements TppUsersRestApi {
     }
 
     @Override
-    public ResponseEntity<CustomPageImpl<UserTO>> getAllUsers(Pageable pageable) {
-        return ResponseEntity.ok(userMgmtStaffRestClient.getBranchUsersByRoles(singletonList(CUSTOMER), pageable.getPageNumber(), pageable.getPageSize()).getBody());
+    public ResponseEntity<CustomPageImpl<UserTO>> getAllUsers(int page, int size) {
+        return ResponseEntity.ok(userMgmtStaffRestClient.getBranchUsersByRoles(singletonList(CUSTOMER), page, size).getBody());
     }
 
     // TODO resolve 'branch' on Ledgers side
