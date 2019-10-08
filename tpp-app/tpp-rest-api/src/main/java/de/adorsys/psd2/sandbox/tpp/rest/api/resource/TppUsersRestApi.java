@@ -1,14 +1,14 @@
 package de.adorsys.psd2.sandbox.tpp.rest.api.resource;
 
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
+import de.adorsys.ledgers.middleware.rest.utils.CustomPageImpl;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Api(tags = "TPP Users management")
 public interface TppUsersRestApi {
@@ -24,7 +24,7 @@ public interface TppUsersRestApi {
         notes = "Endpoint to lists users for a given TPP",
         authorizations = @Authorization(value = "apiKey"))
     @GetMapping
-    ResponseEntity<List<UserTO>> getAllUsers();
+    ResponseEntity<CustomPageImpl<UserTO>> getAllUsers(Pageable pageable);
 
     @ApiOperation(value = "Update user for a given TPP",
         notes = "Endpoint to update a user for a given TPP",

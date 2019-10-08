@@ -52,6 +52,11 @@
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.adorsys.ledgers</groupId>
+            <artifactId>ledgers-middleware-rest-api</artifactId>
+            <version>${ledgers.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
