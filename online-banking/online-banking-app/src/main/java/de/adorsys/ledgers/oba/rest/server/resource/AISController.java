@@ -13,6 +13,7 @@ import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
 import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
 import de.adorsys.ledgers.oba.rest.api.domain.*;
+import de.adorsys.ledgers.oba.rest.api.exception.AuthorizationException;
 import de.adorsys.ledgers.oba.rest.api.exception.ConsentAuthorizeException;
 import de.adorsys.ledgers.oba.rest.api.resource.AISApi;
 import de.adorsys.ledgers.oba.rest.server.auth.TokenAuthenticationService;
@@ -48,6 +49,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.*;
+import static de.adorsys.ledgers.oba.rest.api.exception.AuthErrorCode.LOGIN_FAILED;
 import static org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient.DEFAULT_SERVICE_INSTANCE_ID;
 
 @Slf4j
@@ -109,8 +111,13 @@ public class AISController extends AbstractXISController implements AISApi {
         String token = tokenAuthenticationService.readAccessTokenCookie(request);
         if (StringUtils.isNotBlank(token) && userMgmtRestClient.validate(token).getStatusCodeValue() == 200) {
             success = true;
-            //TODO empty token cookie
         } else {
+            if (StringUtils.isBlank(login) || StringUtils.isBlank(pin)) {
+                throw AuthorizationException.builder()
+                          .errorCode(LOGIN_FAILED)
+                          .devMessage("Login or pin is missing.")
+                          .build();
+            }
             ResponseEntity<SCALoginResponseTO> authoriseForConsent = userMgmtRestClient.authoriseForConsent(login, pin, workflow.consentId(), workflow.authId(), OpTypeTO.CONSENT);
             storeSCAResponseIntoWorkflow(workflow, authoriseForConsent.getBody());
             success = AuthUtils.success(authoriseForConsent);
