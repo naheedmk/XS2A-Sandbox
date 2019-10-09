@@ -20,10 +20,6 @@
                 *ngIf="!customizeService.isCustom()">adorsys </span>Online banking</h2>
               <div class="font-weight-light my-4 text-muted">Please log in with your bank account username.</div>
 
-              <div *ngIf="errorMessage" class="alert alert-danger">
-                {{ errorMessage }}
-              </div>
-
               <div class="form-group">
                 <label for="login" class="text-muted">Your login:</label><br>
                 <input type="text"
@@ -51,22 +47,6 @@
                 <div class="invalid-feedback"
                      *ngIf="authorizeForm.controls['pin'].touched && authorizeForm.controls['pin'].hasError('required')">
                   Pin is
-                  required
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="redirectUri" class="text-muted">Redirect Uri:</label><br>
-                <input type="text"
-                       id="redirectUri"
-                       name="redirectUri"
-                       formControlName="redirectUri"
-                       placeholder="Enter redirect Uri"
-                       [ngClass]="{ 'is-invalid': authorizeForm.controls['redirectUri'].touched && authorizeForm.controls['redirectUri'].errors }"
-                       class="form-control">
-                <div class="invalid-feedback"
-                     *ngIf="authorizeForm.controls['redirectUri'].touched && authorizeForm.controls['redirectUri'].hasError('required')">
-                  Redirect Uri is
                   required
                 </div>
               </div>
