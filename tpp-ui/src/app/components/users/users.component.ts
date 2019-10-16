@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
+import {User} from '../../models/user.model';
+import {UserService} from '../../services/user.service';
 import {FilterPipe} from "ngx-filter-pipe";
 
 @Component({
@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   filteredUsers: User[];
   allUsers: User[];
   userFilter: any = {login: ''};
-  config: {itemsPerPage, currentPage, totalItems, maxSize} = {
+  config: { itemsPerPage, currentPage, totalItems, maxSize } = {
     itemsPerPage: 10,
     currentPage: 1,
     totalItems: 0,
@@ -28,15 +28,14 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listUsers(this.config.currentPage, this.config.itemsPerPage);
+    // this.listUsers(this.config.currentPage, this.config.itemsPerPage);
+    this.getAllUsers();
   }
 
   listUsers(page: number, size: number) {
     this.userService.listUsers(page - 1, size).subscribe(response => {
       this.users = response.users;
       this.config.totalItems = response.totalElements;
-
-      this.getAllUsers();
     });
   }
 
@@ -50,18 +49,28 @@ export class UsersComponent implements OnInit {
     } else {
       let startIndex = (this.config.currentPage - 1) * this.config.itemsPerPage;
       let endIndex = startIndex + this.config.itemsPerPage;
+      this.filteredUsers = result;
       this.users = result.slice(startIndex, endIndex);
     }
+
   }
 
   pageChange(pageNumber: number) {
     this.config.currentPage = pageNumber;
-
+    let startIndex = (this.config.currentPage - 1) * this.config.itemsPerPage;
+    let endIndex = startIndex + this.config.itemsPerPage;
+    this.users = this.filteredUsers.slice(startIndex, endIndex);
   }
 
   private getAllUsers() {
-    this.userService.listUsers(0, this.config.totalItems).subscribe(response => {
+    this.userService.listUsers(0, 1000).subscribe(response => {
       this.allUsers = response.users;
+      this.config.totalItems = response.totalElements;
+
+      let startIndex = (this.config.currentPage - 1) * this.config.itemsPerPage;
+      let endIndex = startIndex + this.config.itemsPerPage;
+      this.filteredUsers = this.allUsers;
+      this.users = this.users = this.filteredUsers.slice(startIndex, endIndex);
       console.log(this.allUsers);
     });
   }
