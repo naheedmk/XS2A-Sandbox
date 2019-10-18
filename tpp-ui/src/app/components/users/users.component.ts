@@ -4,6 +4,7 @@ import { debounceTime } from 'rxjs/operators';
 
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -55,4 +56,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  public changePageSize(num: number): void {
+    this.config.itemsPerPage = this.config.itemsPerPage + num;
+  }
 }

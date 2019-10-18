@@ -28,7 +28,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <div *ngIf="config && users && users.length > 0" class="d-flex justify-content-between p-2">
+                <div *ngIf="config && users && users.length > 0; let i=index"  class="d-flex justify-content-between p-2">
                     <ngb-pagination [collectionSize]="config.totalItems" [(page)]="config.currentPage" [boundaryLinks]="true" [pageSize]="config.itemsPerPage"
                                     [maxSize]="config.maxSize" [rotate]="true" (pageChange)="pageChange($event)"></ngb-pagination>
 
@@ -83,16 +83,22 @@
                 </table>
                 <div *ngIf="config && users && users.length > 0" class="d-flex justify-content-between p-2">
                     <ngb-pagination [collectionSize]="config.totalItems" [(page)]="config.currentPage" [pageSize]="config.itemsPerPage"
-                                    (pageChange)="pageChange($event)"></ngb-pagination>
+                                    [maxSize]="config.maxSize" [rotate]="true"  (pageChange)="pageChange($event)"></ngb-pagination>
 
+<<<<<<< HEAD
                     <select class="custom-select" id="value" style="width:auto" formControlName="itemsPerPage">
                         <option [ngValue]="10">10</option>
+=======
+                    <div *ngIf="config.totalItems > config.itemsPerPage">
+                    <select class="form-control-sm" id="value" style="width:auto" [(ngModel)]="config.itemsPerPage">
+>>>>>>> refactor select form
                         <option [ngValue]="20">20</option>
                         <option [ngValue]="40">40</option>
                         <option [ngValue]="50">50</option>
                         <option [ngValue]="60">60</option>
                         <option [ngValue]="100">100</option>
                     </select>
+                    </div>
                 </div>
            </div>
         </div>
