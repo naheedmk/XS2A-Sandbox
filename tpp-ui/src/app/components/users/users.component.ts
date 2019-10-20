@@ -26,15 +26,21 @@ export class UsersComponent implements OnInit {
     this.listUsers(this.config.currentPage, this.config.itemsPerPage);
   }
 
-  listUsers(page: number, size: number) {
-    this.userService.listUsers(page - 1, size).subscribe(response => {
+  listUsers(page: number, size: number, queryParam: string = '') {
+    this.userService.listUsers(page - 1, size, queryParam).subscribe(response => {
       this.users = response.users;
       this.config.totalItems = response.totalElements;
+      console.log(response);
     });
   }
 
   pageChange(pageNumber: number) {
     this.config.currentPage = pageNumber;
     this.listUsers(pageNumber, this.config.itemsPerPage);
+  }
+
+  queryUsers(queryParam) {
+    console.log(queryParam);
+    this.listUsers(this.config.currentPage, this.config.itemsPerPage, queryParam);
   }
 }
