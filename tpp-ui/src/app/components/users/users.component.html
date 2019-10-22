@@ -8,7 +8,12 @@
                         <span class="form-control-feedback">
                             <img src="./assets/icons/search.svg">
                         </span>
-                        <input class="form-control w-100" placeholder="Search by login" type="text" (ngModelChange)="queryUsers($event)" [(ngModel)]="userFilter.login">
+                      <form [formGroup]="searchForm">
+                        <input class="form-control w-100"
+                               placeholder="Search by login"
+                               formControlName="query"
+                               type="text">
+                      </form>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">

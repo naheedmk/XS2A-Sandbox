@@ -17,7 +17,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   listUsers(page: number = 0, size: number = 25, queryParam: string = ''): Observable<{users: User[], totalElements: number}> {
-    console.log(queryParam);
     return this.http.get<PaginationResponse<User[]>>( `${this.url}/users?page=${page}&size=${size}&queryParam=${queryParam}`).pipe(
         map((resp) => {
           return {
