@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { debounce } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
   }
 
   onQueryUsers() {
-    this.searchForm.valueChanges.pipe(debounce(750)).subscribe(form => {
+    this.searchForm.valueChanges.pipe(debounceTime(750)).subscribe(form => {
       this.listUsers(this.config.currentPage, this.config.itemsPerPage, form.query);
     });
   }
