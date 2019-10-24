@@ -85,13 +85,8 @@
                     <ngb-pagination [collectionSize]="config.totalItems" [(page)]="config.currentPage" [pageSize]="config.itemsPerPage"
                                     [maxSize]="config.maxSize" [rotate]="true"  (pageChange)="pageChange($event)"></ngb-pagination>
 
-<<<<<<< HEAD
                     <select class="custom-select" id="value" style="width:auto" formControlName="itemsPerPage">
                         <option [ngValue]="10">10</option>
-=======
-                    <div *ngIf="config.totalItems > config.itemsPerPage">
-                    <select class="form-control-sm" id="value" style="width:auto" [(ngModel)]="config.itemsPerPage">
->>>>>>> refactor select form
                         <option [ngValue]="20">20</option>
                         <option [ngValue]="40">40</option>
                         <option [ngValue]="50">50</option>
