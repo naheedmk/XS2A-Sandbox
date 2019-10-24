@@ -28,10 +28,11 @@ export class AccountListComponent implements OnInit, OnDestroy {
     }
 
     getAccounts(page: number, size: number): void {
+       this.subscription.add(
        this.accountService.getAccounts(page -1, size).subscribe(response => {
            this.accounts = response.accounts;
            this.config.totalItems = response.totalElements;
-       });
+       }));
     }
 
     goToDepositCash(account: Account) {
