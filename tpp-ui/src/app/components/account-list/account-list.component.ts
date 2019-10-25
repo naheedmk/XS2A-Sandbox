@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./account-list.component.scss']
 })
 export class AccountListComponent implements OnInit, OnDestroy {
-  accounts: Account[];
+  accounts: Account[] = [];
   subscription = new Subscription();
   searchForm: FormGroup;
   config: { itemsPerPage, currentPage, totalItems, maxSize } = {
@@ -25,13 +25,10 @@ export class AccountListComponent implements OnInit, OnDestroy {
 
   constructor(private accountService: AccountService,
               private formBuilder: FormBuilder,
-              public router: Router) {
-    this.accounts = [];
-  }
+              public router: Router) {}
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
-      query: ['', Validators.required],
       itemsPerPage: [this.config.itemsPerPage, Validators.required]
     });
     this.getAccounts(this.config.currentPage, this.config.itemsPerPage);
@@ -39,8 +36,8 @@ export class AccountListComponent implements OnInit, OnDestroy {
     this.onQueryAccounts();
   }
 
-  getAccounts(page: number, size: number, queryParam: string = ''){
-    this.accountService.getAccounts(page - 1, size, queryParam).subscribe(response => {
+  getAccounts(page: number, size: number) {
+    this.accountService.getAccounts(page - 1, size).subscribe(response => {
       this.accounts = response.accounts;
       this.config.totalItems = response.totalElements;
     });
@@ -52,12 +49,12 @@ export class AccountListComponent implements OnInit, OnDestroy {
   }
 
   isAccountEnabled(account: Account): boolean {
-    return (account.accountStatus !== "DELETED");
+    return (account.accountStatus !== 'DELETED');
   }
 
   pageChange(pageNumber: number) {
     this.config.currentPage = pageNumber;
-    this.getAccounts(pageNumber, this.config.itemsPerPage, this.searchForm.get('query').value);
+    this.getAccounts(pageNumber, this.config.itemsPerPage);
   }
 
   ngOnDestroy(): void {
@@ -72,7 +69,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
         debounceTime(750)
     ).subscribe(form => {
       this.config.itemsPerPage = form.itemsPerPage;
-      this.getAccounts(1, this.config.itemsPerPage, form.query);
+      this.getAccounts(1, this.config.itemsPerPage);
     });
   }
 }
