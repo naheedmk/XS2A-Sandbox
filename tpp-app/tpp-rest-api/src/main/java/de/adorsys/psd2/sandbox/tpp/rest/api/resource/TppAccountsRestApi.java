@@ -18,6 +18,7 @@ import java.util.List;
 public interface TppAccountsRestApi {
 
     String BASE_PATH = "/tpp/accounts";
+    String IBAN_QUERY_PARAM = "iban";
 
     @ApiOperation(value = "Create account for a given user",
         notes = "Endpoint to a deposit account for a user with given ID",
@@ -58,6 +59,18 @@ public interface TppAccountsRestApi {
     })
     @GetMapping("/page")
     ResponseEntity<CustomPageImpl<AccountDetailsTO>> getAllAccounts(@RequestParam(required = false, defaultValue = "0") int page, @RequestParam(required = false, defaultValue = "25") int size);
+
+    /**
+     * @param iban : the iban
+     * @return : account details
+     * @deprecated: user request param instead
+     */
+    @GetMapping(path = "/details", params = {IBAN_QUERY_PARAM})
+    @ApiOperation(value = "Load Account Details By IBAN", authorizations = @Authorization(value = "apiKey"), notes = "Returns account details information given the account IBAN")
+    ResponseEntity<AccountDetailsTO> getAccountDetailsByIban(
+        @ApiParam(value = "The IBAN of the requested account: e.g.: DE69760700240340283600")
+        @RequestParam(name = IBAN_QUERY_PARAM) String iban);
+
 
     /**
      * Returns a single account by its ID if it belong to the same branch as STAFF user.
