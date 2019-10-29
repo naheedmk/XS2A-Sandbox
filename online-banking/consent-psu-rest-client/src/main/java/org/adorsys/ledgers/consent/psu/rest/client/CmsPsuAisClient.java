@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(value = "cmsPsuAis", url = "${cms.url}", path = "/psu-api/v1/ais/consent", primary = false, configuration = FeignConfig.class)
-@RequestMapping(path = "psu-api/v1/ais/consent")
 @Api(value = "psu-api/v1/ais/consent", tags = {"PSU AIS Consents"})
 public interface CmsPsuAisClient {
     String DEFAULT_SERVICE_INSTANCE_ID = "UNDEFINED";
