@@ -24,6 +24,7 @@ import de.adorsys.psd2.consent.api.ais.AisAccountAccess;
 import de.adorsys.psd2.consent.api.ais.CmsAisConsentResponse;
 import de.adorsys.psd2.consent.psu.api.ais.CmsAisConsentAccessRequest;
 import de.adorsys.psd2.xs2a.core.psu.PsuIdData;
+import de.adorsys.psd2.xs2a.core.sca.AuthenticationDataHolder;
 import feign.FeignException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -191,7 +192,7 @@ public class AISController extends AbstractXISController implements AISApi {
 
             authInterceptor.setAccessToken(workflow.bearerToken().getAccess_token());
 
-            SCAConsentResponseTO scaConsentResponse = consentRestClient.authorizeConsent(workflow.consentId(),authorisationId, authCode).getBody();
+            SCAConsentResponseTO scaConsentResponse = consentRestClient.authorizeConsent(workflow.consentId(), authorisationId, authCode).getBody();
 
             storeSCAResponseIntoWorkflow(workflow, scaConsentResponse);
             cmsPsuAisClient.confirmConsent(workflow.consentId(), psuId, null, null, null, DEFAULT_SERVICE_INSTANCE_ID);
@@ -353,7 +354,7 @@ public class AISController extends AbstractXISController implements AISApi {
     private boolean failAuthorisation(String consentId, String psuId, String authorisationId) {
         ResponseEntity<Boolean> updateAuthorisationStatusResponse = cmsPsuAisClient.updateAuthorisationStatus(consentId,
             "FAILED", authorisationId, psuId, null, null, null,
-            DEFAULT_SERVICE_INSTANCE_ID);
+            DEFAULT_SERVICE_INSTANCE_ID, new AuthenticationDataHolder(null, null));
 
         return updateAuthorisationStatusResponse.getStatusCode() == HttpStatus.OK;
     }
@@ -432,7 +433,7 @@ public class AISController extends AbstractXISController implements AISApi {
     private void scaStatus(ConsentWorkflow workflow, String psuId, HttpServletResponse response) throws ConsentAuthorizeException {
         String status = workflow.getAuthResponse().getScaStatus().name();
         ResponseEntity<Boolean> resp = cmsPsuAisClient.updateAuthorisationStatus(workflow.consentId(), status,
-            workflow.authId(), psuId, null, null, null, DEFAULT_SERVICE_INSTANCE_ID);
+            workflow.authId(), psuId, null, null, null, DEFAULT_SERVICE_INSTANCE_ID, new AuthenticationDataHolder(null, null));
         if (!HttpStatus.OK.equals(resp.getStatusCode())) {
             throw new ConsentAuthorizeException(responseUtils.couldNotProcessRequest(authResp(),
                 "Error updating authorisation status. See error code.", resp.getStatusCode(), response));
@@ -458,7 +459,7 @@ public class AISController extends AbstractXISController implements AISApi {
             // Map the requested access and push it to the consent management system.
             AisAccountAccess accountAccess = consentMapper.accountAccess(aisConsent.getAccess(), listOfAccounts);
             CmsAisConsentAccessRequest accountAccessRequest = new CmsAisConsentAccessRequest(accountAccess, aisConsent.getValidUntil(), aisConsent.getFrequencyPerDay(), false, aisConsent.isRecurringIndicator());
-            cmsPsuAisClient.putAccountAccessInConsent(workflow.consentId(), accountAccessRequest);
+            cmsPsuAisClient.putAccountAccessInConsent(workflow.consentId(), accountAccessRequest, DEFAULT_SERVICE_INSTANCE_ID);
 
             // Prepare consent object for ledger
             AisConsentTO consent = consentMapper.toTo(workflow.getConsentResponse().getAccountConsent());
@@ -539,7 +540,7 @@ public class AISController extends AbstractXISController implements AISApi {
         String psuCorporateIdType = null;
         String redirectId = consentReference.getRedirectId();
         // 4. After user login:
-        ResponseEntity<CmsAisConsentResponse> responseEntity = cmsPsuAisClient.getConsentByRedirectId(psuId, psuIdType, psuCorporateId, psuCorporateIdType, redirectId, DEFAULT_SERVICE_INSTANCE_ID);
+        ResponseEntity<CmsAisConsentResponse> responseEntity = cmsPsuAisClient.getConsentIdByRedirectId(redirectId, DEFAULT_SERVICE_INSTANCE_ID);
         HttpStatus statusCode = responseEntity.getStatusCode();
 
         if (HttpStatus.OK.equals(statusCode)) {
