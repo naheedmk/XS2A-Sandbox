@@ -104,7 +104,7 @@ public interface CmsPsuPisClient {
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 400, message = "Bad request"),
         @ApiResponse(code = 408, message = "Request Timeout", response = CmsPaymentResponse.class)})
-    public ResponseEntity updateAuthorisationStatus(
+    ResponseEntity updateAuthorisationStatus(
         @ApiParam(value = "Client ID of the PSU in the ASPSP client interface. Might be mandated in the ASPSP's documentation. Is not contained if an OAuth2 based authentication was performed in a pre-step or an OAuth2 based SCA was performed in an preceding AIS service in the same session. ")
         @RequestHeader(value = "psu-id", required = false) String psuId,
         @ApiParam(value = "Type of the PSU-ID, needed in scenarios where PSUs have several PSU-IDs as access possibility. ")

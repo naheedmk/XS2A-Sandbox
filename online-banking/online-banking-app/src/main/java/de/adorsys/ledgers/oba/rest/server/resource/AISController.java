@@ -102,7 +102,7 @@ public class AISController extends AbstractXISController implements AISApi {
 
         ConsentWorkflow workflow;
         try {
-            workflow = identifyConsent(encryptedConsentId, authorisationId, false, consentCookieString, login, response, null);
+            workflow = identifyConsent(encryptedConsentId, authorisationId, false, consentCookieString, response, null);
         } catch (ConsentAuthorizeException e) {
             return e.getError();
         }
@@ -160,7 +160,7 @@ public class AISController extends AbstractXISController implements AISApi {
         ConsentWorkflow workflow;
         List<AccountDetailsTO> listOfAccounts;
         try {
-            workflow = identifyConsent(encryptedConsentId, authorisationId, false, consentAndaccessTokenCookieString, psuId, response, auth.getBearerToken());
+            workflow = identifyConsent(encryptedConsentId, authorisationId, false, consentAndaccessTokenCookieString, response, auth.getBearerToken());
             listOfAccounts = listOfAccounts(workflow);
             startConsent(workflow, aisConsent, listOfAccounts);
             updateScaStatusConsentStatusConsentData(psuId, workflow);
@@ -188,7 +188,7 @@ public class AISController extends AbstractXISController implements AISApi {
         log.error("Authorized -> authId: {}", authorisationId);
         String psuId = AuthUtils.psuId(auth);
         try {
-            ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndaccessTokenCookieString, psuId, response, auth.getBearerToken());
+            ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndaccessTokenCookieString, response, auth.getBearerToken());
 
             authInterceptor.setAccessToken(workflow.bearerToken().getAccess_token());
 
@@ -219,7 +219,7 @@ public class AISController extends AbstractXISController implements AISApi {
         log.error("Select -> authId: {}", authorisationId);
         String psuId = AuthUtils.psuId(auth);
         try {
-            ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndaccessTokenCookieString, psuId, response, auth.getBearerToken());
+            ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndaccessTokenCookieString, response, auth.getBearerToken());
             selectMethod(scaMethodId, workflow);
 
             updateScaStatusConsentStatusConsentData(psuId, workflow);
@@ -281,8 +281,7 @@ public class AISController extends AbstractXISController implements AISApi {
     @Override
     public ResponseEntity<ConsentAuthorizeResponse> aisDone(String encryptedConsentId, String authorisationId, String consentAndAccessTokenCookieString, Boolean forgetConsent, Boolean backToTpp) throws ConsentAuthorizeException {
         log.error("Done -> authId: {}", authorisationId);
-        String psuId = AuthUtils.psuId(auth);
-        ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndAccessTokenCookieString, psuId, response, auth.getBearerToken());
+        ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndAccessTokenCookieString, response, auth.getBearerToken());
 
         ScaStatusTO scaStatus = workflow.getScaResponse().getScaStatus();
         CmsAisConsentResponse consentResponse = workflow.getConsentResponse();
@@ -299,15 +298,14 @@ public class AISController extends AbstractXISController implements AISApi {
 
     @Override
     public ResponseEntity<ConsentAuthorizeResponse> revokeConsent(@NotNull String encryptedConsentId, @NotNull String authorisationId, String cookieString) {
-        String psuId = AuthUtils.psuId(auth);
         ConsentWorkflow workflow;
-
         try {
-            workflow = getConsentWorkflow(encryptedConsentId, authorisationId, cookieString, psuId);
+            workflow = getConsentWorkflow(encryptedConsentId, authorisationId, cookieString);
         } catch (ConsentAuthorizeException e) {
             return ResponseEntity.badRequest().build();
         }
 
+        String psuId = AuthUtils.psuId(auth);
         if (failAuthorisation(workflow.consentId(), psuId, authorisationId)) {
             return ResponseEntity.ok(buildResponseForSuccessfulConsentRevoke());
         }
@@ -344,8 +342,8 @@ public class AISController extends AbstractXISController implements AISApi {
         return access;
     }
 
-    private ConsentWorkflow getConsentWorkflow(String encryptedConsentId, String authorisationId, String cookieString, String psuId) throws ConsentAuthorizeException {
-        ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, cookieString, psuId, response, auth.getBearerToken());
+    private ConsentWorkflow getConsentWorkflow(String encryptedConsentId, String authorisationId, String cookieString) throws ConsentAuthorizeException {
+        ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, cookieString, response, auth.getBearerToken());
         authInterceptor.setAccessToken(auth.getBearerToken().getAccess_token());
 
         return workflow;
@@ -394,7 +392,7 @@ public class AISController extends AbstractXISController implements AISApi {
      * ToDo: Check if we have to hash consent and authorizationId. CSRF.
      */
     private ConsentWorkflow identifyConsent(String encryptedConsentId, String authorizationId, boolean strict,
-                                            String consentCookieString, String psuId, HttpServletResponse response, BearerTokenTO bearerToken)
+                                            String consentCookieString, HttpServletResponse response, BearerTokenTO bearerToken)
         throws ConsentAuthorizeException {
 
         // Parse and verify the consent cookie.
@@ -406,7 +404,7 @@ public class AISController extends AbstractXISController implements AISApi {
             throw new ConsentAuthorizeException(responseUtils.forbidden(authResp(), e.getMessage(), response));
         }
 
-        CmsAisConsentResponse cmsConsentResponse = loadConsentByRedirectId(psuId, consentReference, response);
+        CmsAisConsentResponse cmsConsentResponse = loadConsentByRedirectId(consentReference, response);
 
         ConsentWorkflow workflow = new ConsentWorkflow(cmsConsentResponse, consentReference);
         AisConsentTO aisConsentTO = consentMapper.toTo(cmsConsentResponse.getAccountConsent());
@@ -533,11 +531,8 @@ public class AISController extends AbstractXISController implements AISApi {
 
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
-    private CmsAisConsentResponse loadConsentByRedirectId(String psuId,
-                                                          ConsentReference consentReference, HttpServletResponse response) throws ConsentAuthorizeException {
-        String psuIdType = null;
-        String psuCorporateId = null;
-        String psuCorporateIdType = null;
+    private CmsAisConsentResponse loadConsentByRedirectId(ConsentReference consentReference, HttpServletResponse response) throws ConsentAuthorizeException {
+
         String redirectId = consentReference.getRedirectId();
         // 4. After user login:
         ResponseEntity<CmsAisConsentResponse> responseEntity = cmsPsuAisClient.getConsentIdByRedirectId(redirectId, DEFAULT_SERVICE_INSTANCE_ID);
