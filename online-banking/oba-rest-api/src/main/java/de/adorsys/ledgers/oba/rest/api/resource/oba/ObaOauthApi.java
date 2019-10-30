@@ -1,9 +1,7 @@
 package de.adorsys.ledgers.oba.rest.api.resource.oba;
 
-import de.adorsys.ledgers.middleware.api.domain.oauth.OauthServerInfoTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -23,7 +21,7 @@ public interface ObaOauthApi {
 
     @GetMapping("/authorization-server")
     @ApiOperation(value = "Server info")
-    ResponseEntity<OauthServerInfoTO> oauthServerInfo(
+    void oauthServerInfo(
         @RequestParam(required = false) String redirectId,
         @RequestParam(required = false) String paymentId,
         @RequestParam(required = false) String consentId,
