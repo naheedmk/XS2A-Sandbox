@@ -24,6 +24,7 @@ import de.adorsys.psd2.consent.api.CmsAspspConsentDataBase64;
 import de.adorsys.psd2.consent.api.ais.AisAccountAccess;
 import de.adorsys.psd2.consent.api.ais.CmsAisConsentResponse;
 import de.adorsys.psd2.consent.psu.api.ais.CmsAisConsentAccessRequest;
+import de.adorsys.psd2.xs2a.core.consent.ConsentStatus;
 import de.adorsys.psd2.xs2a.core.psu.PsuIdData;
 import de.adorsys.psd2.xs2a.core.sca.AuthenticationDataHolder;
 import feign.FeignException;
@@ -52,6 +53,7 @@ import java.util.stream.Collectors;
 
 import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.*;
 import static de.adorsys.ledgers.oba.rest.api.exception.AuthErrorCode.LOGIN_FAILED;
+import static de.adorsys.psd2.xs2a.core.consent.ConsentStatus.VALID;
 import static org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient.DEFAULT_SERVICE_INSTANCE_ID;
 
 @Slf4j
@@ -280,15 +282,15 @@ public class AISController extends AbstractXISController implements AISApi {
     public ResponseEntity<ConsentAuthorizeResponse> aisDone(String encryptedConsentId, String authorisationId, String consentAndAccessTokenCookieString, Boolean forgetConsent, Boolean backToTpp, boolean isOauth2Integrated) throws ConsentAuthorizeException {
         ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndAccessTokenCookieString, response, auth.getBearerToken());
 
-        ScaStatusTO scaStatus = workflow.getScaResponse().getScaStatus();
+        ConsentStatus consentStatus = workflow.getConsentResponse().getAccountConsent().getConsentStatus();
         CmsAisConsentResponse consentResponse = workflow.getConsentResponse();
-
+        authInterceptor.setAccessToken(workflow.getScaResponse().getBearerToken().getAccess_token());
         String tppOkRedirectUri = isOauth2Integrated
                                       ? oauthRestClient.oauthCode(consentResponse.getTppOkRedirectUri()).getBody().getRedirectUri()
                                       : consentResponse.getTppOkRedirectUri();
         String tppNokRedirectUri = consentResponse.getTppNokRedirectUri();
 
-        String redirectURL = FINALISED.equals(scaStatus)
+        String redirectURL = VALID.equals(consentStatus)
                                  ? tppOkRedirectUri
                                  : tppNokRedirectUri;
 

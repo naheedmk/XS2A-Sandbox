@@ -7,6 +7,7 @@ import de.adorsys.ledgers.oba.rest.server.auth.oba.AbstractAuthFilter;
 import de.adorsys.ledgers.oba.rest.server.service.OauthServerLinkResolver;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -20,6 +21,11 @@ public class AuthorizationServerSecurityFilter extends AbstractAuthFilter {
     private final ObjectMapper mapper;
     private final OauthRestClient oauthRestClient;
 
+    @Value("${oba.url:http://localhost:4400}")
+    private String obaFeBaseUri;
+    @Value("${self.url:http://localhost:8090}")
+    private String obaBeBaseUri;
+
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
         String redirectId = request.getParameter("redirectId");
@@ -27,7 +33,7 @@ public class AuthorizationServerSecurityFilter extends AbstractAuthFilter {
         String consentId = request.getParameter("consentId");
         String cancellationId = request.getParameter("cancellationId");
         try {
-            OauthServerInfoTO serverInfo = new OauthServerLinkResolver(oauthRestClient.oauthServerInfo().getBody(), redirectId, paymentId, consentId, cancellationId).resolve();
+            OauthServerInfoTO serverInfo = new OauthServerLinkResolver(oauthRestClient.oauthServerInfo().getBody(), paymentId, consentId, cancellationId, redirectId, obaBeBaseUri, obaFeBaseUri).resolve();
             response.setStatus(HttpServletResponse.SC_OK);
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             response.getWriter().print(mapper.writeValueAsString(serverInfo));
