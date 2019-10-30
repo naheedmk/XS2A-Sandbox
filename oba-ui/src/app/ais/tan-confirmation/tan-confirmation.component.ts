@@ -54,7 +54,6 @@ export class TanConfirmationComponent implements OnInit, OnDestroy {
 
     // fetch oauth param value
     this.shareService.oauthParam.subscribe((oauth2: boolean) => {
-      console.log(oauth2);
       this.oauth2Param = oauth2;
     })
   }
