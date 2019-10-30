@@ -30,7 +30,7 @@ public class OauthWebSecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/oauth/authorise")
+            http.antMatcher("/oauth/**")
                 .authorizeRequests()
                 .antMatchers(APP_WHITELIST).permitAll()
                 .and()
@@ -41,52 +41,7 @@ public class OauthWebSecurityConfig {
             http.headers().frameOptions().disable();
 
             http.addFilterBefore(new OauthCodeSecurityFilter(mapper, oauthRestClient), BasicAuthenticationFilter.class);
-        }
-    }
-
-    @Order(3)
-    @Configuration
-    @RequiredArgsConstructor
-    public static class TokenSecurityConfig extends WebSecurityConfigurerAdapter {
-        private final OauthRestClient oauthRestClient;
-        private final ObjectMapper mapper;
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/oauth/token")
-                .authorizeRequests()
-                .antMatchers(APP_WHITELIST).permitAll()
-                .and()
-                .authorizeRequests().anyRequest()
-                .authenticated();
-
-            http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.headers().frameOptions().disable();
-
             http.addFilterBefore(new OauthTokenSecurityFilter(mapper, oauthRestClient), BasicAuthenticationFilter.class);
-        }
-    }
-
-
-    @Order(4)
-    @Configuration
-    @RequiredArgsConstructor
-    public static class AuthorizationServerSecurityConfig extends WebSecurityConfigurerAdapter {
-        private final OauthRestClient oauthRestClient;
-        private final ObjectMapper mapper;
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/oauth/authorization-server")
-                .authorizeRequests()
-                .antMatchers(APP_WHITELIST).permitAll()
-                .and()
-                .authorizeRequests().anyRequest()
-                .authenticated();
-
-            http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.headers().frameOptions().disable();
-
             http.addFilterBefore(new AuthorizationServerSecurityFilter(mapper, oauthRestClient), BasicAuthenticationFilter.class);
         }
     }
