@@ -24,7 +24,7 @@ export class TanConfirmationComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   private operation: string;
-  private oauthParam: boolean;
+  private oauth2Param: boolean;
 
   constructor(public customizeService: CustomizeService,
               private formBuilder: FormBuilder,
@@ -53,8 +53,9 @@ export class TanConfirmationComponent implements OnInit, OnDestroy {
     });
 
     // fetch oauth param value
-    this.shareService.oauthParam.subscribe((oauth: boolean) => {
-      this.oauthParam = oauth;
+    this.shareService.oauthParam.subscribe((oauth2: boolean) => {
+      console.log(oauth2);
+      this.oauth2Param = oauth2;
     })
   }
 
@@ -80,6 +81,7 @@ export class TanConfirmationComponent implements OnInit, OnDestroy {
           queryParams: {
             encryptedConsentId: this.authResponse.encryptedConsentId,
             authorisationId: this.authResponse.authorisationId,
+            oauth2: this.oauth2Param
           }
         }).then(() => {
           this.authResponse = authResponse;
@@ -93,6 +95,7 @@ export class TanConfirmationComponent implements OnInit, OnDestroy {
             queryParams: {
               encryptedConsentId: this.authResponse.encryptedConsentId,
               authorisationId: this.authResponse.authorisationId,
+              oauth2: this.oauth2Param
             }
           }).then(() => {
             throw error;
