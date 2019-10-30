@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private encryptedConsentId: string;
   private redirectId: string;
+  private oauth: boolean;
 
   private subscriptions: Subscription[] = [];
 
@@ -63,6 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.aisService.aisAuthorise(params).subscribe(authorisationResponse => {
         this.shareService.changeData(authorisationResponse);
+
         this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.GRANT_CONSENT}`]);
       }, (error: HttpErrorResponse) => {
         // if encryptedConsentId or redirectId is missing
@@ -86,6 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParams.subscribe(params => {
       this.encryptedConsentId = params.encryptedConsentId;
       this.redirectId = params.redirectId;
+      this.oauth = params.oauth;
       const aisAuthCodeParams: AisAuthUsingGETParams  = {
         encryptedConsentId: this.encryptedConsentId,
         redirectId: this.redirectId,
@@ -96,6 +99,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.aisService.aisAuthCode(aisAuthCodeParams)
           .subscribe(authCodeResponse => {
               this.shareService.changeData(authCodeResponse.body);
+              this.shareService.setOauthParam(this.oauth);
               if (authCodeResponse.headers.get('Authorization')) {
                 this.aisAuthorise({
                   encryptedConsentId: this.encryptedConsentId,

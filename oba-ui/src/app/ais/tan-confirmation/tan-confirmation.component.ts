@@ -24,6 +24,7 @@ export class TanConfirmationComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   private operation: string;
+  private oauthParam: boolean;
 
   constructor(public customizeService: CustomizeService,
               private formBuilder: FormBuilder,
@@ -50,6 +51,11 @@ export class TanConfirmationComponent implements OnInit, OnDestroy {
         this.shareService.currentData.subscribe(authResponse => this.authResponse = authResponse);
       }
     });
+
+    // fetch oauth param value
+    this.shareService.oauthParam.subscribe((oauth: boolean) => {
+      this.oauthParam = oauth;
+    })
   }
 
   ngOnDestroy() {
