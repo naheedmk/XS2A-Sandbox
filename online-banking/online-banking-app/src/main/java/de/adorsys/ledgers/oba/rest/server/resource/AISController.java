@@ -8,6 +8,7 @@ import de.adorsys.ledgers.middleware.api.domain.um.AisConsentTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.client.rest.AccountRestClient;
 import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
+import de.adorsys.ledgers.middleware.client.rest.OauthRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
@@ -77,6 +78,8 @@ public class AISController extends AbstractXISController implements AISApi {
     private AccountRestClient accountRestClient;
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
+    @Autowired
+    private OauthRestClient oauthRestClient;
 
     @Override
     @ApiOperation(value = "Entry point for authenticating ais consent requests.")
@@ -93,8 +96,6 @@ public class AISController extends AbstractXISController implements AISApi {
     @Override
     @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity", "PMD.ExcessiveMethodLength"})
     public ResponseEntity<ConsentAuthorizeResponse> login(String encryptedConsentId, String authorisationId, String login, String pin, String consentCookieString) {
-        log.error("Login -> authId: {}", authorisationId);
-
         // Verify request parameter against cookie. encryptedConsentId and authorisationId must
         // match value stored in the cookie.
         // The load initiated consent from consent database, and store it in the response.
@@ -156,7 +157,6 @@ public class AISController extends AbstractXISController implements AISApi {
     @Override
     public ResponseEntity<ConsentAuthorizeResponse> startConsentAuth(String encryptedConsentId, String authorisationId, String consentAndaccessTokenCookieString, AisConsentTO aisConsent) {
         String psuId = AuthUtils.psuId(auth);
-        log.error("Start -> authId: {}", authorisationId);
         ConsentWorkflow workflow;
         List<AccountDetailsTO> listOfAccounts;
         try {
@@ -185,7 +185,6 @@ public class AISController extends AbstractXISController implements AISApi {
 
     @Override
     public ResponseEntity<ConsentAuthorizeResponse> authrizedConsent(String encryptedConsentId, String authorisationId, String consentAndaccessTokenCookieString, String authCode) {
-        log.error("Authorized -> authId: {}", authorisationId);
         String psuId = AuthUtils.psuId(auth);
         try {
             ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndaccessTokenCookieString, response, auth.getBearerToken());
@@ -216,7 +215,6 @@ public class AISController extends AbstractXISController implements AISApi {
 
     @Override
     public ResponseEntity<ConsentAuthorizeResponse> selectMethod(String encryptedConsentId, String authorisationId, String scaMethodId, String consentAndaccessTokenCookieString) {
-        log.error("Select -> authId: {}", authorisationId);
         String psuId = AuthUtils.psuId(auth);
         try {
             ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndaccessTokenCookieString, response, auth.getBearerToken());
@@ -279,14 +277,15 @@ public class AISController extends AbstractXISController implements AISApi {
     }
 
     @Override
-    public ResponseEntity<ConsentAuthorizeResponse> aisDone(String encryptedConsentId, String authorisationId, String consentAndAccessTokenCookieString, Boolean forgetConsent, Boolean backToTpp) throws ConsentAuthorizeException {
-        log.error("Done -> authId: {}", authorisationId);
+    public ResponseEntity<ConsentAuthorizeResponse> aisDone(String encryptedConsentId, String authorisationId, String consentAndAccessTokenCookieString, Boolean forgetConsent, Boolean backToTpp, boolean isOauth2Integrated) throws ConsentAuthorizeException {
         ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndAccessTokenCookieString, response, auth.getBearerToken());
 
         ScaStatusTO scaStatus = workflow.getScaResponse().getScaStatus();
         CmsAisConsentResponse consentResponse = workflow.getConsentResponse();
 
-        String tppOkRedirectUri = consentResponse.getTppOkRedirectUri();
+        String tppOkRedirectUri = isOauth2Integrated
+                                      ? oauthRestClient.oauthCode(consentResponse.getTppOkRedirectUri()).getBody().getRedirectUri()
+                                      : consentResponse.getTppOkRedirectUri();
         String tppNokRedirectUri = consentResponse.getTppNokRedirectUri();
 
         String redirectURL = FINALISED.equals(scaStatus)
