@@ -39,7 +39,7 @@ These steps are for the developer environment and not the DEMO.
 
 . Click on Manage environments and select `Xs2a DEV ENV`. Then, set `psuidOauth` as your user and update your environment. In our example, it is `psuidOauth = oauth`.
 
-. Click on POST request “Exchange oauth code” in your collection, put the code you grabbed in Step 7 into header “code” param and press on SEND button.
+. Click on POST request “Exchange oauth code” in your collection, add in Headers the new key "code", put the code you grabbed in Step 7 as value and press on Send button.
 
 . Copy and save the access token from the respond.
 

@@ -18,7 +18,7 @@ NOTE: If you have already registered a TPP and created a PSU user with deposit a
 . Create for this user at least one deposit account with a generated IBAN.
 . Now open Postman and import the collection “postman_collection_oauth_pre-step_integrated.json” and the environment “Xs2a DEV ENV.postman_environment.json” from our postman-scripts. Then, switch environment to `Xs2a DEV ENV`.
 . Open the POST request “intitiate consent” of the imported collection.
-. Change in the header the `PSU-ID` to user login, in our example it is _aguex8_, and set `X-OAUTH-PREFERRED` to “integrated”.
+. Change in Headers the key `PSU-ID` to your user login, in our example it is _aguex8_, and set the value of key `X-OAUTH-PREFERRED` to “integrated”.
 . Press Send and you will receive the `consentId` and multiple links (_scaOAuth_, _self_, _status_, _scaStatus_).
 . Press on the first link _scaOAuth_ to open new Postman tab, press Send again.
 . Now you will receive two links, the `authorization_endpoint` and the `token_endpoint`, copy the first link and open it in a web browser.
@@ -35,7 +35,7 @@ NOTE: If you have already registered a TPP and created a PSU user with deposit a
 . Create for this user at least one account with a generated IBAN.
 . Now open Postman and import the collection “postman_collection_oauth_pre-step_integrated.json” and the environment “Xs2a DEV ENV.postman_environment.json” from our postman-scripts. Then, switch environment to `Xs2a DEV ENV`.
 . Open the POST request “intitiate consent” of you imported collection.
-. Change in the header the `PSU-ID` to user login, in our example it is _aguex8_, and set `X-OAUTH-PREFERRED` to “pre-step”.
+. Change in Headers the key `PSU-ID` to your user login, in our example it is _aguex8_, and set the value of key `X-OAUTH-PREFERRED` to “pre-step”.
 . Press Send and you will receive an error message with a link.
 
 [source,ruby]
