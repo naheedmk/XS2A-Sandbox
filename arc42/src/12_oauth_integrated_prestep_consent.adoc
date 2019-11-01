@@ -1,0 +1,8 @@
+== OAuth Integrated Consent
+
+[role="arc42help"]
+****
+.Contents
+A short step by step instruction how to create an oAuth integrated and pre-step consent approach in the Dynamic Sandbox with Postman.
+****
+
