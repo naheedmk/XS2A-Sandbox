@@ -43,7 +43,7 @@ These steps are for the developer environment and not the DEMO.
 
 . Copy and save the access token from the respond.
 
-. Click on second POST request “Creates AIS consent” and there on the Send button.
+. Click on second POST request "Creates AIS consent" and there on the Send button.
 
 . Grab the URL from the scaRedirect url response and add the following parameter to this url: `&token=<access token from the previous response>`. The enlarged URL looks like this:
 
@@ -64,7 +64,7 @@ These steps are for the developer environment and not the DEMO.
 === Unsuccessful path
 
 [start=12]
-. Click on POST request “Create AIS consent” in Postman and switch off “Authorization” param from the header.
+. Click on POST request "Create AIS consent" in Postman and switch off the Headers key "Authorization" by deselecting it.
 
 . Press on SEND button and receive following error as response:
 
