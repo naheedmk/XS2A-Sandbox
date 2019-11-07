@@ -97,6 +97,7 @@ public class AISController extends AbstractXISController implements AISApi {
         }
 
         ResponseEntity<SCALoginResponseTO> loginResult = performLoginForConsent(login, pin, workflow.consentId(), workflow.authId(), OpTypeTO.CONSENT);
+        AuthUtils.checkIfUserInitiatedOperation(loginResult, workflow.getConsentResponse().getAccountConsent().getPsuIdDataList());
         workflow.storeSCAResponse(loginResult.getBody());
 
         if (AuthUtils.success(loginResult)) {

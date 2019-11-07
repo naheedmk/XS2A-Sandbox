@@ -14,6 +14,7 @@ import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
 import de.adorsys.ledgers.oba.rest.api.domain.ConsentAuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.ConsentWorkflow;
 import de.adorsys.ledgers.oba.rest.api.domain.ValidationCode;
+import de.adorsys.ledgers.oba.rest.api.exception.AuthorizationException;
 import de.adorsys.ledgers.oba.rest.api.exception.ConsentAuthorizeException;
 import de.adorsys.ledgers.oba.rest.server.mapper.ObaAisConsentMapper;
 import de.adorsys.ledgers.oba.rest.server.resource.ResponseUtils;
@@ -22,6 +23,7 @@ import de.adorsys.psd2.consent.api.ais.AisAccountAccess;
 import de.adorsys.psd2.consent.api.ais.CmsAisConsentResponse;
 import de.adorsys.psd2.consent.psu.api.ais.CmsAisConsentAccessRequest;
 import de.adorsys.psd2.xs2a.core.consent.AisConsentRequestType;
+import de.adorsys.psd2.xs2a.core.profile.AccountReference;
 import de.adorsys.psd2.xs2a.core.sca.AuthenticationDataHolder;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +37,13 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static de.adorsys.ledgers.oba.rest.api.exception.AuthErrorCode.LOGIN_FAILED;
 import static de.adorsys.psd2.xs2a.core.consent.AisConsentRequestType.*;
 import static org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient.DEFAULT_SERVICE_INSTANCE_ID;
 
@@ -81,6 +87,26 @@ public class RedirectConsentService {
                 authAccountAccess.setTransactions(ibans);
             }
         }
+        if (DEDICATED_ACCOUNTS == consentType) {
+            Set<String> ibans = new HashSet<>(extractUserIbans(listOfAccounts));
+            Set<String> ibansFromAccess = extractIbansFromAccess(workflow.getConsentResponse().getAccountConsent().getAccess());
+            checkAccess(ibansFromAccess, ibans);
+        }
+    }
+
+    private void checkAccess(Set<String> ibansFromAccess, Set<String> ibans) {
+        if (!ibans.containsAll(ibansFromAccess)) {
+            throw AuthorizationException.builder()
+                      .errorCode(LOGIN_FAILED)
+                      .devMessage("Operation you're logging in is not meant for current user")
+                      .build();
+        }
+    }
+
+    private Set<String> extractIbansFromAccess(AisAccountAccess access) {
+        return Stream.of(access.getAccounts(), access.getBalances(), access.getTransactions())
+                   .flatMap(a -> a.stream().map(AccountReference::getIban))
+                   .collect(Collectors.toSet());
     }
 
     /**
