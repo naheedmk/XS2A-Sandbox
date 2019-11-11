@@ -59,7 +59,7 @@ public class RedirectConsentService {
     private final TokenStorageService tokenStorageService;
     private final AspspConsentDataClient aspspConsentDataClient;
 
-    public void selectMethod(String scaMethodId, final ConsentWorkflow workflow) {
+    public void selectScaMethod(String scaMethodId, final ConsentWorkflow workflow) {
         try {
             authInterceptor.setAccessToken(workflow.bearerToken().getAccess_token());
             // INFO. Server does not set the bearer token.
@@ -125,11 +125,11 @@ public class RedirectConsentService {
     public void updateScaStatusConsentStatusConsentData(String psuId, ConsentWorkflow workflow, HttpServletResponse response)
         throws ConsentAuthorizeException {
         // UPDATE CMS
-        scaStatus(workflow, psuId, response);
+        updateCmsAuthorizationScaStatus(workflow, psuId, response);
         updateAspspConsentData(workflow, response);
     }
 
-    private void scaStatus(ConsentWorkflow workflow, String psuId, HttpServletResponse response) throws ConsentAuthorizeException {
+    private void updateCmsAuthorizationScaStatus(ConsentWorkflow workflow, String psuId, HttpServletResponse response) throws ConsentAuthorizeException {
         String status = workflow.getAuthResponse().getScaStatus().name();
         ResponseEntity resp = cmsPsuAisClient.updateAuthorisationStatus(workflow.consentId(), status,
             workflow.authId(), psuId, null, null, null, DEFAULT_SERVICE_INSTANCE_ID, new AuthenticationDataHolder(null, null));

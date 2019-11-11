@@ -164,7 +164,7 @@ public class AISController extends AbstractXISController implements AISApi {
         String psuId = AuthUtils.psuId(middlewareAuth);
         try {
             ConsentWorkflow workflow = consentService.identifyConsent(encryptedConsentId, authorisationId, true, consentAndaccessTokenCookieString, response, middlewareAuth.getBearerToken());
-            consentService.selectMethod(scaMethodId, workflow);
+            consentService.selectScaMethod(scaMethodId, workflow);
 
             consentService.updateScaStatusConsentStatusConsentData(psuId, workflow, response);
 
