@@ -60,8 +60,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
         this.pisService.pisLogin(params).subscribe(authorisationResponse => {
           console.log(authorisationResponse);
-          this.shareService.changeData(authorisationResponse);
-          this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.CONFIRM_PAYMENT}`]);
+          this.shareService.changePaymentData(authorisationResponse);
+          this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.AUTHORIZE}/${RoutingPath.CONFIRM_PAYMENT}`]);
         }, (error: HttpErrorResponse) => {
           // if paymentId or redirectId is missing
           if (this.encryptedPaymentId === undefined || this.redirectId === undefined) {
@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.pisService.pisAuthCode(pisAuthCodeParams)
             .subscribe(authCodeResponse => {
-                  this.shareService.changeData(authCodeResponse.body);
+                  this.shareService.changePaymentData(authCodeResponse.body);
                   if (authCodeResponse.headers.get('Authorization')) {
                     this.pisAuthorise({
                       encryptedPaymentId: this.encryptedPaymentId,
