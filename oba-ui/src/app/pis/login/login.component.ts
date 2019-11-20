@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.pisService.pisLogin(params).subscribe(authorisationResponse => {
           console.log(authorisationResponse);
           this.shareService.changePaymentData(authorisationResponse);
-          this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.AUTHORIZE}/${RoutingPath.CONFIRM_PAYMENT}`]);
+          this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.AUTHORIZE}`]);
         }, (error: HttpErrorResponse) => {
           // if paymentId or redirectId is missing
           if (this.encryptedPaymentId === undefined || this.redirectId === undefined) {
