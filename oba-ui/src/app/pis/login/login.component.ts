@@ -49,7 +49,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
       this.pisAuthorise({
-        ...this.loginForm.value,
+        pin: this.loginForm.get('pin').value,
+        login: this.loginForm.get('login').value,
         encryptedPaymentId: this.encryptedPaymentId,
         authorisationId: this.redirectId,
       });
