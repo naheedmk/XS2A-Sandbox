@@ -1,18 +1,17 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
-import { PSUPISService } from '../../api/services/psupis.service';
-import { InfoService } from '../../common/info/info.service';
-import { RoutingPath } from '../../common/models/routing-path.model';
-import { CustomizeService } from '../../common/services/customize.service';
-import { PisService } from '../../common/services/pis.service';
-import { ShareDataService } from '../../common/services/share-data.service';
-
-import LoginUsingPOST3Params = PSUPISService.LoginUsingPOST3Params;
+import {PSUPISService} from '../../api/services/psupis.service';
+import {InfoService} from '../../common/info/info.service';
+import {RoutingPath} from '../../common/models/routing-path.model';
+import {CustomizeService} from '../../common/services/customize.service';
+import {PisService} from '../../common/services/pis.service';
+import {ShareDataService} from '../../common/services/share-data.service';
 import {OnlineBankingOauthAuthorizationService} from '../../api/services/online-banking-oauth-authorization.service';
+import LoginUsingPOST3Params = PSUPISService.LoginUsingPOST3Params;
 import PisAuthUsingGETParams = PSUPISService.PisAuthUsingGETParams;
 
 @Component({
@@ -60,7 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
         this.pisService.pisLogin(params).subscribe(authorisationResponse => {
           console.log(authorisationResponse);
-          this.shareService.changePaymentData(authorisationResponse);
+          this.shareService.changeData(authorisationResponse);
           this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.AUTHORIZE}`]);
         }, (error: HttpErrorResponse) => {
           // if paymentId or redirectId is missing
@@ -100,7 +99,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.pisService.pisAuthCode(pisAuthCodeParams)
             .subscribe(authCodeResponse => {
-                  this.shareService.changePaymentData(authCodeResponse.body);
+                  this.shareService.changeData(authCodeResponse.body);
                   if (authCodeResponse.headers.get('Authorization')) {
                     this.pisAuthorise({
                       encryptedPaymentId: this.encryptedPaymentId,
