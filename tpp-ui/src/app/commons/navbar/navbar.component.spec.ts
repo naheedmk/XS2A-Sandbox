@@ -7,6 +7,7 @@ import {AuthService} from "../../services/auth.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
+import {ClickOutsideModule} from "ng-click-outside";
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -21,6 +22,7 @@ describe('NavbarComponent', () => {
                 HttpClientTestingModule,
                 ReactiveFormsModule,
                 IconModule,
+                ClickOutsideModule
             ],
             providers: [TestBed.overrideProvider(AuthService, {useValue: authServiceSpy})],
             declarations: [NavbarComponent]
