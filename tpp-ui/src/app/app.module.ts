@@ -45,6 +45,7 @@ import { ConvertBalancePipe } from './pipes/convertBalance.pipe';
 import { AutoLogoutService } from './services/auto-logout.service';
 import { SettingsHttpService } from './services/settings-http.service';
 import { UploadFileComponent } from './uploadFile/uploadFile.component';
+import {ClickOutsideModule} from "ng-click-outside";
 
 export function app_Init(settingsHttpService: SettingsHttpService) {
   return () => settingsHttpService.initializeApp();
@@ -88,6 +89,7 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
     ReactiveFormsModule,
     IconModule,
     InfoModule,
+    ClickOutsideModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FileUploadModule,
