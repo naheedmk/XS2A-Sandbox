@@ -8,7 +8,7 @@
     </a>
     <ul class="nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="dropdown-toggle mr-3 no-underline clickable" (click)="handleDropdownMenu()"
+          <a class="dropdown-toggle mr-3 no-underline clickable" (clickOutside)="onClickedOutside($event)" (click)="handleDropdownMenu()"
             *ngIf="tppUser?.login">{{ tppUser.login }}</a>
           <div class="dropdown-menu dropdown-menu-right" [ngClass]="{show: openDropdownMenu}">
             <li class="divider"></li>
