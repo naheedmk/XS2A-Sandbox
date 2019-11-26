@@ -57,9 +57,9 @@ describe('AccountDetailComponent', () => {
             accountType: AccountType.CASH,
             accountStatus: AccountStatus.ENABLED,
             bic: 'BIChgdgd',
+            linkedAccounts: '',
             usageType: UsageType.PRIV,
             details: '',
-            linkedAccounts: '',
             balances: []
         } as Account;
 
