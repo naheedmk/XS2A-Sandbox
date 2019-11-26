@@ -37,7 +37,7 @@
                   class="form-control"
                   formControlName="currency"
                   id="currency">
-            <option *ngFor="let currency of currencys" [value]="currency">{{currency}}</option>
+            <option *ngFor="let currency of currencies" [value]="currency">{{currency}}</option>
           </select>
           <div *ngIf="currency.errors?.required" class="invalid-feedback">
             <div>
