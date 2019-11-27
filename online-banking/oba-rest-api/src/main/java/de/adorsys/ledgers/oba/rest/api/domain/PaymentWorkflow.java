@@ -111,4 +111,13 @@ public class PaymentWorkflow {
     public ScaStatusTO scaStatus() {
         return scaResponse.getScaStatus();
     }
+
+    public void processSCAResponse(SCAResponseTO paymentResponse) {
+        scaResponse = paymentResponse;
+        authResponse.setAuthorisationId(paymentResponse.getAuthorisationId());
+        authResponse.setScaStatus(paymentResponse.getScaStatus());
+        consentReference.setStatus(paymentResponse.getScaStatus());
+        authResponse.setScaMethods(paymentResponse.getScaMethods());
+        authCodeMessage = paymentResponse.getPsuMessage();
+    }
 }

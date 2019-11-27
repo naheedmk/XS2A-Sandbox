@@ -2,7 +2,6 @@ package de.adorsys.ledgers.oba.rest.server.service;
 
 import de.adorsys.ledgers.middleware.api.domain.payment.TransactionStatusTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAPaymentResponseTO;
-import de.adorsys.ledgers.middleware.api.domain.sca.SCAResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.api.service.TokenStorageService;
@@ -28,6 +27,7 @@ import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
 import de.adorsys.psd2.xs2a.core.sca.AuthenticationDataHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuPisClient;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +51,7 @@ public class CommonPaymentService {
     private final ConsentReferencePolicy referencePolicy;
     private final AuthRequestInterceptor authInterceptor;
     private final CmsPsuPisClient cmsPsuPisClient;
+    private final CmsPsuAisClient cmsPsuAisClient;
     private final PaymentRestClient paymentRestClient;
     private final AspspConsentDataClient aspspConsentDataClient;
     private final TokenStorageService tokenStorageService;
@@ -118,7 +119,7 @@ public class CommonPaymentService {
         }
     }
 
-    public void selectMethodAndUpdateWorkflow(String scaMethodId, final PaymentWorkflow workflow, boolean isCancellationOperation) {
+    private void selectMethodAndUpdateWorkflow(String scaMethodId, final PaymentWorkflow workflow, boolean isCancellationOperation) {
         try {
             authInterceptor.setAccessToken(workflow.bearerToken().getAccess_token());
 
@@ -185,16 +186,8 @@ public class CommonPaymentService {
     }
 
     public void processPaymentResponse(PaymentWorkflow paymentWorkflow, SCAPaymentResponseTO paymentResponse) {
-        processSCAResponse(paymentWorkflow, paymentResponse);
+        paymentWorkflow.processSCAResponse(paymentResponse);
         paymentWorkflow.setPaymentStatus(paymentResponse.getTransactionStatus().name());
-    }
-
-    private void processSCAResponse(PaymentWorkflow workflow, SCAResponseTO paymentResponse) {
-        workflow.setScaResponse(paymentResponse);
-        workflow.getAuthResponse().setAuthorisationId(paymentResponse.getAuthorisationId());
-        workflow.getAuthResponse().setScaStatus(paymentResponse.getScaStatus());
-        workflow.getAuthResponse().setScaMethods(paymentResponse.getScaMethods());
-        workflow.setAuthCodeMessage(paymentResponse.getPsuMessage());
     }
 
     private void updatePaymentStatus(HttpServletResponse response, PaymentWorkflow paymentWorkflow)
@@ -231,7 +224,7 @@ public class CommonPaymentService {
         String psuId = AuthUtils.psuId(auth);
         PaymentWorkflow workflow = identifyPayment(encryptedPaymentId, authorisationId, true, consentAndAccessTokenCookieString, psuId, response, auth.getBearerToken());
 
-        ScaStatusTO scaStatus = workflow.getScaResponse().getScaStatus();
+        ScaStatusTO scaStatus = workflow.getConsentReference().getStatus();
         CmsPaymentResponse consentResponse = workflow.getPaymentResponse();
 
         authInterceptor.setAccessToken(workflow.getScaResponse().getBearerToken().getAccess_token());

@@ -7,6 +7,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReference;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentReferencePolicy;
 import de.adorsys.ledgers.oba.rest.api.consentref.ConsentType;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
@@ -26,6 +28,7 @@ public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
     private static final String REDIRECT_ID_JWT_CLAIM_NAME = "redirect-id";
     private static final String ENC_CONSENT_ID_JWT_CLAIM_NAME = "enc-consent-id";
     private static final String AUTH_ID_JWT_CLAIM_NAME = "auth-id";
+    private static final String AUTH_STATUS = "status";
 
     @Value("${online-banking.sca.jwt.hs256.secret}")
     private String hmacSecret;
@@ -47,6 +50,11 @@ public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
         return verifyParseJWT(encryptedConsentId, authorizationId, cookieString, strict);
     }
 
+    @Override
+    public String cookieString(ConsentReference reference) {
+        return toClaim(reference);
+    }
+
     private String toClaim(ConsentReference ref) {
         Date now = new Date();
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
@@ -56,6 +64,7 @@ public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
                                      .claim(CONSENT_TYPE_JWT_CLAIM_NAME, ref.getConsentType().name())
                                      .claim(ENC_CONSENT_ID_JWT_CLAIM_NAME, ref.getEncryptedConsentId())
                                      .claim(AUTH_ID_JWT_CLAIM_NAME, ref.getAuthorizationId())
+                                     .claim(AUTH_STATUS, Optional.ofNullable(ref.getStatus()).map(ScaStatusTO::name).orElse(null))
                                      .expirationTime(DateUtils.addSeconds(now, 300)).issueTime(now)
                                      .build();
         return signJWT(claimsSet);
@@ -131,6 +140,10 @@ public class DefaultConsentReferencePolicy implements ConsentReferencePolicy {
         cr.setRedirectId(jwtClaimsSet.getClaim(REDIRECT_ID_JWT_CLAIM_NAME).toString());
         cr.setEncryptedConsentId(encryptedConsentId);
         cr.setAuthorizationId(authorizationId);
+        Optional.ofNullable(jwtClaimsSet.getClaim(AUTH_STATUS))
+            .map(Object::toString)
+            .map(ScaStatusTO::valueOf)
+            .ifPresent(cr::setStatus);
         cr.setCookieString(toClaim(cr));
 
         return cr;
