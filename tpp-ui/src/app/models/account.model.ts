@@ -59,11 +59,11 @@ export enum UsageType {
 }
 
 export enum Currency {
-  EUR = "Euro",
-  USD = "Dollar",
-  CHF = "Yuan",
-  GBP = "Livre Sterling",
-  RUB = "Ruble"
+  EUR = "EUR",
+  USD = "USD",
+  CHF = "CHF",
+  GBP = "GBP",
+  RUB = "RUB"
 }
 
 class AccountBalance {
