@@ -21,8 +21,7 @@ describe('NavbarComponent', () => {
                 RouterTestingModule,
                 HttpClientTestingModule,
                 ReactiveFormsModule,
-                IconModule,
-                ClickOutsideModule
+                IconModule
             ],
             providers: [TestBed.overrideProvider(AuthService, {useValue: authServiceSpy})],
             declarations: [NavbarComponent]
