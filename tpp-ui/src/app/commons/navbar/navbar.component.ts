@@ -39,12 +39,4 @@ export class NavbarComponent implements DoCheck, OnInit {
   onLogout(): void {
       this.authService.logout();
   }
-
-  onClickedOutside() {
-      this.openDropdownMenu = false;
-  }
-
-  handleDropdownMenu(): void {
-    this.openDropdownMenu = !this.openDropdownMenu;
-  }
 }

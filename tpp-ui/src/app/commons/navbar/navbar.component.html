@@ -6,29 +6,25 @@
         />
         <span class="ml-3"><span *ngIf="!customizeService.isCustom()">adorsys </span>TPP UI</span>
     </a>
-    <ul class="nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="dropdown-toggle mr-3 no-underline clickable" (clickOutside)="onClickedOutside($event)" (click)="handleDropdownMenu()"
-            *ngIf="tppUser?.login">{{ tppUser.login }}</a>
-          <div class="dropdown-menu dropdown-menu-right" [ngClass]="{show: openDropdownMenu}">
-            <li class="divider"></li>
-            <li>
-              <a routerLink="/profile" (click)="handleDropdownMenu()" class="btn nav-link">
-                <div class="mr-2">
-                  <img src="./assets/icons/user.svg">
+
+    <div class="dropdown">
+        <a class="nav-item dropdown-toggle mr-4 no-underline clickable" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                *ngIf="tppUser?.login">{{ tppUser.login }}
+        </a>
+        <div class="dropdown-menu" >
+            <a routerLink="/profile" class="dropdown-item">
+                <div>
+                    <img src="./assets/icons/user.svg">
+                    <span> Profile</span>
                 </div>
-                <span class="nav__title">Profile</span>
-              </a>
-            </li>
-            <li>
-              <a (click)="onLogout()" [routerLinkActive]="['active']" class="btn nav-link clickable">
-                <div class="mr-2">
-                  <img src="./assets/icons/sign_out.svg">
+            </a>
+            <a (click)="onLogout()" [routerLinkActive]="['active']" class="dropdown-item clickable">
+                <div>
+                    <img src="./assets/icons/sign_out.svg">
+                    <span class="nav__title"> Sign out</span>
                 </div>
-                <span class="nav__title">Sign out</span>
-              </a>
-            </li>
-          </div>
-        </li>
-    </ul>
+            </a>
+        </div>
+    </div>
 </nav>
