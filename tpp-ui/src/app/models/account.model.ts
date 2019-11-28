@@ -62,8 +62,7 @@ export enum Currency {
   EUR = "EUR",
   USD = "USD",
   CHF = "CHF",
-  GBP = "GBP",
-  RUB = "RUB"
+  GBP = "GBP"
 }
 
 class AccountBalance {
