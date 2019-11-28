@@ -168,7 +168,7 @@ public class CommonPaymentService {
 
     private ScaStatusTO loadAuthorization(String authorizationId) {
         try {
-            return ScaStatusTO.valueOf(cmsPsuPisClient.getAuthorisationByAuthorisationId(authorizationId, CmsPsuPisClient.DEFAULT_SERVICE_INSTANCE_ID).getBody().getScaStatus().name());
+            return valueOf(cmsPsuPisClient.getAuthorisationByAuthorisationId(authorizationId, CmsPsuPisClient.DEFAULT_SERVICE_INSTANCE_ID).getBody().getScaStatus().name());
         } catch (FeignException e) {
             throw AisException.builder()
                       .aisErrorCode(NOT_FOUND)
