@@ -140,7 +140,7 @@ public interface CmsPsuPisClient {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK", response = CmsPsuAuthorisation.class),
         @ApiResponse(code = 400, message = "Bad request")})
-    public ResponseEntity<CmsPsuAuthorisation> getAuthorisationByAuthorisationId(
+    ResponseEntity<CmsPsuAuthorisation> getAuthorisationByAuthorisationId(
         @ApiParam(name = "authorisation-id", value = "The authorisation identification.", example = "bf489af6-a2cb-4b75-b71d-d66d58b934d7")
         @PathVariable("authorisation-id") String authorisationId,
         @RequestHeader(value = "instance-id", required = false, defaultValue = DEFAULT_SERVICE_INSTANCE_ID) String instanceId);
