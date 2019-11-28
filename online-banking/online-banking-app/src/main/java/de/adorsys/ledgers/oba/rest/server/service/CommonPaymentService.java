@@ -14,6 +14,7 @@ import de.adorsys.ledgers.oba.rest.api.consentref.InvalidConsentException;
 import de.adorsys.ledgers.oba.rest.api.domain.PaymentAuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.PaymentWorkflow;
 import de.adorsys.ledgers.oba.rest.api.domain.ValidationCode;
+import de.adorsys.ledgers.oba.rest.api.exception.AisException;
 import de.adorsys.ledgers.oba.rest.api.exception.PaymentAuthorizeException;
 import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
 import de.adorsys.ledgers.oba.rest.server.mapper.PaymentConverter;
@@ -25,9 +26,9 @@ import de.adorsys.psd2.consent.api.pis.CmsPayment;
 import de.adorsys.psd2.consent.api.pis.CmsPaymentResponse;
 import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
 import de.adorsys.psd2.xs2a.core.sca.AuthenticationDataHolder;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuPisClient;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.util.EnumSet;
 
 import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.*;
+import static de.adorsys.ledgers.oba.rest.api.domain.AisErrorCode.NOT_FOUND;
 import static de.adorsys.psd2.xs2a.core.profile.PaymentType.PERIODIC;
 import static de.adorsys.psd2.xs2a.core.profile.PaymentType.SINGLE;
 
@@ -51,7 +53,6 @@ public class CommonPaymentService {
     private final ConsentReferencePolicy referencePolicy;
     private final AuthRequestInterceptor authInterceptor;
     private final CmsPsuPisClient cmsPsuPisClient;
-    private final CmsPsuAisClient cmsPsuAisClient;
     private final PaymentRestClient paymentRestClient;
     private final AspspConsentDataClient aspspConsentDataClient;
     private final TokenStorageService tokenStorageService;
@@ -165,6 +166,17 @@ public class CommonPaymentService {
         return resolveResponse(response, cmsResponse);
     }
 
+    private ScaStatusTO loadAuthorization(String authorizationId) {
+        try {
+            return ScaStatusTO.valueOf(cmsPsuPisClient.getAuthorisationByAuthorisationId(authorizationId, CmsPsuPisClient.DEFAULT_SERVICE_INSTANCE_ID).getBody().getScaStatus().name());
+        } catch (FeignException e) {
+            throw AisException.builder()
+                      .aisErrorCode(NOT_FOUND)
+                      .devMessage("Authorization for payment not found!")
+                      .build();
+        }
+    }
+
     private CmsPaymentResponse resolveResponse(HttpServletResponse response, ResponseEntity<CmsPaymentResponse> cmsResponse) throws PaymentAuthorizeException {
         HttpStatus statusCode = cmsResponse.getStatusCode();
         if (HttpStatus.OK.equals(statusCode)) {
@@ -224,7 +236,6 @@ public class CommonPaymentService {
         String psuId = AuthUtils.psuId(auth);
         PaymentWorkflow workflow = identifyPayment(encryptedPaymentId, authorisationId, true, consentAndAccessTokenCookieString, psuId, response, auth.getBearerToken());
 
-        ScaStatusTO scaStatus = workflow.getConsentReference().getStatus();
         CmsPaymentResponse consentResponse = workflow.getPaymentResponse();
 
         authInterceptor.setAccessToken(workflow.getScaResponse().getBearerToken().getAccess_token());
@@ -234,6 +245,7 @@ public class CommonPaymentService {
 
         String tppNokRedirectUri = consentResponse.getTppNokRedirectUri();
 
+        ScaStatusTO scaStatus = loadAuthorization(workflow.authId());
         String redirectURL = FINALISED.equals(scaStatus)
                                  ? tppOkRedirectUri
                                  : tppNokRedirectUri;
