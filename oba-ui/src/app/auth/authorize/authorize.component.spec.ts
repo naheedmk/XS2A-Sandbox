@@ -40,7 +40,7 @@ describe('AuthorizeComponent', () => {
   });
 
   const correctOauthParams: OauthCodeUsingPOSTParams = {
-    redirectUri: "https://angular.io/guide/testing",
+    redirectUri: "https://adorsys.de",
     pin: "pin",
     login: "login"
   };

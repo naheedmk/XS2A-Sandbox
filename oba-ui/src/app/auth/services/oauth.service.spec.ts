@@ -20,7 +20,7 @@ describe('OauthService', () => {
   });
 
   const correctOauthParams: OauthCodeUsingPOSTParams = {
-    redirectUri: "redirect uri",
+    redirectUri: "https://adorsys.de/",
     pin: "pin",
     login: "login"
   };
