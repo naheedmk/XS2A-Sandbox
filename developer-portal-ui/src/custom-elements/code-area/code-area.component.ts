@@ -37,5 +37,6 @@ export class CodeAreaComponent {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+    alert('Body copied to clipboard!');
   }
 }
