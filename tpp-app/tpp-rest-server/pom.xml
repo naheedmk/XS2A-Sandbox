@@ -93,6 +93,11 @@
             <artifactId>mapstruct-jdk8</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.goxr3plus</groupId>
+            <artifactId>iban5j</artifactId>
+        </dependency>
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>

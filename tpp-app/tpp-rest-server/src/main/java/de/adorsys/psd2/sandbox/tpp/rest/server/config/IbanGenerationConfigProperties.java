@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "iban.generator")
 public class IbanGenerationConfigProperties {
-    private String countryCode = "DE";
+    private String countryCode = new String();
     private BankCode bankCode = new BankCode();
 
 

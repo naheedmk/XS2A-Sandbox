@@ -153,6 +153,10 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -265,6 +269,7 @@
                 <version>${fasterxml.version}</version>
                 <scope>compile</scope>
             </dependency>
+
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
@@ -276,6 +281,12 @@
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-yaml</artifactId>
                 <version>${fasterxml-data-format.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.goxr3plus</groupId>
+                <artifactId>iban5j</artifactId>
+                <version>iban5j-1.0.0</version>
             </dependency>
 
             <!-- Commons -->
