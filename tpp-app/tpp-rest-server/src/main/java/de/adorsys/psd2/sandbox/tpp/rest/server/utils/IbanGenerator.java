@@ -12,4 +12,11 @@ public class IbanGenerator {
                    .buildRandom()
                    .toString();
     }
+
+    public static String generateIbanWithCountryCode(CountryCode countryCode) {
+        return new Iban.Builder()
+                   .countryCode(countryCode)
+                   .buildRandom()
+                   .toString();
+    }
 }

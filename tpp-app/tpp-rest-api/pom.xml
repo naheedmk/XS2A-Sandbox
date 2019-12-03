@@ -58,6 +58,11 @@
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.goxr3plus</groupId>
+            <artifactId>iban5j</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

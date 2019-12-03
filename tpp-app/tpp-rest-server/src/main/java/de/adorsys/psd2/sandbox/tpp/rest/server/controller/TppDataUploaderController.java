@@ -7,6 +7,7 @@ import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
 import de.adorsys.psd2.sandbox.tpp.rest.server.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.iban4j.CountryCode;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -61,6 +62,11 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
     @Override
     public ResponseEntity<String> generateIban() {
         return ResponseEntity.ok(ibanGenerationService.generateRandomIban());
+    }
+
+    @Override
+    public ResponseEntity<String> generateIbanWithCountryCode(CountryCode countryCode) {
+        return ResponseEntity.ok(ibanGenerationService.generateRandomIbanWithCountryCode(countryCode));
     }
 
     @Override

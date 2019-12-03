@@ -3,6 +3,7 @@ package de.adorsys.psd2.sandbox.tpp.rest.api.resource;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import org.iban4j.CountryCode;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,10 @@ public interface TppDataUploaderRestApi {
     @ApiOperation(value = "Generate random IBAN", authorizations = @Authorization(value = "apiKey"))
     @GetMapping("/generate/iban")
     ResponseEntity<String> generateIban();
+
+    @ApiOperation(value = "Generate random IBAN with selected country code", authorizations = @Authorization(value = "apiKey"))
+    @GetMapping("/generate/ibanWithCountryCode")
+    ResponseEntity<String> generateIbanWithCountryCode(@RequestParam CountryCode countryCode);
 
     @ApiOperation(value = "Upload CSV file with transactions list", authorizations = @Authorization(value = "apiKey"))
     @PutMapping("/upload/transactions")
