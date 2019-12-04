@@ -24,10 +24,10 @@ public class UserMapperTest {
     private static final String PIN = "PIN";
     private static final String SCA_ID = "SCA-ID";
     private static final String STATIC_TAN = "12345";
-    private static final String BRANCH_ID = "MY-TEST-BRANCH";
     private static final String ACC_ID = "ZXCVASDF";
     private static final String IBAN = "DE1234567890";
     private static final Currency CURRENCY = Currency.getInstance("EUR");
+
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     @Test
