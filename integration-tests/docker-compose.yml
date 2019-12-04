@@ -17,7 +17,7 @@ services:
     - "8089:8089"
     environment:
     - SPRING_PROFILES_ACTIVE=mock-qwak
-    - LEDGERS_URL=http://ledgers:8088
+    - LEDGERS_URL_INT=http://ledgers:8088
     - ASPSP_PROFILE_BASEURL=http://profile:48080/api/v1
     - CONSENT_SERVICE_BASEURL=http://consent:38080/api/v1
     - SECURITY_BASIC_ENABLED=false
@@ -43,12 +43,12 @@ services:
     - "8090:8090"
     environment:
     - SPRING_PROFILES_ACTIVE=mock-qwak
-    - LEDGERS_URL=http://ledgers:8088
-    - XS2A_URL=http://gateway:8089
-    - CMS_URL=http://consent:38080
+    - LEDGERS_URL_INT=http://ledgers:8088
+    - XS2A_URL_INT=http://gateway:8089
+    - CMS_URL_INT=http://consent:38080
     - FEIGN_CLIENT_CONFIG_DEFAULT_LOGGERLEVEL=NONE
     - LOGGING_LEVEL_ROOT=INFO
-    - ONLINE_BANKING_SCA_LOGINPAGE=http://localhost:4400/
+    - ONLINE_BANKING_SCA_LOGINPAGE_INT=http://localhost:4400/
     - ONLINE_BANKING_SCA_UIREDIRECT=true
     networks:
     - xs2a-net

@@ -1,46 +1,46 @@
 [
   {
-    "name": "DEVELOPER_PORTAL",
+    "name": "DEVELOPER_PORTAL_EXT",
     "localEnvironmentLink": "http://localhost:4206",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-developerportalui.cloud.adorsys.de/"
   },
   {
-    "name": "XS2A_INTERFACE_SWAGGER",
+    "name": "XS2A_INTERFACE_EXT",
     "localEnvironmentLink": "http://localhost:8089/swagger-ui.html",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-xs2a.cloud.adorsys.de/"
   },
   {
-    "name": "CONSENT_MANAGEMENT_SYSTEM",
+    "name": "CONSENT_MANAGEMENT_SYSTEM_EXT",
     "localEnvironmentLink": "http://localhost:38080/swagger-ui.html",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-cms.cloud.adorsys.de"
   },
   {
-    "name": "LEDGERS",
+    "name": "LEDGERS_EXT",
     "localEnvironmentLink": "http://localhost:8088/swagger-ui.html",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-ledgers.cloud.adorsys.de"
   },
   {
-    "name": "ASPSP_PROFILE_SWAGGER",
+    "name": "ASPSP_PROFILE_EXT",
     "localEnvironmentLink": "http://localhost:48080/swagger-ui.html",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-aspspprofile.cloud.adorsys.de"
   },
   {
-    "name": "TPP_UI",
+    "name": "TPP_UI_EXT",
     "localEnvironmentLink": "http://localhost:4205",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-tppui.cloud.adorsys.de/login"
   },
   {
-    "name": "ONLINE_BANKING_UI",
+    "name": "ONLINE_BANKING_UI_EXT",
     "localEnvironmentLink": "http://localhost:4400",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-onlinebankingui.cloud.adorsys.de/account-information/login"
   },
   {
-    "name": "ONLINE_BANKING_BACKEND",
+    "name": "ONLINE_BANKING_BACKEND_EXT",
     "localEnvironmentLink": "http://localhost:8090/swagger-ui.html",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-onlinebanking.cloud.adorsys.de/swagger-ui.html"
   },
   {
-    "name": "CERTIFICATE_GENERATOR",
+    "name": "CERTIFICATE_GENERATOR_EXT",
     "localEnvironmentLink": "http://localhost:8092/swagger-ui.html",
     "productionEnvironmentLink": "https://demo-dynamicsandbox-certificategenerator.cloud.adorsys.de/swagger-ui.html"
   }

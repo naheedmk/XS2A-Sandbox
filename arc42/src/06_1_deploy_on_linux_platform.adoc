@@ -11,9 +11,9 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 |Service | Dependencies | Environment variables | Ports
 
 |xs2a-connector-examples | Java 8 | SPRING_PROFILES_ACTIVE | 8089,8189
-| | |ASPSP-PROFILE_BASEURL |
-| | |CMS_URL |
-| | |LEDGERS_URL |
+| | |ASPSP-PROFILE_BASEURL_INT |
+| | |CMS_URL_INT |
+| | |LEDGERS_URL_INT |
 | | |CONSENT_SERVICE_BASEURL |
 | | |SPRING_PROFILES_ACTIVE |
 | | |skip_ssl_certificate_verification |
@@ -23,7 +23,7 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | |DB_HOST |
 |xs2a-asps--profile |Java 8 | SPRING_PROFILES_ACTIVE | 48080
 | | | BANK_PROFILE_PATH |
-|xs2a-consent-management |Java 8 | ASPSP-PROFILE_BASEURL | 38080
+|xs2a-consent-management |Java 8 | ASPSP-PROFILE_BASEURL_INT | 38080
 | | |SPRING_DATASOURCE_URL  |
 | | |SPRING_DATASOURCE_USERNAME  |
 | | |SPRING_DATASOURCE_PASSWORD  |
@@ -40,10 +40,10 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | POSTGRESQL_DATABASE  |
 | | | POSTGRESQL_USER  |
 | | | POSTGRESQL_PASSWORD |
-|xs2a-online-banking | NGINX 1.15.5 |XS2A_URL| 8090,8190
-| | | LEDGERS_URL  |
-| | | CMS_URL  |
-| | | ONLINE_BANKING_SCA_LOGINPAGE  |
+|xs2a-online-banking | NGINX 1.15.5 |XS2A_URL_INT| 8090,8190
+| | | LEDGERS_URL_INT  |
+| | | CMS_URL_INT  |
+| | | ONLINE_BANKING_SCA_LOGINPAGE_INT  |
 | | | ONLINE_BANKING_SCA_UIREDIRECT  |
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_METHODS  |
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_ORIGINS  |
@@ -61,12 +61,12 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | SPRING_MAIL_PROPERTIES_MAIL_FROM  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE |
-|xs2a-online-banking-ui  |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL | 4400
+|xs2a-online-banking-ui  |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL_INT | 4400
 | | | DEV_PORTAL_URL_EXT |
-|xs2a-tpp-ui | NGINX 1.15.5 | LEDGERS_URL | 4205
-| | | TPP_REST_SERVER_URL |
-| | | CERT_GEN_URL |
-| xs2a-tpp-rest-server | Java 8 | LEDGERS_URL | 8093
+|xs2a-tpp-ui | NGINX 1.15.5 | LEDGERS_URL_INT | 4205
+| | |TPP_REST_SERVER_URL_INT |
+| | | CERT_GEN_URL_INT |
+| xs2a-tpp-rest-server | Java 8 | LEDGERS_URL_INT | 8093
 | | | SPRING_DATASOURCE_URL  |
 | | | SPRING_DATASOURCE_USERNAME  |
 | | | SPRING_DATASOURCE_PASSWORD  |
@@ -80,7 +80,7 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | IBAN_GENERATOR_BANKCODE_NISP  |
 | | | IBAN_GENERATOR_BANKCODE_RANDOM  |
 | | | IBAN_GENERATOR_COUNTRYCODE  |
-|developer-portal-ui | NGINX 1.15.5 | XS2A_URL | 4206
+|developer-portal-ui | NGINX 1.15.5 | XS2A_URL_INT | 4206
 |ledgers-db |  Postgresql 9.5  | POSTGRESQL_ADMIN_PASSWORD | 5432
 | | | POSTGRESQL_DATABASE  |
 | | | POSTGRESQL_USER  |
@@ -221,9 +221,9 @@ The table of options and possible configurations you can find below:
 | | | skip_ssl_certificate_verification | true, false | Value used in XS2A_Sandbox is true
 | $JAVA_OPTS_GATEWAY | XS2A Connector examples | SPRING_PROFILES_ACTIVE | postgres,mock-qwac | mock-qwac is used only for testing, this profile mocks TPP QWAC certificate for every request. This profile should not be used for production
 | | | ASPSP_PROFILE_BASEURL | http://localhost:8080/api/v1 (example) | Mandatory URL to your Aspsp-profile application.
-| | | CMS_URL | http://localhost:8080 (example) | Mandatory consent-management-system URL
-| | | LEDGERS_URL | http://localhost:8088 (example)| Mandatory Ledgers URL
-| | | CONSENT_SERVICE_BASEURL | http://localhost:8080/api/v1 (example) | Base consent-management URL for calls to endpoints (CMS_URL + "api/v1")
+| | | CMS_URL_INT | http://localhost:8080 (example) | Mandatory consent-management-system URL
+| | | LEDGERS_URL_INT | http://localhost:8088 (example)| Mandatory Ledgers URL
+| | | CONSENT_SERVICE_BASEURL | http://localhost:8080/api/v1 (example) | Base consent-management URL for calls to endpoints (CMS_URL_INT + "api/v1")
 | | | skip_ssl_certificate_verification | true, false | Value used in XS2A Sandbox is true
 | | | DB_PASSWORD | password-to-change |
 | | | DB_USER | cmsdb |
@@ -247,14 +247,14 @@ The table of options and possible configurations you can find below:
 | | | spring_mail_properties_mail_smtp_connectiontimeout | 5000 |
 | | | spring_mail_properties_mail_smtp_timeout | 5000 |
 | | | spring_mail_properties_mail_smtp_writetimeout | 5000 |
-| $JAVA_OPTS_OBA | Online banking | XS2A_URL | http://localhost:8089 | Mandatory URL to XS2A
-| | | LEDGERS_URL | http://localhost:8088 |
-| | | CMS_URL | http://localhost:8080 |
-| | | ONLINE_BANKING_SCA_LOGINPAGE | https://demo-dynamicsandbox-onlinebankingui-cloud-adorsys.de/ (example) | Online-banking page, to which user would be redirected in Redirect approach
+| $JAVA_OPTS_OBA | Online banking | XS2A_URL_INT | http://localhost:8089 | Mandatory URL to XS2A
+| | | LEDGERS_URL_INT | http://localhost:8088 |
+| | | CMS_URL_INT | http://localhost:8080 |
+| | | ONLINE_BANKING_SCA_LOGINPAGE_INT | https://demo-dynamicsandbox-onlinebankingui-cloud-adorsys.de/ (example) | Online-banking page, to which user would be redirected in Redirect approach
 | | | ONLINE_BANKING_SCA_UIREDIRECT | true, false | XS2A Sandbox uses "true" as a value in this configuration
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_METHODS | GET,POST,PUT,DELETE,OPTIONS,PATCH | CORS settings
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_ORIGINS | https://demo-dynamicsandbox-onlinebankingui-cloud-adorsys.de | CORS settings
-| $JAVA_OPTS_TPP | TPP REST server | LEDGERS_URL | http://localhost:8088 |
+| $JAVA_OPTS_TPP | TPP REST server | LEDGERS_URL_INT | http://localhost:8088 |
 | | | SPRING_DATASOURCE_URL | jdbc:postgresql://localhost/cms |
 | | | SPRING_DATASOURCE_USERNAME | cmsdb |
 | | | SPRING_DATASOURCE_PASSWORD | password-to-change |

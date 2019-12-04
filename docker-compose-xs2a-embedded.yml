@@ -20,7 +20,7 @@ services:
       - "8189:8000"
     environment:
       - SPRING_PROFILES_ACTIVE=mock-qwac,debug_mode
-      - LEDGERS_URL=http://ledgers:8088
+      - LEDGERS_URL_INT=http://ledgers:8088
       - BANK_PROFILE_PATH=/opt/profile/bank_profile_ledgers.yml
       - SPRING_DATASOURCE_URL=jdbc:postgresql://xs2a-consent-management-db/consent?currentSchema=consent
       - SPRING_DATASOURCE_USERNAME=cms
@@ -74,14 +74,14 @@ services:
     networks:
       - xs2a-net
     environment:
-      XS2A_URL: "http://xs2a-connector-embedded:8089"
-      LEDGERS_URL: "http://ledgers:8088"
-      CMS_URL: "http://xs2a-connector-embedded:8089"
-      OBA_URL: "http://localhost:4400"
-      SELF_URL: "http://localhost:8090"
-      ONLINE_BANKING_SCA_LOGINPAGE: "http://localhost:4400/"
+      XS2A_URL_INT: "http://xs2a-connector-embedded:8089"
+      LEDGERS_URL_INT: "http://ledgers:8088"
+      CMS_URL_INT: "http://xs2a-connector-embedded:8089"
+      OBA_URL_INT: "http://localhost:4400"
+      SELF_URL_INT: "http://localhost:8090"
+      ONLINE_BANKING_SCA_LOGINPAGE_INT: "http://localhost:4400/"
       ONLINE_BANKING_SCA_UIREDIRECT: "true"
-      ONLINE-BANKING_URL: "http://xs2a-online-banking:8090/api/v1/consents/confirm/{userLogin}/{consentId}/{authorizationId}/{tan}"
+      ONLINE-BANKING_URL_INT: "http://xs2a-online-banking:8090/api/v1/consents/confirm/{userLogin}/{consentId}/{authorizationId}/{tan}"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://xs2a-consent-management-db/consent?currentSchema=consent"
       SPRING_DATASOURCE_USERNAME: "cms"
       SPRING_DATASOURCE_PASSWORD: "cms"
@@ -124,7 +124,7 @@ services:
     networks:
       - xs2a-net
     environment:
-      ONLINE_BANKING_SERVER_URL: "http://xs2a-online-banking:8090"
+      ONLINE_BANKING_SERVER_URL_INT: "http://xs2a-online-banking:8090"
       DEV_PORTAL_URL_EXT: "http://localhost:4206"
     depends_on:
       - xs2a-online-banking
@@ -135,8 +135,8 @@ services:
     image: adorsys/xs2a-bank-tpp-ui
     restart: on-failure
     environment:
-      - TPP_REST_SERVER_URL=http://xs2a-tpp-rest-server:8093
-      - CERT_GEN_URL=http://certificate-generator:8092
+      -TPP_REST_SERVER_URL_INT=http://xs2a-tpp-rest-server:8093
+      - CERT_GEN_URL_INT=http://certificate-generator:8092
       - CERT_GEN_ENABLED=false
     build:
       context: tpp-ui
@@ -154,7 +154,7 @@ services:
     image: adorsys/xs2a-tpp-rest-server
     restart: on-failure
     environment:
-      LEDGERS_URL: "http://ledgers:8088"
+      LEDGERS_URL_INT: "http://ledgers:8088"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://xs2a-consent-management-db/consent?currentSchema=consent"
       SPRING_DATASOURCE_USERNAME: "cms"
       SPRING_DATASOURCE_PASSWORD: "cms"
@@ -186,17 +186,17 @@ services:
     depends_on:
       - xs2a-connector-embedded
     environment:
-      - XS2A_URL=http://xs2a-connector-embedded:8089
-      - ASPSP_URL=http://xs2a-connector-embedded:8089
-      - ENVLINK_DEVELOPER_PORTAL=https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/
-      - ENVLINK_XS2A_INTERFACE_SWAGGER=https://dev-dynamicsandbox-xs2a.cloud.adorsys.de/
-      - ENVLINK_CONSENT_MANAGEMENT_SYSTEM=https://dev-dynamicsandbox-cms.cloud.adorsys.de
-      - ENVLINK_LEDGERS=https://dev-dynamicsandbox-ledgers.cloud.adorsys.de
-      - ENVLINK_ASPSP_PROFILE_SWAGGER=https://dev-dynamicsandbox-aspspprofile.cloud.adorsys.de
-      - ENVLINK_TPP_UI=https://blub-dynamicsandbox-tppui.cloud.adorsys.de/login
-      - ENVLINK_ONLINE_BANKING_UI=https://dev-dynamicsandbox-onlinebankingui.cloud.adorsys.de/account-information/login
-      - ENVLINK_ONLINE_BANKING_BACKEND=https://dev-dynamicsandbox-onlinebanking.cloud.adorsys.de/swagger-ui.html
-      - ENVLINK_CERTIFICATE_GENERATOR=https://dev-dynamicsandbox-certificategenerator.cloud.adorsys.de/swagger-ui.html
+      - XS2A_URL_INT=http://xs2a-connector-embedded:8089
+      - ASPSP_URL_INT=http://xs2a-connector-embedded:8089
+      - DEVELOPER_PORTAL_INT=https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/
+      - XS2A_INTERFACE_EXT=https://dev-dynamicsandbox-xs2a.cloud.adorsys.de/
+      - CONSENT_MANAGEMENT_SYSTEM_EXT=https://dev-dynamicsandbox-cms.cloud.adorsys.de
+      - LEDGERS_EXT=https://dev-dynamicsandbox-ledgers.cloud.adorsys.de
+      - ASPSP_PROFILE_EXT=https://dev-dynamicsandbox-aspspprofile.cloud.adorsys.de
+      - TPP_UI_EXT=https://blub-dynamicsandbox-tppui.cloud.adorsys.de/login
+      - ONLINE_BANKING_UI_EXT=https://dev-dynamicsandbox-onlinebankingui.cloud.adorsys.de/account-information/login
+      - ONLINE_BANKING_BACKEND_EXT=https://dev-dynamicsandbox-onlinebanking.cloud.adorsys.de/swagger-ui.html
+      - CERTIFICATE_GENERATOR_EXT=https://dev-dynamicsandbox-certificategenerator.cloud.adorsys.de/swagger-ui.html
 
   # Certificate generator
   certificate-generator:
