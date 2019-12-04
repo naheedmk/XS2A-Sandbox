@@ -103,6 +103,7 @@ public class AccountMapperTest {
         accountAccess.setId("XyZ");
         accountAccess.setAccessType(ACCESS_TYPE);
         accountAccess.setIban(IBAN);
+        accountAccess.setCurrency(CURRENCY);
         accountAccess.setScaWeight(SCA_WEIGHT);
         return accountAccess;
     }

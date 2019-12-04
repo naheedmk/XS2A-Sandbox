@@ -96,6 +96,7 @@ public class UserMapperTest {
         AccountAccess access = new AccountAccess();
         access.setId(ACC_ID);
         access.setIban(IBAN);
+        access.setCurrency(CURRENCY);
         access.setScaWeight(50);
         access.setAccessType(OWNER);
         return access;
