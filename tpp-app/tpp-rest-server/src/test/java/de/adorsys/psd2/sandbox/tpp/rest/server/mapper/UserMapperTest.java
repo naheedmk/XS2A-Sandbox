@@ -28,6 +28,7 @@ public class UserMapperTest {
     private static final String ACC_ID = "ZXCVASDF";
     private static final String IBAN = "DE1234567890";
     private static final Currency CURRENCY = Currency.getInstance("EUR");
+
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     @Test

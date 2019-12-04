@@ -9,6 +9,7 @@ import java.util.Currency;
 public class AccountAccess {
     private String id;
     private String iban;
+    private Currency currency;
     private AccessTypeTO accessType;
     private Currency currency;
     private int scaWeight;
