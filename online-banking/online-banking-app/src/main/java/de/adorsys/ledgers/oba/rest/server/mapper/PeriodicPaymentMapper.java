@@ -33,6 +33,7 @@ public interface PeriodicPaymentMapper {
                    : Integer.parseInt(day.getValue());
     }
 
+    //TODO extends Ledgers FrequencyCodeTO according to xs2a one and remove this method https://git.adorsys.de/adorsys/xs2a/ledgers/issues/234
     default FrequencyCodeTO mapFrequencyCode(FrequencyCode frequencyCode) {
         return frequencyCode == null
                    ? null
