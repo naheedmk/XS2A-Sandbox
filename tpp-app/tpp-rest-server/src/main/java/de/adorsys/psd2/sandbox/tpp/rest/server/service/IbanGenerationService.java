@@ -37,10 +37,9 @@ public class IbanGenerationService {
         return BbanStructure.supportedCountries();
     }
 
-    public Integer getbankCodeLenght(CountryCode countryCode) {
+    public Integer getBankCodeLength(CountryCode countryCode) {
         return BbanStructure.forCountry(countryCode).getEntries().get(0).getLength();
     }
-
 
     private TppData getTppData() {
         return new TppData(userMgmtRestClient.getUser().getBody());

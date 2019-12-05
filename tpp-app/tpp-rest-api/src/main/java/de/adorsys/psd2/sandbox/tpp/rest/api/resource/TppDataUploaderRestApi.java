@@ -28,12 +28,12 @@ public interface TppDataUploaderRestApi {
     @GetMapping("/generate/iban")
     ResponseEntity<String> generateIban();
 
-    @ApiOperation(value = "Get bank code lenght", authorizations = @Authorization(value = "apiKey"))
-    @GetMapping("/bankCode")
-    ResponseEntity<Integer> getbankCodeLenght(@RequestParam String countryCode);
+    @ApiOperation(value = "Get bank code length", authorizations = @Authorization(value = "apiKey"))
+    @GetMapping("/bank/code")
+    ResponseEntity<Integer> getBankCodeLength(@RequestParam String countryCode);
 
     @ApiOperation(value = "Get country codes ", authorizations = @Authorization(value = "apiKey"))
-    @GetMapping("/countryCodes")
+    @GetMapping("/country/codes")
     ResponseEntity<List<CountryCode>> getCountryCodes();
 
     @ApiOperation(value = "Upload CSV file with transactions list", authorizations = @Authorization(value = "apiKey"))

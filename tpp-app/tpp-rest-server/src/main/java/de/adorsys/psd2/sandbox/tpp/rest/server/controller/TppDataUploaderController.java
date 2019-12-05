@@ -66,8 +66,8 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
     }
 
     @Override
-    public ResponseEntity<Integer> getbankCodeLenght(String countryCode) {
-        return ResponseEntity.ok(ibanGenerationService.getbankCodeLenght(CountryCode.valueOf(countryCode)));
+    public ResponseEntity<Integer> getBankCodeLength(String countryCode) {
+        return ResponseEntity.ok(ibanGenerationService.getBankCodeLength(CountryCode.valueOf(countryCode)));
     }
 
     @Override
