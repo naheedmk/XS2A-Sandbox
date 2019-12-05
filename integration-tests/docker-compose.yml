@@ -44,11 +44,11 @@ services:
     environment:
     - SPRING_PROFILES_ACTIVE=mock-qwak
     - LEDGERS_URL=http://ledgers:8088
-    - XS2A_URL=http://gateway:8089
+    - XS2A_URL_INT=http://gateway:8089
     - CMS_URL=http://consent:38080
     - FEIGN_CLIENT_CONFIG_DEFAULT_LOGGERLEVEL=NONE
     - LOGGING_LEVEL_ROOT=INFO
-    - ONLINE_BANKING_SCA_LOGINPAGE=http://localhost:4400/
+    - ONLINE_BANKING_SCA_LOGINPAGE_INT=http://localhost:4400/
     - ONLINE_BANKING_SCA_UIREDIRECT=true
     networks:
     - xs2a-net

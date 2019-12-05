@@ -74,12 +74,12 @@ services:
     networks:
       - xs2a-net
     environment:
-      XS2A_URL: "http://xs2a-connector-embedded:8089"
+      XS2A_URL_INT: "http://xs2a-connector-embedded:8089"
       LEDGERS_URL: "http://ledgers:8088"
       CMS_URL: "http://xs2a-connector-embedded:8089"
       OBA_URL: "http://localhost:4400"
       SELF_URL: "http://localhost:8090"
-      ONLINE_BANKING_SCA_LOGINPAGE: "http://localhost:4400/"
+      ONLINE_BANKING_SCA_LOGINPAGE_INT: "http://localhost:4400/"
       ONLINE_BANKING_SCA_UIREDIRECT: "true"
       ONLINE-BANKING_URL: "http://xs2a-online-banking:8090/api/v1/consents/confirm/{userLogin}/{consentId}/{authorizationId}/{tan}"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://xs2a-consent-management-db/consent?currentSchema=consent"
@@ -124,8 +124,8 @@ services:
     networks:
       - xs2a-net
     environment:
-      ONLINE_BANKING_SERVER_URL: "http://xs2a-online-banking:8090"
-      DEV_PORTAL_URL_EXT: "http://localhost:4206"
+      ONLINE_BANKING_SERVER_URL_INT: "http://xs2a-online-banking:8090"
+      DEV_PORTAL_URL_INT: "http://localhost:4206"
     depends_on:
       - xs2a-online-banking
       - developer-portal-ui
@@ -135,8 +135,8 @@ services:
     image: adorsys/xs2a-bank-tpp-ui
     restart: on-failure
     environment:
-      - TPP_REST_SERVER_URL=http://xs2a-tpp-rest-server:8093
-      - CERT_GEN_URL=http://certificate-generator:8092
+      - TPP_REST_SERVER_URL_INT=http://xs2a-tpp-rest-server:8093
+      - CERT_GEN_URL_INT=http://certificate-generator:8092
       - CERT_GEN_ENABLED=false
     build:
       context: tpp-ui
@@ -186,7 +186,7 @@ services:
     depends_on:
       - xs2a-connector-embedded
     environment:
-      - XS2A_URL=http://xs2a-connector-embedded:8089
+      - XS2A_URL_INT=http://xs2a-connector-embedded:8089
       - ASPSP_URL=http://xs2a-connector-embedded:8089
       - ENVLINK_DEVELOPER_PORTAL=https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/
       - ENVLINK_XS2A_INTERFACE_SWAGGER=https://dev-dynamicsandbox-xs2a.cloud.adorsys.de/

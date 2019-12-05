@@ -40,10 +40,10 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | POSTGRESQL_DATABASE  |
 | | | POSTGRESQL_USER  |
 | | | POSTGRESQL_PASSWORD |
-|xs2a-online-banking | NGINX 1.15.5 |XS2A_URL| 8090,8190
+|xs2a-online-banking | NGINX 1.15.5 |XS2A_URL_INT| 8090,8190
 | | | LEDGERS_URL  |
 | | | CMS_URL  |
-| | | ONLINE_BANKING_SCA_LOGINPAGE  |
+| | | ONLINE_BANKING_SCA_LOGINPAGE_INT |
 | | | ONLINE_BANKING_SCA_UIREDIRECT  |
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_METHODS  |
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_ORIGINS  |
@@ -61,11 +61,11 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | SPRING_MAIL_PROPERTIES_MAIL_FROM  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE |
-|xs2a-online-banking-ui  |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL | 4400
-| | | DEV_PORTAL_URL_EXT |
+|xs2a-online-banking-ui  |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL_INT | 4400
+| | | DEV_PORTAL_URL_INT |
 |xs2a-tpp-ui | NGINX 1.15.5 | LEDGERS_URL | 4205
-| | | TPP_REST_SERVER_URL |
-| | | CERT_GEN_URL |
+| | | TPP_REST_SERVER_URL_INT |
+| | | CERT_GEN_URL_INT |
 | xs2a-tpp-rest-server | Java 8 | LEDGERS_URL | 8093
 | | | SPRING_DATASOURCE_URL  |
 | | | SPRING_DATASOURCE_USERNAME  |
@@ -250,7 +250,7 @@ The table of options and possible configurations you can find below:
 | $JAVA_OPTS_OBA | Online banking | XS2A_URL | http://localhost:8089 | Mandatory URL to XS2A
 | | | LEDGERS_URL | http://localhost:8088 |
 | | | CMS_URL | http://localhost:8080 |
-| | | ONLINE_BANKING_SCA_LOGINPAGE | https://demo-dynamicsandbox-onlinebankingui-cloud-adorsys.de/ (example) | Online-banking page, to which user would be redirected in Redirect approach
+| | | ONLINE_BANKING_SCA_LOGINPAGE_INT | https://demo-dynamicsandbox-onlinebankingui-cloud-adorsys.de/ (example) | Online-banking page, to which user would be redirected in Redirect approach
 | | | ONLINE_BANKING_SCA_UIREDIRECT | true, false | XS2A Sandbox uses "true" as a value in this configuration
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_METHODS | GET,POST,PUT,DELETE,OPTIONS,PATCH | CORS settings
 | | | MANAGEMENT_ENDPOINTS_WEB_CORS_ALLOWED_ORIGINS | https://demo-dynamicsandbox-onlinebankingui-cloud-adorsys.de | CORS settings

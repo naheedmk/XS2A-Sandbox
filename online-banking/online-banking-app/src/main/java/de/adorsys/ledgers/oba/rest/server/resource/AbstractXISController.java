@@ -52,7 +52,7 @@ public abstract class AbstractXISController {
     @Autowired
     protected UserMgmtRestClient userMgmtRestClient;
 
-    @Value("${online-banking.sca.loginpage:http://localhost:4400/}")
+    @Value("${online-banking.sca.loginpage.int:http://localhost:4400/}")
     private String loginPage;
 
     @Autowired
@@ -67,7 +67,7 @@ public abstract class AbstractXISController {
      * The purpose of this protocol step is to parse the redirect link and start
      * the user agent.
      * <p>
-     * The user agent is defined by providing the URL read from the property online-banking.sca.loginpage.
+     * The user agent is defined by providing the URL read from the property online-banking.sca.loginpage.int.
      * <p>
      * A 302 redirect will be performed to that URL by default. But if the target user agent does not
      * which for a redirect, it can set the NO_REDIRECT_HEADER_PARAM to true/on.

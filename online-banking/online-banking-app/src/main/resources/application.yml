@@ -32,11 +32,11 @@ spring:
   jpa:
     open-in-view: false
 
-ledgers.url: http://localhost:8088
-xs2a.url: http://localhost:8089
-cms.url: http://localhost:38080
-oba.url: http://localhost:4400
-self.url: http://localhost:8090
+ledgers.url.int: http://localhost:8088
+xs2a.url.int: http://localhost:8089
+cms.url.int: http://localhost:38080
+oba.url.int: http://localhost:4400
+self.url.int: http://localhost:8090
 
 #LOGGER
 # logging.level.org.springframework.web: DEBUG
