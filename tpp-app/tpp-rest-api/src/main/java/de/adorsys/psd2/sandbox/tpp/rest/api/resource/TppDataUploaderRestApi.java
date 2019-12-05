@@ -6,12 +6,10 @@ import io.swagger.annotations.Authorization;
 import org.iban4j.CountryCode;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 @Api(tags = "TPP data uploader")
@@ -30,9 +28,13 @@ public interface TppDataUploaderRestApi {
     @GetMapping("/generate/iban")
     ResponseEntity<String> generateIban();
 
-    @ApiOperation(value = "Generate random IBAN with selected country code", authorizations = @Authorization(value = "apiKey"))
-    @GetMapping("/generate/ibanWithCountryCode")
-    ResponseEntity<String> generateIbanWithCountryCode(@RequestParam CountryCode countryCode);
+    @ApiOperation(value = "Get bank code lenght", authorizations = @Authorization(value = "apiKey"))
+    @GetMapping("/bankCode")
+    ResponseEntity<Integer> getbankCodeLenght(@RequestParam String countryCode);
+
+    @ApiOperation(value = "Get country codes ", authorizations = @Authorization(value = "apiKey"))
+    @GetMapping("/countryCodes")
+    ResponseEntity<List<CountryCode>> getCountryCodes();
 
     @ApiOperation(value = "Upload CSV file with transactions list", authorizations = @Authorization(value = "apiKey"))
     @PutMapping("/upload/transactions")

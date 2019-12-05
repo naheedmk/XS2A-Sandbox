@@ -2,78 +2,47 @@ package de.adorsys.psd2.sandbox.tpp.rest.server.service;
 
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.middleware.api.domain.payment.SinglePaymentTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AccessTypeTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
-import de.adorsys.ledgers.middleware.client.rest.AccountRestClient;
-import de.adorsys.psd2.sandbox.tpp.rest.server.config.IbanGenerationConfigProperties;
+import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.AccountBalance;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
-import feign.FeignException;
-import feign.Request;
-import feign.Response;
 import org.apache.commons.lang3.StringUtils;
-import org.iban4j.CountryCode;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestsDataGenerationServiceTest {
-    private static final String TPP_ID = "11111111";
-    private static final String COUNTRY_CODE = "DE";
-    private static final String INVALID_COUNTRY_CODE = "EEE";
-    private static final String BANK_CODE = "76050101";
+    private static final String TPP_ID = "DE_11111111";
+    private static final String USER_IBAN = "DE89000000115555555555";
+    private static final String USER_ID = "QWERTY";
+    private static final Currency CURRENCY = Currency.getInstance("EUR");
 
     @InjectMocks
     private IbanGenerationService generationService;
     @Mock
-    private AccountRestClient accountRestClient;
-    @Mock
-    private IbanGenerationConfigProperties ibanGenerationConfigProperties;
-
-    @Before
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
-        ibanGenerationConfigProperties = new IbanGenerationConfigProperties();
-        ibanGenerationConfigProperties.getBankCode().setNisp(BANK_CODE);
-        ibanGenerationConfigProperties.getBankCode().setRandom(BANK_CODE);
-        ibanGenerationConfigProperties.setCountryCode(COUNTRY_CODE);
-        generationService = new IbanGenerationService(ibanGenerationConfigProperties, accountRestClient);
-    }
+    private UserMgmtRestClient userMgmtRestClient;
 
     @Test
-    public void generateRandomIban() {
-        when(accountRestClient.getAccountDetailsByIban(anyString())).thenThrow(getFeignException());
-        String iban = generationService.generateRandomIban();
+    public void generateIban() {
+        when(userMgmtRestClient.getUser()).thenReturn(ResponseEntity.ok(new UserTO(null, null, null, null, null, getAccountAccess(), null, TPP_ID)));
+        String iban = generationService.generateNextIban();
         assertTrue(StringUtils.isNotEmpty(iban));
     }
 
     @Test
-    public void generateRandomIbanWithCountryCode() {
-        String iban = generationService.generateRandomIbanWithCountryCode(CountryCode.valueOf(COUNTRY_CODE));
-        assertTrue(StringUtils.isNoneEmpty(iban));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void generateRandomIbanWithCountryCode_wrongCountryCode() {
-        when(generationService.generateRandomIbanWithCountryCode(CountryCode.valueOf(INVALID_COUNTRY_CODE))).thenThrow(IllegalArgumentException.class);
-        generationService.generateRandomIbanWithCountryCode(CountryCode.valueOf(anyString()));
-    }
-
-    @Test
     public void generateNispIban() {
+        when(userMgmtRestClient.getUser()).thenReturn(ResponseEntity.ok(new UserTO(null, null, null, null, null, getAccountAccess(), null, TPP_ID)));
         String s = generationService.generateIbanForNisp(getPayload(), "00");
         assertTrue(StringUtils.isNotBlank(s));
     }
@@ -86,10 +55,13 @@ public class TestsDataGenerationServiceTest {
         return new DataPayload(users, accounts, balances, payments, false, TPP_ID, new HashMap<>());
     }
 
-    @NotNull
-    private FeignException getFeignException() {
-        Request rec = Request.create(Request.HttpMethod.GET, " ", new HashMap<>(), Request.Body.empty());
-        Response resp = Response.builder().status(404).request(rec).headers(new HashMap<>()).build();
-        return FeignException.errorStatus("GET", resp);
+    private List<AccountAccessTO> getAccountAccess() {
+        AccountAccessTO accountAccess = new AccountAccessTO();
+        accountAccess.setCurrency(CURRENCY);
+        accountAccess.setAccessType(AccessTypeTO.OWNER);
+        accountAccess.setIban(USER_IBAN);
+        accountAccess.setScaWeight(50);
+        accountAccess.setId(USER_ID);
+        return Collections.singletonList(accountAccess);
     }
 }

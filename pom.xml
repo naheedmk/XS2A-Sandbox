@@ -99,7 +99,7 @@
         <!-- xs2a version -->
         <xs2a.version>5.3</xs2a.version>
         <connector.version>5.3.1</connector.version>
-        <ledgers.version>2.1</ledgers.version>
+        <ledgers.version>2.2</ledgers.version>
         <psd2.certificate.generator.version>1.5.0</psd2.certificate.generator.version>
         <!-- other properties -->
         <spring-boot-dependencies.version>2.1.1.RELEASE</spring-boot-dependencies.version>
@@ -152,10 +152,6 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -284,9 +280,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.github.goxr3plus</groupId>
-                <artifactId>iban5j</artifactId>
-                <version>iban5j-1.0.0</version>
+                <groupId>org.iban4j</groupId>
+                <artifactId>iban4j</artifactId>
+                <version>3.2.1</version>
             </dependency>
 
             <!-- Commons -->

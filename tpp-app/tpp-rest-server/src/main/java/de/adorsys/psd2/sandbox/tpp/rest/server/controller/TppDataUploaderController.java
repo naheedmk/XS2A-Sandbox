@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -61,12 +62,17 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
 
     @Override
     public ResponseEntity<String> generateIban() {
-        return ResponseEntity.ok(ibanGenerationService.generateRandomIban());
+        return ResponseEntity.ok(ibanGenerationService.generateNextIban());
     }
 
     @Override
-    public ResponseEntity<String> generateIbanWithCountryCode(CountryCode countryCode) {
-        return ResponseEntity.ok(ibanGenerationService.generateRandomIbanWithCountryCode(countryCode));
+    public ResponseEntity<Integer> getbankCodeLenght(String countryCode) {
+        return ResponseEntity.ok(ibanGenerationService.getbankCodeLenght(CountryCode.valueOf(countryCode)));
+    }
+
+    @Override
+    public ResponseEntity<List<CountryCode>> getCountryCodes() {
+        return ResponseEntity.ok(ibanGenerationService.getSupportedCountryCodes());
     }
 
     @Override
