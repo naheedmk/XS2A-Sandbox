@@ -61,9 +61,11 @@ describe('AuthorizeComponent', () => {
   it('should call oAuthService on submit', () => {
     expect(oAuthService).toBeTruthy();
     spyOn(oAuthService, 'authorize').and.returnValue(of(correctOauthParams));
+    let registerSpy = spyOn(router, 'navigate').and.callFake(() => of());
 
     component.onSubmit();
     expect(oAuthService.authorize).toHaveBeenCalledTimes(1);
+    expect(registerSpy).toHaveBeenCalledTimes(1);
   });
 
 });
