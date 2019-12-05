@@ -45,7 +45,7 @@ export class AuthorizeComponent implements OnInit {
       .pipe(
         map(response => response.redirectUri)
       )
-      .subscribe(url => this.router.navigate([url]));
+      .subscribe(url => window.location.href = url);
   }
 
   private initAuthorizeForm(): void {
