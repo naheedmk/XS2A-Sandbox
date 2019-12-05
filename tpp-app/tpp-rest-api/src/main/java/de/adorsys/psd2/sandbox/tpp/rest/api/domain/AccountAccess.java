@@ -11,6 +11,5 @@ public class AccountAccess {
     private String iban;
     private Currency currency;
     private AccessTypeTO accessType;
-    private Currency currency;
     private int scaWeight;
 }
