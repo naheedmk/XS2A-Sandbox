@@ -35,6 +35,6 @@ public class TppData {
                                      .map(Long::parseLong)
                                      .max(Comparator.comparingLong(Long::longValue))
                                      .map(i -> ++i)
-                                     .orElse(100l);
+                                     .orElse(100L);
     }
 }

@@ -1,5 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.rest.api.resource;
 
+import de.adorsys.psd2.sandbox.tpp.rest.api.domain.BankCodeStructure;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -31,17 +32,13 @@ public interface TppDataUploaderRestApi {
     @GetMapping("/generate/iban")
     ResponseEntity<String> generateIban();
 
-    @ApiOperation(value = "Get bank code length", authorizations = @Authorization(value = "apiKey"))
-    @GetMapping("/bank/code")
-    ResponseEntity<Integer> getBankCodeLength(@RequestParam String countryCode);
-
     @ApiOperation(value = "Get country codes ", authorizations = @Authorization(value = "apiKey"))
     @GetMapping("/country/codes")
     ResponseEntity<List<CountryCode>> getCountryCodes();
 
-    @ApiOperation(value = "Get country code character type ", authorizations = @Authorization(value = "apiKey"))
-    @GetMapping("/country/codes/type")
-    ResponseEntity<String> getBankCodeCharacterType(@RequestParam String countryCode);
+    @ApiOperation(value = "Get country code character type and country code length", authorizations = @Authorization(value = "apiKey"))
+    @GetMapping("/country/codes/structure")
+    ResponseEntity<BankCodeStructure> getBankCodeStructure(@RequestParam String countryCode);
 
     @ApiOperation(value = "Upload CSV file with transactions list", authorizations = @Authorization(value = "apiKey"))
     @PutMapping("/upload/transactions")

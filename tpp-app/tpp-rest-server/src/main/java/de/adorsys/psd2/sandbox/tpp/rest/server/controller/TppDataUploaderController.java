@@ -1,6 +1,7 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import de.adorsys.psd2.sandbox.tpp.rest.api.domain.BankCodeStructure;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppDataUploaderRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
@@ -66,20 +67,15 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
     }
 
     @Override
-    public ResponseEntity<Integer> getBankCodeLength(String countryCode) {
-        return ResponseEntity.ok(ibanGenerationService.getBankCodeLength(CountryCode.valueOf(countryCode)));
-    }
-
-    @Override
     public ResponseEntity<List<CountryCode>> getCountryCodes() {
         return ResponseEntity.ok(ibanGenerationService.getSupportedCountryCodes());
     }
 
     @Override
-    public ResponseEntity<String> getBankCodeCharacterType(String countryCode) {
-        return ResponseEntity.ok(ibanGenerationService.getBankCodeCharacterType(CountryCode.valueOf(countryCode)));
-    }
+    public ResponseEntity<BankCodeStructure> getBankCodeStructure(String countryCode){
+        return ResponseEntity.ok(ibanGenerationService.getBankCodeStructure(CountryCode.valueOf(countryCode)));
 
+    }
     @Override
     public ResponseEntity<Map<String, String>> uploadTransactions(MultipartFile file) {
         log.info("uploading transactions");
