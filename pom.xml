@@ -123,7 +123,7 @@
         <fasterxml-data-format.version>2.9.8</fasterxml-data-format.version>
         <opencsv.version>4.5</opencsv.version>
         <iban4j-version>3.2.1</iban4j-version>
-        <iban-validation.version>1.6</iban-validation.version>
+        <commons-validator.version>1.6</commons-validator.version>
         <!--Sonar -->
         <sonar.core.coveragePlugin>jacoco</sonar.core.coveragePlugin>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -312,7 +312,7 @@
             <dependency>
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
-                <version>${iban-validation.version}</version>
+                <version>${commons-validator.version}</version>
                 <scope>test</scope>
             </dependency>
 
