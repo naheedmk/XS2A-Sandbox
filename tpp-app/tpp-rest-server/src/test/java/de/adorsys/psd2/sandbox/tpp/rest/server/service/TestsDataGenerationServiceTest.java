@@ -46,7 +46,7 @@ public class TestsDataGenerationServiceTest {
         assertTrue(isIbanValid);
     }
 
-    //TODO write correct test for country with different character type
+    //TODO write correct test for countries with different character type
 //    @Test
 //    public void validateIbansForDifferentCountries_CharacterTypeN() {
 //        List<CountryCode> countryCodes = generationService.getSupportedCountryCodes().stream()
