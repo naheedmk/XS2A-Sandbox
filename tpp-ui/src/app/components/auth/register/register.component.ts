@@ -27,12 +27,12 @@ export class RegisterComponent implements OnInit {
 
   public selectedCountry;
   public countries: Array<string>;
+  public showTppStructureMessage = false;
   public tppIdStructure: TppIdStructure = {
     "length": 8,
     "type": TppIdType.n
   };
   private defaultCountry = "DE";
-  private showTppStructureMessage = false;
 
   constructor(private service: AuthService,
               private certGenerationService: CertGenerationService,
