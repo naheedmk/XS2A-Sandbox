@@ -67,16 +67,6 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
     }
 
     @Override
-    public ResponseEntity<List<CountryCode>> getCountryCodes() {
-        return ResponseEntity.ok(ibanGenerationService.getSupportedCountryCodes());
-    }
-
-    @Override
-    public ResponseEntity<BankCodeStructure> getBankCodeStructure(String countryCode){
-        return ResponseEntity.ok(ibanGenerationService.getBankCodeStructure(CountryCode.valueOf(countryCode)));
-
-    }
-    @Override
     public ResponseEntity<Map<String, String>> uploadTransactions(MultipartFile file) {
         log.info("uploading transactions");
         Map<String, String> response = transactionService.uploadUserTransaction(file);
