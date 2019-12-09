@@ -83,37 +83,11 @@ export class AuthService {
 
   getCountryCodes(): Observable<any> {
     return this.http.get(this.url + '/country/codes');
-    // return of(
-    //   [
-    //     "DE",
-    //     "CH",
-    //     "FR",
-    //     "UA",
-    //     "DK",
-    //     "FI",
-    //     "HU",
-    //     "IS",
-    //     "LI",
-    //     "LU",
-    //     "PL",
-    //     "PT",
-    //     "SE",
-    //     "SI",
-    //     "GB"
-    //   ]
-    // );
   }
 
   getTppIdStructure(countryCode: string): Observable<any> {
     return this.http.get(this.url + '/country/codes/structure',
       {params: new HttpParams().set("countryCode", countryCode)});
-
-    // return of(
-    //   {
-    //     "length": 10,
-    //     "type": "n"
-    //   }
-    // );
   }
 
 }
