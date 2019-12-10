@@ -45,7 +45,11 @@ export class AuthorizeComponent implements OnInit {
       .pipe(
         map(response => response.redirectUri)
       )
-      .subscribe(url => this.router.navigate([url]));
+      .subscribe(url => {
+        this.router.navigate(['/externalRedirect', { externalUrl: url }], {
+          skipLocationChange: true,
+        });
+      });
   }
 
   private initAuthorizeForm(): void {

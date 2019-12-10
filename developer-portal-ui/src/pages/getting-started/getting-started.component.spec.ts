@@ -6,6 +6,8 @@ import { CustomizeService } from '../../services/customize.service';
 import { CodeAreaComponent } from '../../custom-elements/code-area/code-area.component';
 import { DataService } from '../../services/data.service';
 import { ToastrService } from 'ngx-toastr';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 describe('GettingStartedComponent', () => {
   let component: GettingStartedComponent;
@@ -76,6 +78,10 @@ describe('GettingStartedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        NgxImageZoomModule.forRoot(),
+        RouterTestingModule
+      ],
       declarations: [
         GettingStartedComponent,
         TranslatePipe,

@@ -60,7 +60,7 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
 
     @Override
     public ResponseEntity<String> generateIban() {
-        return ResponseEntity.ok(ibanGenerationService.generateRandomIban());
+        return ResponseEntity.ok(ibanGenerationService.generateNextIban());
     }
 
     @Override

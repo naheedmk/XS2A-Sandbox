@@ -49,11 +49,6 @@ describe('AuthorizeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should check that the functions are defined', () => {
-    expect(component).toBeTruthy();
-    expect(component.onSubmit).not.toBeNull();
-  });
-
   it('should have Customise Service', () => {
     expect(component.customizeService).toBeTruthy();
   });
@@ -66,6 +61,11 @@ describe('AuthorizeComponent', () => {
     component.onSubmit();
     expect(oAuthService.authorize).toHaveBeenCalledTimes(1);
     expect(registerSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should check that the functions are defined', () => {
+    expect(component).toBeTruthy();
+    expect(component.onSubmit).not.toBeNull();
   });
 
 });
