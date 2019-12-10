@@ -25,14 +25,13 @@ export class RegisterComponent implements OnInit {
   public submitted: boolean;
   public errorMessage: string;
 
-  public selectedCountry;
-  public countries: Array<string>;
+  public selectedCountry: string;
+  public countries: Array<string> = [];
   public showTppStructureMessage = false;
   public tppIdStructure: TppIdStructure = {
     "length": 8,
     "type": TppIdType.n
   };
-  private defaultCountry = "DE";
 
   constructor(private service: AuthService,
               private certGenerationService: CertGenerationService,
@@ -47,12 +46,15 @@ export class RegisterComponent implements OnInit {
     this.service.getTppIdStructure(this.selectedCountry)
       .subscribe(
         data => {
-          this.userForm.enable();
           this.tppIdStructure = data;
-          this.showTppStructureMessage = true;
           this.changeIdValidators();
+          this.userForm.enable();
+          this.showTppStructureMessage = true;
         },
-        error => console.log(error)
+        error => {
+          console.log(error);
+          this.infoService.openFeedback("Could not get TPP ID structure for this country!");
+        }
       );
   }
 
@@ -75,7 +77,7 @@ export class RegisterComponent implements OnInit {
       data => this.countries = data,
       error => {
         console.log(error);
-        this.countries = [this.defaultCountry];
+        this.infoService.openFeedback("Could not download country list!");
       }
     );
   }

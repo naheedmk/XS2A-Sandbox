@@ -89,5 +89,4 @@ export class AuthService {
     return this.http.get(this.url + '/country/codes/structure',
       {params: new HttpParams().set("countryCode", countryCode)});
   }
-
 }

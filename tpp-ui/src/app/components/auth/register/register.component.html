@@ -125,6 +125,7 @@
           <div class="form-check">
             <input (change)="generateCertificate = !generateCertificate"
                    [checked]="generateCertificate"
+                   [disabled]="selectedCountry == undefined && !userForm.valid"
                    class="form-check-input"
                    id="generateCertificate"
                    type="checkbox">
@@ -138,7 +139,8 @@
 
         <div>
           <button [innerHTML]="!generateCertificate ?'Register': 'Register & Generate'"
-                  class="btn btn-primary btn-block mb-3"></button>
+                  class="btn btn-primary btn-block mb-3"
+                  [disabled]="selectedCountry == undefined && !userForm.valid"></button>
           <div class="text-center text-light-grey">
             <a routerLink="/login">Login</a>
           </div>
