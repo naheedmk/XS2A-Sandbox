@@ -59,7 +59,7 @@ export class PlayWthDataComponent implements OnInit {
     'pain.001-cross-border-credit-transfers',
   ];
   bookingStatusSelect = ['booked', 'pending', 'both'];
-  selectedConsentType: string = 'dedicatedAccountsConsent';
+  selectedConsentType = 'dedicatedAccountsConsent';
 
   constructor(
     public restService: RestService,
