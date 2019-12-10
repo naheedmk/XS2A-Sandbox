@@ -6,7 +6,6 @@ import { getStatusText } from 'http-status-codes';
 import { CopyService } from '../../../../services/copy.service';
 import { ConsentTypes } from '../../../../models/consentTypes.model';
 import { LocalStorageService } from '../../../../services/local-storage.service';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-play-wth-data',
@@ -65,8 +64,7 @@ export class PlayWthDataComponent implements OnInit {
     public restService: RestService,
     public dataService: DataService,
     public copyService: CopyService,
-    public localStorageService: LocalStorageService,
-    public formBuilder: FormBuilder
+    public localStorageService: LocalStorageService
   ) {}
 
   /**
