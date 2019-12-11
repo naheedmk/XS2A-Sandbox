@@ -1,7 +1,5 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.service;
 
-import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
-import de.adorsys.ledgers.middleware.api.domain.payment.SinglePaymentTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
@@ -48,20 +46,8 @@ public class TestsDataGenerationService {
         dataPayload.getAccounts().forEach(a -> a.setCurrency(currency));
         dataPayload.getBalancesList().forEach(b -> b.setCurrency(currency));
         dataPayload.getUsers().forEach(u -> updateCurrencyForAccountAccesses(u.getAccountAccesses(), currency));
-        dataPayload.getPayments().forEach(p -> updatePaymentCurrencies(p, currency));
 
         return dataPayload;
-    }
-
-    private void updatePaymentCurrencies(SinglePaymentTO payment, Currency currency) {
-        AccountReferenceTO creditorAccount = payment.getCreditorAccount();
-        AccountReferenceTO debtorAccount = payment.getDebtorAccount();
-
-        creditorAccount.setCurrency(currency);
-        debtorAccount.setCurrency(currency);
-
-        payment.setCreditorAccount(creditorAccount);
-        payment.setDebtorAccount(debtorAccount);
     }
 
     private void updateCurrencyForAccountAccesses(List<AccountAccessTO> accountAccesses, Currency currency) {
