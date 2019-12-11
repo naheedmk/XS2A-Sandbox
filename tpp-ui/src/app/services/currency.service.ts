@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
-import {of} from "rxjs";
+import {environment} from "../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrencyService {
 
-  private currencies: Array<string> = [];
+  private currencies;
+  public url = `${environment.tppBackend}`;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.initializeCurrenciesList();
   }
 
   initializeCurrenciesList() {
     return this.getSupportedCurrencies().subscribe(
-      data => {
-        this.currencies = data;
-        console.log("data from service " + data);
-      },
+      data => this.currencies = data,
       error => console.log(error)
     )
   }
@@ -27,14 +26,7 @@ export class CurrencyService {
   }
 
   getSupportedCurrencies() {
-    //return this.http.get(this.url + '/tpp/currencies');
-    return of(
-      [
-        'EUR',
-        'UAH',
-        'USD'
-      ]
-    )
+    return this.http.get(this.url + '/currencies');
   }
 
 }

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Currency;
 import java.util.Map;
 
 @Api(tags = "TPP data uploader")
@@ -21,7 +20,7 @@ public interface TppDataUploaderRestApi {
 
     @ApiOperation(value = "Generate test data and upload it to Ledgers", authorizations = @Authorization(value = "apiKey"))
     @GetMapping(value = "/generate/{currency}")
-    ResponseEntity<Resource> generateData(@RequestParam boolean generatePayments, @PathVariable("currency") Currency currency);
+    ResponseEntity<Resource> generateData(@RequestParam boolean generatePayments, @PathVariable("currency") String currency);
 
     @ApiOperation(value = "Generate random IBAN", authorizations = @Authorization(value = "apiKey"))
     @GetMapping("/generate/iban")
