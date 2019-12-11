@@ -1,5 +1,8 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.service;
 
+import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
+import de.adorsys.ledgers.middleware.api.domain.payment.SinglePaymentTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
@@ -7,6 +10,8 @@ import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Currency;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +26,7 @@ public class TestsDataGenerationService {
     private final UserMgmtRestClient userMgmtRestClient;
     private final IbanGenerationService ibanGenerationService;
 
-    public byte[] generate(boolean generatePayments) {
+    public byte[] generate(boolean generatePayments, Currency currency) {
         Optional<UserTO> user = Optional.ofNullable(userMgmtRestClient.getUser()
                                                         .getBody());
 
@@ -30,12 +35,37 @@ public class TestsDataGenerationService {
 
         DataPayload payload = parseService.getDefaultData()
                                   .map(p -> updateIbanForBranch(p, branch))
+                                  .map(p -> updateCurrency(p, currency))
                                   .orElseThrow(() -> new TppException(CAN_NOT_LOAD_DEFAULT_DATA, 400));
         payload.setBranch(branch);
         payload.setGeneratePayments(generatePayments);
 
         executionService.updateLedgers(payload);
         return parseService.generateFileByPayload(payload);
+    }
+
+    private DataPayload updateCurrency(DataPayload dataPayload, Currency currency) {
+        dataPayload.getAccounts().forEach(a -> a.setCurrency(currency));
+        dataPayload.getBalancesList().forEach(b -> b.setCurrency(currency));
+        dataPayload.getUsers().forEach(u -> updateCurrencyForAccountAccesses(u.getAccountAccesses(), currency));
+        dataPayload.getPayments().forEach(p -> updatePaymentCurrencies(p, currency));
+
+        return dataPayload;
+    }
+
+    private void updatePaymentCurrencies(SinglePaymentTO payment, Currency currency) {
+        AccountReferenceTO creditorAccount = payment.getCreditorAccount();
+        AccountReferenceTO debtorAccount = payment.getDebtorAccount();
+
+        creditorAccount.setCurrency(currency);
+        debtorAccount.setCurrency(currency);
+
+        payment.setCreditorAccount(creditorAccount);
+        payment.setDebtorAccount(debtorAccount);
+    }
+
+    private void updateCurrencyForAccountAccesses(List<AccountAccessTO> accountAccesses, Currency currency) {
+        accountAccesses.forEach(a -> a.setCurrency(currency));
     }
 
     private DataPayload updateIbanForBranch(DataPayload dataPayload, String branch) {
