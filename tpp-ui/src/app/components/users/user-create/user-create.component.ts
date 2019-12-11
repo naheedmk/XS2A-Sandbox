@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user.model";
@@ -55,8 +55,15 @@ export class UserCreateComponent implements OnInit {
         const scaData = this.formBuilder.group({
             scaMethod: [ScaMethods.EMAIL, Validators.required],
             methodValue: ['', emailValidators],
-            staticTan: [''],
-            usesStaticTan: ['']
+            staticTan: [{value: '', disabled: true}],
+            usesStaticTan: new FormControl(false)
+        });
+
+        scaData.get('usesStaticTan').valueChanges.subscribe((bool: boolean = true) => {
+            bool ? scaData.get('staticTan').setValidators(Validators.required) : scaData.get('staticTan').clearValidators();
+            bool ? scaData.get('staticTan').enable() : scaData.get('staticTan').disable();
+            bool ? scaData.get('staticTan').enable() : scaData.get('staticTan').setValue('');
+            scaData.get('staticTan').updateValueAndValidity();
         });
 
         scaData.get('scaMethod').valueChanges.subscribe(value => {
