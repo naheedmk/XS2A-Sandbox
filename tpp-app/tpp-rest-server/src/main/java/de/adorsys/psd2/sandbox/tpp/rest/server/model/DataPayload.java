@@ -3,12 +3,14 @@ package de.adorsys.psd2.sandbox.tpp.rest.server.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.middleware.api.domain.payment.SinglePaymentTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,18 @@ public class DataPayload {
     @JsonIgnore
     public Map<String, AccountBalance> getBalancesByIban() {
         return getTargetData(balancesList, AccountBalance::getIban);
+    }
+
+    public DataPayload updateCurrency(Currency currency) {
+        this.getAccounts().forEach(a -> a.setCurrency(currency));
+        this.getBalancesList().forEach(b -> b.setCurrency(currency));
+        this.getUsers().forEach(u -> updateCurrencyForAccountAccesses(u.getAccountAccesses(), currency));
+
+        return this;
+    }
+
+    private void updateCurrencyForAccountAccesses(List<AccountAccessTO> accountAccesses, Currency currency) {
+        accountAccesses.forEach(a -> a.setCurrency(currency));
     }
 
     private <T> Map<String, T> getTargetData(List<T> source, Function<T, String> function) {
