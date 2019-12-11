@@ -3,7 +3,6 @@ package de.adorsys.psd2.sandbox.tpp.rest.server.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
 import de.adorsys.ledgers.middleware.api.domain.payment.SinglePaymentTO;
-import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +13,7 @@ import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,6 +27,7 @@ public class DataPayload {
     private List<AccountDetailsTO> accounts;
     private List<AccountBalance> balancesList;
     private List<SinglePaymentTO> payments;
+    private static final String SEPARATOR = "_";
 
     @JsonIgnore
     private boolean generatePayments;
@@ -56,16 +57,33 @@ public class DataPayload {
         return getTargetData(balancesList, AccountBalance::getIban);
     }
 
-    public DataPayload updateCurrency(Currency currency) {
-        this.getAccounts().forEach(a -> a.setCurrency(currency));
-        this.getBalancesList().forEach(b -> b.setCurrency(currency));
-        this.getUsers().forEach(u -> updateCurrencyForAccountAccesses(u.getAccountAccesses(), currency));
+    @JsonIgnore
+    public DataPayload updatePayload(BiFunction<DataPayload, String, String> ibanGenerator, String branch, Currency currency, boolean generatePayments) {
+        this.branch = branch;
+        this.generatePayments = generatePayments;
+        this.accounts.forEach(a -> {
+            a.setIban(ibanGenerator.apply(this, a.getIban()));
+            a.setCurrency(currency);
+        });
+        this.balancesList.forEach(b -> {
+            b.setIban(ibanGenerator.apply(this, b.getIban()));
+            b.setCurrency(currency);
+        });
 
+        this.users.forEach(u -> updateUserAndAccesses(ibanGenerator, u, branch, currency));
         return this;
     }
 
-    private void updateCurrencyForAccountAccesses(List<AccountAccessTO> accountAccesses, Currency currency) {
-        accountAccesses.forEach(a -> a.setCurrency(currency));
+    private void updateUserAndAccesses(BiFunction<DataPayload, String, String> function, UserTO user, String branch, Currency currency) {
+        user.setId(buildValue(branch, user.getId()));
+        user.setEmail(buildValue(branch, user.getEmail()));
+        user.setLogin(buildValue(branch, user.getLogin()));
+        user.getScaUserData().forEach(d -> d.setMethodValue(buildValue(branch, d.getMethodValue())));
+        user.getAccountAccesses()
+            .forEach(a -> {
+                a.setIban(function.apply(this, a.getIban()));
+                a.setCurrency(currency);
+            });
     }
 
     private <T> Map<String, T> getTargetData(List<T> source, Function<T, String> function) {
@@ -85,5 +103,9 @@ public class DataPayload {
 
     private <T> boolean notContainsNullElements(List<T> list) {
         return !list.contains(null);
+    }
+
+    private String buildValue(String branch, String suffix) {
+        return branch + SEPARATOR + suffix;
     }
 }
