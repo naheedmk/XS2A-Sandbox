@@ -24,7 +24,7 @@ export class AccountDetailComponent implements OnInit {
   accountTypes = Object.keys(AccountType);
   accountStatuses = Object.keys(AccountStatus);
   usageTypes = Object.keys(UsageType);
-  currencies: Array<string> = [];
+  currencies;
   submitted = false;
   errorMessage = null;
 

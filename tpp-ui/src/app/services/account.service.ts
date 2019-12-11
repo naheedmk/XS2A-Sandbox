@@ -56,13 +56,6 @@ export class AccountService {
   }
 
   getCurrencies() {
-    //return this.http.get(this.url + '/tpp/currencies');
-    return of(
-      [
-        'EUR',
-        'UAH',
-        'USD'
-      ]
-    )
+    return this.http.get(this.url + '/currencies');
   }
 }
