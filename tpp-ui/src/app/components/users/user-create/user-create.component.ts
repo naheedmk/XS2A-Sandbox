@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user.model";
@@ -56,7 +56,7 @@ export class UserCreateComponent implements OnInit {
             scaMethod: [ScaMethods.EMAIL, Validators.required],
             methodValue: ['', emailValidators],
             staticTan: [{value: '', disabled: true}],
-            usesStaticTan: new FormControl(false)
+            usesStaticTan: [false]
         });
 
         scaData.get('usesStaticTan').valueChanges.subscribe((bool: boolean = true) => {
