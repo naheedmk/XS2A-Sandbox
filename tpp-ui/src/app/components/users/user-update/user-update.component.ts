@@ -83,8 +83,15 @@ export class UserUpdateComponent implements OnInit {
         const scaData = this.formBuilder.group({
             scaMethod: [ScaMethods.EMAIL, Validators.required],
             methodValue: ['', emailValidators],
-            staticTan: [''],
-            usesStaticTan: ['']
+            staticTan: [{value: '', disabled: true}],
+            usesStaticTan: [false]
+        });
+
+        scaData.get('usesStaticTan').valueChanges.subscribe((bool: boolean = true) => {
+            bool ? scaData.get('staticTan').setValidators(Validators.required) : scaData.get('staticTan').clearValidators();
+            bool ? scaData.get('staticTan').enable() : scaData.get('staticTan').disable();
+            bool ? scaData.get('staticTan').enable() : scaData.get('staticTan').setValue('');
+            scaData.get('staticTan').updateValueAndValidity();
         });
 
         scaData.get('scaMethod').valueChanges.subscribe(value => {
