@@ -60,9 +60,14 @@ export class UserCreateComponent implements OnInit {
         });
 
         scaData.get('usesStaticTan').valueChanges.subscribe((bool: boolean = true) => {
-            bool ? scaData.get('staticTan').setValidators(Validators.required) : scaData.get('staticTan').clearValidators();
-            bool ? scaData.get('staticTan').enable() : scaData.get('staticTan').disable();
-            bool ? scaData.get('staticTan').enable() : scaData.get('staticTan').setValue('');
+            if(bool) {
+                scaData.get('staticTan').setValidators(Validators.required);
+                scaData.get('staticTan').enable();
+            } else {
+                scaData.get('staticTan').clearValidators();
+                scaData.get('staticTan').disable();
+                scaData.get('staticTan').setValue('');
+            }
             scaData.get('staticTan').updateValueAndValidity();
         });
 
