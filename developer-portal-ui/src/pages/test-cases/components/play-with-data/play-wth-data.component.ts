@@ -125,33 +125,27 @@ export class PlayWthDataComponent implements OnInit {
                 'paymentId',
                 this.response.body.paymentId
               );
-              console.log('playwithdata', this.paymentId);
             } else if (this.response.body.hasOwnProperty('authorisationId')) {
               this.authorisationId = this.response.body.authorisationId;
               this.localStorageService.set(
                 'authorisationId',
                 this.authorisationId
               );
-              console.log('authorisationId', this.authorisationId);
             } else if (this.response.body.hasOwnProperty('consentId')) {
               this.consentId = this.response.body.consentId;
               this.localStorageService.set('consentId', this.consentId);
-              console.log('consentId', this.consentId);
             } else if (this.response.body.hasOwnProperty('cancellationId')) {
               this.cancellationId = this.response.body.cancellationId;
               this.localStorageService.set(
                 'cancellationId',
                 this.cancellationId
               );
-              console.log('cancellationId', this.cancellationId);
             } else if (this.response.body.hasOwnProperty('accountId')) {
               this.accountId = this.response.body.accountId;
               this.localStorageService.set('accountId', this.accountId);
-              console.log('paymentId', this.paymentId);
             } else if (this.response.body.hasOwnProperty('transactionId')) {
               this.transactionId = this.response.body.transactionId;
               this.localStorageService.set('transactionId', this.transactionId);
-              console.log('transactionId', this.transactionId);
             }
             this.dataService.setIsLoading(false);
             this.dataService.showToast('Request sent', 'Success!', 'success');
