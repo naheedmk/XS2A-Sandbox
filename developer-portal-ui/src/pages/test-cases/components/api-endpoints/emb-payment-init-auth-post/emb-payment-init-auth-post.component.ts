@@ -17,9 +17,7 @@ export class EmbPaymentInitAuthPostComponent implements OnInit {
   paymentId: string;
 
   constructor(public localStorageService: LocalStorageService) {
-    console.log('localstorage', this.localStorageService.get('paymentId'));
     this.paymentId = this.localStorageService.get('paymentId');
-    console.log('ssfdfdf', this.paymentId);
   }
 
   changeSegment(segment) {
