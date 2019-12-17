@@ -27,13 +27,13 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
-    private static final String DEFAULT_SERVICE_INSTANCE_ID = "UNDEFINED";
-    private final CmsAspspPisExportService cmsAspspPisExportService;
-    private final ObaCmsPeriodicPaymentMapper obaCmsPeriodicPaymentMapper;
-
 
     private static final String RESPONSE_ERROR = "Error in response from CMS, please contact admin.";
     private static final String GET_PAYMENTS_ERROR_MSG = "Failed to retrieve periodic payments for user: %s, code: %s, message: %s";
+    private static final String DEFAULT_SERVICE_INSTANCE_ID = "UNDEFINED";
+
+    private final CmsAspspPisExportService cmsAspspPisExportService;
+    private final ObaCmsPeriodicPaymentMapper obaCmsPeriodicPaymentMapper;
 
     @Override
     public List<ObaCmsPeriodicPayment> getPeriodicPayments(String userLogin) {
