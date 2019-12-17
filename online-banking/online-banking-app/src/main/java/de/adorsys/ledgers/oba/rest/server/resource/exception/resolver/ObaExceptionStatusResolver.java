@@ -11,7 +11,7 @@ import static de.adorsys.ledgers.oba.service.api.domain.exception.ObaErrorCode.C
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
-public class AisExceptionStatusResolver {
+public class ObaExceptionStatusResolver {
     private static final Map<ObaErrorCode, HttpStatus> container = new EnumMap<>(ObaErrorCode.class);
 
     static {
@@ -22,7 +22,7 @@ public class AisExceptionStatusResolver {
         container.put(CONNECTION_ERROR, INTERNAL_SERVER_ERROR);
     }
 
-    private AisExceptionStatusResolver() {
+    private ObaExceptionStatusResolver() {
     }
 
     public static HttpStatus resolveHttpStatusByCode(ObaErrorCode code) {

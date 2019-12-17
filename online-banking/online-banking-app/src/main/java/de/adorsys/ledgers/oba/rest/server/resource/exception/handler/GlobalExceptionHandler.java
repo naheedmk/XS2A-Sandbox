@@ -8,7 +8,7 @@ import de.adorsys.ledgers.oba.rest.api.resource.exception.PaymentAuthorizeExcept
 import de.adorsys.ledgers.oba.service.api.domain.exception.ObaException;
 import de.adorsys.ledgers.oba.service.api.domain.exception.AuthorizationException;
 import de.adorsys.ledgers.oba.rest.server.auth.oba.ErrorResponse;
-import de.adorsys.ledgers.oba.rest.server.resource.exception.resolver.AisExceptionStatusResolver;
+import de.adorsys.ledgers.oba.rest.server.resource.exception.resolver.ObaExceptionStatusResolver;
 import de.adorsys.ledgers.oba.rest.server.resource.exception.resolver.AuthorizationExceptionStatusResolver;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ObaException.class)
     public ResponseEntity<Map> handleAisException(ObaException e) {
-        HttpStatus status = AisExceptionStatusResolver.resolveHttpStatusByCode(e.getObaErrorCode());
+        HttpStatus status = ObaExceptionStatusResolver.resolveHttpStatusByCode(e.getObaErrorCode());
         Map message = buildContentMap(status.value(), e.getDevMessage());
         return ResponseEntity.status(status).body(message);
     }
