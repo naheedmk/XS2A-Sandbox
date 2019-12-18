@@ -42,9 +42,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             UserAuthentication userAuthentication = tokenAuthenticationService.getAuthentication(readAccessTokenCookie(request));
-            BearerTokenTO bearerToken = userAuthentication.getBearerToken();
-            AccessTokenTO token = bearerToken.getAccessTokenObject();
-            SecurityContextHolder.getContext().setAuthentication(new ObaMiddlewareAuthentication(token.getSub(), bearerToken, buildAuthorities(token)));
+            if(userAuthentication != null) {
+                BearerTokenTO bearerToken = userAuthentication.getBearerToken();
+                AccessTokenTO token = bearerToken.getAccessTokenObject();
+                SecurityContextHolder.getContext().setAuthentication(new ObaMiddlewareAuthentication(token.getSub(), bearerToken, buildAuthorities(token)));
+            }
         }
 
         filterChain.doFilter(request, response);
@@ -62,8 +64,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private String readAccessTokenCookie(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, ACCESS_TOKEN_COOKIE);
-        return cookie != null
-                           ? cookie.getValue()
+        return cookie != null ? cookie.getValue()
                            : null;
     }
 
