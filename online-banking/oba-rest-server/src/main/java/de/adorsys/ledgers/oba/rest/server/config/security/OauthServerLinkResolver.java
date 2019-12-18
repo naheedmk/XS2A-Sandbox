@@ -1,4 +1,4 @@
-package de.adorsys.ledgers.oba.service.impl.service;
+package de.adorsys.ledgers.oba.rest.server.config.security;
 
 import de.adorsys.ledgers.middleware.api.domain.oauth.OauthServerInfoTO;
 import lombok.Setter;

@@ -13,7 +13,7 @@ import de.adorsys.ledgers.oba.rest.api.resource.SCAApi;
 import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,22 +25,14 @@ import java.util.Collections;
 @RestController(SCAController.BASE_PATH)
 @RequestMapping(SCAController.BASE_PATH)
 @Api(value = SCAController.BASE_PATH, tags = "PSU SCA", description = "Provides access to one time password for strong customer authentication.")
+@RequiredArgsConstructor
 public class SCAController implements SCAApi {
-    public static final String BASE_PATH = "/sca";
-
-    @Autowired
-    private UserMgmtRestClient ledgersUserMgmt;
-
-    @Autowired
-    private ResponseUtils responseUtils;
-
-    @Autowired
-    private AuthRequestInterceptor authInterceptor;
-
-    @Autowired
-    private HttpServletResponse response;
-    @Autowired
-    private ObaMiddlewareAuthentication auth;
+    static final String BASE_PATH = "/sca";
+    private final UserMgmtRestClient ledgersUserMgmt;
+    private final ResponseUtils responseUtils;
+    private final AuthRequestInterceptor authInterceptor;
+    private final HttpServletResponse response;
+    private final ObaMiddlewareAuthentication auth;
 
 
     /**

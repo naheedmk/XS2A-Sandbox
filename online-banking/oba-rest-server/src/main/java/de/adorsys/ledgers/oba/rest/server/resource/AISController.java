@@ -14,8 +14,8 @@ import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
 import de.adorsys.ledgers.middleware.client.rest.OauthRestClient;
 import de.adorsys.ledgers.oba.rest.api.resource.exception.ConsentAuthorizeException;
 import de.adorsys.ledgers.oba.rest.api.resource.AISApi;
+import de.adorsys.ledgers.oba.service.api.service.ConsentService;
 import de.adorsys.ledgers.oba.service.api.service.RedirectConsentService;
-import de.adorsys.ledgers.oba.service.impl.mapper.CreatePiisConsentRequestMapper;
 import de.adorsys.ledgers.oba.service.api.domain.*;
 import de.adorsys.psd2.consent.api.CmsAspspConsentDataBase64;
 import de.adorsys.psd2.consent.api.ais.CmsAisConsentResponse;
@@ -24,19 +24,15 @@ import de.adorsys.psd2.xs2a.core.psu.PsuIdData;
 import de.adorsys.psd2.xs2a.core.sca.AuthenticationDataHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.adorsys.ledgers.consent.aspsp.rest.client.CmsAspspPiisClient;
-import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentRequest;
-import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentResponse;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -53,23 +49,14 @@ import static org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient.DEFAUL
 @RequestMapping(AISController.BASE_PATH)
 @Api(value = AISController.BASE_PATH, tags = "PSU AIS", description = "Provides access to online banking account functionality")
 @SuppressWarnings("PMD.TooManyMethods")
+@RequiredArgsConstructor
 public class AISController extends AbstractXISController implements AISApi {
-    @Autowired
-    private HttpServletResponse response;
-    @Autowired
-    private CmsPsuAisClient cmsPsuAisClient;
-    @Autowired
-    private ConsentRestClient consentRestClient;
-    @Autowired
-    private CmsAspspPiisClient cmsAspspPiisClient;
-    @Autowired
-    private CreatePiisConsentRequestMapper createPiisConsentRequestMapper;
-    @Autowired
-    private AccountRestClient accountRestClient;
-    @Autowired
-    private OauthRestClient oauthRestClient;
-    @Autowired
-    private RedirectConsentService consentService;
+    private final CmsPsuAisClient cmsPsuAisClient;
+    private final ConsentRestClient consentRestClient;
+    private final AccountRestClient accountRestClient;
+    private final OauthRestClient oauthRestClient;
+    private final RedirectConsentService redirectConsentService;
+    private final ConsentService consentService;
 
     @Override
     @ApiOperation(value = "Entry point for authenticating ais consent requests.")
@@ -92,7 +79,7 @@ public class AISController extends AbstractXISController implements AISApi {
         ConsentWorkflow workflow;
         try {
             String consentCookie = responseUtils.consentCookie(consentCookieString);
-            workflow = consentService.identifyConsent(encryptedConsentId, authorisationId, false, consentCookie, null);
+            workflow = redirectConsentService.identifyConsent(encryptedConsentId, authorisationId, false, consentCookie, null);
         } catch (ConsentAuthorizeException e) {
             return e.getError();
         }
@@ -105,7 +92,7 @@ public class AISController extends AbstractXISController implements AISApi {
             String psuId = AuthUtils.psuId(workflow.bearerToken());
             try {
                 updatePSUIdentification(workflow, psuId);
-                consentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
+                redirectConsentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
             } catch (ConsentAuthorizeException e) {
                 return e.getError();
             }
@@ -123,10 +110,10 @@ public class AISController extends AbstractXISController implements AISApi {
         List<AccountDetailsTO> listOfAccounts;
         try {
             String consentCookie = responseUtils.consentCookie(consentAndAccessTokenCookieString);
-            workflow = consentService.identifyConsent(encryptedConsentId, authorisationId, false, consentCookie, middlewareAuth.getBearerToken());
+            workflow = redirectConsentService.identifyConsent(encryptedConsentId, authorisationId, false, consentCookie, middlewareAuth.getBearerToken());
             listOfAccounts = listOfAccounts(workflow);
-            consentService.startConsent(workflow, aisConsent, listOfAccounts);
-            consentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
+            redirectConsentService.startConsent(workflow, aisConsent, listOfAccounts);
+            redirectConsentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
         } catch (ConsentAuthorizeException e) {
             return e.getError();
         }
@@ -139,14 +126,14 @@ public class AISController extends AbstractXISController implements AISApi {
         String psuId = AuthUtils.psuId(middlewareAuth);
         try {
             String consentCookie = responseUtils.consentCookie(consentAndAccessTokenCookieString);
-            ConsentWorkflow workflow = consentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
+            ConsentWorkflow workflow = redirectConsentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
 
             authInterceptor.setAccessToken(workflow.bearerToken().getAccess_token());
             SCAConsentResponseTO scaConsentResponse = consentRestClient.authorizeConsent(workflow.consentId(), authorisationId, authCode).getBody();
             workflow.storeSCAResponse(scaConsentResponse);
 
             cmsPsuAisClient.confirmConsent(workflow.consentId(), psuId, null, null, null, DEFAULT_SERVICE_INSTANCE_ID);
-            consentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
+            redirectConsentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
 
             // if consent is partially authorized the access token is null
             Optional<BearerTokenTO> token = Optional.ofNullable(workflow.bearerToken());
@@ -167,10 +154,10 @@ public class AISController extends AbstractXISController implements AISApi {
         String psuId = AuthUtils.psuId(middlewareAuth);
         try {
             String consentCookie = responseUtils.consentCookie(consentAndAccessTokenCookieString);
-            ConsentWorkflow workflow = consentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
-            consentService.selectScaMethod(scaMethodId, workflow);
+            ConsentWorkflow workflow = redirectConsentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
+            redirectConsentService.selectScaMethod(scaMethodId, workflow);
 
-            consentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
+            redirectConsentService.updateScaStatusConsentStatusConsentData(psuId, workflow);
 
             responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
 
@@ -185,17 +172,10 @@ public class AISController extends AbstractXISController implements AISApi {
 
         String psuId = AuthUtils.psuId(middlewareAuth);
         try {
-
             authInterceptor.setAccessToken(middlewareAuth.getBearerToken().getAccess_token());
+            SCAConsentResponseTO scaConsentResponse = consentService.createConsent(piisConsentRequestTO, psuId);
 
-            CreatePiisConsentRequest piisConsentRequest = createPiisConsentRequestMapper.fromCreatePiisConsentRequest(piisConsentRequestTO);
-            CreatePiisConsentResponse cmsConsent = cmsAspspPiisClient.createConsent(piisConsentRequest, psuId, null, null, null).getBody();
-
-            // Attention intentional manual mapping. We fill up only the balances.
-            AisConsentTO pisConsent = new AisConsentTO(cmsConsent.getConsentId(), psuId, piisConsentRequest.getTppAuthorisationNumber(), 100, buildAccountAccess(piisConsentRequest.getAccount().getIban()), piisConsentRequest.getValidUntil(), true);
-
-            SCAConsentResponseTO scaConsentResponse = consentRestClient.grantPIISConsent(pisConsent).getBody();
-            ResponseEntity<?> updateAspspPiisConsentDataResponse = updateAspspPiisConsentData(cmsConsent.getConsentId(), scaConsentResponse);
+            ResponseEntity<?> updateAspspPiisConsentDataResponse = updateAspspPiisConsentData(scaConsentResponse.getConsentId(), scaConsentResponse);
             if (!HttpStatus.OK.equals(updateAspspPiisConsentDataResponse.getStatusCode())) {
                 return responseUtils.error(new PIISConsentCreateResponse(), updateAspspPiisConsentDataResponse.getStatusCode(),
                     "Could not update aspsp consent data", response);
@@ -228,7 +208,7 @@ public class AISController extends AbstractXISController implements AISApi {
     @Override
     public ResponseEntity<ConsentAuthorizeResponse> aisDone(String encryptedConsentId, String authorisationId, String consentAndAccessTokenCookieString, Boolean forgetConsent, Boolean backToTpp, boolean isOauth2Integrated) throws ConsentAuthorizeException {
         String consentCookie = responseUtils.consentCookie(consentAndAccessTokenCookieString);
-        ConsentWorkflow workflow = consentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
+        ConsentWorkflow workflow = redirectConsentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
 
         ConsentStatus consentStatus = workflow.getConsentResponse().getAccountConsent().getConsentStatus();
         CmsAisConsentResponse consentResponse = workflow.getConsentResponse();
@@ -250,7 +230,7 @@ public class AISController extends AbstractXISController implements AISApi {
         ConsentWorkflow workflow;
         try {
             String consentCookie = responseUtils.consentCookie(cookieString);
-            workflow = consentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
+            workflow = redirectConsentService.identifyConsent(encryptedConsentId, authorisationId, true, consentCookie, middlewareAuth.getBearerToken());
             authInterceptor.setAccessToken(middlewareAuth.getBearerToken().getAccess_token());
         } catch (ConsentAuthorizeException e) {
             return ResponseEntity.badRequest().build();
@@ -275,19 +255,13 @@ public class AISController extends AbstractXISController implements AISApi {
             workflow.getAuthResponse().setAccounts(listOfAccounts);
             if (isLoginOperation) {
                 // update consent accounts, transactions and balances if global consent flag is set
-                consentService.updateAccessByConsentType(workflow, listOfAccounts);
+                redirectConsentService.updateAccessByConsentType(workflow, listOfAccounts);
             }
             responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
             return ResponseEntity.ok(workflow.getAuthResponse());
         }// failed Message. No repeat. Delete cookies.
         responseUtils.removeCookies(response);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-
-    private AisAccountAccessInfoTO buildAccountAccess(String iban) {
-        AisAccountAccessInfoTO access = new AisAccountAccessInfoTO();
-        access.setAccounts(Collections.singletonList(iban));
-        return access;
     }
 
     private boolean failAuthorisation(String consentId, String psuId, String authorisationId) {

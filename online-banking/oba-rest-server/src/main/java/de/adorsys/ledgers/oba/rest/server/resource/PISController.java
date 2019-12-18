@@ -2,9 +2,7 @@ package de.adorsys.ledgers.oba.rest.server.resource;
 
 import de.adorsys.ledgers.middleware.api.domain.sca.OpTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCALoginResponseTO;
-import de.adorsys.ledgers.middleware.api.domain.sca.SCAPaymentResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO;
-import de.adorsys.ledgers.middleware.client.rest.PaymentRestClient;
 import de.adorsys.ledgers.oba.rest.api.resource.PISApi;
 import de.adorsys.ledgers.oba.rest.api.resource.exception.PaymentAuthorizeException;
 import de.adorsys.ledgers.oba.service.api.domain.AuthorizeResponse;
@@ -12,11 +10,9 @@ import de.adorsys.ledgers.oba.service.api.domain.ConsentType;
 import de.adorsys.ledgers.oba.service.api.domain.PaymentAuthorizeResponse;
 import de.adorsys.ledgers.oba.service.api.domain.PaymentWorkflow;
 import de.adorsys.ledgers.oba.service.api.service.CommonPaymentService;
-import de.adorsys.ledgers.oba.service.impl.mapper.PaymentConverter;
-import de.adorsys.psd2.consent.api.pis.CmsPaymentResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController(PISController.BASE_PATH)
 @RequestMapping(PISController.BASE_PATH)
 @Api(value = PISController.BASE_PATH, tags = "PSU PIS", description = "Provides access to online banking payment functionality")
+@RequiredArgsConstructor
 public class PISController extends AbstractXISController implements PISApi {
-    @Autowired
-    private PaymentRestClient paymentRestClient;
-    @Autowired
-    private CommonPaymentService paymentService;
-    @Autowired
-    private PaymentConverter paymentConverter;
+    private final CommonPaymentService paymentService;
 
     @Override
     public ResponseEntity<AuthorizeResponse> pisAuth(String redirectId, String encryptedPaymentId, String token) {
@@ -55,9 +47,8 @@ public class PISController extends AbstractXISController implements PISApi {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         String psuId = AuthUtils.psuId(workflow.bearerToken());
-        initiatePayment(workflow);
-        paymentService.updateScaStatusPaymentStatusConsentData(psuId, workflow);
-        return resolvePaymentWorkflow(workflow, response);
+        PaymentWorkflow initiatePaymentWorkflow = paymentService.initiatePayment(workflow, psuId);
+        return resolvePaymentWorkflow(initiatePaymentWorkflow);
     }
 
     @Override
@@ -68,17 +59,16 @@ public class PISController extends AbstractXISController implements PISApi {
             String psuId = AuthUtils.psuId(middlewareAuth);
             // Identity the link and load the workflow.
             String consentCookie = responseUtils.consentCookie(consentAndaccessTokenCookieString);
-            PaymentWorkflow workflow = paymentService.identifyPayment(encryptedPaymentId, authorisationId, true, consentCookie, psuId, middlewareAuth.getBearerToken());
+            PaymentWorkflow identifyPaymentWorkflow = paymentService.identifyPayment(encryptedPaymentId, authorisationId, true, consentCookie, psuId, middlewareAuth.getBearerToken());
 
             // Update status
-            workflow.getScaResponse().setScaStatus(ScaStatusTO.PSUAUTHENTICATED);
+            identifyPaymentWorkflow.getScaResponse().setScaStatus(ScaStatusTO.PSUAUTHENTICATED);
 
-            initiatePayment(workflow);
-            paymentService.updateScaStatusPaymentStatusConsentData(psuId, workflow);
+            PaymentWorkflow initiatePaymentWorkflow = paymentService.initiatePayment(identifyPaymentWorkflow, psuId);
 
             // Store result in token.
-            responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
-            return ResponseEntity.ok(workflow.getAuthResponse());
+            responseUtils.setCookies(response, initiatePaymentWorkflow.getConsentReference(), initiatePaymentWorkflow.bearerToken().getAccess_token(), initiatePaymentWorkflow.bearerToken().getAccessTokenObject());
+            return ResponseEntity.ok(initiatePaymentWorkflow.getAuthResponse());
         } catch (PaymentAuthorizeException e) {
             return e.getError();
         }
@@ -107,17 +97,11 @@ public class PISController extends AbstractXISController implements PISApi {
         String psuId = AuthUtils.psuId(middlewareAuth);
         try {
             String consentCookie = responseUtils.consentCookie(consentAndaccessTokenCookieString);
-            PaymentWorkflow workflow = paymentService.identifyPayment(encryptedPaymentId, authorisationId, true, consentCookie, psuId, middlewareAuth.getBearerToken());
+            PaymentWorkflow identifyPaymentWorkflow = paymentService.identifyPayment(encryptedPaymentId, authorisationId, true, consentCookie, psuId, middlewareAuth.getBearerToken());
+            PaymentWorkflow authorizePaymentWorkflow = paymentService.authorizePayment(identifyPaymentWorkflow, psuId, authCode);
 
-            authInterceptor.setAccessToken(workflow.bearerToken().getAccess_token());
-
-            SCAPaymentResponseTO scaPaymentResponse = paymentRestClient.authorizePayment(workflow.paymentId(), workflow.authId(), authCode).getBody();
-            paymentService.processPaymentResponse(workflow, scaPaymentResponse);
-
-            paymentService.updateScaStatusPaymentStatusConsentData(psuId, workflow);
-
-            responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
-            return ResponseEntity.ok(workflow.getAuthResponse());
+            responseUtils.setCookies(response, authorizePaymentWorkflow.getConsentReference(), authorizePaymentWorkflow.bearerToken().getAccess_token(), authorizePaymentWorkflow.bearerToken().getAccessTokenObject());
+            return ResponseEntity.ok(authorizePaymentWorkflow.getAuthResponse());
         } catch (PaymentAuthorizeException e) {
             return e.getError();
         } finally {
@@ -159,13 +143,5 @@ public class PISController extends AbstractXISController implements PISApi {
     @Override
     public String getBasePath() {
         return BASE_PATH;
-    }
-
-    private void initiatePayment(final PaymentWorkflow paymentWorkflow) {
-        CmsPaymentResponse paymentResponse = paymentWorkflow.getPaymentResponse();
-        Object payment = paymentConverter.convertPayment(paymentWorkflow.paymentType(), paymentResponse);
-        authInterceptor.setAccessToken(paymentWorkflow.bearerToken().getAccess_token());
-        SCAPaymentResponseTO paymentResponseTO = paymentRestClient.initiatePayment(paymentWorkflow.paymentType(), payment).getBody();
-        paymentService.processPaymentResponse(paymentWorkflow, paymentResponseTO);
     }
 }

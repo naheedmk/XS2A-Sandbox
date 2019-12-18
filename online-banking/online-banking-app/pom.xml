@@ -27,6 +27,12 @@
 
         <dependency>
             <groupId>de.adorsys.psd2.sandbox</groupId>
+            <artifactId>oba-service-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.adorsys.psd2.sandbox</groupId>
             <artifactId>xs2a-cms-starter</artifactId>
             <version>${project.version}</version>
         </dependency>

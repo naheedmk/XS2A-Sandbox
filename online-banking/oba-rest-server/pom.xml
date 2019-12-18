@@ -43,7 +43,7 @@
 
         <dependency>
             <groupId>de.adorsys.psd2.sandbox</groupId>
-            <artifactId>oba-service-impl</artifactId>
+            <artifactId>oba-service-api</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
