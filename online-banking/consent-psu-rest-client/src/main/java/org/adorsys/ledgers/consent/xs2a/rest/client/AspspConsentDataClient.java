@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@FeignClient(value = "aspspConsentDataClient", url = "${cms.url}", path="/api/v1/aspsp-consent-data/consents", primary=false, configuration=FeignConfig.class)
+@FeignClient(value = "aspspConsentDataClient", url = "${cms.url.int}", path="/api/v1/aspsp-consent-data/consents", primary=false, configuration=FeignConfig.class)
 @Api(value = "api/v1/aspsp-consent-data", tags = "Aspsp Consent Data", description = "Provides access to consent management system for AspspDataConsent")
 public interface AspspConsentDataClient {
 

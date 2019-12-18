@@ -30,9 +30,9 @@ spring:
     serialization:
       write_dates_as_timestamps: false
 
-ledgers.url: http://localhost:8088
-xs2a.url: http://localhost:8089
-cms.url: http://localhost:38080
+ledgers.url.int: http://localhost:8088
+xs2a.url.int: http://localhost:8089
+cms.url.int: http://localhost:38080
 
 #LOGGER
 # logging.level.org.springframework.web: DEBUG

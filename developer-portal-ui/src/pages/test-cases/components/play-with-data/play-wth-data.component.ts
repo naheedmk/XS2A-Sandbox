@@ -49,12 +49,14 @@ export class PlayWthDataComponent implements OnInit {
   paymentServiceSelect = ['payments', 'bulk-payments', 'periodic-payments'];
   paymentProductSelect = [
     'sepa-credit-transfers',
-    'instant-sepa-credit-transfers',
-    'target-2-payments',
+    'domestic-swiss-credit-transfers-ISR',
+    'domestic-swiss-credit-transfers',
+    'domestic-swiss-foreign-credit-transfers',
     'cross-border-credit-transfers',
     'pain.001-sepa-credit-transfers',
-    'pain.001-instant-sepa-credit-transfers',
-    'pain.001-target-2-payments',
+    'pain.001-domestic-swiss-credit-transfers-ISR',
+    'pain.001-domestic-swiss-credit-transfers',
+    'pain.001-domestic-swiss-foreign-credit-transfers',
     'pain.001-cross-border-credit-transfers',
   ];
   bookingStatusSelect = ['booked', 'pending', 'both'];

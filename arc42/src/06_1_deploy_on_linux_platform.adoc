@@ -40,7 +40,7 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | POSTGRESQL_DATABASE  |
 | | | POSTGRESQL_USER  |
 | | | POSTGRESQL_PASSWORD |
-|xs2a-online-banking | NGINX 1.15.5 |XS2A_URL| 8090,8190
+|xs2a-online-banking | NGINX 1.15.5 |XS2A_URL_INT| 8090,8190
 | | | LEDGERS_URL  |
 | | | CMS_URL  |
 | | | ONLINE_BANKING_SCA_LOGINPAGE  |
@@ -61,7 +61,7 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | SPRING_MAIL_PROPERTIES_MAIL_FROM  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE |
-|xs2a-online-banking-ui  |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL | 4400
+|xs2a-online-banking-ui  |NGINX 1.15.5 | ONLINE_BANKING_SERVER_URL_INT | 4400
 | | | DEV_PORTAL_URL_EXT |
 |xs2a-tpp-ui | NGINX 1.15.5 | LEDGERS_URL | 4205
 | | | TPP_REST_SERVER_URL |
@@ -80,7 +80,7 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | IBAN_GENERATOR_BANKCODE_NISP  |
 | | | IBAN_GENERATOR_BANKCODE_RANDOM  |
 | | | IBAN_GENERATOR_COUNTRYCODE  |
-|developer-portal-ui | NGINX 1.15.5 | XS2A_URL | 4206
+|developer-portal-ui | NGINX 1.15.5 | XS2A_URL_INT | 4206
 |ledgers-db |  Postgresql 9.5  | POSTGRESQL_ADMIN_PASSWORD | 5432
 | | | POSTGRESQL_DATABASE  |
 | | | POSTGRESQL_USER  |
@@ -247,7 +247,7 @@ The table of options and possible configurations you can find below:
 | | | spring_mail_properties_mail_smtp_connectiontimeout | 5000 |
 | | | spring_mail_properties_mail_smtp_timeout | 5000 |
 | | | spring_mail_properties_mail_smtp_writetimeout | 5000 |
-| $JAVA_OPTS_OBA | Online banking | XS2A_URL | http://localhost:8089 | Mandatory URL to XS2A
+| $JAVA_OPTS_OBA | Online banking | XS2A_URL_INT | http://localhost:8089 | Mandatory URL to XS2A
 | | | LEDGERS_URL | http://localhost:8088 |
 | | | CMS_URL | http://localhost:8080 |
 | | | ONLINE_BANKING_SCA_LOGINPAGE | https://demo-dynamicsandbox-onlinebankingui-cloud-adorsys.de/ (example) | Online-banking page, to which user would be redirected in Redirect approach

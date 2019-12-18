@@ -57,7 +57,7 @@ public abstract class AbstractXISController {
     @Autowired
     protected UserMgmtRestClient userMgmtRestClient;
 
-    @Value("${online-banking.sca.loginpage:http://localhost:4400/}")
+    @Value("${online-banking.sca.loginpage.int:http://localhost:4400/}")
     private String loginPage;
 
     @Autowired

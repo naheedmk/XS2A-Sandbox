@@ -8,7 +8,7 @@ server {
   error_log /var/log/nginx/error.log <%= ENV['NGINX_ERROR_LOG_DEBUG'] %>;
 
   location /tpp/ {
-        proxy_pass <%= ENV['TPP_REST_SERVER_URL'] %>;
+        proxy_pass <%= ENV['TPP_REST_SERVER_URL_INT'] %>;
 
         proxy_set_header          Host            $host;
         proxy_set_header          X-Real-IP       $remote_addr;
@@ -17,9 +17,9 @@ server {
         proxy_http_version 1.1;
   }
 
-  <% if ENV['CERT_GEN_URL'] && !ENV['CERT_GEN_URL'].empty? %>
+  <% if ENV['CERT_GEN_URL_INT'] && !ENV['CERT_GEN_URL_INT'].empty? %>
   location /certgen/ {
-        proxy_pass <%= ENV['CERT_GEN_URL'] %>/;
+        proxy_pass <%= ENV['CERT_GEN_URL_INT'] %>/;
 
         proxy_set_header          Host            $host;
         proxy_set_header          X-Real-IP       $remote_addr;

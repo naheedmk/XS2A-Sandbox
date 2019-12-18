@@ -16,26 +16,16 @@
 
 package org.adorsys.ledgers.consent.aspsp.rest.client;
 
-import java.util.List;
-
+import de.adorsys.psd2.xs2a.core.piis.PiisConsent;
+import io.swagger.annotations.*;
 import org.adorsys.ledgers.consent.xs2a.rest.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
-import de.adorsys.psd2.xs2a.core.piis.PiisConsent;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import java.util.List;
 
-@FeignClient(value = "cmsAspspPiisClient", url = "${cms.url}", path="/aspsp-api/v1/piis/consents", primary=false, configuration=FeignConfig.class)
+@FeignClient(value = "cmsAspspPiisClient", url = "${cms.url.int}", path="/aspsp-api/v1/piis/consents", primary=false, configuration=FeignConfig.class)
 @Api(value = "aspsp-api/v1/piis/consents", tags = "ASPSP PIIS, Consents", description = "Controller for cms-aspsp-api providing access to PIIS consents")
 public interface CmsAspspPiisClient {
 

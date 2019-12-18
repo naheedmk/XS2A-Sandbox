@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(ObaOauthApi.BASE_PATH)
 public class ObaOauthController implements ObaOauthApi {
-    @Value("${oba.url:http://localhost:4400}")
+    @Value("${oba.url.int:http://localhost:4400}")
     private String obaFeBaseUri;
-    @Value("${self.url:http://localhost:8090}")
+    @Value("${self.url.int:http://localhost:8090}")
     private String obaBeBaseUri;
 
     private final OauthRestClient oauthRestClient;
