@@ -92,7 +92,7 @@ export class CustomizeService {
           theme = this.getDefaultTheme();
           this.IS_CUSTOM = false;
         }
-        return theme.currency;
+        return theme['currency'];
       })
       .catch(e => {
         this.IS_CUSTOM = false;
