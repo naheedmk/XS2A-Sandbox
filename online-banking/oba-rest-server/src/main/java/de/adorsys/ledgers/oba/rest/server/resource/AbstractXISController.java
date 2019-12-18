@@ -8,12 +8,12 @@ import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.middleware.api.service.TokenStorageService;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
+import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
 import de.adorsys.ledgers.oba.service.api.domain.*;
 import de.adorsys.ledgers.oba.service.api.domain.exception.AuthorizationException;
-import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
-import de.adorsys.ledgers.oba.rest.server.auth.TokenAuthenticationService;
 import de.adorsys.ledgers.oba.service.api.domain.exception.InvalidConsentException;
 import de.adorsys.ledgers.oba.service.api.service.ConsentReferencePolicy;
+import de.adorsys.ledgers.oba.service.api.service.TokenAuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.apache.commons.lang3.StringUtils;
@@ -23,18 +23,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.EnumSet;
 import java.util.Optional;
 
 import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.*;
-import static de.adorsys.ledgers.oba.service.api.domain.exception.AuthErrorCode.LOGIN_FAILED;
 import static de.adorsys.ledgers.oba.rest.server.auth.oba.SecurityConstant.BEARER_TOKEN_PREFIX;
+import static de.adorsys.ledgers.oba.service.api.domain.exception.AuthErrorCode.LOGIN_FAILED;
 
 @Slf4j
 public abstract class AbstractXISController {
+    private static final String ACCESS_TOKEN_COOKIE = "ACCESS_TOKEN";
 
     @Autowired
     protected AspspConsentDataClient aspspConsentDataClient;
@@ -50,7 +53,7 @@ public abstract class AbstractXISController {
     @Autowired
     protected HttpServletResponse response;
     @Autowired
-    protected MiddlewareAuthentication middlewareAuth;
+    protected ObaMiddlewareAuthentication middlewareAuth;
     @Autowired
     protected UserMgmtRestClient userMgmtRestClient;
 
@@ -127,7 +130,10 @@ public abstract class AbstractXISController {
 
     //TODO consider refactoring
     protected ResponseEntity<SCALoginResponseTO> performLoginForConsent(String login, String pin, String operationId, String authId, OpTypeTO operationType) {
-        String token = tokenAuthenticationService.readAccessTokenCookie(request);
+        Cookie cookie = WebUtils.getCookie(request, ACCESS_TOKEN_COOKIE);
+        String token = cookie != null
+                           ? cookie.getValue()
+                           : null;
         return performLoginForConsent(login, pin, token, operationId, authId, operationType);
     }
 

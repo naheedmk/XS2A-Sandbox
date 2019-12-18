@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.adorsys.ledgers.oba.rest.server;
+package de.adorsys.ledgers.oba.app;
 
 import de.adorsys.ledgers.middleware.client.rest.AccountRestClient;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CmsAspspPiisClient;

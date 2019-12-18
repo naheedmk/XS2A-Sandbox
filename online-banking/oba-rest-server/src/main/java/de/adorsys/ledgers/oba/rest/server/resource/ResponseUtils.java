@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
 import de.adorsys.ledgers.oba.rest.server.config.cors.CookieConfigProperties;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +24,6 @@ import de.adorsys.ledgers.oba.service.api.domain.OnlineBankingResponse;
 import de.adorsys.ledgers.oba.service.api.domain.PsuMessage;
 import de.adorsys.ledgers.oba.service.api.domain.PsuMessageCategory;
 import de.adorsys.ledgers.oba.service.api.domain.ValidationCode;
-import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
 
 @Service
 @RequiredArgsConstructor
@@ -115,7 +115,7 @@ public class ResponseUtils {
 		return error(authResp, status, message, httpResp);
 	}
 
-	public String authHeader(MiddlewareAuthentication auth) {
+	public String authHeader(ObaMiddlewareAuthentication auth) {
 		return TOKEN_PREFIX + auth.getBearerToken().getAccess_token();
 	}
 

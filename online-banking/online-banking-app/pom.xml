@@ -18,27 +18,10 @@
 
     <dependencies>
         <!-- project dependencies -->
-        <dependency>
-            <groupId>de.adorsys.ledgers</groupId>
-            <artifactId>ledgers-utils</artifactId>
-            <version>${ledgers.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>de.adorsys.ledgers</groupId>
-            <artifactId>ledgers-middleware-rest-client</artifactId>
-            <version>${ledgers.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>de.adorsys.psd2.sandbox</groupId>
-            <artifactId>oba-rest-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>de.adorsys.psd2.sandbox</groupId>
-            <artifactId>consent-psu-rest-client</artifactId>
+            <artifactId>oba-rest-server</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -113,11 +96,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>de.adorsys.psd2.sandbox</groupId>
-            <artifactId>oba-service-impl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

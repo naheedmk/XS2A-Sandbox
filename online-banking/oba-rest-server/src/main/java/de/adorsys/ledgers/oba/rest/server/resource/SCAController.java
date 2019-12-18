@@ -10,7 +10,7 @@ import de.adorsys.ledgers.oba.service.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.service.api.domain.PsuMessage;
 import de.adorsys.ledgers.oba.service.api.domain.PsuMessageCategory;
 import de.adorsys.ledgers.oba.rest.api.resource.SCAApi;
-import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
+import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class SCAController implements SCAApi {
     @Autowired
     private HttpServletResponse response;
     @Autowired
-    private MiddlewareAuthentication auth;
+    private ObaMiddlewareAuthentication auth;
 
 
     /**

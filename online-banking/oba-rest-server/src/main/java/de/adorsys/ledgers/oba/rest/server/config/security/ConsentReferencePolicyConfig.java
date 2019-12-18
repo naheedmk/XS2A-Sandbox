@@ -1,4 +1,4 @@
-package de.adorsys.ledgers.oba.rest.server.config;
+package de.adorsys.ledgers.oba.rest.server.config.security;
 
 import de.adorsys.ledgers.oba.service.api.service.ConsentReferencePolicy;
 import org.springframework.context.annotation.Bean;

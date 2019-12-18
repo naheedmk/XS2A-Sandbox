@@ -1,4 +1,4 @@
-package de.adorsys.ledgers.oba.rest.server.config;
+package de.adorsys.ledgers.oba.rest.server.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

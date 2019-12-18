@@ -1,4 +1,4 @@
-package de.adorsys.ledgers.oba.service.impl.mapper;
+package de.adorsys.ledgers.oba.rest.server.config.mapper;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

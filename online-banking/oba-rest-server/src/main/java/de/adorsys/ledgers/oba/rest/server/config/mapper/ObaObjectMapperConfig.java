@@ -1,9 +1,8 @@
-package de.adorsys.ledgers.oba.rest.server.config;
+package de.adorsys.ledgers.oba.rest.server.config.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.adorsys.ledgers.oba.service.impl.mapper.CmsSinglePaymentDeserializer;
 import de.adorsys.psd2.consent.api.pis.CmsPayment;
 import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
 import lombok.RequiredArgsConstructor;

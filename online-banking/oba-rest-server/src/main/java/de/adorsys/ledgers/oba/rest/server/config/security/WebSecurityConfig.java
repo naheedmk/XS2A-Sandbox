@@ -1,13 +1,13 @@
-package de.adorsys.ledgers.oba.rest.server.config;
+package de.adorsys.ledgers.oba.rest.server.config.security;
 
 import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.oba.rest.server.auth.JWTAuthenticationFilter;
-import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
-import de.adorsys.ledgers.oba.rest.server.auth.TokenAuthenticationService;
+import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
 import de.adorsys.ledgers.oba.rest.server.auth.oba.LoginAuthenticationFilter;
 import de.adorsys.ledgers.oba.rest.server.auth.oba.TokenAuthenticationFilter;
+import de.adorsys.ledgers.oba.service.api.service.TokenAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -92,7 +92,7 @@ public class WebSecurityConfig {
 
     @Bean
     @RequestScope
-    public MiddlewareAuthentication getMiddlewareAuthentication() {
+    public ObaMiddlewareAuthentication getMiddlewareAuthentication() {
         return auth().orElse(null);
     }
 
@@ -107,14 +107,14 @@ public class WebSecurityConfig {
      *
      * @return
      */
-    private static Optional<MiddlewareAuthentication> auth() {
+    private static Optional<ObaMiddlewareAuthentication> auth() {
         return SecurityContextHolder.getContext() == null ||
-                   !(SecurityContextHolder.getContext().getAuthentication() instanceof MiddlewareAuthentication)
+                   !(SecurityContextHolder.getContext().getAuthentication() instanceof ObaMiddlewareAuthentication)
                    ? Optional.empty()
-                   : Optional.of((MiddlewareAuthentication) SecurityContextHolder.getContext().getAuthentication());
+                   : Optional.of((ObaMiddlewareAuthentication) SecurityContextHolder.getContext().getAuthentication());
     }
 
-    private AccessTokenTO extractToken(MiddlewareAuthentication authentication) {
+    private AccessTokenTO extractToken(ObaMiddlewareAuthentication authentication) {
         return authentication.getBearerToken().getAccessTokenObject();
     }
 }

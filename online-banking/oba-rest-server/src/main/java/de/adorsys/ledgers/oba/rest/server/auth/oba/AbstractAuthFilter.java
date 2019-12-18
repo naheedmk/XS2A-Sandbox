@@ -3,7 +3,7 @@ package de.adorsys.ledgers.oba.rest.server.auth.oba;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
-import de.adorsys.ledgers.oba.rest.server.auth.MiddlewareAuthentication;
+import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -53,7 +53,7 @@ public abstract class AbstractAuthFilter extends OncePerRequestFilter {
 
     protected void fillSecurityContext(BearerTokenTO token) {
         SecurityContextHolder.getContext()
-            .setAuthentication(new MiddlewareAuthentication(token.getAccessTokenObject(), token, buildGrantedAuthorities(token.getAccessTokenObject())));
+            .setAuthentication(new ObaMiddlewareAuthentication(token.getAccessTokenObject(), token, buildGrantedAuthorities(token.getAccessTokenObject())));
     }
 
     private boolean isNotAuthenticated(Authentication existingAuth) {
@@ -61,7 +61,7 @@ public abstract class AbstractAuthFilter extends OncePerRequestFilter {
     }
 
     private boolean isNotMiddlewareAuthentication(Authentication existingAuth) {
-        return !(existingAuth instanceof MiddlewareAuthentication);
+        return !(existingAuth instanceof ObaMiddlewareAuthentication);
     }
 
     private List<GrantedAuthority> buildGrantedAuthorities(AccessTokenTO accessTokenTO) {
