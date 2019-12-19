@@ -118,7 +118,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.1.RELEASE</version>
                 <configuration>
-                    <mainClass>de.adorsys.ledgers.oba.rest.server.LedgersXs2aObaApplication</mainClass>
+                    <mainClass>de.adorsys.ledgers.oba.app.LedgersXs2aObaApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
