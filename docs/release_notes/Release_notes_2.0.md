@@ -15,3 +15,5 @@ Current version consists of following components:
 - Fixed security alerts
 - Supported Swiss payments on developer portal
 - In developer portal for the embedded approach play with data copy two IDs at the same time
+- Appropriate massage in OBA-UI in case of creating consent (redirect) for user without accounts
+- Added checking if static TAN is entered in TPP-UI
