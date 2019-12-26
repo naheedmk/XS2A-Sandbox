@@ -13,5 +13,5 @@ Current version consists of following components:
 - Refactored Online Banking back-end to provide more flexibility and modularity
 - Fixed security alerts
 - Copy two IDs at the same time in developer portal for the embedded approach
-- Appropriate massage in OBA-UI in case of creating consent (redirect) for user without accounts
+- Appropriate message in OBA-UI in case of creating consent (redirect) for user without accounts
 - Added checking if static TAN is entered in TPP-UI
