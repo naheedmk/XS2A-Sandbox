@@ -69,23 +69,27 @@
 										"header": [
 											{
 												"key": "accept",
-												"value": "application/json"
+												"value": "application/json",
+												"type": "text"
 											},
 											{
 												"key": "PSU-ID",
-												"value": "{{psu_id_single}}"
+												"value": "{{psu_id_single}}",
+												"type": "text"
 											},
 											{
 												"key": "X-Request-ID",
-												"value": "{{x_request_id}}"
+												"value": "{{x_request_id}}",
+												"type": "text"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json"
+												"value": "application/json",
+												"type": "text"
 											},
 											{
 												"key": "psu-ip-address",
-												"value": "{{psu_ip_address}}",
+												"value": "1.1.1.1",
 												"type": "text"
 											}
 										],
