@@ -35,13 +35,13 @@ public class RestExecutionService {
     }
 
     private UploadedDataTO initialiseDataSets(DataPayload payload) {
-        List<PaymentTO> paymentTOList = payload.getPayments().stream()
+        List<PaymentTO> paymentTOs = payload.getPayments().stream()
                                             .map(this::performMapping)
                                             .collect(Collectors.toList());
         return new UploadedDataTO(payload.getUsers(),
             payload.getAccountByIban(),
             toAccountBalanceTO(payload.getBalancesByIban()),
-            paymentTOList,
+            paymentTOs,
             payload.isGeneratePayments(),
             payload.getBranch());
     }
