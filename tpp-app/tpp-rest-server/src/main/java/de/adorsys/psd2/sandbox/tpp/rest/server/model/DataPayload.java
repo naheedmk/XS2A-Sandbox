@@ -26,7 +26,7 @@ public class DataPayload {
     private List<UserTO> users;
     private List<AccountDetailsTO> accounts;
     private List<AccountBalance> balancesList;
-    private List<SinglePaymentTO> payments;
+    private List<SinglePaymentTO> payments; //TODO update to PaymentTO
     private static final String SEPARATOR = "_";
 
     @JsonIgnore
