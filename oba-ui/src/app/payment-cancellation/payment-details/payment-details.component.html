@@ -20,9 +20,6 @@
     <!--bulk payment-->
     <div *ngIf="authResponse.payment.paymentType =='BULK'">
       <div id="fixed">
-        <h2><strong>Debtor account</strong></h2>
-        <strong><p>{{authResponse.debtorAccount.iban}} {{authResponse.debtorAccount.currency}}</p></strong>
-        <hr>
         <h5>Total amount</h5>
         <strong><p>{{totalAmount}} {{authResponse.payment.targets[0].instructedAmount.currency}}</p></strong>
         <hr>
