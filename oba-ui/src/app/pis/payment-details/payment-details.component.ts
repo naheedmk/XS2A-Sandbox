@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
 
-import { PaymentAuthorizeResponse } from '../../api/models';
-import { ShareDataService } from '../../common/services/share-data.service';
+import {PaymentAuthorizeResponse} from '../../api/models';
+import {ShareDataService} from '../../common/services/share-data.service';
 
 @Component({
   selector: 'app-payment-details',
@@ -24,9 +24,11 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   get totalAmount(): number {
-    if (!this.authResponse || !this.authResponse.bulkPayment) { return null; }
+    if (!this.authResponse || this.authResponse.payment.paymentType != 'BULK') {
+      return null;
+    }
     let totalAmount = 0;
-    this.authResponse.bulkPayment.payments.forEach(payment => {
+    this.authResponse.payment.targets.forEach(payment => {
       totalAmount = totalAmount + payment.instructedAmount.amount;
     });
     return (Math.round(totalAmount * 100) / 100);
