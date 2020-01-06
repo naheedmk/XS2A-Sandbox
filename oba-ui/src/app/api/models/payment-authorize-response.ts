@@ -10,7 +10,6 @@ export interface PaymentAuthorizeResponse {
   scaMethods?: Array<ScaUserDataTO>;
   scaStatus?: 'received' | 'psuIdentified' | 'psuAuthenticated' | 'scaMethodSelected' | 'started' | 'finalised' | 'failed' | 'exempted';
   payment?: PaymentTO;
-  debtorAccount?: PaymentAccount,
   requestedExecutionDate?: string
 }
 
@@ -22,6 +21,7 @@ export interface PaymentTO {
   endDate?: string,
   executionRule?: string,
   dayOfExecution?: number,
+  debtorAccount?: PaymentAccount,
 }
 
 export interface Target {
