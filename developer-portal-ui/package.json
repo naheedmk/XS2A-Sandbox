@@ -44,10 +44,11 @@
     "ngx-toastr": "^10.0.2",
     "ramda": "^0.26.1",
     "rxjs": "~6.5.2",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "ng-http-loader": "latest"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.802.2",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "~8.2.2",
     "@angular/compiler-cli": "~8.2.3",
     "@angular/language-service": "~8.2.3",

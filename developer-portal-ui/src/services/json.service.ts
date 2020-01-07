@@ -12,9 +12,9 @@ export class JsonService {
   defaultJsonSource = '../assets/UI/jsons/';
 
   jsonLinks = {
-    singlePayment: 'singlePayment.json',
-    periodicPayment: 'periodicPayment.json',
-    bulkPayment: 'bulkPayment.json',
+    singlePayment: 'payments/sepa-credit-transfers.json',
+    periodicPayment: 'periodic-payments/sepa-credit-transfers.json',
+    bulkPayment: 'bulk-payments/sepa-credit-transfers.json',
     debtorAccount: 'debtorAccount.json',
     singlePaymentPlayWithData: 'playWithDataSinglePayment.json',
     dedicatedAccountsConsent: 'dedicatedAccountsConsent.json',
@@ -35,9 +35,9 @@ export class JsonService {
     private http: HttpClient,
     private customizeService: CustomizeService
   ) {
-    this.customizeService.getJSON().then(data => {
-      if (data.currency && data.currency.length !== 0) {
-        this.currency = data.currency;
+    this.customizeService.getCurrency().then(currency => {
+      if (currency && currency.length !== 0) {
+        this.currency = currency;
       }
     });
   }
@@ -57,10 +57,13 @@ export class JsonService {
     return this.getRawJsonData(url).pipe(
       map(data => {
         // replaces all the values of "currency" key word in formatted jsons
-        const regex = /(?<="currency"\s*:\s*"\s*)(.+)(?=")/g;
+        const regex = /(currency"\s*:\s*"\s*)(.+)(")/g;
 
         return JSON.parse(
-          JSON.stringify(data, null, '\t').replace(regex, this.currency)
+          JSON.stringify(data, null, '\t').replace(
+            regex,
+            'currency": "' + this.currency + '"'
+          )
         );
       })
     );

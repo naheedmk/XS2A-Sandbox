@@ -5,12 +5,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAConsentResponseTO;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAResponseTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AisAccountAccessInfoTO;
+import de.adorsys.ledgers.middleware.api.domain.um.AisConsentTO;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
+import de.adorsys.ledgers.oba.service.api.domain.CreatePiisConsentRequestTO;
 import de.adorsys.ledgers.oba.service.api.domain.ObaAisConsent;
-import de.adorsys.ledgers.oba.service.api.domain.exception.AisErrorCode;
-import de.adorsys.ledgers.oba.service.api.domain.exception.AisException;
+import de.adorsys.ledgers.oba.service.api.domain.exception.ObaErrorCode;
+import de.adorsys.ledgers.oba.service.api.domain.exception.ObaException;
 import de.adorsys.ledgers.oba.service.api.service.ConsentService;
+import de.adorsys.ledgers.oba.service.impl.mapper.CreatePiisConsentRequestMapper;
 import de.adorsys.psd2.consent.api.AspspDataService;
 import de.adorsys.psd2.consent.api.CmsAspspConsentDataBase64;
 import de.adorsys.psd2.consent.api.ais.CmsAisAccountConsent;
@@ -20,6 +24,9 @@ import de.adorsys.psd2.xs2a.core.sca.AuthenticationDataHolder;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.adorsys.ledgers.consent.aspsp.rest.client.CmsAspspPiisClient;
+import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentRequest;
+import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentResponse;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.springframework.stereotype.Service;
@@ -30,7 +37,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static de.adorsys.ledgers.oba.service.api.domain.exception.AisErrorCode.*;
+import static de.adorsys.ledgers.oba.service.api.domain.exception.ObaErrorCode.*;
 import static java.lang.String.format;
 import static java.util.Base64.getEncoder;
 
@@ -53,6 +60,8 @@ public class ConsentServiceImpl implements ConsentService {
     private final AuthRequestInterceptor authInterceptor;
     private final ObjectMapper objectMapper;
     private final AspspDataService aspspDataService;
+    private final CmsAspspPiisClient cmsAspspPiisClient;
+    private final CreatePiisConsentRequestMapper createPiisConsentRequestMapper;
 
     @Override
     public List<ObaAisConsent> getListOfConsents(String userLogin) {
@@ -63,9 +72,9 @@ public class ConsentServiceImpl implements ConsentService {
         } catch (FeignException e) {
             String msg = format(GET_CONSENTS_ERROR_MSG, userLogin, e.status(), e.getMessage());
             log.error(msg);
-            throw AisException.builder()
+            throw ObaException.builder()
                       .devMessage(RESPONSE_ERROR)
-                      .aisErrorCode(AIS_BAD_REQUEST).build();
+                      .obaErrorCode(AIS_BAD_REQUEST).build();
         }
     }
 
@@ -87,15 +96,30 @@ public class ConsentServiceImpl implements ConsentService {
         authInterceptor.setAccessToken(null);
     }
 
+    @Override
+    public SCAConsentResponseTO createConsent(CreatePiisConsentRequestTO request, String psuId) {
+        CreatePiisConsentRequest piisConsentRequest = createPiisConsentRequestMapper.fromCreatePiisConsentRequest(request);
+        CreatePiisConsentResponse cmsConsent = cmsAspspPiisClient.createConsent(piisConsentRequest, psuId, null, null, null).getBody();
+        String consentId = Optional.ofNullable(cmsConsent).orElseGet(CreatePiisConsentResponse::new).getConsentId();
+        AisConsentTO pisConsent = new AisConsentTO(consentId, psuId, piisConsentRequest.getTppAuthorisationNumber(), 100, buildAccountAccess(piisConsentRequest.getAccount().getIban()), piisConsentRequest.getValidUntil(), true);
+        return consentRestClient.grantPIISConsent(pisConsent).getBody();
+    }
+
+    private AisAccountAccessInfoTO buildAccountAccess(String iban) {
+        AisAccountAccessInfoTO access = new AisAccountAccessInfoTO();
+        access.setAccounts(Collections.singletonList(iban));
+        return access;
+    }
+
     private void updateCmsAuthorization(String userLogin, String authorizationId, String consentId) {
         try {
             cmsPsuAisClient.updateAuthorisationStatus(consentId, "FINALISED", authorizationId, userLogin, null, null, null, DEFAULT_SERVICE_INSTANCE_ID, new AuthenticationDataHolder(null, null));
         } catch (FeignException e) {
             String msg = format(UPDATE_FAILED_MSG, "authorization", e.getMessage());
             log.error(msg);
-            throw AisException.builder()
+            throw ObaException.builder()
                       .devMessage(msg)
-                      .aisErrorCode(AIS_BAD_REQUEST)
+                      .obaErrorCode(AIS_BAD_REQUEST)
                       .build();
         }
     }
@@ -107,9 +131,9 @@ public class ConsentServiceImpl implements ConsentService {
         } catch (FeignException e) {
             String msg = format(UPDATE_FAILED_MSG, "aspsp consent data", e.getMessage());
             log.error(msg);
-            throw AisException.builder()
+            throw ObaException.builder()
                       .devMessage(msg)
-                      .aisErrorCode(AIS_BAD_REQUEST)
+                      .obaErrorCode(AIS_BAD_REQUEST)
                       .build();
         }
     }
@@ -122,21 +146,21 @@ public class ConsentServiceImpl implements ConsentService {
                              ? format(CONSENT_COULD_NOT_BE_FOUND, consentId)
                              : format(FAILED_TO_CONFIRM_THE_CONSENT_MSG, consentId, e.getMessage());
             log.error(msg);
-            AisErrorCode errorCode = e.status() == 404
+            ObaErrorCode errorCode = e.status() == 404
                                          ? NOT_FOUND
                                          : CONNECTION_ERROR;
-            throw AisException.builder()
+            throw ObaException.builder()
                       .devMessage(msg)
-                      .aisErrorCode(errorCode)
+                      .obaErrorCode(errorCode)
                       .build();
         }
     }
 
     private String getDecryptedConsentId(String encryptedConsentId) {
         return securityDataService.decryptId(encryptedConsentId)
-                   .orElseThrow(() -> AisException.builder()
+                   .orElseThrow(() -> ObaException.builder()
                                           .devMessage("Error decrypting consent id")
-                                          .aisErrorCode(AIS_BAD_REQUEST)
+                                          .obaErrorCode(AIS_BAD_REQUEST)
                                           .build());
     }
 
@@ -144,9 +168,9 @@ public class ConsentServiceImpl implements ConsentService {
         try {
             return getEncoder().encodeToString(objectMapper.writeValueAsBytes(ledgerValidateTanConsentResponse));
         } catch (JsonProcessingException e) {
-            throw AisException.builder()
+            throw ObaException.builder()
                       .devMessage("Could not encode ledgers consent confirmation response.")
-                      .aisErrorCode(AIS_BAD_REQUEST)
+                      .obaErrorCode(AIS_BAD_REQUEST)
                       .build();
         }
     }
@@ -155,9 +179,9 @@ public class ConsentServiceImpl implements ConsentService {
         try {
             return consentRestClient.authorizeConsent(consentId, authorizationId, tan).getBody();
         } catch (FeignException e) {
-            throw AisException.builder()
+            throw ObaException.builder()
                       .devMessage(getDevMessageFromFeignException(e))
-                      .aisErrorCode(AIS_BAD_REQUEST)
+                      .obaErrorCode(AIS_BAD_REQUEST)
                       .build();
         }
     }
@@ -175,21 +199,21 @@ public class ConsentServiceImpl implements ConsentService {
         try {
             byte[] decodedData = aspspDataService.readAspspConsentData(encryptedConsentId)
                                      .map(AspspConsentData::getAspspConsentData)
-                                     .orElseThrow(() -> AisException.builder()
+                                     .orElseThrow(() -> ObaException.builder()
                                                             .devMessage(COULD_NOT_RETRIEVE_ASPSP_CONSENT_DATA)
-                                                            .aisErrorCode(AIS_BAD_REQUEST)
+                                                            .obaErrorCode(AIS_BAD_REQUEST)
                                                             .build());
             token = Optional.ofNullable(objectMapper.readTree(decodedData).get("bearerToken"))
                         .map(t -> t.get("access_token"))
                         .map(JsonNode::asText)
-                        .orElseThrow(() -> AisException.builder()
+                        .orElseThrow(() -> ObaException.builder()
                                                .devMessage("No AccessToken present in ASPSP consent data")
-                                               .aisErrorCode(AIS_BAD_REQUEST)
+                                               .obaErrorCode(AIS_BAD_REQUEST)
                                                .build());
         } catch (IOException e) {
-            throw AisException.builder()
+            throw ObaException.builder()
                       .devMessage("Could not parse ASPSP consent data")
-                      .aisErrorCode(AIS_BAD_REQUEST)
+                      .obaErrorCode(AIS_BAD_REQUEST)
                       .build();
         }
         authInterceptor.setAccessToken(token);
