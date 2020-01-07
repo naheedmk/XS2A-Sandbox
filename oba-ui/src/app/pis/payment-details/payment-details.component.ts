@@ -15,7 +15,8 @@ export class PaymentDetailsComponent implements OnInit {
 
   public authResponse: PaymentAuthorizeResponse;
 
-  constructor(private sharedService: ShareDataService) {}
+  constructor(private sharedService: ShareDataService) {
+  }
 
   ngOnInit() {
     this.sharedService.currentData.subscribe(
@@ -24,7 +25,7 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   get totalAmount(): number {
-    if (!this.authResponse || this.authResponse.payment.paymentType != 'BULK') {
+    if (!this.authResponse && !this.authResponse.payment) {
       return null;
     }
     let totalAmount = 0;

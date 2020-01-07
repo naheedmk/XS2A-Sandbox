@@ -24,7 +24,7 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   get totalAmount(): number {
-    if (!this.authResponse || this.authResponse.payment.paymentType != 'BULK') {
+    if (!this.authResponse && !this.authResponse.payment) {
       return null;
     }
     let totalAmount = 0;

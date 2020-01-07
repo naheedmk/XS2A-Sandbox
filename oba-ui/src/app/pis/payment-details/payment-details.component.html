@@ -1,24 +1,6 @@
 <div class="card bg-light">
   <div *ngIf="authResponse" class="card-body">
-    <!--single payment-->
-    <div *ngIf="authResponse.payment.paymentType =='SINGLE'">
-      <h4><strong>Creditor account</strong></h4>
-      <strong>
-        <p>{{authResponse.payment.targets[0].creditorAccount.iban}} {{authResponse.payment.targets[0].creditorAccount.currency}}</p>
-      </strong>
-      <hr>
-
-      <h4>Creditor name</h4>
-      <strong><p>{{authResponse.payment.targets[0].creditorName}}</p></strong>
-      <hr>
-
-      <h4>Payment amount</h4>
-      <strong><p>{{authResponse.payment.targets[0].instructedAmount.amount}}
-        {{authResponse.payment.targets[0].instructedAmount.currency}} </p></strong>
-      <hr>
-    </div>
-    <!--bulk payment-->
-    <div *ngIf="authResponse.payment.paymentType =='BULK'">
+    <div *ngIf="authResponse.payment">
       <div id="fixed">
         <h2><strong>Debtor account</strong></h2>
         <strong><p>{{authResponse.payment.debtorAccount.iban}} {{authResponse.payment.debtorAccount.currency}}</p></strong>
@@ -40,24 +22,6 @@
         <strong><p>{{payment.instructedAmount.amount}} {{payment.instructedAmount.currency}}</p></strong>
         <hr>
       </div>
-    </div>
-
-    <!--periodic payment-->
-    <div *ngIf="authResponse.payment.paymentType =='PERIODIC'">
-      <h4><strong>Creditor account</strong></h4>
-      <strong>
-        <p>{{authResponse.payment.targets[0].creditorAccount.iban}} {{authResponse.payment.targets[0].creditorAccount.currency}}</p>
-      </strong>
-      <hr>
-
-      <h4>Creditor name</h4>
-      <strong><p>{{authResponse.payment.targets[0].creditorName}}</p></strong>
-      <hr>
-
-      <h4>Payment amount</h4>
-      <strong><p>{{authResponse.payment.targets[0].instructedAmount.amount}}
-        {{authResponse.payment.targets[0].instructedAmount.currency}}</p></strong>
-      <hr>
 
       <div *ngIf="authResponse.payment.startDate">
         <h4>Payment start date</h4>
@@ -77,5 +41,6 @@
         <hr>
       </div>
     </div>
+
   </div>
 </div>
