@@ -5,9 +5,9 @@ import {PaymentAuthorizeResponse} from "../../api/models/payment-authorize-respo
 import {PeriodicPaymentTO} from "../../api/models/periodic-payment-to";
 
 @Component({
-  selector: 'app-periodic-payments',
-  templateUrl: './periodic-payments.component.html',
-  styleUrls: ['./periodic-payments.component.scss']
+    selector: 'app-periodic-payments',
+    templateUrl: './periodic-payments.component.html',
+    styleUrls: ['./periodic-payments.component.scss']
 })
 export class PeriodicPaymentsComponent implements OnInit {
 
@@ -15,7 +15,8 @@ export class PeriodicPaymentsComponent implements OnInit {
     public authResponse: PaymentAuthorizeResponse;
     private subscriptions: Subscription[] = [];
 
-    constructor(private sharedService: ShareDataService) {}
+    constructor(private sharedService: ShareDataService) {
+    }
 
     ngOnInit() {
         this.sharedService.currentData.subscribe(
@@ -26,9 +27,10 @@ export class PeriodicPaymentsComponent implements OnInit {
     }
 
     getPeriodicPayments() {
-        if (!this.authResponse || !this.authResponse.periodicPayment) { return; }
-        this.payments.forEach(payments => {
-           payments = this.authResponse.periodicPayment;
-        });
+        if (!this.authResponse || !this.authResponse.periodicPayment) {
+            return;
+        } else {
+            this.payments.push(this.authResponse.periodicPayment);
+        }
     }
 }
