@@ -220,8 +220,4 @@ export class PlayWthDataComponent implements OnInit {
       .getPreparedJsonData(paymentService + '/' + paymentProduct + '.json')
       .subscribe(data => (this.body = data));
   }
-
-  public getError(responseElement: any) {
-    return JSON.stringify(responseElement, null, '\t');
-  }
 }
