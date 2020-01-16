@@ -222,6 +222,6 @@ export class PlayWthDataComponent implements OnInit {
   }
 
   public getError(responseElement: any) {
-    return JSON.stringify(responseElement);
+    return JSON.stringify(responseElement, null, '\t');
   }
 }
