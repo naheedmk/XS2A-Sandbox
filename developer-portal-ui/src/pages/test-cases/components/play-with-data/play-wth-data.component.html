@@ -173,9 +173,9 @@
     </div>
 
     <div *ngIf="response['error']" class="response-status">
-      <span class="status-style">Error</span>
+      <span class="status-style">Error details</span>
       <div class="response-status-wrapper">
-        <span>{{ response['error'] }}</span>
+        <span>{{ getError(response['error']) }}</span>
       </div>
     </div>
 
