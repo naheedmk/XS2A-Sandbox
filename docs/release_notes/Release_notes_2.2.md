@@ -5,7 +5,7 @@ Current version consists of following components:
 2. **XS2A v.5.8-RC2**
 3. **ASPSP-Profile v.5.8-RC2**
 4. **Consent-Management v.5.8-RC2**
-4. **XS2A Connector-Examples v.5.8-RC2**
+5. **XS2A Connector-Examples v.5.8-RC2**
  
 - migrate ledgers v 2.6
 - extend developer portal 'play with data' section with error messages display for codes 4xx, 5xx 
