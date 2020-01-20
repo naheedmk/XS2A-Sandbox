@@ -1,4 +1,4 @@
-# Release notes v.2.2
+# Release notes v.2.7
 
 Current version consists of following components:
 1. **Ledgers v.2.6**
