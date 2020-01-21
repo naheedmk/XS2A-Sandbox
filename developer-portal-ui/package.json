@@ -33,6 +33,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "bootstrap-scss": "~4.2.0",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
     "css-vars-ponyfill": "^2.0.2",
     "custom-event-polyfill": "^1.0.7",
