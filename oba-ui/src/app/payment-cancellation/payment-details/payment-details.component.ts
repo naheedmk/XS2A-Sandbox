@@ -24,11 +24,11 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   get totalAmount(): number {
-    if (!this.authResponse && !this.authResponse.payment) {
+    if (!this.authResponse && !this.authResponse.bulkPayment) {
       return null;
     }
     let totalAmount = 0;
-    this.authResponse.payment.targets.forEach(payment => {
+    this.authResponse.bulkPayment.payments.forEach(payment => {
       totalAmount = totalAmount + payment.instructedAmount.amount;
     });
     return (Math.round(totalAmount * 100) / 100);

@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="header__title">Payments</div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CreditorAccount</th>
+                        <th scope="col">CreditorName</th>
+                        <th scope="col">DebitorAccount</th>
+                        <th scope="col">PaymentAmount</th>
+                        <th scope="col">StartDate</th>
+                        <th scope="col">Frequency</th>
+                        <th scope="col">EndDate</th>
+                        <th scope="col">Currency</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let payment of payments; index as i">
+                        <th scope="row">{{i + 1}}</th>
+                        <td>{{payment.creditorAccount.iban}}</td>
+                        <td>{{payment.creditorName}}</td>
+                        <td>{{payment.debtorAccount.iban}}</td>
+                        <td>{{payment.instructedAmount.amount}}</td>
+                        <td>{{payment.startDate}}</td>
+                        <td>{{payment.frequency}}</td>
+                        <td>{{payment.endDate}}</td>
+                        <td>{{payment.instructedAmount.currency}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

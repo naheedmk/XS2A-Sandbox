@@ -15,6 +15,7 @@ import { ConsentsComponent } from './consents/consents.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PeriodicPaymentsComponent } from './periodic-payments/periodic-payments.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     AccountsComponent,
     AccountDetailsComponent,
     ResetPasswordComponent,
-    ConfirmPasswordComponent
+    ConfirmPasswordComponent,
+    PeriodicPaymentsComponent
   ],
   imports: [
     CommonModule,

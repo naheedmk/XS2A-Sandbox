@@ -9,6 +9,7 @@ import {ConsentsComponent} from './oba/consents/consents.component';
 import {DashboardComponent} from './oba/dashboard/dashboard.component';
 import {LoginComponent} from './oba/login/login.component';
 import {ResetPasswordComponent} from './oba/reset-password/reset-password.component';
+import {PeriodicPaymentsComponent} from "./oba/periodic-payments/periodic-payments.component";
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -47,6 +48,10 @@ export const routes: Routes = [
         path: 'accounts/:id',
         component: AccountDetailsComponent
       },
+        {
+            path: 'payment',
+            component: PeriodicPaymentsComponent
+        },
     ]
   },
   {
