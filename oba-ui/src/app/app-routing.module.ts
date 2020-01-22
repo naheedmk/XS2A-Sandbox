@@ -49,7 +49,7 @@ export const routes: Routes = [
         component: AccountDetailsComponent
       },
         {
-            path: 'payment',
+            path: 'periodic-payments',
             component: PeriodicPaymentsComponent
         },
     ]
