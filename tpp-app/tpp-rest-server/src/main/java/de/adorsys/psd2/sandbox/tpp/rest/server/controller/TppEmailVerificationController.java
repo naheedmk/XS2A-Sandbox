@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(TppEmailVerificationRestApi.BASE_PATH)
 public class TppEmailVerificationController implements TppEmailVerificationRestApi {
-    private final ScaVerificationRestClient scaVerificationRestAPI;
+    private final ScaVerificationRestClient scaVerificationRestClient;
 
     @Override
     public ResponseEntity<Void> sendEmailVerification(String email) {
-        return scaVerificationRestAPI.sendEmailVerification(email);
+        return scaVerificationRestClient.sendEmailVerification(email);
     }
 
     @Override
     public ResponseEntity<Void> confirmVerificationToken(String token) {
-        return scaVerificationRestAPI.confirmVerificationToken(token);
+        return scaVerificationRestClient.confirmVerificationToken(token);
     }
 }
