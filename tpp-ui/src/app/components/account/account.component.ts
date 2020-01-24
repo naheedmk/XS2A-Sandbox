@@ -66,7 +66,7 @@ export class AccountComponent implements OnInit {
       .subscribe(() => {
         this.getAccountReport();
         this.infoService.openFeedback(
-          `Transactions of ${this.account.id} successfully deleted`,
+          `Transactions of ${this.account.iban} successfully deleted`,
           {
             severity: 'info',
           }
