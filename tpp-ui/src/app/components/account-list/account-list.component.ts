@@ -29,8 +29,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.searchForm = this.formbuilder.group({
-      query: ['', Validators.required],
-      itemsPerPage: [this.config.itemsPerPage, Validators.required],
+      query: ['', Validators.required]
     });
     this.listAccounts(this.config.currentPageNumber, this.config.itemsPerPage);
     this.onQueryUsers();
@@ -46,7 +45,6 @@ export class AccountListComponent implements OnInit, OnDestroy {
   onQueryUsers() {
     this.searchForm.valueChanges
       .subscribe(form => {
-        this.config.itemsPerPage = form.itemsPerPage;
         this.listAccounts(1, this.config.itemsPerPage, form.query);
       });
   }
