@@ -75,14 +75,14 @@ describe('AccountListComponent', () => {
         balances: []
       } as Account
     ];
-    let getAccountsSpy = spyOn(accountService, 'getAccounts').and.returnValue(of({
+    let listAccountsSpy = spyOn(accountService, 'listAccounts').and.returnValue(of({
       accounts: mockAccounts,
       totalElements: mockAccounts.length
     }));
 
     component.ngOnInit();
 
-    expect(getAccountsSpy).toHaveBeenCalled();
+    expect(listAccountsSpy).toHaveBeenCalled();
     expect(component.accounts).toEqual(mockAccounts);
   });
 });
