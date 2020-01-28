@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.EnumSet;
 
-import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.EXEMPTED;
-import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.FINALISED;
+import static de.adorsys.ledgers.middleware.api.domain.sca.ScaStatusTO.*;
 import static de.adorsys.psd2.xs2a.core.pis.TransactionStatus.CANC;
 import static org.adorsys.ledgers.consent.psu.rest.client.CmsPsuPisClient.DEFAULT_SERVICE_INSTANCE_ID;
 import static org.springframework.http.HttpStatus.*;

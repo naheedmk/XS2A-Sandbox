@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Api(value = ObaAuthorizationApi.BASE_PATH, tags = "Online Banking PIS Cancellation.")
 public interface ObaCancellationApi {
-    String BASE_PATH = "/api/v1";
+    String BASE_PATH = "/api/v1/cancel";
 
     @PostMapping("/init")
     @ApiOperation(value = "Initiate payment cancellation process", authorizations = @Authorization(value = "apiKey"))
