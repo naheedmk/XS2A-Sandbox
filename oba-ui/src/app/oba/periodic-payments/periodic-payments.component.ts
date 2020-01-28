@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ShareDataService} from "../../common/services/share-data.service";
 import {Subscription} from "rxjs/index";
 import {PaymentAuthorizeResponse} from "../../api/models/payment-authorize-response";
-import {PeriodicPaymentTO} from "../../api/models/periodic-payment-to";
 
 @Component({
     selector: 'app-periodic-payments',
@@ -11,7 +10,7 @@ import {PeriodicPaymentTO} from "../../api/models/periodic-payment-to";
 })
 export class PeriodicPaymentsComponent implements OnInit {
 
-    payments: PeriodicPaymentTO[];
+    payments;
     public authResponse: PaymentAuthorizeResponse;
     private subscriptions: Subscription[] = [];
 
@@ -27,10 +26,10 @@ export class PeriodicPaymentsComponent implements OnInit {
     }
 
     getPeriodicPayments() {
-        if (!this.authResponse || !this.authResponse.periodicPayment) {
+        if (!this.authResponse || !this.authResponse.payment) {
             return;
         } else {
-            this.payments.push(this.authResponse.periodicPayment);
+            this.payments = this.authResponse.payment;
         }
     }
 }

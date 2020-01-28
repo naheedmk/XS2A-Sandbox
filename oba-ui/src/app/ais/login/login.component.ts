@@ -4,16 +4,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { OnlineBankingOauthAuthorizationService } from '../../api/services';
-import { PSUAISService } from '../../api/services/psuais.service';
+import {
+    OnlineBankingOauthAuthorizationService, PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService
+} from '../../api/services';
 import { InfoService } from '../../common/info/info.service';
 import { RoutingPath } from '../../common/models/routing-path.model';
 import { AisService } from '../../common/services/ais.service';
 import { CustomizeService } from '../../common/services/customize.service';
 import { ShareDataService } from '../../common/services/share-data.service';
+import LoginUsingPOSTParams = LoginUsingPOSTParams;
+import AisAuthUsingGETParams = AisAuthUsingGETParams;
+import AisAuthUsingGETParams = PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisAuthUsingGETParams;
 
-import LoginUsingPOSTParams = PSUAISService.LoginUsingPOSTParams;
-import AisAuthUsingGETParams = PSUAISService.AisAuthUsingGETParams;
 
 @Component({
   selector: 'app-login',
@@ -36,7 +38,8 @@ export class LoginComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private shareService: ShareDataService,
               private onlineBankingOauthAuthorizationService: OnlineBankingOauthAuthorizationService,
-              private aisService: AisService) {
+              private aisService: AisService,
+              private PSUAISService: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService) {
   }
 
   ngOnInit() {
