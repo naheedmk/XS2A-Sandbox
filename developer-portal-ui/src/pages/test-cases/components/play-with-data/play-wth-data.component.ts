@@ -123,6 +123,7 @@ export class PlayWthDataComponent implements OnInit {
       )
       .subscribe(
         resp => {
+          delete this.headers['Content-Type'];
           this.response = Object.assign(resp);
           if (
             this.response.body.hasOwnProperty('_links') &&
@@ -158,6 +159,7 @@ export class PlayWthDataComponent implements OnInit {
           this.dataService.showToast('Request sent', 'Success!', 'success');
         },
         err => {
+          delete this.headers['Content-Type'];
           this.dataService.setIsLoading(false);
           this.dataService.showToast(
             'Something went wrong!',
@@ -223,5 +225,10 @@ export class PlayWthDataComponent implements OnInit {
           });
       }
     }
+  }
+
+  onClear() {
+    this.response = undefined;
+    this.redirectUrl = undefined;
   }
 }

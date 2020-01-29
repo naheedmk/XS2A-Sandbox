@@ -16,7 +16,6 @@ export class RestService {
     body?
   ): Observable<any> {
     const headers = this.buildHeadersForRequest(headerParams, xml);
-
     switch (method) {
       case 'POST':
         return this.http.post(this.serverUrl + '/' + url, body, {
