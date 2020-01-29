@@ -4,15 +4,15 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
-import {PSUPISService} from '../../api/services/psupis.service';
 import {InfoService} from '../../common/info/info.service';
 import {RoutingPath} from '../../common/models/routing-path.model';
 import {CustomizeService} from '../../common/services/customize.service';
 import {PisService} from '../../common/services/pis.service';
 import {ShareDataService} from '../../common/services/share-data.service';
 import {OnlineBankingOauthAuthorizationService} from '../../api/services/online-banking-oauth-authorization.service';
-import LoginUsingPOST3Params = PSUPISService.LoginUsingPOST3Params;
-import PisAuthUsingGETParams = PSUPISService.PisAuthUsingGETParams;
+import LoginUsingPOST3Params = PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService.LoginUsingPOST3Params;
+import PisAuthUsingGETParams = PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService.PisAuthUsingGETParams;
+import {PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService} from "../../api/services/psupisprovides-access-to-online-banking-payment-functionality.service";
 
 @Component({
   selector: 'app-login',

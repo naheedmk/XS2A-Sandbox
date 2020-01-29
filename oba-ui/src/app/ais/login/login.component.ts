@@ -12,8 +12,7 @@ import { RoutingPath } from '../../common/models/routing-path.model';
 import { AisService } from '../../common/services/ais.service';
 import { CustomizeService } from '../../common/services/customize.service';
 import { ShareDataService } from '../../common/services/share-data.service';
-import LoginUsingPOSTParams = LoginUsingPOSTParams;
-import AisAuthUsingGETParams = AisAuthUsingGETParams;
+import LoginUsingPOSTParams = PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.LoginUsingPOSTParams;
 import AisAuthUsingGETParams = PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisAuthUsingGETParams;
 
 

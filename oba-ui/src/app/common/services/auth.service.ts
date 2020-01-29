@@ -8,10 +8,12 @@ import { catchError, map } from 'rxjs/operators';
 import { ResetPassword } from '../../api/models/reset-password';
 import { SendCode } from '../../api/models/send-code';
 import { UpdatePassword } from '../../api/models/update-password';
-import { OnlineBankingAuthorizationService } from '../../api/services';
+import {
+    OnlineBankingAuthorizationProvidesAccessToOnlineBankingService,
+} from '../../api/services';
 import { AutoLogoutService } from './auto-logout.service';
 
-import LoginUsingPOST1Params = OnlineBankingAuthorizationService.LoginUsingPOST1Params;
+import LoginUsingPOST1Params = OnlineBankingAuthorizationProvidesAccessToOnlineBankingService.LoginUsingPOST1Params;
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +26,7 @@ export class AuthService {
     constructor(private http: HttpClient,
                 private router: Router,
                 private autoLogoutService: AutoLogoutService,
-                private onlineBankingAuthorizationService: OnlineBankingAuthorizationService) {
+                private onlineBankingAuthorizationService: OnlineBankingAuthorizationProvidesAccessToOnlineBankingService) {
     }
 
     authorize(loginUsingPOST1Params: LoginUsingPOST1Params): Observable<string> {

@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, throwError } from 'rxjs';
 
-import { OnlineBankingAuthorizationService } from '../../api/services/online-banking-authorization.service';
 import { RoutingPath } from '../../common/models/routing-path.model';
 import { AuthService } from '../../common/services/auth.service';
 import { CustomizeService } from '../../common/services/customize.service';
 
-import LoginUsingPOST1Params = OnlineBankingAuthorizationService.LoginUsingPOST1Params;
+import LoginUsingPOST1Params = OnlineBankingAuthorizationProvidesAccessToOnlineBankingService.LoginUsingPOST1Params;
+import {OnlineBankingAuthorizationProvidesAccessToOnlineBankingService} from "../../api/services/online-banking-authorization-provides-access-to-online-banking.service";
 
 @Component({
   selector: 'app-login',

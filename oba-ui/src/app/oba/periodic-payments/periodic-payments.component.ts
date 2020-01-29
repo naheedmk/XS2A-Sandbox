@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ShareDataService} from "../../common/services/share-data.service";
 import {Subscription} from "rxjs/index";
 import {PaymentAuthorizeResponse} from "../../api/models/payment-authorize-response";
+import {PaymentTO} from "../../api/models/payment-to";
+import {OnlineBankingService} from "../../common/services/online-banking.service";
+import {InfoService} from "../../common/info/info.service";
+import {PaymentTargetTO} from "../../api/models/payment-target-to";
 
 @Component({
     selector: 'app-periodic-payments',
@@ -10,26 +14,25 @@ import {PaymentAuthorizeResponse} from "../../api/models/payment-authorize-respo
 })
 export class PeriodicPaymentsComponent implements OnInit {
 
-    payments;
-    public authResponse: PaymentAuthorizeResponse;
+    payments: PaymentTO[];
+    paymentsTarget: PaymentTargetTO[];
     private subscriptions: Subscription[] = [];
 
-    constructor(private sharedService: ShareDataService) {
+    constructor(private infoService: InfoService,
+                private onlineBankingService: OnlineBankingService ) {
     }
 
     ngOnInit() {
-        this.sharedService.currentData.subscribe(
-            authResponse => this.authResponse = authResponse
-        );
-
         this.getPeriodicPayments();
     }
 
     getPeriodicPayments() {
-        if (!this.authResponse || !this.authResponse.payment) {
-            return;
-        } else {
-            this.payments = this.authResponse.payment;
-        }
+        this.onlineBankingService.getPayments().subscribe(payments => {
+            this.payments = payments;
+
+            for (let target of this.payments) {
+                this.paymentsTarget = target.targets;
+            }
+        });
     }
 }

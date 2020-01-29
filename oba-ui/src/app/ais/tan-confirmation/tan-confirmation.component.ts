@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { ConsentAuthorizeResponse } from '../../api/models/consent-authorize-response';
-import { PSUAISService } from '../../api/services/psuais.service';
 import { RoutingPath } from '../../common/models/routing-path.model';
 import { AisService } from '../../common/services/ais.service';
 import { CustomizeService } from '../../common/services/customize.service';
 import { ShareDataService } from '../../common/services/share-data.service';
 
-import AuthrizedConsentUsingPOSTParams = PSUAISService.AuthrizedConsentUsingPOSTParams;
+import AuthrizedConsentUsingPOSTParams = PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AuthrizedConsentUsingPOSTParams;
+import {PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService} from "../../api/services/psuaisprovides-access-to-online-banking-account-functionality.service";
 @Component({
   selector: 'app-tan-confirmation',
   templateUrl: './tan-confirmation.component.html',

@@ -3,20 +3,20 @@ import { Observable } from 'rxjs';
 
 import { PaymentAuthorizeResponse } from '../../api/models';
 import { AuthorizeResponse } from '../../api/models/authorize-response';
-import { PSUPISService } from '../../api/services';
 
-import PisAuthUsingGETParams = PSUPISService.PisAuthUsingGETParams;
-import LoginUsingPOST3Params = PSUPISService.LoginUsingPOST3Params;
-import SelectMethodUsingPOST2Params = PSUPISService.SelectMethodUsingPOST2Params;
-import AuthorisePaymentUsingPOSTParams = PSUPISService.AuthrizedPaymentUsingPOSTParams;
+import PisAuthUsingGETParams = PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService.PisAuthUsingGETParams;
+import LoginUsingPOST3Params = PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService.LoginUsingPOST3Params;
+import SelectMethodUsingPOST2Params = PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService.SelectMethodUsingPOST2Params;
+import AuthorisePaymentUsingPOSTParams = PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService.AuthrizedPaymentUsingPOSTParams;
 import {HttpResponse} from "@angular/common/http";
+import {PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService} from "../../api/services/psupisprovides-access-to-online-banking-payment-functionality.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PisService {
 
-  constructor(private pisService: PSUPISService) {}
+  constructor(private pisService: PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService) {}
 
   public pisAuthCode(params: PisAuthUsingGETParams): Observable<HttpResponse<AuthorizeResponse>> {
     return this.pisService.pisAuthUsingGETResponse(params);
@@ -34,7 +34,7 @@ export class PisService {
     return this.pisService.authrizedPaymentUsingPOST(params);
   }
 
-  public pisDone(params: PSUPISService.PisDoneUsingGET1Params): Observable<PaymentAuthorizeResponse> {
+  public pisDone(params: PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService.PisDoneUsingGET1Params): Observable<PaymentAuthorizeResponse> {
     return this.pisService.pisDoneUsingGET1(params);
   }
 }
