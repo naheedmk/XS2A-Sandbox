@@ -258,7 +258,10 @@ export class PlayWthDataComponent implements OnInit {
           });
       } else {
         this.jsonService
-          .getPreparedJsonData(this.paymentService + this.paymentProduct, paymentProduct == '/sepa-credit-transfers')
+          .getPreparedJsonData(
+            this.paymentService + this.paymentProduct,
+            this.paymentProduct == '/sepa-credit-transfers'
+          )
           .subscribe(data => {
             this.xml = false;
             this.body = data;
