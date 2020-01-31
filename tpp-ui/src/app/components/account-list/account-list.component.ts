@@ -31,7 +31,11 @@ export class AccountListComponent implements OnInit, OnDestroy {
     this.route.queryParams.pipe(
       map(params => params.page))
       .subscribe(param => {
-        this.config.currentPageNumber = param;
+        if (param) {
+          this.config.currentPageNumber = param;
+        } else {
+          this.config.currentPageNumber = 1;
+        }
       });
   }
 
