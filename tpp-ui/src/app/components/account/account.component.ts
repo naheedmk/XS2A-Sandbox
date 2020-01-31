@@ -60,6 +60,10 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  goToAccountList() {
+    this.router.navigate(['/accounts']);
+  }
+
   deleteAccountTransations() {
     this.tppService
       .deleteAccountTransations(this.account.id)
