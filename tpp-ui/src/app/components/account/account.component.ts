@@ -61,7 +61,7 @@ export class AccountComponent implements OnInit {
   }
 
   goToAccountList() {
-    this.router.navigate(['/accounts']);
+    this.router.navigate(['/accounts'], {queryParamsHandling: 'preserve'});
   }
 
   deleteAccountTransations() {
