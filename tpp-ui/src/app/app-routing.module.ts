@@ -91,10 +91,6 @@ const routes: Routes = [
             {
                 path: 'profile/edit',
                 component: UserProfileUpdateComponent
-            },
-            {
-                path: 'settings',
-                component: SettingsComponent
             }
         ]
     },
