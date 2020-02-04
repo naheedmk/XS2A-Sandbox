@@ -45,7 +45,7 @@ public class IbanGenerationService {
     public Map<CountryCode, String> getCountryCodes() {
         Map<CountryCode, String> codes = new HashMap<>();
         COUNTRY_CODES.forEach(c -> codes.put(c, c.getName()));
-        return TppData.sortByValue(codes);
+        return TppData.sortMapByValue(codes);
     }
 
     public BankCodeStructure getBankCodeStructure(CountryCode code) {

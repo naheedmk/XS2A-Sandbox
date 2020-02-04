@@ -41,10 +41,10 @@ public class TppData {
                                      .orElse(100L);
     }
 
-    public static Map<CountryCode, String> sortByValue(Map<CountryCode, String> wordCounts) {
-        return wordCounts.entrySet()
+    public static Map<CountryCode, String> sortMapByValue(Map<CountryCode, String> map) {
+        return map.entrySet()
                    .stream()
-                   .sorted((Map.Entry.<CountryCode, String>comparingByValue()))
+                   .sorted((Map.Entry.comparingByValue())) //NOPMD
                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }
