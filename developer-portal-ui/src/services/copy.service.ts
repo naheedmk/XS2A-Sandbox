@@ -8,7 +8,7 @@ export class CopyService {
 
   copyThis(index: number, fieldsToCopy: string[], fieldName?: string) {
     const copyText = document.getElementById(`input-${index}`);
-    this.copyTextToClipboard(copyText.value, index, fieldsToCopy, fieldName);
+    this.copyTextToClipboard(copyText['value'], index, fieldsToCopy, fieldName);
   }
 
   copyTextToClipboard(
