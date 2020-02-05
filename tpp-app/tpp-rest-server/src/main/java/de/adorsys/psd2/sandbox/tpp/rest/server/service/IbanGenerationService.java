@@ -20,6 +20,8 @@ import static org.iban4j.bban.BbanEntryType.account_number;
 @RequiredArgsConstructor
 public class IbanGenerationService {
     private static final List<CountryCode> COUNTRY_CODES = Arrays.asList(AD, AL, AT, BE, BG, CH, CY, CZ, DE, DK, EE, ES, FI, FR, GB, GL, GR, HR, HU, IE, IL, IS, IT, LI, LT, LU, LV, MC, MD, MK, MT, NL, NO, PL, PT, RO, RS, SE, SI, SK, UA, VG, XK);
+    @Deprecated
+    private static final List<CountryCode> COUNTRY_CODES_OLD = Arrays.asList(DE, CH, FR, UA, DK, FI, HU, IS, LI, LU, PL, PT, SE, SI, GB);
     private final UserMgmtRestClient userMgmtRestClient;
 
     public String generateNextIban() {
@@ -39,7 +41,7 @@ public class IbanGenerationService {
 
     @Deprecated
     public List<CountryCode> getSupportedCountryCodes() {
-        return COUNTRY_CODES;
+        return COUNTRY_CODES_OLD;
     }
 
     public Map<CountryCode, String> getCountryCodes() {
