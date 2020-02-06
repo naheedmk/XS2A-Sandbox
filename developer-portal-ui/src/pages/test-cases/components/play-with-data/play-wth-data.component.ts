@@ -9,7 +9,11 @@ import { LocalStorageService } from '../../../../services/local-storage.service'
 import { JsonService } from '../../../../services/json.service';
 import * as vkbeautify from 'vkbeautify';
 import { AspspService } from '../../../../services/aspsp.service';
-import { PaymentTypesMatrix } from '../../../../models/paymentTypesMatrix.model';
+import {
+  PaymentType,
+  PaymentTypesMatrix,
+} from '../../../../models/paymentTypesMatrix.model';
+import { AcceptType } from '../../../../models/acceptType.model';
 
 @Component({
   selector: 'app-play-wth-data',
@@ -48,6 +52,7 @@ export class PlayWthDataComponent implements OnInit {
   @Input() transactionId = '';
 
   @Input() resourceIds = [];
+  @Input() acceptFlag: boolean;
 
   bookingStatus = '';
   redirectUrl = '';
@@ -60,7 +65,9 @@ export class PlayWthDataComponent implements OnInit {
   selectedConsentType = 'dedicatedAccountsConsent';
 
   paymentTypesMatrix: PaymentTypesMatrix;
-  paymentTypes = ['payments', 'periodic-payments', 'bulk-payments'];
+  paymentTypes = [PaymentType.single, PaymentType.bulk, PaymentType.periodic];
+  acceptTypes = [AcceptType.json, AcceptType.xml];
+  acceptHeader = this.acceptTypes[0];
 
   constructor(
     public restService: RestService,
@@ -119,12 +126,20 @@ export class PlayWthDataComponent implements OnInit {
         this.finalUrl,
         this.headers,
         this.xml,
-        requestBody
+        requestBody,
+        this.acceptHeader
       )
       .subscribe(
         resp => {
           delete this.headers['Content-Type'];
+          delete this.headers.Accept;
+
+          this.acceptHeader == AcceptType.xml
+            ? (resp.body = vkbeautify.xml(resp.body))
+            : resp;
+
           this.response = Object.assign(resp);
+
           if (
             this.response.body.hasOwnProperty('_links') &&
             this.response.body._links.hasOwnProperty('scaRedirect')
@@ -167,6 +182,8 @@ export class PlayWthDataComponent implements OnInit {
         },
         err => {
           delete this.headers['Content-Type'];
+          delete this.headers.Accept;
+
           this.dataService.setIsLoading(false);
           this.dataService.showToast(
             'Something went wrong!',
