@@ -196,7 +196,7 @@
 
     <div *ngIf="response['error']" class="response-body">
       <span class="status-style">Error details</span>
-      <p class="response-body-text" *ngIf="acceptHeader == 'application/json'">
+      <p class="response-body-text" *ngIf="!acceptHeader || (acceptHeader == 'application/json')">
         {{ response['error'] | json }}
       </p>
       <p class="response-body-text" *ngIf="acceptHeader == 'application/xml'">
@@ -206,7 +206,7 @@
 
     <div *ngIf="response.body" class="response-body">
       <span>Response body</span>
-      <p class="response-body-text" *ngIf="acceptHeader == 'application/json'">
+      <p class="response-body-text" *ngIf="!acceptHeader || (acceptHeader == 'application/json')">
         {{ response.body | json }}
       </p>
       <p class="response-body-text" *ngIf="acceptHeader == 'application/xml'">

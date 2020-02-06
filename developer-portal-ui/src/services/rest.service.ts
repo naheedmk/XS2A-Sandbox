@@ -1,13 +1,14 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AcceptType } from '../models/acceptType.model';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {AcceptType} from '../models/acceptType.model';
 
 @Injectable()
 export class RestService {
   serverUrl = '/xs2a-proxy';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   public sendRequest(
     method,
@@ -34,6 +35,7 @@ export class RestService {
         responseType: 'text',
       };
       return this.sendRequestWithSetOptions(method, url, options, body);
+
     } else {
       const options: {
         headers?: HttpHeaders;
