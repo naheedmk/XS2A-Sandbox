@@ -136,19 +136,21 @@
   </div>
 
   <div class="play-with-data-table bg th">
+    <div class="checkbox"></div>
     <span>{{ 'TEST_CASES.COMPONENTS.TH.TH_1' | translate }}</span>
-    <div style="width: 100%;">
-      {{ 'TEST_CASES.COMPONENTS.TH.TH_2' | translate }}
-    </div>
+    <div>{{ 'TEST_CASES.COMPONENTS.TH.TH_2' | translate }}</div>
   </div>
 
   <div class="play-with-data-table" *ngIf="acceptFlag">
+    <input
+      type="checkbox"
+      id="acceptHeaderCheckbox"
+      name="acceptHeaderCheckbox"
+      checked
+      class="checkbox"
+    />
     <span>Accept</span>
-    <select
-      [(ngModel)]="acceptHeader"
-      (ngModelChange)="onClear()"
-      style="width: 100%;"
-    >
+    <select [(ngModel)]="acceptHeader" (ngModelChange)="onClear()">
       <option *ngFor="let type of acceptTypes">{{ type }}</option>
     </select>
   </div>
@@ -158,8 +160,15 @@
     *ngFor="let item of (headers | keyvalue); let i = index; trackBy: trackByFn"
     [ngClass]="acceptFlag ? (i % 2 ? null : 'bg') : i % 2 ? 'bg' : null"
   >
+    <input
+      type="checkbox"
+      (change)="disableHeader($event)"
+      [value]="item.key"
+      checked
+      class="checkbox"
+    />
     <span>{{ item.key }}</span>
-    <input [(ngModel)]="headers[item.key]" type="text" />
+    <input [(ngModel)]="headers[item.key]" type="text" [id]="item.key" />
   </div>
 
   <div class="send-body" *ngIf="body">
