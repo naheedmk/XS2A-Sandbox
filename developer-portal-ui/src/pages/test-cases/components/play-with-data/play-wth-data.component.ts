@@ -1,19 +1,20 @@
-import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { RestService } from '../../../../services/rest.service';
-import { DataService } from '../../../../services/data.service';
-import { getStatusText } from 'http-status-codes';
-import { CopyService } from '../../../../services/copy.service';
-import { ConsentTypes } from '../../../../models/consentTypes.model';
-import { LocalStorageService } from '../../../../services/local-storage.service';
-import { JsonService } from '../../../../services/json.service';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Component, Input, OnInit} from '@angular/core';
+import {RestService} from '../../../../services/rest.service';
+import {DataService} from '../../../../services/data.service';
+import {getStatusText} from 'http-status-codes';
+import {CopyService} from '../../../../services/copy.service';
+import {ConsentTypes} from '../../../../models/consentTypes.model';
+import {LocalStorageService} from '../../../../services/local-storage.service';
+import {JsonService} from '../../../../services/json.service';
 import * as vkbeautify from 'vkbeautify';
-import { AspspService } from '../../../../services/aspsp.service';
+import {AspspService} from '../../../../services/aspsp.service';
 import {
   PaymentType,
   PaymentTypesMatrix,
 } from '../../../../models/paymentTypesMatrix.model';
-import { AcceptType } from '../../../../models/acceptType.model';
+import {AcceptType} from '../../../../models/acceptType.model';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-play-wth-data',
@@ -75,8 +76,10 @@ export class PlayWthDataComponent implements OnInit {
     public copyService: CopyService,
     public localStorageService: LocalStorageService,
     public jsonService: JsonService,
-    public aspspService: AspspService
-  ) {}
+    public aspspService: AspspService,
+    private http: HttpClient
+  ) {
+  }
 
   /**
    * Get status text by status code
@@ -224,12 +227,7 @@ export class PlayWthDataComponent implements OnInit {
       }
 
       if (this.headers) {
-        this.headers['TPP-Nok-Redirect-URI'] = localStorage.getItem(
-          'tppDefaultNokRedirectUrl'
-        );
-        this.headers['TPP-Redirect-URI'] = localStorage.getItem(
-          'tppDefaultRedirectUrl'
-        );
+        this.setDefaultHeaders();
       }
     });
   }
@@ -332,5 +330,28 @@ export class PlayWthDataComponent implements OnInit {
   public onClear() {
     this.response = undefined;
     this.redirectUrl = undefined;
+  }
+
+  private setDefaultHeaders() {
+    if (
+      this.headers.hasOwnProperty('TPP-Redirect-Preferred') &&
+      this.headers['TPP-Redirect-Preferred'] == 'true'
+    ) {
+      this.headers['TPP-Nok-Redirect-URI'] = localStorage.getItem(
+        'tppDefaultNokRedirectUrl'
+      );
+      this.headers['TPP-Redirect-URI'] = localStorage.getItem(
+        'tppDefaultRedirectUrl'
+      );
+    }
+
+    this.headers['X-Request-ID'] = uuid.v4();
+    this.setIpAddress();
+  }
+
+  private setIpAddress() {
+    return this.http
+      .get('https://api.ipify.org/?format=json')
+      .subscribe(ip => (this.headers['PSU-IP-Address'] = ip['ip']));
   }
 }

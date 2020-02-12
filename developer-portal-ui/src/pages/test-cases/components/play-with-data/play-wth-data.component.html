@@ -36,6 +36,7 @@
         class="payment-id"
         *ngIf="accountIdFlag"
         [(ngModel)]="accountId"
+        [ngClass]="{ filled: accountId, 'payment-id': !accountId }"
       />
       <select
         id="paymentProduct"
@@ -58,6 +59,7 @@
         class="payment-id"
         *ngIf="paymentIdFlag"
         [(ngModel)]="paymentId"
+        [ngClass]="{ filled: paymentId, 'payment-id': !paymentId }"
       />
 
       <input
@@ -65,6 +67,7 @@
         class="payment-id"
         *ngIf="consentIdFlag"
         [(ngModel)]="consentId"
+        [ngClass]="{ filled: consentId, 'payment-id': !consentId }"
       />
 
       <span class="top-line" *ngIf="variablePathEnd">{{
@@ -80,18 +83,21 @@
         class="payment-id"
         *ngIf="authorisationIdFlag"
         [(ngModel)]="authorisationId"
+        [ngClass]="{ filled: authorisationId, 'payment-id': !authorisationId }"
       />
       <input
         type="text"
         class="payment-id"
         *ngIf="cancellationIdFlag"
         [(ngModel)]="cancellationId"
+        [ngClass]="{ filled: cancellationId, 'payment-id': !cancellationId }"
       />
       <input
         type="text"
         class="payment-id"
         *ngIf="transactionIdFlag"
         [(ngModel)]="transactionId"
+        [ngClass]="{ filled: transactionId, 'payment-id': !transactionId }"
       />
       <span class="top-line" *ngIf="dateFromFlag">?dateFrom=</span>
       <input
@@ -99,12 +105,14 @@
         class="payment-id"
         *ngIf="dateFromFlag"
         [(ngModel)]="dateFrom"
+        [ngClass]="{ filled: dateFrom, 'payment-id': !dateFrom }"
       />
       <span class="top-line" *ngIf="bookingStatusFlag">&bookingStatus=</span>
       <select
         id="bookingStatus"
         *ngIf="bookingStatusFlag"
         [(ngModel)]="bookingStatus"
+        [ngClass]="{ filled: bookingStatus, 'payment-id': !bookingStatus }"
       >
         <option [value]="bs" *ngFor="let bs of bookingStatusSelect">
           {{ bs }}
@@ -129,12 +137,18 @@
 
   <div class="play-with-data-table bg th">
     <span>{{ 'TEST_CASES.COMPONENTS.TH.TH_1' | translate }}</span>
-    <span>{{ 'TEST_CASES.COMPONENTS.TH.TH_2' | translate }}</span>
+    <div style="width: 100%;">
+      {{ 'TEST_CASES.COMPONENTS.TH.TH_2' | translate }}
+    </div>
   </div>
 
   <div class="play-with-data-table" *ngIf="acceptFlag">
     <span>Accept</span>
-    <select [(ngModel)]="acceptHeader" (ngModelChange)="onClear()">
+    <select
+      [(ngModel)]="acceptHeader"
+      (ngModelChange)="onClear()"
+      style="width: 100%;"
+    >
       <option *ngFor="let type of acceptTypes">{{ type }}</option>
     </select>
   </div>
@@ -196,7 +210,10 @@
 
     <div *ngIf="response['error']" class="response-body">
       <span class="status-style">Error details</span>
-      <p class="response-body-text" *ngIf="!acceptHeader || (acceptHeader == 'application/json')">
+      <p
+        class="response-body-text"
+        *ngIf="!acceptHeader || acceptHeader == 'application/json'"
+      >
         {{ response['error'] | json }}
       </p>
       <p class="response-body-text" *ngIf="acceptHeader == 'application/xml'">
@@ -206,7 +223,10 @@
 
     <div *ngIf="response.body" class="response-body">
       <span>Response body</span>
-      <p class="response-body-text" *ngIf="!acceptHeader || (acceptHeader == 'application/json')">
+      <p
+        class="response-body-text"
+        *ngIf="!acceptHeader || acceptHeader == 'application/json'"
+      >
         {{ response.body | json }}
       </p>
       <p class="response-body-text" *ngIf="acceptHeader == 'application/xml'">
