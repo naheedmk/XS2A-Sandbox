@@ -16,8 +16,6 @@ export class RestService {
     acceptHeader: string,
     body?
   ): Observable<any> {
-    console.log('headers');
-    console.log(headers);
     if (acceptHeader && acceptHeader == AcceptType.xml) {
       const options: {
         headers?: HttpHeaders;
