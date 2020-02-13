@@ -15,7 +15,7 @@ export class TestCasesComponent implements OnInit {
   accountFlag = false;
   redirectSupported = true;
   embeddedSupported = true;
-  private fundsConfirmationFlag = false;
+  fundsConfirmationFlag = false;
 
   constructor(
     private router: Router,
