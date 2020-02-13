@@ -508,6 +508,42 @@
                 </li>
               </ul>
             </li>
+            <li>
+              <span
+                class="clickable-item"
+                (click)="collapseThis('funds-confirmation')"
+              >
+                <span *ngIf="!fundsConfirmationFlag">+ </span>
+                <span *ngIf="fundsConfirmationFlag" class="minus">- </span>
+                <!--
+                  {{ 'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LI_3' | translate }}
+                -->
+                Funds Confirmation:
+              </span>
+              <ul class="collapse-content" id="funds-confirmation-content">
+                <li>
+                  <!--
+                    <span>{{'TEST_CASES.INTRODUCTION.MENU.SUBMENU.LIST_2.LI_1'| translate}}</span>
+                  -->
+                  <span>Confirmation of funds request</span>
+                  <ul>
+                    <li
+                      class="clickable-item get"
+                      routerLink="/test-cases/funds-confirmation"
+                      [ngStyle]="
+                        dataService
+                          .getRouterUrl()
+                          .includes('funds-confirmation')
+                          ? { 'font-weight': 'bold' }
+                          : null
+                      "
+                    >
+                      POST endpoint {{ '/v1/funds-confirmation' }}
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li>

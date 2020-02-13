@@ -32,6 +32,7 @@ import { PrettyJsonPipe } from '../../pipes/pretty-json.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { RdctPaymentStatusGetComponent } from './components/api-endpoints/rdct-payment-status-get/rdct-payment-status-get.component';
+import { FundsConfirmationComponent } from './components/api-endpoints/funds-confirmation/funds-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { RdctPaymentStatusGetComponent } from './components/api-endpoints/rdct-p
     EmbPaymentInitGetComponent,
     PlayWthDataComponent,
     PrettyJsonPipe,
+    FundsConfirmationComponent,
   ],
   imports: [
     CommonModule,

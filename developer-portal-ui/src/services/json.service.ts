@@ -26,6 +26,7 @@ export class JsonService {
     psuData: 'psuData',
     scaAuthenticationData: 'scaAuthenticationData',
     authenticationMethodId: 'authenticationMethodId',
+    fundsConfirmation: 'funds-confirmation',
   };
 
   private currency = 'EUR';

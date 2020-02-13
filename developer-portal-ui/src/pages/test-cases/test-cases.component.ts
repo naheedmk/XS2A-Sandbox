@@ -15,6 +15,7 @@ export class TestCasesComponent implements OnInit {
   accountFlag = false;
   redirectSupported = true;
   embeddedSupported = true;
+  private fundsConfirmationFlag = false;
 
   constructor(
     private router: Router,
@@ -34,7 +35,8 @@ export class TestCasesComponent implements OnInit {
     if (
       collapseId === 'redirect' ||
       collapseId === 'embedded' ||
-      collapseId === 'account'
+      collapseId === 'account' ||
+      collapseId === 'funds-confirmation'
     ) {
       const collapsibleItemContent = document.getElementById(
         `${collapseId}-content`
@@ -50,6 +52,8 @@ export class TestCasesComponent implements OnInit {
         case 'account':
           this.accountFlag = !this.accountFlag;
           break;
+        case 'funds-confirmation':
+          this.fundsConfirmationFlag = !this.fundsConfirmationFlag;
       }
 
       if (collapsibleItemContent.style.maxHeight) {
