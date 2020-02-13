@@ -816,6 +816,15 @@
         "PART_2": "para obtener la transacción de la cuenta con la identificación actual.",
         "PART_3": "Ponga en ",
         "PART_4": " de consentimiento de la cuenta que quiere obtener (puede ver los usuarios y su información en TPP-UI)."
+      },
+      "FUNDS_CONFIRMATION": {
+        "TH": "Funds confirmation:",
+        "TH2": "Confirmation of funds request",
+        "PART_1": "1. Try POST endpoint",
+        "PART_2": " to check whether funds are available for chosen user or not. Fill the header fields with the following values: ",
+        "PART_3": "2. Insert into request body the following json:",
+        "PART_4": "3. Change placeholder ",
+        "PART_5": " to the IBAN of the chosen user. Set user currency in the field \"currency\"."
       }
     }
   },

@@ -79,10 +79,10 @@ export class TestCasesComponent implements OnInit {
       const embedded = 'embedded';
       const redirect = 'redirect';
 
-      let redirectSupportedInSettings = data.supportedApproaches.includes(
+      const redirectSupportedInSettings = data.supportedApproaches.includes(
         embedded
       );
-      let embeddedSupportedInSettings = data.supportedApproaches.includes(
+      const embeddedSupportedInSettings = data.supportedApproaches.includes(
         redirect
       );
 
