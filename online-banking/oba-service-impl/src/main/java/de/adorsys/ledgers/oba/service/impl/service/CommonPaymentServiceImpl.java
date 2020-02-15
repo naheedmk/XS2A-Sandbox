@@ -207,10 +207,7 @@ public class CommonPaymentServiceImpl implements CommonPaymentService {
                 paymentId, authorisationId, ScaStatus.valueOf(status), DEFAULT_SERVICE_INSTANCE_ID, new AuthenticationDataHolder(null, workflow.getScaResponse().getAuthConfirmationCode()));
         } catch (AuthorisationIsExpiredException e) {
             log.error("Authorization for your payment has expired!");
-            throw ObaException.builder()
-                      .obaErrorCode(AUTH_EXPIRED)
-                      .devMessage(e.getMessage())
-                      .build();
+            throw new ObaException(e.getMessage(),AUTH_EXPIRED);
         }
     }
 
@@ -220,10 +217,7 @@ public class CommonPaymentServiceImpl implements CommonPaymentService {
             return cmsPsuPisService.checkRedirectAndGetPayment(redirectId, DEFAULT_SERVICE_INSTANCE_ID)
                        .orElseThrow(() -> new RedirectUrlIsExpiredException(null));
         } catch (RedirectUrlIsExpiredException e) {
-            throw ObaException.builder()
-                      .obaErrorCode(NOT_FOUND)
-                      .devMessage(String.format("Could not retrieve payment %s from CMS", redirectId))
-                      .build();
+            throw new ObaException(String.format("Could not retrieve payment %s from CMS", redirectId),NOT_FOUND);
         }
     }
 
@@ -232,11 +226,7 @@ public class CommonPaymentServiceImpl implements CommonPaymentService {
                    .map(CmsPsuAuthorisation::getScaStatus)
                    .map(Enum::name)
                    .map(ScaStatusTO::valueOf)
-                   .orElseThrow(() -> ObaException.builder()
-                                          .obaErrorCode(NOT_FOUND)
-                                          .devMessage("Authorization for payment not found!")
-                                          .build());
-
+                   .orElseThrow(() -> new ObaException("Authorization for payment not found!",NOT_FOUND));
     }
 
     private void updatePaymentStatus(PaymentWorkflow paymentWorkflow) {

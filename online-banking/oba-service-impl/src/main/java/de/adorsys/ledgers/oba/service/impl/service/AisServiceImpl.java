@@ -36,9 +36,7 @@ public class AisServiceImpl implements AisService {
         } catch (FeignException e) {
             String msg = String.format(GET_ACCOUNTS_ERROR_MSG, userLogin, e.status(), e.getMessage());
             log.error(msg);
-            throw ObaException.builder()
-                      .devMessage(RESPONSE_ERROR)
-                      .obaErrorCode(ObaErrorCode.AIS_BAD_REQUEST).build();
+            throw new ObaException(RESPONSE_ERROR, ObaErrorCode.AIS_BAD_REQUEST);
         }
     }
 
@@ -50,9 +48,7 @@ public class AisServiceImpl implements AisService {
         } catch (FeignException e) {
             String msg = String.format(GET_TRANSACTIONS_ERROR_MSG, accountId, e.status(), e.getMessage());
             log.error(msg);
-            throw ObaException.builder()
-                      .devMessage(RESPONSE_ERROR)
-                      .obaErrorCode(ObaErrorCode.AIS_BAD_REQUEST).build();
+            throw new ObaException(RESPONSE_ERROR, ObaErrorCode.AIS_BAD_REQUEST);
         }
     }
 
@@ -63,9 +59,7 @@ public class AisServiceImpl implements AisService {
         } catch (FeignException e) {
             String msg = String.format(GET_TRANSACTIONS_ERROR_MSG, accountId, e.status(), e.getMessage());
             log.error(msg);
-            throw ObaException.builder()
-                      .devMessage(RESPONSE_ERROR)
-                      .obaErrorCode(ObaErrorCode.AIS_BAD_REQUEST).build();
+            throw new ObaException(RESPONSE_ERROR, ObaErrorCode.AIS_BAD_REQUEST);
         }
     }
 
@@ -76,9 +70,7 @@ public class AisServiceImpl implements AisService {
         } catch (FeignException e) {
             String msg = String.format(GET_ACCOUNT_ERROR_MSG, accountId, e.status(), e.getMessage());
             log.error(msg);
-            throw ObaException.builder()
-                      .devMessage(RESPONSE_ERROR)
-                      .obaErrorCode(ObaErrorCode.AIS_BAD_REQUEST).build();
+            throw new ObaException(RESPONSE_ERROR, ObaErrorCode.AIS_BAD_REQUEST);
         }
     }
 }

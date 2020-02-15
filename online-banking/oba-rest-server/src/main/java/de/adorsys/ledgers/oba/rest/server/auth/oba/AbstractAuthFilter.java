@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
 import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -27,7 +28,13 @@ public abstract class AbstractAuthFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     protected void handleAuthenticationFailure(HttpServletResponse response, Exception e) throws IOException {
-        doAuthenticationFailure(response, e.getMessage());
+        if (e.getClass() == FeignException.class) {
+            FeignException exception = (FeignException) e;
+            String devMessage = objectMapper.readTree(exception.contentUTF8()).get("devMessage").asText();
+            doAuthenticationFailure(response, devMessage);
+        } else {
+            doAuthenticationFailure(response, e.getMessage());
+        }
     }
 
     private void doAuthenticationFailure(HttpServletResponse response, String message) throws IOException {

@@ -27,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
-    private static final List<String> EXCLUDED_URLS = Arrays.asList("/**/auth", "/**/login");
+    private static final List<String> EXCLUDED_URLS = Arrays.asList("/**/auth", "/**/login", "/redirect/**");
     private static final AntPathMatcher matcher = new AntPathMatcher();
     private static final String ACCESS_TOKEN_COOKIE = "ACCESS_TOKEN";
 
