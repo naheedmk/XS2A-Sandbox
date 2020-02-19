@@ -239,6 +239,9 @@ PMD Report:
 
 PMD Check:
   stage: "Test"
+  variables:
+    JAVA_VERSION: "system@1.11"
+    JAVA_TOOL_OPTIONS: "-Djavax.net.ssl.trustStorePassword=changeit -XX:MaxRAM=3G"
   except:
     - develop
   cache:
