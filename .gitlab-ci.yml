@@ -61,7 +61,7 @@ variables:
   ###########################
 
   # Defaults for Java 11
-  JAVA_TOOL_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAM=3G -XX:MaxRAMFraction=3"
+  JAVA_TOOL_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:MaxRAM=3G -XX:MaxRAMFraction=3"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
 # ------------------------------------------------------------------
