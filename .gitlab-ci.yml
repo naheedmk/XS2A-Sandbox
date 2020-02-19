@@ -238,6 +238,8 @@ PMD Report:
     expire_in: "10 day"
 
 PMD Check:
+  except:
+    - develop
   stage: "Test"
   script:
     - mvn -Dmaven.test.skip=true package pmd:check
