@@ -248,7 +248,7 @@ PMD Check:
   script:
     - mvn -Dmaven.test.skip=true package pmd:check
 
-Dock Check Java11:
+Doc Check Java11:
   stage: "Test"
   except:
     - develop
