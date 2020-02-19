@@ -8,6 +8,7 @@ Current version consists of following components:
 5. **XS2A Connector-Examples v.5.10**
  
 - migrate to xs2a v 5.10
+- migrate to ledgers v 2.9
 - increased code quality (code coverage)
 - minor bug-fixes
 - configure default Tpp OK/NOK urls in developer portal in settings
