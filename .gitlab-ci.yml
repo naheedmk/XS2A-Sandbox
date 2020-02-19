@@ -239,15 +239,6 @@ PMD Report:
 
 PMD Check:
   stage: "Test"
-  variables:
-    JAVA_VERSION: "system@1.11"
-    JAVA_TOOL_OPTIONS: "-Djavax.net.ssl.trustStorePassword=changeit -XX:MaxRAM=3G"
-  except:
-    - develop
-  cache:
-    key: "Java_${CI_COMMIT_REF_SLUG}"
-    paths:
-      - /builds/adorsys/xs2a/psd2-dynamic-sandbox/.m2/repository
   script:
     - mvn -Dmaven.test.skip=true package pmd:check
 
