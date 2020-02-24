@@ -387,7 +387,7 @@ export class PlayWthDataComponent implements OnInit {
     }
   }
 
-  booleanValue(item: any) {
+  isBooleanValue(item: any) {
     return item.value === 'true' || item.value === 'false';
   }
 

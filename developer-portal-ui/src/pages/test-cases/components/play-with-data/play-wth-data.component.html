@@ -169,7 +169,7 @@
     />
     <span>{{ item.key }}</span>
 
-    <select *ngIf="booleanValue(item); else regularInput"
+    <select *ngIf="isBooleanValue(item); else regularInput"
             [(ngModel)]="item.value"
             (change)="changeBooleanHeader(item.key, $event.target.value)">
       <option *ngFor="let boolean of booleanValues" [value]="boolean">{{ boolean }}</option>
