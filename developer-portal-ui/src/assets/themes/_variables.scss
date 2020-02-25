@@ -96,7 +96,11 @@ $dark-80: #2c2e2f;
     var(--buttonClickedGradient2) 100%
   );
 
-  /* Input fields */
+  /* Inputs */
   --inputBG: $COLOR_WHITE;
   --inputBorderStyle: 1px solid #dcdcdc;
+
+  /* Selects */
+  --selectBG: $COLOR_WHITE;
+  --selectColor: #3b4151;
 }

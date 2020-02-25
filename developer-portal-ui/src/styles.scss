@@ -172,6 +172,12 @@ input {
   border-radius: 0.1rem;
 }
 
+select {
+  background: var(--selectBG);
+  outline: none;
+  color: var(--selectColor);
+}
+
 .endpoint-wrapper {
   padding: 2vw;
 
