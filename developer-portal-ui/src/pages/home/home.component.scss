@@ -38,8 +38,6 @@
   .what-sandbox-title {
     margin: 64px 0;
     text-align: center;
-    font-weight: 600;
-    font-size: 2rem;
     color: var(--colorPrimary);
   }
 
@@ -57,8 +55,6 @@
 
   .how-use-api-title {
     text-align: center;
-    font-weight: 600;
-    font-size: 2rem;
     color: var(--colorPrimary);
   }
 
@@ -383,13 +379,10 @@
 
   .any-questions-title {
     margin: 26px 0 13px 0;
-    font-weight: 600;
-    font-size: 36px;
     color: var(--colorPrimary);
   }
 
   .any-questions-subtitle {
-    font-size: 36px;
     color: #868e96;
   }
 
@@ -472,6 +465,7 @@
     }
   }
 }
+
 @media screen and (max-width: 720px) {
   .hero {
     padding: 40px 30px;
@@ -499,6 +493,7 @@
     }
   }
 }
+
 @media screen and (max-width: 720px) {
   .what-sandbox-wrapper {
     .what-sandbox-title {
@@ -521,6 +516,7 @@
     }
   }
 }
+
 @media screen and (max-width: 720px) {
   .how-use-api {
     margin: 30px 0;
@@ -531,6 +527,7 @@
 
     .steps-wrapper {
       flex-direction: column;
+
       .step {
         height: 85px;
         margin: 0 10px 0 10px;
@@ -562,6 +559,7 @@
     }
   }
 }
+
 @media screen and (max-width: 720px) {
   .open-banking {
     padding: 20px 25px;
@@ -580,6 +578,7 @@
     padding-top: 0;
   }
 }
+
 @media screen and (max-width: 720px) {
   #slider {
     padding-top: 0;
@@ -606,6 +605,7 @@
 
     .product-history-header-wrapper {
       width: 100%;
+
       .title {
         margin: 13px 0 0 5px;
       }
@@ -620,6 +620,7 @@
     }
   }
 }
+
 @media screen and (max-width: 720px) {
   .product-history-wrapper {
     .product-history-header-wrapper {
@@ -688,6 +689,7 @@
     }
   }
 }
+
 @media screen and (max-width: 720px) {
   .any-questions {
     width: 100%;

@@ -1,3 +1,4 @@
+<script src="../pages/home/home.component.spec.ts"></script>
 <div class="nav-bar" [ngClass]="{ activeDropdown: showNavDropDown }">
   <div class="nav-bar-content">
     <img
@@ -124,10 +125,10 @@
 
 <div class="footer-bar">
   <div class="footer-top-items">
-    <img
-      class="logo"
-      [src]="customizeService.getLogo()"
-      (click)="goToPage('home')"
+    <img *ngIf="customizeService.getFooterLogo()"
+         class="logo"
+         [src]="customizeService.getFooterLogo()"
+         (click)="goToPage('home')"
     />
     <div>
       <a class="footer-item" routerLink="/getting-started">{{
