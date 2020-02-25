@@ -126,7 +126,7 @@ a:focus {
 h1 {
   font-size: var(--h1FontSize);
   font-weight: var(--h1FontWeight);
-  color: var(--colorPrimary)
+  color: var(--colorPrimary);
 }
 
 h2 {
@@ -167,7 +167,9 @@ button {
 
 input {
   background: var(--inputBG);
-  border: none;
+  outline: none;
+  border: var(--inputBorderStyle);
+  border-radius: 0.1rem;
 }
 
 .endpoint-wrapper {
