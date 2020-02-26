@@ -1,4 +1,3 @@
-
 function sendPaymentRequestAndGetResponse(productNumber) {
     var paymentResponse = {};
 
@@ -67,7 +66,6 @@ function getPaymentInitiationRequestJson(productNumber) {
     var formattedDateTime = formattedDateTimeString.substring(23, 0);
 
     formObject.requestedExecutionDate = formattedDate;
-    //formObject.requestedExecutionTime = formattedDateTime;
 
     return JSON.stringify(formObject);
 }
