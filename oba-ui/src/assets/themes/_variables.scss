@@ -25,9 +25,21 @@ $danger-gradient: linear-gradient(129.54deg, lighten($danger, 7%) 0%, $danger 10
 :root {
   /* Fonts */
   --fontFamily: #{$font-family-base};
+  --textFontSize: 1.125rem;
+  --textFontWeight: normal;
+
+  --h1FontSize: 2rem;
+  --h1FontWeight: bold;
+
+  --h2FontSize: 2rem;
+  --h2FontWeight: 700;
+
+  --h3FontSize: 1rem;
+  --h3FontWeight: normal;
 
   /* Colors */
   --colorPrimary: #{$primary};
+  --colorSecondary: #{$primary};
 
   /* Gradients */
   --gradientPrimary: #{$primary-gradient};
@@ -39,8 +51,67 @@ $danger-gradient: linear-gradient(129.54deg, lighten($danger, 7%) 0%, $danger 10
 
   /* Main */
   --mainBG: #{$COLOR_LIGHT_GREY-10};
+  --menuItemHovered: white;
 
   /* Anchor */
   --anchorFontColor: #{$link-color};
   --anchorFontColorHover: #{$link-hover-color};
+
+  /* Header */
+  --headerBG: #ffffff;
+  --headerFontColor: #000000;
+
+  /* Footer */
+  --footerBG: #054f72;
+  --footerFontColor: #ffffff;
+
+  /* Buttons */
+
+  /* Primary */
+
+  --buttonTextColor: #fff;
+
+  --buttonBgGradient1: #0db0e2;
+  --buttonBgGradient2: #10317D;
+  --buttonBG: linear-gradient(
+      129.54deg,
+      var(--buttonBgGradient1) 0%,
+      var(--buttonBgGradient2) 100%
+  );
+
+  --buttonHoveredGradient1: #0F62A4;
+  --buttonHoveredGradient2: #10317D;
+  --buttonHovered: linear-gradient(
+      129.54deg,
+      var(--buttonHoveredGradient1) 0%,
+      var(--buttonHoveredGradient2) 100%
+  );
+
+  --buttonClickedGradient1: #0db0e2;
+  --buttonClickedGradient2: #062e72;
+  --buttonClicked: linear-gradient(
+      129.54deg,
+      var(--buttonClickedGradient1) 0%,
+      var(--buttonClickedGradient2) 100%
+  );
+
+  /* Secondary */
+  --secondaryButtonTextColor: #{$danger};
+  --secondaryButtonBG: white;
+
+  --secondaryButtonHoveredTextColor: white;
+  --secondaryButtonHovered: #{$danger};
+
+  --secondaryButtonClickedTextColor: white;
+  --secondaryButtonClicked: #{$danger};
+
+  --secondaryButtonBorderStyle: 1px solid #{$danger};
+
+  /* Inputs */
+  --inputBG: white;
+  --inputBorderStyle: 1px solid #a0a0a0;
+
+  /* Selects */
+  --selectBG: white;
+  --selectColor: #3b4151;
 }
