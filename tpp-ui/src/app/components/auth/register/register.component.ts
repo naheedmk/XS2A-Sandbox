@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   public errorMessage: string;
 
   public selectedCountry = '';
-  public countries: Array<string> = [];
+  public countries: Array<any> = [];
   public showTppStructureMessage = false;
   public tppIdStructure: TppIdStructure = {
     "length": 8,
