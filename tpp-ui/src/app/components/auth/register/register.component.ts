@@ -79,7 +79,10 @@ export class RegisterComponent implements OnInit {
   private initializeCountryList() {
     this.service.getCountryCodes().subscribe(
       data => {
-        this.countries = data;
+        this.countries = [];
+        Object.keys(data).forEach(countryKey => {
+          this.countries.push({code: countryKey, name: data[countryKey]});
+        })
         this.selectedCountry = '';
       },
       error => {
