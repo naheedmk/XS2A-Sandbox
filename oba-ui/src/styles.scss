@@ -169,6 +169,7 @@ nav {
 
 .btn {
   white-space: nowrap;
+  border-radius: var(--buttonBorderRadius);
 
   &-primary {
     color: var(--buttonTextColor);

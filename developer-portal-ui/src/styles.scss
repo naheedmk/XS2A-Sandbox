@@ -176,10 +176,11 @@ h3 {
   }
 }
 
-button, a.redirect-btn {
+button,
+a.redirect-btn {
   color: var(--buttonTextColor);
   background: var(--buttonBG);
-  border-radius: 3px;
+  border-radius: var(--buttonBorderRadius);
 
   &:hover {
     background: var(--buttonHovered);
@@ -202,7 +203,8 @@ button, a.redirect-btn {
   }
 }
 
-input, textarea {
+input,
+textarea {
   background: var(--inputBG);
   outline: none;
   border-left: var(--inputBorderStyleLeft);
@@ -217,11 +219,11 @@ select:not([multiple]) {
   -moz-appearance: none;
   background-position: 95% 50%;
   background-repeat: no-repeat;
-  vertical-align:top;
-  background-image: url("assets/icons/arrow-down.svg");
-  background-size: .6em;
-  padding: .2em 1.5em .2em .2em;
-  margin: .5em;
+  vertical-align: top;
+  background-image: url('assets/icons/arrow-down.svg');
+  background-size: 0.6em;
+  padding: 0.2em 1.5em 0.2em 0.2em;
+  margin: 0.5em;
 }
 
 select {
@@ -332,7 +334,7 @@ select {
 }
 
 .checkmark:after {
-  content: "";
+  content: '';
   position: absolute;
   display: none;
 }
