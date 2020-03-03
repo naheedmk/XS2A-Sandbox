@@ -8,3 +8,4 @@ Current version consists of following components:
 5. **XS2A Connector-Examples v.5.10**
 
 - minor bug-fixes
+- added TPP-DEMO application for payment initialisations
