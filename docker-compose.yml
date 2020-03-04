@@ -31,8 +31,8 @@ services:
       - xs2a-net
     depends_on:
       - xs2a-aspsp-profile
-      #- xs2a-consent-management
-      #- ledgers
+      - xs2a-consent-management
+      - ledgers
 
   # Xs2a aspsp profile
   xs2a-aspsp-profile:
