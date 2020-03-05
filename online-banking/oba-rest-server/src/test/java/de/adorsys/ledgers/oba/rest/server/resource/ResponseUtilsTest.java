@@ -16,7 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.Assert.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,11 +43,8 @@ public class ResponseUtilsTest {
         when(cookieConfigProperties.getMaxAge()).thenReturn(300);
         when(cookieConfigProperties.getPath()).thenReturn("somePath");
 
-        //when
-        responseUtils.setCookies(response, getConsentReference(null), "accessTokenString", getAccessTokenTO());
-
         //then
-        // assertThat(response.get);
+        assertThatCode(() -> responseUtils.setCookies(response, getConsentReference(null), "accessTokenString", getAccessTokenTO())).doesNotThrowAnyException();
     }
 
     @Test
@@ -57,11 +54,8 @@ public class ResponseUtilsTest {
         when(cookieConfigProperties.getMaxAge()).thenReturn(300);
         when(cookieConfigProperties.getPath()).thenReturn("somePath");
 
-        //when
-        responseUtils.setCookies(response, getConsentReference("someCookie"), null, getAccessTokenTO());
-
         //then
-        // assertThat(response.get);
+        assertThatCode(() -> responseUtils.setCookies(response, getConsentReference("someCookie"), null, getAccessTokenTO())).doesNotThrowAnyException();
     }
 
     @Test
@@ -70,11 +64,8 @@ public class ResponseUtilsTest {
         HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
         when(cookieConfigProperties.getPath()).thenReturn("somePath");
 
-        //when
-        responseUtils.removeCookies(response);
-
         //then
-        // assertThat(response.get);
+        assertThatCode(() -> responseUtils.removeCookies(response)).doesNotThrowAnyException();
     }
 
     @Test

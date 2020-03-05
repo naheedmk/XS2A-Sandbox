@@ -73,29 +73,37 @@ public class SinglePaymentMapperTest {
 
     @Test
     public void mapPisExecutionRule() {
+        //when
         String rule = mapper.mapPisExecutionRule(PisExecutionRule.FOLLOWING);
 
+        //then
         assertFalse(StringUtils.isEmpty(rule));
     }
 
     @Test
     public void mapPisExecutionRule_null() {
+        //when
         String rule = mapper.mapPisExecutionRule(null);
 
+        //then
         assertTrue(StringUtils.isEmpty(rule));
     }
 
     @Test
     public void mapPisDayOfExecution() {
+        //when
         int day = mapper.mapPisDayOfExecution(PisDayOfExecution._3);
 
+        //then
         assertEquals(day, Integer.parseInt(PisDayOfExecution._3.getValue()));
     }
 
     @Test
     public void mapPisDayOfExecution_null() {
+        //when
         int day = mapper.mapPisDayOfExecution(null);
 
+        //then
         assertEquals(day, Integer.parseInt(PisDayOfExecution._1.getValue()));
     }
 
