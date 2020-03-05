@@ -10,8 +10,11 @@ import de.adorsys.psd2.consent.api.CmsAddress;
 import de.adorsys.psd2.consent.api.ais.CmsAccountReference;
 import de.adorsys.psd2.consent.api.pis.CmsAmount;
 import de.adorsys.psd2.consent.api.pis.CmsSinglePayment;
+import de.adorsys.psd2.xs2a.core.pis.PisDayOfExecution;
+import de.adorsys.psd2.xs2a.core.pis.PisExecutionRule;
 import de.adorsys.psd2.xs2a.core.pis.TransactionStatus;
 import de.adorsys.psd2.xs2a.core.tpp.TppInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -65,6 +69,34 @@ public class SinglePaymentMapperTest {
         SinglePaymentTO expected = getSinglePaymentTO();
         SinglePaymentTO result = mapper.toPayment(getCmsSinglePayment());
         assertThat(result).isEqualToComparingFieldByFieldRecursively(expected);
+    }
+
+    @Test
+    public void mapPisExecutionRule() {
+        String rule = mapper.mapPisExecutionRule(PisExecutionRule.FOLLOWING);
+
+        assertFalse(StringUtils.isEmpty(rule));
+    }
+
+    @Test
+    public void mapPisExecutionRule_null() {
+        String rule = mapper.mapPisExecutionRule(null);
+
+        assertTrue(StringUtils.isEmpty(rule));
+    }
+
+    @Test
+    public void mapPisDayOfExecution() {
+        int day = mapper.mapPisDayOfExecution(PisDayOfExecution._3);
+
+        assertEquals(day, Integer.parseInt(PisDayOfExecution._3.getValue()));
+    }
+
+    @Test
+    public void mapPisDayOfExecution_null() {
+        int day = mapper.mapPisDayOfExecution(null);
+
+        assertEquals(day, Integer.parseInt(PisDayOfExecution._1.getValue()));
     }
 
     private CmsSinglePayment getCmsSinglePayment() {
