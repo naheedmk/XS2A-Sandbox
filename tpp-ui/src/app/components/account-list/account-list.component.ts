@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Account} from '../../models/account.model';
 import {Subscription} from 'rxjs';
 import {PageConfig, PaginationConfigModel} from "../../models/pagination-config.model";
+import { debounceTime, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account-list',
@@ -29,7 +30,8 @@ export class AccountListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.searchForm = this.formbuilder.group({
-      query: ['', Validators.required]
+      query: ['', Validators.required],
+      itemsPerPage: [this.config.itemsPerPage, Validators.required]
     });
     this.listAccounts(this.config.currentPageNumber, this.config.itemsPerPage);
     this.onQueryUsers();
@@ -43,14 +45,19 @@ export class AccountListComponent implements OnInit, OnDestroy {
   }
 
   onQueryUsers() {
-    this.searchForm.valueChanges
-      .subscribe(form => {
+    this.searchForm.valueChanges.pipe(
+      tap(val => {
+        this.searchForm.patchValue(val, { emitEvent: false });
+      }),
+      debounceTime(750)
+    ).subscribe(form => {
+        this.config.itemsPerPage = form.itemsPerPage;
         this.listAccounts(1, this.config.itemsPerPage, form.query);
       });
   }
 
   goToDepositCash(account: Account) {
-    if (!this.isAccountEnabled(account)) return false;
+    if (!this.isAccountEnabled(account)) { return false; }
     this.router.navigate(['/accounts/' + account.id + '/deposit-cash']);
   }
 
@@ -59,7 +66,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
   }
 
   pageChange(pageConfig: PageConfig) {
-    this.listAccounts(pageConfig.pageNumber, pageConfig.pageSize);
+    this.listAccounts(pageConfig.pageNumber, pageConfig.pageSize, this.searchForm.get('query').value);
   }
 
   ngOnDestroy(): void {

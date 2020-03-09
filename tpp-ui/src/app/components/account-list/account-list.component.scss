@@ -31,3 +31,14 @@
     }
 }
 
+@media (max-width: 1199.98px) {
+  .search-field-wrapper {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .pagination-wrapper {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+

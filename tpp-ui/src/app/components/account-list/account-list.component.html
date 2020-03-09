@@ -1,25 +1,27 @@
 <div class="container-fluid" [formGroup]="searchForm">
     <div class="row header">
       <div class="col-12 col-md-3 header__title">Accounts</div>
-      <div class=" col-12 col-md-9 right accountInput">
-        <div class="row">
-          <div class="col-12 col-md-8 p-md-0">
-            <div class="form-group has-search">
-              <span class="form-control-feedback">
-                <img src="./assets/icons/search.svg">
-              </span>
-              <div>
-                <input class="form-control w-100" placeholder="Search by iban" formControlName="query" type="text">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
+              <div class="row">
+                <div class="pagination-wrapper col-12 col-md-6 mt-2">
+                  <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
+                </div>
+                <div class="search-field-wrapper col-12 col-md-6 mt-1">
+                  <div class="col-12">
+                    <div class="form-group has-search">
+                      <span class="form-control-feedback">
+                        <img src="./assets/icons/search.svg">
+                      </span>
+                      <div>
+                        <input class="form-control w-100" placeholder="Search by IBAN" formControlName="query" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
                 <table class="table">
                     <thead>
