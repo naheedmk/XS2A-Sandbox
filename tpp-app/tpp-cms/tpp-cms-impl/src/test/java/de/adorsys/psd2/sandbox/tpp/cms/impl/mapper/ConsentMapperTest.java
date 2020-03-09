@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AisConsentMapperTest {
+public class ConsentMapperTest {
     private static final Integer ALLOWED_FREQUENCY = 5;
     private static final int REQUESTED_FREQUENCY = 5;
     private static final LocalDate VALID_UNTIL = LocalDate.of(2019, 8, 3);
