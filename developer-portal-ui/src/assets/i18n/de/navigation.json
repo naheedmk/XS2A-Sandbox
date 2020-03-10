@@ -1,8 +1,24 @@
 {
   "navigation": [
     {
+      "navName": "Erste Schritte",
+      "route": "getting-started",
+      "type": "default"
+    },
+    {
+      "navName": "Testfälle",
+      "route": "test-cases/redirect",
+      "type": "default"
+    },
+    {
       "navName": "FAQs",
-      "route": "faq"
+      "route": "faq",
+      "type": "custom"
+    },
+    {
+      "navName": "Kontakt",
+      "route": "contact",
+      "type": "default"
     }
   ]
 }
