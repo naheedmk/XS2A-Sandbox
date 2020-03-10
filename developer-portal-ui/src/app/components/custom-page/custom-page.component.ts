@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck} from '@angular/core';
 import {LanguageService} from "../../services/language.service";
 import {ActivatedRoute} from "@angular/router";
 
@@ -7,7 +7,7 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './custom-page.component.html',
   styleUrls: ['./custom-page.component.scss']
 })
-export class CustomPageComponent implements OnInit {
+export class CustomPageComponent implements DoCheck {
   private name = 'faq';
   pathToFile = `./assets/i18n/en/${this.name}.md`;
 
@@ -15,12 +15,11 @@ export class CustomPageComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
-  ngOnInit() {
+  ngDoCheck() {
     this.name = this.route.snapshot.paramMap.get('name');
     if (this.name) {
       this.languageService.currentLanguage.subscribe(
         data => {
-          console.log(this.name);
           this.pathToFile = `./assets/i18n/${data}/${this.name}.md`;
         }
       );
