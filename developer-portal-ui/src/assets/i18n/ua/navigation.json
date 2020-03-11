@@ -1,6 +1,11 @@
 {
   "navigation": [
     {
+      "navName": "Головна",
+      "route": "home",
+      "type": "default"
+    },
+    {
       "navName": "Початок роботи",
       "route": "getting-started",
       "type": "default"

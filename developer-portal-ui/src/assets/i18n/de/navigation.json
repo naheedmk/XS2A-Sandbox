@@ -1,6 +1,11 @@
 {
   "navigation": [
     {
+      "navName": "Home",
+      "route": "home",
+      "type": "default"
+    },
+    {
       "navName": "Erste Schritte",
       "route": "getting-started",
       "type": "default"

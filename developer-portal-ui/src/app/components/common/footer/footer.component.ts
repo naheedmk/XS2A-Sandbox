@@ -27,7 +27,7 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.globalSettings.socialMedia) {
+    if (this.globalSettings && this.globalSettings.socialMedia) {
       this.socialMedia = Object.keys(this.globalSettings.socialMedia);
     }
   }
