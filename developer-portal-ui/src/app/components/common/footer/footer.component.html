@@ -3,7 +3,7 @@
     <img *ngIf="globalSettings?.footerLogo" class="logo" [src]="globalSettings?.footerLogo"
          (click)="navigationService.goToLogoLink(logoLink, defaultLogoLink)" alt="Logo"/>
 
-    <div>
+    <div *ngIf="showNavigation">
       <a *ngFor="let navItem of navigation" class="footer-item"
          routerLinkActive="active"
          [routerLinkActiveOptions]="{ exact: false }"

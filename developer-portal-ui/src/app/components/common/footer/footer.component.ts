@@ -11,7 +11,9 @@ export class FooterComponent implements OnInit {
   @Input() navigation;
   @Input() globalSettings;
   @Input() logoLink;
+  @Input() allowedNavigationSize = 5;
   socialMedia = [];
+  showNavigation = true;
 
   private supportedSocialMedia = {
     twitter: "fa-twitter",
@@ -27,6 +29,10 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.allowedNavigationSize && this.navigation && (Object.keys(this.navigation).length > this.allowedNavigationSize)) {
+      this.showNavigation = false;
+    }
+
     if (this.globalSettings && this.globalSettings.socialMedia) {
       this.socialMedia = Object.keys(this.globalSettings.socialMedia);
     }

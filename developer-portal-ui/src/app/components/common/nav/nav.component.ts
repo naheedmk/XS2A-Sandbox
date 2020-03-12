@@ -23,7 +23,7 @@ export class NavComponent implements OnInit {
   @Input() logo;
   @Input() logoLink: string;
   @Input() supportedLanguagesDictionary;
-  @Input() allowedNavigationSize = 3;
+  @Input() allowedNavigationSize = 5;
 
   constructor(private languageService: LanguageService,
               public dataService: DataService,
