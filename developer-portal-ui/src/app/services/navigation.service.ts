@@ -25,7 +25,7 @@ export class NavigationService {
       case "default":
         this.router.navigateByUrl('/' + url);
         break;
-      case "custom":
+      case "markdown":
         this.router.navigateByUrl('/page/' + url);
         break;
       case "redirect":

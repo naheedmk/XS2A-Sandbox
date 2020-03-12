@@ -18,7 +18,7 @@
     {
       "navName": "FAQs",
       "route": "faq",
-      "type": "custom"
+      "type": "markdown"
     },
     {
       "navName": "Kontakt",

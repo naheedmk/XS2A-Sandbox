@@ -18,7 +18,7 @@
     {
       "navName": "Питання",
       "route": "faq",
-      "type": "custom"
+      "type": "markdown"
     },
     {
       "navName": "Контакти",
