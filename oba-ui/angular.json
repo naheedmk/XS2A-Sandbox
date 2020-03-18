@@ -137,8 +137,5 @@
       }
     }
   },
-  "defaultProject": "oba-ui",
-  "cli": {
-    "analytics": "1827c847-9135-451c-bb32-2057816b137c"
-  }
+  "defaultProject": "oba-ui"
 }
