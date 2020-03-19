@@ -118,11 +118,11 @@
                                                id="scaData"
                                                placeholder="Please input SCA method for user"
                                                type="text">
-                                        <div *ngIf="scaDataItem.get('methodValue')?.errors?.required"
+                                        <div *ngIf="scaDataItem.controls['staticTan'].touched || scaDataItem.get('staticTan')?.errors?.required"
                                              class="invalid-feedback">
                                             The value of the method is required
                                         </div>
-                                        <div *ngIf="scaDataItem.get('methodValue')?.hasError('pattern')"
+                                        <div *ngIf="scaDataItem.get('staticTan')?.hasError('pattern')"
                                              class="invalid-feedback">
                                             The method value has an incorrect format
                                         </div>

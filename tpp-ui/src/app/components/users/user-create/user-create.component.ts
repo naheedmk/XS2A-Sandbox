@@ -71,15 +71,15 @@ export class UserCreateComponent implements OnInit {
             scaData.get('staticTan').updateValueAndValidity();
         });
 
-        scaData.get('scaMethod').valueChanges.subscribe(value => {
+        scaData.get('staticTan').valueChanges.subscribe(value => {
             if (value === ScaMethods.EMAIL) {
-                scaData.get('methodValue').setValidators(emailValidators);
+                scaData.get('staticTan').setValidators(emailValidators);
             } else if (value === ScaMethods.MOBILE) {
-                scaData.get('methodValue').setValidators([Validators.required, Validators.pattern(new RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/))]);
+                scaData.get('staticTan').setValidators([Validators.required, Validators.pattern(new RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/))]);
             } else {
-                scaData.get('methodValue').setValidators([Validators.required]);
+                scaData.get('methodVastaticTanlue').setValidators([Validators.required]);
             }
-            scaData.get('methodValue').updateValueAndValidity();
+            scaData.get('staticTan').updateValueAndValidity();
         });
         return scaData;
     }
