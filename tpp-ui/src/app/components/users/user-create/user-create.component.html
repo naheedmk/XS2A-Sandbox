@@ -118,7 +118,7 @@
                                                id="scaData"
                                                placeholder="Please input SCA method for user"
                                                type="text">
-                                        <div *ngIf="scaDataItem.controls['staticTan'].touched || scaDataItem.get('staticTan')?.errors?.required"
+                                        <div *ngIf="scaDataItem.controls['scaMethod'].touched && scaDataItem.get('methodValue').errors"
                                              class="invalid-feedback">
                                             The value of the method is required
                                         </div>

@@ -62,6 +62,7 @@ export class UserCreateComponent implements OnInit {
         scaData.get('usesStaticTan').valueChanges.subscribe((bool: boolean = true) => {
             if(bool) {
                 scaData.get('staticTan').setValidators(Validators.required);
+                scaData.get('methodValue').setValidators(Validators.required);
                 scaData.get('staticTan').enable();
             } else {
                 scaData.get('staticTan').clearValidators();
@@ -69,6 +70,7 @@ export class UserCreateComponent implements OnInit {
                 scaData.get('staticTan').setValue('');
             }
             scaData.get('staticTan').updateValueAndValidity();
+            scaData.get('methodValue').updateValueAndValidity();
         });
 
         scaData.get('staticTan').valueChanges.subscribe(value => {
