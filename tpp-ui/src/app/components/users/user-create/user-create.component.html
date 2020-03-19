@@ -111,14 +111,14 @@
                                 <div class="col-12 col-md-8">
                                     <div [formGroupName]="i" class="form-group">
                                         <label class="control-label" for="scaData">SCA</label>
-                                        <input [ngClass]="{ 'is-invalid': (scaDataItem.controls['methodValue'].touched || submitted) && scaDataItem.controls['methodValue'].errors }"
+                                        <input [ngClass]="{ 'is-invalid': scaDataItem.controls['methodValue'].errors }"
                                                aria-describedby="scaDataHelp"
                                                class="form-control"
                                                formControlName="methodValue"
                                                id="scaData"
                                                placeholder="Please input SCA method for user"
                                                type="text">
-                                        <div *ngIf="scaDataItem.controls['scaMethod'].touched && scaDataItem.get('methodValue').errors"
+                                        <div *ngIf="scaDataItem.controls['usesStaticTan'].value && scaDataItem.controls['scaMethod'].value"
                                              class="invalid-feedback">
                                             The value of the method is required
                                         </div>
