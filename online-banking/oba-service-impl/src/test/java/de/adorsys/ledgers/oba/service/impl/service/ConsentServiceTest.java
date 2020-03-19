@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAConsentResponseTO;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
-import de.adorsys.ledgers.oba.service.api.domain.CreatePiisConsentRequestTO;
 import de.adorsys.ledgers.oba.service.api.domain.ObaAisConsent;
 import de.adorsys.ledgers.oba.service.api.domain.exception.ObaException;
 import de.adorsys.ledgers.oba.service.impl.mapper.CreatePiisConsentRequestMapper;
@@ -22,8 +21,6 @@ import de.adorsys.psd2.xs2a.core.profile.AccountReference;
 import de.adorsys.psd2.xs2a.core.tpp.TppInfo;
 import feign.FeignException;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CmsAspspPiisClient;
-import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentRequest;
-import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentResponse;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.junit.Test;
@@ -43,7 +40,8 @@ import java.util.Optional;
 
 import static org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient.DEFAULT_SERVICE_INSTANCE_ID;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -214,52 +212,6 @@ public class ConsentServiceTest {
 
         //when
         consentService.confirmAisConsentDecoupled(USER_LOGIN, "encryptedConsentId", AUTHORIZATION_ID, TAN);
-    }
-
-    @Test
-    public void createConsent() {
-        //given
-        when(createPiisConsentRequestMapper.fromCreatePiisConsentRequest(any())).thenReturn(getCreatePiisConsentRequest());
-        when(cmsAspspPiisClient.createConsent(any(), any(), any(), any(), any())).thenReturn(ResponseEntity.ok(getCreatePiisConsentResponse()));
-        when(consentRestClient.grantPIISConsent(any())).thenReturn(ResponseEntity.ok(getSCAConsentResponseTO()));
-
-        //when
-        SCAConsentResponseTO result = consentService.createConsent(getCreatePiisConsentRequestTO(), USER_LOGIN);
-
-        //then
-        assertThat(result).isNotNull();
-        assertEquals(CONSENT_ID, result.getConsentId());
-        verify(createPiisConsentRequestMapper, times(1)).fromCreatePiisConsentRequest(getCreatePiisConsentRequestTO());
-    }
-
-    private CreatePiisConsentResponse getCreatePiisConsentResponse() {
-        CreatePiisConsentResponse response = new CreatePiisConsentResponse();
-        response.setConsentId(CONSENT_ID);
-        return response;
-    }
-
-    private CreatePiisConsentRequest getCreatePiisConsentRequest() {
-        CreatePiisConsentRequest request = new CreatePiisConsentRequest();
-        request.setAccount(getReference());
-        request.setCardExpiryDate(LocalDate.now().plusMonths(1));
-        request.setCardInformation("cardInformation");
-        request.setCardNumber("cardNumber");
-        request.setRegistrationInformation("registrationInformation");
-        request.setValidUntil(LocalDate.now().plusMonths(3));
-        request.setTppAuthorisationNumber("tppAuthorisationNumber");
-        return request;
-    }
-
-    private CreatePiisConsentRequestTO getCreatePiisConsentRequestTO() {
-        CreatePiisConsentRequestTO request = new CreatePiisConsentRequestTO();
-        request.setAccount(getReference());
-        request.setCardExpiryDate(LocalDate.now().plusMonths(1));
-        request.setCardInformation("cardInformation");
-        request.setCardNumber("cardNumber");
-        request.setRegistrationInformation("registrationInformation");
-        request.setValidUntil(LocalDate.now().plusMonths(3));
-        request.setTppAuthorisationNumber("tppAuthorisationNumber");
-        return request;
     }
 
     private SCAConsentResponseTO getSCAConsentResponseTO() {

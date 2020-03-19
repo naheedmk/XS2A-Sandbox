@@ -12,7 +12,6 @@ import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AisAccountAccessInfoTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AisConsentTO;
 import de.adorsys.ledgers.middleware.api.domain.um.BearerTokenTO;
-import de.adorsys.ledgers.middleware.api.service.TokenStorageService;
 import de.adorsys.ledgers.middleware.client.rest.AccountRestClient;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
@@ -20,16 +19,13 @@ import de.adorsys.ledgers.middleware.client.rest.OauthRestClient;
 import de.adorsys.ledgers.oba.rest.server.auth.ObaMiddlewareAuthentication;
 import de.adorsys.ledgers.oba.service.api.domain.*;
 import de.adorsys.ledgers.oba.service.api.service.AuthorizationService;
-import de.adorsys.ledgers.oba.service.api.service.ConsentService;
 import de.adorsys.ledgers.oba.service.api.service.RedirectConsentService;
 import de.adorsys.psd2.consent.api.ais.AisAccountAccess;
 import de.adorsys.psd2.consent.api.ais.CmsAisAccountConsent;
 import de.adorsys.psd2.consent.api.ais.CmsAisConsentResponse;
 import de.adorsys.psd2.xs2a.core.consent.AisConsentRequestType;
 import de.adorsys.psd2.xs2a.core.consent.ConsentStatus;
-import de.adorsys.psd2.xs2a.core.profile.AccountReference;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
-import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -85,8 +81,6 @@ public class AISControllerTest {
     @Mock
     private RedirectConsentService redirectConsentService;
     @Mock
-    private ConsentService consentService;
-    @Mock
     private XISControllerService xisService;
     @Mock
     private HttpServletResponse response;
@@ -96,14 +90,8 @@ public class AISControllerTest {
     private ObaMiddlewareAuthentication middlewareAuth;
     @Mock
     private AuthorizationService authService;
-
     @Mock
     private AuthRequestInterceptor authInterceptor;
-
-    @Mock
-    private AspspConsentDataClient aspspConsentDataClient;
-    @Mock
-    private TokenStorageService tokenStorageService;
 
     @Test
     public void aisAuth() {
@@ -158,15 +146,6 @@ public class AISControllerTest {
     }
 
     @Test
-    public void grantPiisConsent() {
-        Whitebox.setInternalState(controller, "middlewareAuth", new ObaMiddlewareAuthentication(null, new BearerTokenTO(TOKEN, null, 999, null, getAccessTokenTO())));
-        when(consentService.createConsent(any(), anyString())).thenReturn(getScaConsentResponse(FINALISED));
-        when(aspspConsentDataClient.updateAspspConsentData(anyString(), any())).thenReturn(ResponseEntity.ok(null));
-        ResponseEntity<PIISConsentCreateResponse> result = controller.grantPiisConsent(COOKIE, getPiisRequest());
-        assertThat(result).isEqualToComparingFieldByFieldRecursively(ResponseEntity.ok(getPiisResp()));
-    }
-
-    @Test
     public void getListOfAccounts() {
         Whitebox.setInternalState(controller, "middlewareAuth", new ObaMiddlewareAuthentication(null, new BearerTokenTO(TOKEN, null, 999, null, getAccessTokenTO())));
         when(accountRestClient.getListOfAccounts()).thenReturn(ResponseEntity.ok(getAccounts()));
@@ -199,20 +178,6 @@ public class AISControllerTest {
 
     private List<AccountDetailsTO> getAccounts() {
         return Collections.singletonList(new AccountDetailsTO(ASPSP_ACC_ID, IBAN, null, null, null, null, EUR, LOGIN, null, AccountTypeTO.CASH, AccountStatusTO.ENABLED, null, null, UsageTypeTO.PRIV, null, Collections.emptyList()));
-    }
-
-    private PIISConsentCreateResponse getPiisResp() {
-        PIISConsentCreateResponse resp = new PIISConsentCreateResponse();
-        resp.setConsent(getAisConsentTO(false));
-        return resp;
-    }
-
-    private CreatePiisConsentRequestTO getPiisRequest() {
-        CreatePiisConsentRequestTO request = new CreatePiisConsentRequestTO();
-        request.setAccount(new AccountReference(ASPSP_ACC_ID, RESOURCE_ID, IBAN, null, null, null, null, EUR));
-        request.setTppAuthorisationNumber(TPP_AUTH_ID);
-        request.setValidUntil(DATE);
-        return request;
     }
 
     private SCAConsentResponseTO getScaConsentResponse(ScaStatusTO status) {
