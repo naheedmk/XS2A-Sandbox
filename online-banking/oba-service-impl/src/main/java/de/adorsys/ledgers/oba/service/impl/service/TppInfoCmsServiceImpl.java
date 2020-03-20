@@ -21,7 +21,7 @@ public class TppInfoCmsServiceImpl implements TppInfoCmsService {
     @Override
     @Transactional
     public List<TppInfoTO> getTpps() {
-        List<TppInfoEntity> all = IterableUtils.toList(tppInfoRepository.findAll());
-        return tppInfoObaMapper.toTppInfoTOs(all);
+        List<TppInfoEntity> tpps = IterableUtils.toList(tppInfoRepository.findAll());
+        return tppInfoObaMapper.toTppInfoTOs(tpps);
     }
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.ledgers.middleware.api.domain.sca.SCAConsentResponseTO;
 import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.ConsentRestClient;
+import de.adorsys.ledgers.oba.service.api.domain.CreatePiisConsentRequestTO;
 import de.adorsys.ledgers.oba.service.api.domain.ObaAisConsent;
 import de.adorsys.ledgers.oba.service.api.domain.exception.ObaException;
 import de.adorsys.ledgers.oba.service.impl.mapper.CreatePiisConsentRequestMapper;
@@ -20,23 +21,26 @@ import de.adorsys.psd2.xs2a.core.consent.ConsentStatus;
 import de.adorsys.psd2.xs2a.core.profile.AccountReference;
 import de.adorsys.psd2.xs2a.core.tpp.TppInfo;
 import feign.FeignException;
+import feign.Request;
+import feign.Response;
 import org.adorsys.ledgers.consent.aspsp.rest.client.CmsAspspPiisClient;
+import org.adorsys.ledgers.consent.aspsp.rest.client.CreatePiisConsentResponse;
 import org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient;
 import org.adorsys.ledgers.consent.xs2a.rest.client.AspspConsentDataClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Collections;
-import java.util.Currency;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.adorsys.ledgers.consent.psu.rest.client.CmsPsuAisClient.DEFAULT_SERVICE_INSTANCE_ID;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -127,6 +131,57 @@ public class ConsentServiceTest {
 
         //then
         verify(objectMapper, times(1)).readTree(getByteArray());
+    }
+
+    @Test(expected = ObaException.class)
+    public void confirmAisConsentDecoupled_feign_exception() throws IOException {
+        //given
+        when(securityDataService.decryptId(any())).thenReturn(Optional.of(CONSENT_ID));
+        when(aspspDataService.readAspspConsentData(any())).thenReturn(Optional.of(getAspspConsentData()));
+        when(objectMapper.readTree(any(byte[].class))).thenReturn(getJsonNodeError());
+
+        //when
+        consentService.confirmAisConsentDecoupled(USER_LOGIN, "encryptedConsentId", AUTHORIZATION_ID, TAN);
+
+        //then
+        verify(objectMapper, times(1)).readTree(getByteArray());
+    }
+
+    private FeignException getFeignExceptionWithDevMsg() {
+        return FeignException.errorStatus("zzz", Response.builder()
+                                                     .body(new byte[]{})
+                                                     .status(400)
+                                                     .headers(new HashMap<>())
+                                                     .reason("")
+                                                     .request(Request.create(Request.HttpMethod.POST, "null", new HashMap<>(), null))
+                                                     .build());
+    }
+
+    @Test
+    public void createPiisConsent() throws JsonProcessingException {
+        Whitebox.setInternalState(consentService, "createPiisConsentRequestMapper", Mappers.getMapper(CreatePiisConsentRequestMapper.class));
+        when(cmsAspspPiisClient.createConsent(any(), anyString(), nullable(String.class), nullable(String.class), nullable(String.class))).thenReturn(getCreatePiisConsentResponse());
+        when(consentRestClient.grantPIISConsent(any())).thenReturn(ResponseEntity.ok(getSCAConsentResponseTO()));
+        when(consentDataClient.updateAspspConsentData(anyString(), any())).thenReturn(ResponseEntity.ok().build());
+        when(objectMapper.writeValueAsBytes(any())).thenReturn(getByteArray());
+
+        consentService.createPiisConsent(getCreatePiisConsentRequest(), "psiId");
+
+        verify(objectMapper, times(1)).writeValueAsBytes(getSCAConsentResponseTO());
+    }
+
+    private ResponseEntity<CreatePiisConsentResponse> getCreatePiisConsentResponse() {
+        CreatePiisConsentResponse response = new CreatePiisConsentResponse();
+        response.setConsentId("consentId");
+        return ResponseEntity.ok(response);
+    }
+
+    private CreatePiisConsentRequestTO getCreatePiisConsentRequest() {
+        CreatePiisConsentRequestTO to = new CreatePiisConsentRequestTO();
+        to.setAccount(getReference());
+        to.setTppAuthorisationNumber("123456");
+        to.setValidUntil(LocalDate.of(2025, 1, 1));
+        return to;
     }
 
     @Test(expected = ObaException.class)
@@ -250,6 +305,11 @@ public class ConsentServiceTest {
     private JsonNode getJsonNode() throws JsonProcessingException {
         String json = "{ \"bearerToken\":{ \"access_token\":\"eyJraWQiOiJBV3MtRk1o1V4M\"," +
                           " \"token_type\":\"Bearer\" }}";
+        return mapper.readTree(json);
+    }
+
+    private JsonNode getJsonNodeError() throws JsonProcessingException {
+        String json = "\"{\\\"devMessage\\\":\\\"error\\\" }\"";
         return mapper.readTree(json);
     }
 }
