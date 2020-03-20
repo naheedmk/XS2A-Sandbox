@@ -80,7 +80,11 @@ export class UserCreateComponent implements OnInit {
                 scaData.get('staticTan').setValidators([Validators.required, 
                     Validators.pattern(new RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/))]);
             } else {
+<<<<<<< Updated upstream
                 scaData.get('staticTan').setValidators([Validators.required]);
+=======
+                scaData.get('scaMethod').setValidators([Validators.required]);
+>>>>>>> Stashed changes
             }
         });
         return scaData;
