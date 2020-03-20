@@ -77,7 +77,8 @@ export class UserCreateComponent implements OnInit {
             if (value === ScaMethods.EMAIL) {
                 scaData.get('staticTan').setValidators(emailValidators);
             } else if (value === ScaMethods.MOBILE) {
-                scaData.get('staticTan').setValidators([Validators.required, Validators.pattern(new RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/))]);
+                scaData.get('staticTan').setValidators([Validators.required, 
+                    Validators.pattern(new RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/))]);
             } else {
                 scaData.get('staticTan').setValidators([Validators.required]);
             }
