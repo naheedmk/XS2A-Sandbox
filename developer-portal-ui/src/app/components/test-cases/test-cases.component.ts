@@ -84,30 +84,33 @@ export class TestCasesComponent implements OnInit {
   private setUpUsedApproaches() {
     this.customizeService.currentTheme
       .subscribe(data => {
-        const embedded = 'embedded';
-        const redirect = 'redirect';
+        if (data.supportedApproaches) {
+          const embedded = 'embedded';
+          const redirect = 'redirect';
 
-        let redirectSupportedInSettings = data.supportedApproaches.includes(
-          redirect
-        );
-        let embeddedSupportedInSettings = data.supportedApproaches.includes(
-          embedded
-        );
+          let redirectSupportedInSettings = data.supportedApproaches.includes(
+            redirect
+          );
+          let embeddedSupportedInSettings = data.supportedApproaches.includes(
+            embedded
+          );
 
-        this.aspspService.getScaApproaches().subscribe(
-          (scaApproaches: Array<string>) => {
-            this.redirectSupported =
-              redirectSupportedInSettings &&
-              scaApproaches.includes(redirect.toLocaleUpperCase());
-            this.embeddedSupported =
-              embeddedSupportedInSettings &&
-              scaApproaches.includes(embedded.toLocaleUpperCase());
-          },
-          () => {
-            this.redirectSupported = redirectSupportedInSettings;
-            this.embeddedSupported = embeddedSupportedInSettings;
-          }
-        );
+          this.aspspService.getScaApproaches().subscribe(
+            (scaApproaches: Array<string>) => {
+              this.redirectSupported =
+                redirectSupportedInSettings &&
+                scaApproaches.includes(redirect.toLocaleUpperCase());
+              this.embeddedSupported =
+                embeddedSupportedInSettings &&
+                scaApproaches.includes(embedded.toLocaleUpperCase());
+            },
+            () => {
+              this.redirectSupported = redirectSupportedInSettings;
+              this.embeddedSupported = embeddedSupportedInSettings;
+            }
+          );
+        }
+
       });
   }
 }
