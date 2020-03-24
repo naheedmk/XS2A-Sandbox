@@ -353,7 +353,7 @@ You can customize html body background color and font color with the following p
 "colorSecondary": "#eed52f"  
 ```
 
-![Colors 1](../customization_guide/pictures/colors1.png)
+![Colors 1](../pictures/colors1.png)
 
 [Back to reading about colors](#colors).
 
@@ -932,12 +932,3 @@ Type `redirect` means that the page would redirect to an external link on click.
 }
 ```
 
-### Google Analytics support
-
-To connect your Google Analytics account, in docker-compose.yml in Developer Portal UI section add property TRACKING_ID with your Google Analytics account ID. Then run docker-compose normally, Google Analytics account would be connected automatically.
-
-![Google Analytics Docker](../customization_guide/pictures/googleAnalyticsDocker.png)
-
-The example of docker-compose.yaml with enabled Google Analytics support can be fount in [docker-compose-google-analytics-enabled.yml](https://github.com/adorsys/XS2A-Sandbox/blob/master/docker-compose-google-analytics-enabled.yml) file in root of the Sandbox repository.
-
-The application gives to Google Analytics the information about every page visit and some events. These event are every try out of API endpoint in Test Cases section (event is triggered by clicking on `Submit` button) and Postman tests download (event is triggered by clicking on `Download` button).
