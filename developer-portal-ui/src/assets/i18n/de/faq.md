@@ -111,6 +111,11 @@ Eine weitere Möglichkeit ist, dass Ihr Zertifikat nicht die benötigten Rollen 
 }
 ```
 
+<div class="divider">
+</div>
+
+# Allgemeine Fragen
+
 ## Warum passiert nichts, wenn ich execute betätige?
 
 Wenn Sie versuchen Ihre Anfrage auszuführen und keinen Response-Code erhalten, dann ist es sehr wahrscheinlich, dass ein Header-Feld mit einem ungültigen Wert aufgefüllt ist. Bspw.: Ein Leerzeichen vor der X-Request-ID.
@@ -138,7 +143,7 @@ or rename) that container to be able to reuse that name.
 
 Lösung: Zuerst, solten Sie versuchen alle Docker Container zu löschen. Führen Sie dazu folgende Befehle nacheinander aus
 
-_- Warnung: Dies löscht auch die von Ihnen erstellten lokalen Daten wie bereits registrierte TPPs:_
+**Warnung**: Dies löscht auch die von Ihnen erstellten lokalen Daten wie bereits registrierte TPPs:
 
 1._docker rm -vf \$(docker ps -a -q)_
 

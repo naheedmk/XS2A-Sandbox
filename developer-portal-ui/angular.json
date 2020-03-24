@@ -124,8 +124,5 @@
       }
     }
   },
-  "defaultProject": "developer-portal",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "developer-portal"
 }

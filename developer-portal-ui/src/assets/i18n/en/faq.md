@@ -1,4 +1,4 @@
-\<div class="centeredText">
+<div class="centeredText">
 
 # Frequently Asked Questions
 
@@ -111,6 +111,11 @@ You need the PSU to create a new consent and use the new consentId. Another poss
 }
 ```
 
+<div class="divider">
+</div>
+
+# General questions
+
 ## Why does nothing happen when I press execute?
 
 If you press the execute button and do not even receive any response code, then it is very likely that you have an invalid value in a header field such as a blank space at the beginning of the X-Request-ID.
@@ -139,7 +144,7 @@ or rename) that container to be able to reuse that name.
 
 Solution: First of all you try to remove all containers from docker with following commands step by step
 
-_- Warning: this will delete also all your created local data like registered TPPs:_
+**Warning**: this will delete also all your created local data like registered TPPs:
 
 1._docker rm -vf \$(docker ps -a -q)_
 
