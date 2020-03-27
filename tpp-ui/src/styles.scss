@@ -108,7 +108,7 @@ h3 {
 nav {
   background: var(--headerBG);
   padding: 2rem !important;
-  border-top: #CC0033 7px solid;
+  border-top: var(--headerBorderTop);
 }
 
 .nav-item {
