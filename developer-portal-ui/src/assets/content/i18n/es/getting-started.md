@@ -114,9 +114,10 @@ En el caso de un enfoque de REDIRECT SCA, un usuario desea dar su consentimiento
 </div>
 
 # Cómo descargar, configurar y ejecutar el proyecto
+
 ## Prerrequisitos
 
-Este sandbox se ejecuta con el docker-compose que se puede encontrar en docker-compose.yml y Makefile en el directorio del proyecto. Pero antes de ejecutar XS2ASandbox, primero verifique si todas las dependencias de compilación están instaladas: 
+Este sandbox se ejecuta con el docker-compose que se puede encontrar en docker-compose.yml y Makefile en el directorio del proyecto. Pero antes de ejecutar XS2ASandbox, primero verifique si todas las dependencias de compilación están instaladas:
 
 _make check_
 
@@ -170,11 +171,7 @@ _make_
 
 _docker-compose up_
 
-En Makefile puede usar uno de los cuatro comandos:
-
-• Ejecute la versión de lanzamiento de los servicios desde Docker Hub sin construir:
-
-_make run-release_
+En Makefile puede usar uno de los tres comandos:
 
 • Ejecute servicios desde Docker Hub sin construir:
 
@@ -317,6 +314,7 @@ Ejemplo de Json:
 ```
 
 Campos de Json:
+
 - globalSettings - requeridos
   - logo - requeridos, value: string, http url or file name with extension or ' '
   - favicon - optional
