@@ -9,7 +9,7 @@ import { CustomizeService } from '../services/customize.service';
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements DoCheck {
-  title;
+  public title: string;
 
     constructor(public customizeService: CustomizeService,
                 private authService: AuthService) {
