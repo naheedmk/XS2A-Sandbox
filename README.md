@@ -10,19 +10,29 @@ XS2ASandbox is a dynamic sandbox environment: you can create users, payments as 
 
 [Developer Portal](https://github.com/adorsys/XS2A-Sandbox/tree/master/developer-portal-ui) contains testing instructions and all of the necessary documentation. All PSD2 services can be installed and run with one simple command. 
 
-Two main SCA approaches are supported: REDIRECT and EMBEDDED. For the Redirect SCA Approach an [Online Banking UI](https://github.com/adorsys/XS2A-Sandbox/tree/master/oba-ui) is used for authorisation.
+All four SCA approaches are supported: REDIRECT, OAUTH, EMBEDDED, DECOUPLED. Two of them (REDIRECT, EMBEDDED) are directly testable on Developer portal. For the Redirect SCA Approach an [Online Banking UI](https://github.com/adorsys/XS2A-Sandbox/tree/master/oba-ui) is used for authorisation.
+
+![XS2ASandbox structure](https://github.com/adorsys/XS2A-Sandbox/tree/master/docs/XS2ASandbox.png)
+
 
 ## Project documentation
 
 * [Release notes](https://github.com/adorsys/XS2A-Sandbox/tree/master/docs/release_notes) contain information about changes included into releases.
-* [Running XS2ASandbox instructions](https://github.com/adorsys/XS2A-Sandbox/tree/master/docs/running-xs2asandbox.md) will help you getting you a copy of the project up and running on your local machine.
 * [User Guide](https://github.com/adorsys/XS2A-Sandbox/tree/master/docs/user-guide.md) describes how to configure XS2ASandbox.
+
+## How to try it
+
+* [Running XS2ASandbox instructions](https://github.com/adorsys/XS2A-Sandbox/tree/master/docs/running-xs2asandbox.md) will help you getting you a copy of the project up and running on your local machine.
 
 ## Development and contributing
 
 Any person are free to join us by implementing some parts of code or fixing some bugs and making a merge requests for them.
 
+[Contribution Guidelines](https://github.com/adorsys/XS2A-Sandbox/tree/master/docs/Contribution-Guidelines.md) describe internal development process and how to contribute to XS2ASandbox.
+
 ## Contact
+
+If you still have any questions, please write us an [e-mail](psd2-sandbox@adorsys.de).
 
 For commercial support please contact [adorsys Team](https://adorsys-platform.de/solutions/).
 
