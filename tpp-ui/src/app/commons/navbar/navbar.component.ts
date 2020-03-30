@@ -12,7 +12,7 @@ import { TppUserService } from '../../services/tpp.user.service';
 })
 export class NavbarComponent implements DoCheck, OnInit {
   public tppUser: User;
-  public title;
+  public title: string;
   public openDropdownMenu = false;
 
   constructor(private authService: AuthService,
