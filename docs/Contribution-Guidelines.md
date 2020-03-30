@@ -23,13 +23,25 @@ The conditions listed in the Definition of Done are required to be fulfilled in 
 ### Technical conditions for the implementations
 
 #### Testing API with Postman json collections
+For testing API of XS2A [Postman](https://www.getpostman.com/) tool can be used.
+ Environment jsons with global parameter’s sets and Collections of jsons for imitation of processes flows are stored in /postman-scripts folder.
+ To import Postman collections and environments follow next steps:
+ 1.     Download Postman jsons with collections and environments to your local machine.
+ 2.     Open Postman, press button “Import”.
+ 3.     Choose “Import file” to import one json or “Import folder” to import all jsons within the folder, then press button “Choose Files” or “Choose Folders” and open necessary files/folders.
+ 4.     To change settings of environments - go to “Manage Environments”, press the environment name and change variables.
  
+ To start testing with Postman collections it is necessary to have all services running.
  
 #### Code styling
-
+If you are using Intellij IDEs, like we do, please consider importing our code-style settings.
+General settings are also documented in .editorconfig file.
+You may find more information and a plugin for your editor/IDE [here](http://editorconfig.org/))
 
 #### Java
-
+* Please use Optionals and corresponding streams instead of null-checks where possible
+* We prefer using Mockito over EasyMock for unit-tests.
+* We prefer SpringBoot autoconfiguration over manual Configuration where possible
 
 ### How to Release
 
