@@ -41,7 +41,7 @@ Any person are free to join us by implementing some parts of code or fixing some
 
 ## Contact
 
-If you still have any questions, please write us an [e-mail](psd2-sandbox@adorsys.de).
+If you think that our system behaves in an unexpected way or incorrect, or you need some clarifications, to contact XS2ASandbox Team please [create an issue](https://github.com/adorsys/XS2A-Sandbox/issues). Team will provide comments and feedback there.
 
 For commercial support please contact [adorsys Team](https://adorsys-platform.de/solutions/).
 
