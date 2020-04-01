@@ -72,24 +72,18 @@ describe('UserDetailsComponent', () => {
   });
 
     it('should show confirmation letter feedback on successful confirm email', () => {
-      //Given
         const email = 'foo@foo.de';
         const getEmailSpy = spyOn(emailVerificationService, 'sendEmailForVerification').and.returnValue(of(''));
         const infoServiceOpenFeedbackSpy = spyOn(infoService, 'openFeedback');
-        //WHen
         component.confirmEmail(`${email}`);
-        //Then
         expect(infoServiceOpenFeedbackSpy).toHaveBeenCalledWith(`Confirmation letter has been sent to your email ${email}!`)
     });
 
     it('should show failure message on unsuccessful confirm email ', () => {
-        //Given
         const email = 'foo@foo.de';
         const getEmailSpy = spyOn(emailVerificationService, 'sendEmailForVerification').and.returnValue(throwError(''));
         const infoServiceOpenFeedbackSpy = spyOn(infoService, 'openFeedback');
-        //WHen
         component.confirmEmail(`${email}`);
-        //Then
         expect(infoServiceOpenFeedbackSpy).toHaveBeenCalledWith(`Sorry, something went wrong during the process of sending the confirmation!`)
     });
 
@@ -113,14 +107,11 @@ describe('UserDetailsComponent', () => {
   });
 
   it('should handle Click Iban', () => {
-      //Given
       const accountId = 'abc232';
       let getAccountSpy = spyOn(accountService, 'getAccountByIban').and.returnValue(of({id: accountId}));
       let navigateSpy = spyOn(router, 'navigate');
       const clickEvent = {target: {innerHTML: 'DE980000000001'}};
-      //When
       component.handleClickOnIBAN(clickEvent);
-      //Then
       expect(getAccountSpy).toHaveBeenCalledTimes(1);
       expect(navigateSpy).toHaveBeenCalledWith(['/accounts/', accountId]);
   });
