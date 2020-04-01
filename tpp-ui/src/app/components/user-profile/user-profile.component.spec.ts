@@ -78,7 +78,7 @@ describe('UserProfileComponent', () => {
      expect(component.tppUser).toEqual(mockUser)
   });
 
-  it('should TODO deleteTpp', () => {
+  it('should delete a Tpp User', () => {
      let deleteTppSpy = spyOn(tppService, 'deleteTpp').and.returnValue(of('mock'));
      let navigateSpy = spyOn(router, 'navigate');
 
