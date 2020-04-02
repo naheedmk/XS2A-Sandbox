@@ -1,18 +1,26 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {TestValuesComponent} from './test-values.component';
-import {Pipe, PipeTransform} from '@angular/core';
-import {MarkdownModule} from "ngx-markdown";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
-import {HttpLoaderFactory, LanguageService} from "../../../../services/language.service";
-import {HttpClient} from "@angular/common/http";
+import { TestValuesComponent } from './test-values.component';
+import { Pipe, PipeTransform } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import {
+  HttpLoaderFactory,
+  LanguageService,
+} from '../../../../services/language.service';
+import { HttpClient } from '@angular/common/http';
+import { DataService } from '../../../../services/data.service';
 
 describe('TestValuesComponent', () => {
   let component: TestValuesComponent;
   let fixture: ComponentFixture<TestValuesComponent>;
 
-  @Pipe({name: 'translate'})
+  @Pipe({ name: 'translate' })
   class TranslatePipe implements PipeTransform {
     transform(value) {
       const tmp = value.split('.');
@@ -30,17 +38,11 @@ describe('TestValuesComponent', () => {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
             deps: [HttpClient],
-          }
-        })
+          },
+        }),
       ],
-      providers: [
-        LanguageService,
-        TranslateService,
-      ],
-      declarations: [
-        TestValuesComponent,
-        TranslatePipe
-      ],
+      providers: [LanguageService, TranslateService, DataService],
+      declarations: [TestValuesComponent, TranslatePipe],
     }).compileComponents();
   }));
 
