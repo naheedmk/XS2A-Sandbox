@@ -381,7 +381,7 @@ export class PlayWthDataComponent implements OnInit {
     return this.http
       .get('https://api.ipify.org/?format=json')
       .subscribe(
-        ip => (this.headers['PSU-IP-Address'] = ip.ip),
+        ip => (this.headers['PSU-IP-Address'] = ip['ip']),
         () => (this.headers['PSU-IP-Address'] = '1.1.1.1')
       );
   }
@@ -397,7 +397,7 @@ export class PlayWthDataComponent implements OnInit {
       requestHeaders['Content-Type'] = this.xml
         ? 'application/xml'
         : 'application/json';
-      requestHeaders.Accept = this.acceptHeader
+      requestHeaders['Accept'] = this.acceptHeader
         ? this.acceptHeader
         : 'application/json';
 

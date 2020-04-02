@@ -44,5 +44,6 @@ export class TestValuesComponent {
   clear() {
     localStorage.removeItem('certificate');
     this.dataService.showToast('Certificate delated', 'Success!', 'success');
+    this.certificate = '';
   }
 }

@@ -30,12 +30,25 @@ export class PopUpComponent implements OnInit {
       .subscribe(data => (this.certificate = data.certificate));
   }
   saveCertificate() {
-    localStorage.setItem('certificate', JSON.stringify(this.certificate));
-    this.dataService.showToast(
-      'Certificate edited and saved',
-      'Success!',
-      'success'
-    );
+    if (!this.certificate) {
+      this.dataService.showToast(
+        'Please, add certificate',
+        'Warning!',
+        'Warning'
+      );
+    } else {
+      localStorage.setItem('certificate', JSON.stringify(this.certificate));
+      this.dataService.showToast(
+        'Certificate edited and saved',
+        'Success!',
+        'success'
+      );
+    }
+  }
+  clearCertificate() {
+    localStorage.removeItem('certificate');
+    this.certificate = '';
+    this.dataService.showToast('Certificate deleted', 'Success!', 'success');
   }
 
   ngOnInit() {
