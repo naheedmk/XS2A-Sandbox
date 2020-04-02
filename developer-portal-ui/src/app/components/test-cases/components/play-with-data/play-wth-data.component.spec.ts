@@ -10,6 +10,7 @@ import { CopyService } from '../../../../services/copy.service';
 import { LocalStorageService } from '../../../../services/local-storage.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { JsonService } from '../../../../services/json.service';
+import { PopUpComponent } from './pop-up/pop-up.component';
 
 describe('PlayWthDataComponent', () => {
   let component: PlayWthDataComponent;
@@ -47,7 +48,7 @@ describe('PlayWthDataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PlayWthDataComponent, TranslatePipe],
+      declarations: [PlayWthDataComponent, PopUpComponent, TranslatePipe],
       imports: [FormsModule, NgxLoadingModule, HttpClientTestingModule],
       providers: [
         { provide: DataService, useValue: DataServiceStub },
