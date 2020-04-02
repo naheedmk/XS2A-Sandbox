@@ -84,6 +84,6 @@ import { CertificateService } from '../../services/certificate.service';
   ],
   providers: [CertificateService],
   exports: [LineCommandComponent, PlayWthDataComponent, CodeAreaComponent],
-  entryComponents: [PopUpComponent],
+  bootstrap: [PopUpComponent],
 })
 export class TestCasesModule {}

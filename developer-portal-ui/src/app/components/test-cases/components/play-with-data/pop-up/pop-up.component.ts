@@ -7,6 +7,7 @@ import { DataService } from '../../../../../services/data.service';
   selector: 'app-pop-up',
   templateUrl: './pop-up.component.html',
   styleUrls: ['./pop-up.component.scss'],
+  providers: [NgbModalConfig, NgbModal],
 })
 export class PopUpComponent implements OnInit {
   public certificate;
