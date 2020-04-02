@@ -29,7 +29,7 @@
         </option>
       </select>
       <span class="top-line" *ngIf="paymentProductFlag || accountIdFlag"
-      >/</span
+        >/</span
       >
       <input
         type="text"
@@ -72,11 +72,11 @@
 
       <span class="top-line" *ngIf="variablePathEnd">{{
         variablePathEnd
-        }}</span>
+      }}</span>
       <span
         class="top-line"
         *ngIf="authorisationIdFlag || cancellationIdFlag || transactionIdFlag"
-      >/</span
+        >/</span
       >
       <input
         type="text"
@@ -137,13 +137,16 @@
   </div>
 
   <div class="play-with-data-table bg th">
-    <span style="width: 60%;">{{ 'TEST_CASES.COMPONENTS.TH.TH_1' | translate }}</span>
+    <span style="width: 60%;">{{
+      'TEST_CASES.COMPONENTS.TH.TH_1' | translate
+    }}</span>
     <div>{{ 'TEST_CASES.COMPONENTS.TH.TH_2' | translate }}</div>
   </div>
 
   <div class="play-with-data-table" *ngIf="acceptFlag">
     <span></span>
-    <label class="check-container">Accept
+    <label class="check-container"
+      >Accept
       <input
         type="checkbox"
         id="acceptHeaderCheckbox"
@@ -163,7 +166,8 @@
     *ngFor="let item of (headers | keyvalue); let i = index; trackBy: trackByFn"
     [ngClass]="acceptFlag ? (i % 2 ? null : 'bg') : i % 2 ? 'bg' : null"
   >
-    <label class="check-container">{{ item.key }}
+    <label class="check-container"
+      >{{ item.key }}
       <input
         type="checkbox"
         (change)="disableHeader($event)"
@@ -173,15 +177,34 @@
       />
       <span class="checkmark"></span>
     </label>
-    <select *ngIf="isBooleanValue(item); else regularInput"
-            [(ngModel)]="item.value"
-            (change)="changeBooleanHeader(item.key, $event.target.value)">
-      <option *ngFor="let boolean of booleanValues" [value]="boolean">{{ boolean }}</option>
+    <select
+      *ngIf="isBooleanValue(item); else: regularInput"
+      [(ngModel)]="item.value"
+      (change)="changeBooleanHeader(item.key, $event.target.value)"
+    >
+      <option *ngFor="let boolean of booleanValues" [value]="boolean">{{
+        boolean
+      }}</option>
     </select>
 
     <ng-template #regularInput>
-      <input [(ngModel)]="headers[item.key]" type="text" [id]="item.key"/>
+      <input [(ngModel)]="headers[item.key]" type="text" [id]="item.key" />
     </ng-template>
+  </div>
+
+  <div class="play-with-data-table bg">
+    <label class="check-container">
+      TPP-QWAC-Certificate
+      <input
+        type="checkbox"
+        (change)="disableHeader($event)"
+        [value]="certificate"
+        [checked]="false"
+        class="checkbox"
+      />
+      <span class="checkmark"></span>
+    </label>
+    <app-pop-up> </app-pop-up>
   </div>
 
   <div class="send-body" *ngIf="body">
@@ -197,7 +220,7 @@
         <option
           *ngFor="let consent of (consentTypes | keyvalue); let i = index"
           [value]="consent.key"
-        >{{ consent.key }}
+          >{{ consent.key }}
         </option>
       </select>
     </div>
@@ -299,7 +322,7 @@
               <label [for]="'input-' + i">resourceId {{ i + 1 }}</label>
             </td>
             <td class="copy-field">
-              <input type="text" [value]="resourceId" [id]="'input-' + i"/>
+              <input type="text" [value]="resourceId" [id]="'input-' + i" />
             </td>
             <td>
               <button

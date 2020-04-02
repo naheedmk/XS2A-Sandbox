@@ -1,21 +1,21 @@
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Component, Input, OnInit} from '@angular/core';
-import {RestService} from '../../../../services/rest.service';
-import {DataService} from '../../../../services/data.service';
-import {getStatusText} from 'http-status-codes';
-import {CopyService} from '../../../../services/copy.service';
-import {ConsentTypes} from '../../../../models/consentTypes.model';
-import {LocalStorageService} from '../../../../services/local-storage.service';
-import {JsonService} from '../../../../services/json.service';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { RestService } from '../../../../services/rest.service';
+import { DataService } from '../../../../services/data.service';
+import { getStatusText } from 'http-status-codes';
+import { CopyService } from '../../../../services/copy.service';
+import { ConsentTypes } from '../../../../models/consentTypes.model';
+import { LocalStorageService } from '../../../../services/local-storage.service';
+import { JsonService } from '../../../../services/json.service';
 import * as vkbeautify from 'vkbeautify';
-import {AspspService} from '../../../../services/aspsp.service';
+import { AspspService } from '../../../../services/aspsp.service';
 import {
   PaymentType,
   PaymentTypesMatrix,
 } from '../../../../models/paymentTypesMatrix.model';
-import {AcceptType} from '../../../../models/acceptType.model';
+import { AcceptType } from '../../../../models/acceptType.model';
 import * as uuid from 'uuid';
-import {GoogleAnalyticsService} from "../../../../services/google-analytics.service";
+import { GoogleAnalyticsService } from '../../../../services/google-analytics.service';
 
 @Component({
   selector: 'app-play-wth-data',
@@ -70,7 +70,7 @@ export class PlayWthDataComponent implements OnInit {
   paymentTypesMatrix: PaymentTypesMatrix;
   paymentTypes = [PaymentType.single, PaymentType.bulk, PaymentType.periodic];
   acceptHeader;
-
+  certificate: string;
   private disabledHeaders = [];
   booleanValues = ['true', 'false'];
 
@@ -88,8 +88,7 @@ export class PlayWthDataComponent implements OnInit {
     public aspspService: AspspService,
     private http: HttpClient,
     private googleAnalyticsService: GoogleAnalyticsService
-  ) {
-  }
+  ) {}
 
   /**
    * Get status text by status code
@@ -297,7 +296,11 @@ export class PlayWthDataComponent implements OnInit {
   }
 
   private setBookingStatuses(bookingStatuses?: Array<string>) {
-    if (bookingStatuses && this.bookingStatusFlag && bookingStatuses.length > 0) {
+    if (
+      bookingStatuses &&
+      this.bookingStatusFlag &&
+      bookingStatuses.length > 0
+    ) {
       this.bookingStatus = bookingStatuses[0];
       this.bookingStatusSelect = bookingStatuses;
     } else {
@@ -358,7 +361,10 @@ export class PlayWthDataComponent implements OnInit {
   }
 
   private setDefaultHeaders() {
-    if (this.headers.hasOwnProperty('TPP-Redirect-Preferred') && this.headers['TPP-Redirect-Preferred'] == 'true') {
+    if (
+      this.headers.hasOwnProperty('TPP-Redirect-Preferred') &&
+      this.headers['TPP-Redirect-Preferred'] == 'true'
+    ) {
       this.headers['TPP-Nok-Redirect-URI'] = localStorage.getItem(
         'tppDefaultNokRedirectUrl'
       );
@@ -375,8 +381,9 @@ export class PlayWthDataComponent implements OnInit {
     return this.http
       .get('https://api.ipify.org/?format=json')
       .subscribe(
-        ip => (this.headers['PSU-IP-Address'] = ip['ip']),
-        () => this.headers['PSU-IP-Address'] = '1.1.1.1');
+        ip => (this.headers['PSU-IP-Address'] = ip.ip),
+        () => (this.headers['PSU-IP-Address'] = '1.1.1.1')
+      );
   }
 
   private buildHeadersForRequest() {
@@ -387,8 +394,12 @@ export class PlayWthDataComponent implements OnInit {
         requestHeaders[key] = this.headers[key];
       }
 
-      requestHeaders['Content-Type'] = this.xml ? 'application/xml' : 'application/json';
-      requestHeaders['Accept'] = this.acceptHeader ? this.acceptHeader : 'application/json';
+      requestHeaders['Content-Type'] = this.xml
+        ? 'application/xml'
+        : 'application/json';
+      requestHeaders.Accept = this.acceptHeader
+        ? this.acceptHeader
+        : 'application/json';
 
       for (const disabled of this.disabledHeaders) {
         delete requestHeaders[disabled];
