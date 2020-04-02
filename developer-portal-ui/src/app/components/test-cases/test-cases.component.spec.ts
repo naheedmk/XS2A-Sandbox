@@ -19,6 +19,8 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { CustomizeService } from '../../services/customize.service';
 import { PopUpComponent } from './components/play-with-data/pop-up/pop-up.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 describe('TestCasesComponent', () => {
   let component: TestCasesComponent;
@@ -112,6 +114,8 @@ describe('TestCasesComponent', () => {
       declarations: [TestCasesComponent, PopUpComponent, TranslatePipe],
       imports: [
         RouterTestingModule,
+        FormsModule,
+        BrowserModule,
         MarkdownModule.forRoot(),
         HttpClientTestingModule,
         TranslateModule.forRoot({
