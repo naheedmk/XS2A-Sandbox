@@ -10,4 +10,4 @@ Current version consists of following components:
 - Created Customization Guide for Developer Portal, OBA UI and TPP UI
 - Added ability to test endpoint calls with TPP-QWAC-Certificate header in Developer portal
 - Fixed TPP UI and OBA UI bugs
-- Increased test coverage for TPP UI (up to 76.41% Statements, 50.35% Branches, 75.27% Functions, 75.51% Lines 555/735)
+- Increased test coverage for TPP UI (up to 76.41% Statements, 50.35% Branches, 75.27% Functions, 75.51% Lines)
