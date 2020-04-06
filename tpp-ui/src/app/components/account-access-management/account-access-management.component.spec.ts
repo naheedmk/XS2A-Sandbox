@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
 import {User} from "../../models/user.model";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AccountAccessManagementComponent} from './account-access-management.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
@@ -10,11 +10,18 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {InfoModule} from "../../commons/info/info.module";
 import {InfoService} from "../../commons/info/info.service";
 import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
-import {Router, ActivatedRoute} from "@angular/router";
-import { AccountStatus, AccountType, UsageType } from '../../models/account.model';
-import {Account} from "../../models/account.model";
+import {Account, AccountStatus, AccountType, UsageType} from "../../models/account.model";
 import { of } from 'rxjs';
 import get = Reflect.get;
+
+const mockRouter = {
+    navigate: (url: string) => {
+        console.log('mocknavigation', url);
+    }
+};
+const mockActivatedRoute = {
+    params: of({id: '12345'})
+};
 
 describe('AccountAccessManagementComponent', () => {
     let component: AccountAccessManagementComponent;
@@ -24,20 +31,19 @@ describe('AccountAccessManagementComponent', () => {
     let infoService: InfoService;
     let router: Router;
     let route: ActivatedRoute;
-    let de: DebugElement;
-    let el: HTMLElement;
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 ReactiveFormsModule,
                 HttpClientTestingModule,
-                RouterTestingModule,
                 NgbTypeaheadModule,
                 InfoModule,
                 FormsModule,
             ],
             declarations: [AccountAccessManagementComponent],
-            providers: [AccountService, InfoService]
+            providers: [AccountService, InfoService,
+                {provide: Router, useValue: mockRouter},
+                {provide: ActivatedRoute, useValue: mockActivatedRoute}]
         })
             .compileComponents();
     }));
@@ -51,11 +57,41 @@ describe('AccountAccessManagementComponent', () => {
         router = TestBed.get(Router);
         route = TestBed.get(ActivatedRoute)
         fixture.detectChanges();
-        component.ngOnInit();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should set the validform of accountAccessForm in OnSumbit', () => {
+        let mockAccount: Account = {
+                id: 'XXXXXX',
+                iban: 'DE35653635635663',
+                bban: 'BBBAN',
+                pan: 'pan',
+                maskedPan: 'maskedPan',
+                currency: 'EUR',
+                msisdn: 'MSISDN',
+                name: 'Pupkin',
+                product: 'Deposit',
+                accountType: AccountType.CASH,
+                accountStatus: AccountStatus.ENABLED,
+                bic: 'BIChgdgd',
+                usageType: UsageType.PRIV,
+                details: '',
+                linkedAccounts: '',
+                balances: []
+            } as Account
+        component.account = mockAccount;
+        component.accountAccessForm.get('id').setValue('12345');
+        component.accountAccessForm.get('scaWeight').setValue(20);
+        component.accountAccessForm.get('accessType').setValue('READ');
+        let getAccountSpy = spyOn(accountService, 'updateAccountAccessForUser').and.returnValue(of(undefined));
+        let infoSpy = spyOn(infoService, 'openFeedback');
+        component.onSubmit();
+        expect(component.accountAccessForm.invalid).toBeFalsy();
+        expect(getAccountSpy).toHaveBeenCalled();
+        expect(infoSpy).toHaveBeenCalledWith("Access to account " + mockAccount.iban + " successfully granted", {duration: 3000});
     });
 
     it('submitted should false', () => {
