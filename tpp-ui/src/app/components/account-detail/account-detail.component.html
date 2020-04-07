@@ -5,13 +5,17 @@
     <div class="card-body--large">
       <form (ngSubmit)="onSubmit()" [formGroup]="accountForm">
         <div *ngIf="errorMessage" class="alert alert-danger">
-          {{errorMessage}}
+          {{ errorMessage }}
         </div>
         <div class="form-group required">
           <label class="control-label" for="accountType">Account type</label>
-          <select [ngClass]="{'is-invalid': accountType.invalid && (accountType.dirty || accountType.touched || submitted)}" class="form-control" formControlName="accountType"
-                  id="accountType">
-            <option *ngFor="let accountType of accountTypes" [value]="accountType">{{accountType}}</option>
+          <select
+            [ngClass]="{ 'is-invalid': accountType.invalid && (accountType.dirty || accountType.touched || submitted) }"
+            class="form-control"
+            formControlName="accountType"
+            id="accountType"
+          >
+            <option *ngFor="let accountType of accountTypes" [value]="accountType">{{ accountType }}</option>
           </select>
           <div class="invalid-feedback">
             <div *ngIf="accountType.errors?.required">
@@ -21,9 +25,13 @@
         </div>
         <div class="form-group required">
           <label class="control-label" for="usageType">Usage type</label>
-          <select [ngClass]="{'is-invalid': usageType.invalid && (usageType.dirty || usageType.touched || submitted)}" class="form-control" formControlName="usageType"
-                  id="usageType">
-            <option *ngFor="let usageType of usageTypes" [value]="usageType">{{usageType}}</option>
+          <select
+            [ngClass]="{ 'is-invalid': usageType.invalid && (usageType.dirty || usageType.touched || submitted) }"
+            class="form-control"
+            formControlName="usageType"
+            id="usageType"
+          >
+            <option *ngFor="let usageType of usageTypes" [value]="usageType">{{ usageType }}</option>
           </select>
           <div *ngIf="usageType.errors?.required" class="invalid-feedback">
             <div>
@@ -33,11 +41,13 @@
         </div>
         <div class="form-group required">
           <label class="control-label" for="currency">Currency code</label>
-          <select [ngClass]="{'is-invalid': currency.invalid && (currency.dirty || currency.touched || submitted)}"
-                  class="form-control"
-                  formControlName="currency"
-                  id="currency">
-            <option *ngFor="let currency of currencies" [value]="currency">{{currency}}</option>
+          <select
+            [ngClass]="{ 'is-invalid': currency.invalid && (currency.dirty || currency.touched || submitted) }"
+            class="form-control"
+            formControlName="currency"
+            id="currency"
+          >
+            <option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</option>
           </select>
           <div *ngIf="currency.errors?.required" class="invalid-feedback">
             <div>
@@ -48,14 +58,18 @@
         <div class="form-group required">
           <label class="control-label" for="iban">IBAN</label>
           <div class="input-group">
-            <input [ngClass]="{'is-invalid': iban.invalid && (iban.dirty || iban.touched || submitted)}"
-                   class="form-control"
-                   formControlName="iban"
-                   id="iban"
-                   type="text">
+            <input
+              [ngClass]="{ 'is-invalid': iban.invalid && (iban.dirty || iban.touched || submitted) }"
+              class="form-control"
+              formControlName="iban"
+              id="iban"
+              type="text"
+            />
 
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary bg-light text-black-50 mb-0" type="button" (click) = "generateIban()">Generate IBAN</button>
+              <button class="btn btn-outline-secondary bg-light text-black-50 mb-0" type="button" (click)="generateIban()">
+                Generate IBAN
+              </button>
             </div>
             <div class="invalid-feedback">
               <div *ngIf="iban.errors?.required">
@@ -67,9 +81,13 @@
 
         <div class="form-group required">
           <label class="control-label" for="accountStatus">Account status</label>
-          <select [ngClass]="{'is-invalid': accountStatus.invalid && (accountStatus.dirty || accountStatus.touched || submitted)}" class="form-control" formControlName="accountStatus"
-                  id="accountStatus">
-            <option *ngFor="let accountStatus of accountStatuses" [value]="accountStatus">{{accountStatus}}</option>
+          <select
+            [ngClass]="{ 'is-invalid': accountStatus.invalid && (accountStatus.dirty || accountStatus.touched || submitted) }"
+            class="form-control"
+            formControlName="accountStatus"
+            id="accountStatus"
+          >
+            <option *ngFor="let accountStatus of accountStatuses" [value]="accountStatus">{{ accountStatus }}</option>
           </select>
           <div class="invalid-feedback">
             <div *ngIf="accountStatus.errors?.required">

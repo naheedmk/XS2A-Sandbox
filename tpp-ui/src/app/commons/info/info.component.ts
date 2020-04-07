@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Subject } from 'rxjs';
 
@@ -14,20 +14,19 @@ import { InfoOptions } from './info-options';
         'void',
         style({
           transform: 'translateY(100%)',
-          opacity: 0
+          opacity: 0,
         })
       ),
       state(
         '*',
         style({
           transform: 'translateY(0)',
-          opacity: 1
+          opacity: 1,
         })
       ),
-      transition('* <=> void', animate(`400ms cubic-bezier(0.4, 0, 0.1, 1)`))
-    ])
+      transition('* <=> void', animate(`400ms cubic-bezier(0.4, 0, 0.1, 1)`)),
+    ]),
   ],
-  encapsulation: ViewEncapsulation.None
 })
 export class InfoComponent {
   private onDestroy = new Subject<void>();

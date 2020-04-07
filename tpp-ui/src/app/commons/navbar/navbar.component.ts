@@ -6,39 +6,35 @@ import { User } from '../../models/user.model';
 import { TppUserService } from '../../services/tpp.user.service';
 
 @Component({
-    selector: 'app-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements DoCheck, OnInit {
   public tppUser: User;
   public title: string;
   public openDropdownMenu = false;
 
-  constructor(private authService: AuthService,
-              public customizeService: CustomizeService,
-              private tppUserService: TppUserService) {}
+  constructor(private authService: AuthService, public customizeService: CustomizeService, private tppUserService: TppUserService) {}
 
   ngDoCheck(): void {
-      if (!this.authService.isLoggedIn()) {
-          this.authService.logout();
-          throw new Error('Session expired. Please login again.');
-      }
+    if (!this.authService.isLoggedIn()) {
+      this.authService.logout();
+      throw new Error('Session expired. Please login again.');
+    }
     this.title = this.customizeService.getTitle();
   }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.tppUserService.currentTppUser.subscribe(
-        (response: User) => {
-          this.tppUser = response;
-        }
-      );
+      this.tppUserService.currentTppUser.subscribe((response: User) => {
+        this.tppUser = response;
+      });
       this.tppUserService.loadUserInfo();
     }
   }
 
   onLogout(): void {
-      this.authService.logout();
+    this.authService.logout();
   }
 }

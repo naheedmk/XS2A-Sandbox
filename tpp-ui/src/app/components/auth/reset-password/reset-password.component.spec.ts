@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResetPasswordComponent } from './reset-password.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {RouterTestingModule} from "@angular/router/testing";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {By} from "@angular/platform-browser";
-import {AuthService} from "../../../services/auth.service";
-import {DebugElement} from "@angular/core";
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { AuthService } from '../../../services/auth.service';
+import { DebugElement } from '@angular/core';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -19,15 +19,9 @@ describe('ResetPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-        BrowserAnimationsModule,
-      ],
-      declarations: [ ResetPasswordComponent ]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule],
+      declarations: [ResetPasswordComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -52,7 +46,7 @@ describe('ResetPasswordComponent', () => {
     el = fixture.debugElement.query(By.css('button')).nativeElement;
     el.click();
 
-    expect(authServiceSpy).toHaveBeenCalledWith({login: 'test', email: 'test@test.de'});
+    expect(authServiceSpy).toHaveBeenCalledWith({ login: 'test', email: 'test@test.de' });
     expect(authServiceSpy).toHaveBeenCalled();
   });
 

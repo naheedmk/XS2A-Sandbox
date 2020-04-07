@@ -1,64 +1,61 @@
 <div class="bg-sm-light sticky-top">
-        <nav class="navbar navbar-light text-primary py-3">
-            <a class="navbar-brand" href="#">
-                <img
-                    class="logo"
-                    [src]="customizeService.getLogo()"
-                />
-            </a>
-        </nav>
+  <nav class="navbar navbar-light text-primary py-3">
+    <a class="navbar-brand" href="#">
+      <img class="logo" [src]="customizeService.getLogo()" />
+    </a>
+  </nav>
 </div>
 
 <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-    <div class="card">
-        <div class="card-body">
-            <div class="card__headline text-center">
-                <h2 class="card-title font-weight-bold"><span *ngIf="!customizeService.isCustom()">adorsys </span>TPP UI</h2>
-                <div class="my-4 card__subtitle">
-                    Please log in with your bank account username
-                </div>
-            </div>
-            <div *ngIf="errorMessage" class="alert alert-danger">
-                {{errorMessage}}
-            </div>
-           <div class="form__margin">
-               <div class="form-group">
-                   <label for="login">Login</label>
-                   <input [ngClass]="{'is-invalid': loginForm.get('login')?.errors && loginForm.get('login')?.dirty}"
-                          autocomplete="off"
-                          class="form-control"
-                          formControlName="login"
-                          id="login"
-                          type="text">
-                   <div *ngIf="loginForm.get('login')?.errors?.required && loginForm.get('login')?.dirty"
-                        class="invalid-feedback">
-                       Login is Required
-                   </div>
-               </div>
-
-               <div class="form-group">
-                   <label for="pin">PIN</label>
-                   <input [ngClass]="{'is-invalid': loginForm.get('pin')?.errors && loginForm.get('pin')?.dirty}"
-                          autocomplete="new-password"
-                          class="form-control"
-                          formControlName="pin"
-                          id="pin"
-                          type="password">
-                   <div *ngIf="loginForm.get('pin')?.errors?.required && loginForm.get('pin')?.dirty"
-                        class="invalid-feedback">
-                       Pin is Required
-                   </div>
-                   <div class="text-light-grey">
-                       <a routerLink="/reset-password"><small>Forgot PIN?</small></a>
-                   </div>
-               </div>
-
-           </div>
-            <button class="btn btn-primary btn-block mb-3" type="submit">Login</button>
-            <div class="text-center text-light-grey" *ngIf="!customizeService.isCustom()">
-                <a routerLink="/register">Create new account</a>
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="card__headline text-center">
+        <h2 class="card-title font-weight-bold"><span *ngIf="!customizeService.isCustom()">adorsys </span>TPP UI</h2>
+        <div class="my-4 card__subtitle">
+          Please log in with your bank account username
         </div>
-    </div>
-</form>
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      <div class="form__margin">
+        <div class="form-group">
+          <label for="login">Login</label>
+          <input
+            [ngClass]="{ 'is-invalid': loginForm.get('login')?.errors && loginForm.get('login')?.dirty }"
+            autocomplete="off"
+            class="form-control"
+            formControlName="login"
+            id="login"
+            type="text"
+          />
+          <div *ngIf="loginForm.get('login')?.errors?.required && loginForm.get('login')?.dirty" class="invalid-feedback">
+            Login is Required
+          </div>
+        </div>
 
+        <div class="form-group">
+          <label for="pin">PIN</label>
+          <input
+            [ngClass]="{ 'is-invalid': loginForm.get('pin')?.errors && loginForm.get('pin')?.dirty }"
+            autocomplete="new-password"
+            class="form-control"
+            formControlName="pin"
+            id="pin"
+            type="password"
+          />
+          <div *ngIf="loginForm.get('pin')?.errors?.required && loginForm.get('pin')?.dirty" class="invalid-feedback">
+            Pin is Required
+          </div>
+          <div class="text-light-grey">
+            <a routerLink="/reset-password"><small>Forgot PIN?</small></a>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block mb-3" type="submit">Login</button>
+      <div class="text-center text-light-grey" *ngIf="!customizeService.isCustom()">
+        <a routerLink="/register">Create new account</a>
+      </div>
+    </div>
+  </div>
+</form>

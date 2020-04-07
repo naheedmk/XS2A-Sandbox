@@ -7,7 +7,7 @@ import { InfoOptions } from './info-options';
 import { InfoComponent } from './info.component';
 
 @Injectable({
-  providedIn: InfoModule
+  providedIn: InfoModule,
 })
 export class InfoService {
   private overlayRef: OverlayRef;
@@ -16,25 +16,25 @@ export class InfoService {
   private readonly DEFAULT_OPTIONS: InfoOptions = {
     severity: 'info',
     closable: true,
-    duration: 6000
+    duration: 6000,
   };
 
   constructor(private overlay: Overlay) {
     this.overlayRef = this.overlay.create({
       hasBackdrop: false,
       scrollStrategy: this.overlay.scrollStrategies.noop(),
-      positionStrategy: this.overlay.position().global().right(this.CORNER_OFFSET).top(this.CORNER_OFFSET)
+      positionStrategy: this.overlay.position().global().right(this.CORNER_OFFSET).top(this.CORNER_OFFSET),
     });
   }
 
   openFeedback(message: string, options?: Partial<InfoOptions>) {
     if (this.overlayRef.hasAttached()) {
-        this.overlayRef.detach();
+      this.overlayRef.detach();
     }
     const portal = new ComponentPortal(InfoComponent);
     const componentRef = this.overlayRef.attach(portal);
     this.feedbackComp = componentRef.instance;
-    this.feedbackComp.open(message, { ...this.DEFAULT_OPTIONS, ...options});
+    this.feedbackComp.open(message, { ...this.DEFAULT_OPTIONS, ...options });
     this.feedbackComp.onDestroy$.subscribe(() => {
       this.overlayRef.detach();
     });

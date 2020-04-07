@@ -1,60 +1,61 @@
 <div class="container-fluid" [formGroup]="searchForm">
-     <div class="row header">
-        <div class="col-12 col-md-3 header__title">Accounts</div>
-        <div class="col-12 col-md-9">
-            <div class="row">
-                <div class="col-12 col-md-12 p-md-0">
-                    <div class="form-group has-search">
-                      <span class="form-control-feedback">
-                          <img src="./assets/icons/search.svg">
-                      </span>
-                      <div>
-                        <input class="form-control w-100"
-                               placeholder="Search by IBAN"
-                               formControlName="query"
-                               type="text">
-                      </div>
-                    </div>
-                </div>
+  <div class="row header">
+    <div class="col-12 col-md-3 header__title">Accounts</div>
+    <div class="col-12 col-md-9">
+      <div class="row">
+        <div class="col-12 col-md-12 p-md-0">
+          <div class="form-group has-search">
+            <span class="form-control-feedback">
+              <img src="./assets/icons/search.svg" />
+            </span>
+            <div>
+              <input class="form-control w-100" placeholder="Search by IBAN" formControlName="query" type="text" />
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
 
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">IBAN</th>
-                        <th scope="col">Currency</th>
-                        <th scope="col">Account Type</th>
-                        <th scope="col">Usage Type</th>
-                        <th scope="col">Account Status</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let account of accounts; index as i" [routerLink]="[createAccountDetailsLink(account.id)]" [queryParams]="{page: config.currentPageNumber}">
-                        <th scope="row">{{((config.currentPageNumber - 1) * config.itemsPerPage) + i + 1}}</th>
-                        <td>{{account.iban}}</td>
-                        <td>{{account.currency}}</td>
-                        <td>{{account.accountType}}</td>
-                        <td>{{account.usageType}}</td>
-                        <td>{{account.accountStatus}}</td>
-                        <td>
-                            <button class="btn btn-primary" [disabled]="!isAccountEnabled(account)"
-                                    (click)="goToDepositCash(account)">deposit cash
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">IBAN</th>
+              <th scope="col">Currency</th>
+              <th scope="col">Account Type</th>
+              <th scope="col">Usage Type</th>
+              <th scope="col">Account Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let account of accounts; index as i"
+              [routerLink]="[createAccountDetailsLink(account.id)]"
+              [queryParams]="{ page: config.currentPageNumber }"
+            >
+              <th scope="row">{{ (config.currentPageNumber - 1) * config.itemsPerPage + i + 1 }}</th>
+              <td>{{ account.iban }}</td>
+              <td>{{ account.currency }}</td>
+              <td>{{ account.accountType }}</td>
+              <td>{{ account.usageType }}</td>
+              <td>{{ account.accountStatus }}</td>
+              <td>
+                <button class="btn btn-primary" [disabled]="!isAccountEnabled(account)" (click)="goToDepositCash(account)">
+                  deposit cash
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-                <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
-            </div>
-        </div>
+        <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
+      </div>
     </div>
+  </div>
 </div>

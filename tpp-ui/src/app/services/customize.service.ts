@@ -13,13 +13,13 @@ export class CustomizeService {
   private IS_CUSTOM = false;
   private DEFAULT_THEME: Theme = {
     globalSettings: {
-      logo: 'Logo_XS2ASandbox.png'
+      logo: 'Logo_XS2ASandbox.png',
     },
   };
   private USER_THEME: Theme = {
     globalSettings: {
-      logo: ''
-    }
+      logo: '',
+    },
   };
 
   constructor(private http: HttpClient) {
@@ -27,33 +27,31 @@ export class CustomizeService {
   }
 
   public getJSON(): Observable<Theme> {
-    return this.http
-      .get('../assets/UI/custom/UITheme.json')
-      .pipe(
-        map(data => {
-            let theme = data;
-            this.IS_CUSTOM = true;
-            try {
-                JSON.parse(JSON.stringify(theme));
-                const errors = this.validateTheme(theme);
-                if (errors.length) {
-                    console.log(errors);
-                    theme = this.getDefaultTheme();
-                    this.IS_CUSTOM = false;
-                }
-            } catch (e) {
-                console.log(e);
-                theme = this.getDefaultTheme();
-                this.IS_CUSTOM = false;
-            }
-            return theme as Theme;
-        }),
-        catchError(e => {
-            console.log(e);
+    return this.http.get('../assets/UI/custom/UITheme.json').pipe(
+      map((data) => {
+        let theme = data;
+        this.IS_CUSTOM = true;
+        try {
+          JSON.parse(JSON.stringify(theme));
+          const errors = this.validateTheme(theme);
+          if (errors.length) {
+            console.log(errors);
+            theme = this.getDefaultTheme();
             this.IS_CUSTOM = false;
-            return this.getDefaultTheme();
-        })
-      );
+          }
+        } catch (e) {
+          console.log(e);
+          theme = this.getDefaultTheme();
+          this.IS_CUSTOM = false;
+        }
+        return theme as Theme;
+      }),
+      catchError((e) => {
+        console.log(e);
+        this.IS_CUSTOM = false;
+        return this.getDefaultTheme();
+      })
+    );
   }
 
   isCustom() {
@@ -72,7 +70,7 @@ export class CustomizeService {
     return this.http
       .get('../assets/UI/defaultTheme.json')
       .toPromise()
-      .then(data => {
+      .then((data) => {
         return data as Theme;
       });
   }
@@ -84,10 +82,7 @@ export class CustomizeService {
       this.removeExternalLinkElements();
     }
     if (this.USER_THEME.globalSettings.favicon) {
-      this.setFavicon(
-        this.USER_THEME.globalSettings.favicon.type,
-        this.USER_THEME.globalSettings.favicon.href
-      );
+      this.setFavicon(this.USER_THEME.globalSettings.favicon.type, this.USER_THEME.globalSettings.favicon.href);
     }
     this.NEW_THEME_WAS_SET = true;
     this.STATUS_WAS_CHANGED = !this.STATUS_WAS_CHANGED;
@@ -111,15 +106,14 @@ export class CustomizeService {
   }
   validateTheme(theme): string[] {
     const general = ['globalSettings'];
-    const additional = [
-      ['logo']
-    ];
+    const additional = [['logo']];
     const errors: string[] = [];
+    const additionalProperties = 2;
 
     for (let i = 0; i < general.length; i++) {
       if (!theme.hasOwnProperty(general[i])) {
         errors.push(`Missing field ${general[i]}!`);
-      } else if (i !== 2) {
+      } else if (i !== additionalProperties) {
         for (const property of additional[i]) {
           if (!theme[general[i]].hasOwnProperty(property)) {
             errors.push(`Field ${general[i]} missing property ${property}!`);
@@ -156,9 +150,7 @@ export class CustomizeService {
   }
 
   private removeFavicon(): void {
-    const linkElement = document.head.querySelector(
-      '#customize-service-injected-node'
-    );
+    const linkElement = document.head.querySelector('#customize-service-injected-node');
     if (linkElement) {
       document.head.removeChild(linkElement);
     }

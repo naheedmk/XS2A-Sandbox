@@ -1,69 +1,67 @@
-import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { ConvertBalancePipe } from "./convertBalance.pipe";
+import { Component } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ConvertBalancePipe } from './convertBalance.pipe';
 import { DebugElement } from '@angular/core';
-import { By } from "@angular/platform-browser";
+import { By } from '@angular/platform-browser';
 
 @Component({
-    template: '<div> {{ balance | convertBalance }} </div>'
+  template: '<div> {{ balance | convertBalance }} </div>',
 })
 export class ConvertBalancePipeHostComponent {
-    balance: number;
+  balance: number;
 }
 
 describe('ConvertBalancePipe inside a Component', () => {
-    beforeEach(async(() => {
-        TestBed
-            .configureTestingModule({
-                declarations: [ ConvertBalancePipe, ConvertBalancePipeHostComponent]
-            })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ConvertBalancePipe, ConvertBalancePipeHostComponent],
+    }).compileComponents();
+  }));
 
-    let fixture: ComponentFixture<ConvertBalancePipeHostComponent>;
-    let debugElement: DebugElement;
-    let component: ConvertBalancePipeHostComponent;
+  let fixture: ComponentFixture<ConvertBalancePipeHostComponent>;
+  let debugElement: DebugElement;
+  let component: ConvertBalancePipeHostComponent;
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ConvertBalancePipeHostComponent);
-        debugElement = fixture.debugElement;
-        component = fixture.componentInstance;
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ConvertBalancePipeHostComponent);
+    debugElement = fixture.debugElement;
+    component = fixture.componentInstance;
+  });
 
-    it('should create', () => {
-        expect(fixture).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(fixture).toBeTruthy();
+  });
 
-    it('should Display 0,44', () => {
-        component.balance = .44;
-        fixture.detectChanges();
+  it('should Display 0,44', () => {
+    const givenValue = 0.44;
 
-        const div: HTMLDivElement = debugElement
-            .query(By.css('div'))
-            .nativeElement;
+    component.balance = givenValue;
+    fixture.detectChanges();
 
-        expect(div.textContent.trim()).toEqual('0,44');
-    });
+    const div: HTMLDivElement = debugElement.query(By.css('div')).nativeElement;
 
-    it('should Display 10.000.000,00', () => {
-        component.balance = 10000000;
-        fixture.detectChanges();
+    expect(div.textContent.trim()).toEqual('0,44');
+  });
 
-        const div: HTMLDivElement = debugElement
-            .query(By.css('div'))
-            .nativeElement;
+  it('should Display 10.000.000,00', () => {
+    const givenValue = 10000000;
 
-        expect(div.textContent.trim()).toEqual('10.000.000,00');
-    });
+    component.balance = givenValue;
+    fixture.detectChanges();
 
-    it('should Display 10.000.000,50', () => {
-        component.balance = 10000000.5;
-        fixture.detectChanges();
+    const div: HTMLDivElement = debugElement.query(By.css('div')).nativeElement;
 
-        const div: HTMLDivElement = debugElement
-            .query(By.css('div'))
-            .nativeElement;
+    expect(div.textContent.trim()).toEqual('10.000.000,00');
+  });
 
-        expect(div.textContent.trim()).toEqual('10.000.000,50');
-    });
+  it('should Display 10.000.000,50', () => {
+    const givenValue = 10000000.5;
+
+    component.balance = givenValue;
+    fixture.detectChanges();
+
+    const div: HTMLDivElement = debugElement.query(By.css('div')).nativeElement;
+
+    expect(div.textContent.trim()).toEqual('10.000.000,50');
+  });
 });

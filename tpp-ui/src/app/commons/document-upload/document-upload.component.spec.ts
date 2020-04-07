@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DocumentUploadComponent } from './document-upload.component';
-import {RouterTestingModule} from "@angular/router/testing";
-import {HttpClientModule} from "@angular/common/http";
-import {FileUploadModule} from "ng2-file-upload";
-import {IconModule} from "../icon/icon.module";
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { FileUploadModule } from 'ng2-file-upload';
+import { IconModule } from '../icon/icon.module';
 
 describe('DocumentUploadComponent', () => {
   let component: DocumentUploadComponent;
@@ -12,15 +12,9 @@ describe('DocumentUploadComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FileUploadModule,
-        RouterTestingModule,
-        HttpClientModule,
-        IconModule,
-      ],
-      declarations: [ DocumentUploadComponent ]
-    })
-    .compileComponents();
+      imports: [FileUploadModule, RouterTestingModule, HttpClientModule, IconModule],
+      declarations: [DocumentUploadComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -29,4 +23,7 @@ describe('DocumentUploadComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

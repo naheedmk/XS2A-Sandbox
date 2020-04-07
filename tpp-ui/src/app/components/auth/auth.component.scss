@@ -1,42 +1,42 @@
-@import "~src/assets/themes/variables";
+@import '~src/assets/themes/variables';
 
 form {
-    font-weight: 100;
+  font-weight: 100;
 }
 
 .sticky-top {
-    z-index: 1000;
+  z-index: 1000;
 }
 .card {
-    max-width: 400px;
-    border: none;
-    margin: 5vh auto 15vh auto;
+  max-width: 400px;
+  border: none;
+  margin: 5vh auto 15vh auto;
 
-    &-title {
-        font-size: 1.8rem;
-        margin: 1.1rem;
-    }
+  &-title {
+    font-size: 1.8rem;
+    margin: 1.1rem;
+  }
 
-    &__headline {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 300px;
-    }
+  &__headline {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 300px;
+  }
 
-    &__subtitle {
-        font-size: 1.1rem;
-        color: $light-grey;
-    }
+  &__subtitle {
+    font-size: 1.1rem;
+    color: $light-grey;
+  }
 }
 
 .form__margin {
-    margin-bottom: 4rem;
+  margin-bottom: 4rem;
 }
 
-.text-light-grey a{
-    color: $light-grey;
+.text-light-grey a {
+  color: $light-grey;
 }
 
 .btn {
-    width: 100%;
+  width: 100%;
 }

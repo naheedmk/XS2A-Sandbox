@@ -1,89 +1,81 @@
 <div class="container-fluid" [formGroup]="searchForm">
-    <div class="row header">
-        <div class="col-12 col-md-4 header__title">List of users</div>
-        <div class="col-12 col-md-8 right">
-            <div class="row">
-                <div class="col-12 col-md-8 p-md-0">
-                    <div class="form-group has-search">
-                      <span class="form-control-feedback">
-                          <img src="./assets/icons/search.svg">
-                      </span>
-                      <div>
-                        <input class="form-control w-100"
-                               placeholder="Search by login"
-                               formControlName="query"
-                               type="text">
-                      </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="header__button">
-                        <button class="btn btn-primary btn-block" routerLink="/users/create">Create new user</button>
-                    </div>
-                </div>
+  <div class="row header">
+    <div class="col-12 col-md-4 header__title">List of users</div>
+    <div class="col-12 col-md-8 right">
+      <div class="row">
+        <div class="col-12 col-md-8 p-md-0">
+          <div class="form-group has-search">
+            <span class="form-control-feedback">
+              <img src="./assets/icons/search.svg" />
+            </span>
+            <div>
+              <input class="form-control w-100" placeholder="Search by login" formControlName="query" type="text" />
             </div>
+          </div>
         </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
-
-                <table class="table ">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Login</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Accounts</th>
-                        <th scope="col">Currencies</th>
-                        <th scope="col">Authentication methods</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let user of users; index as i" routerLink="/users/{{user.id}}">
-                        <th scope="row">{{((config.currentPageNumber - 1) * config.itemsPerPage) + i + 1}}</th>
-                        <td>{{user.login}}</td>
-                        <td>{{user.email}}</td>
-                        <td>
-                            <ul>
-                                <li *ngFor="let accountAccess of user?.accountAccesses" class="nav-item">
-                                    {{accountAccess.iban}}
-                                </li>
-                            </ul>
-                        </td>
-                        <td>
-                          <ul>
-                            <li *ngFor="let accountAccess of user?.accountAccesses" class="nav-item">
-                              {{accountAccess.currency}}
-                            </li>
-                          </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast" [ngClass]="{'mb-2': !isLast}">
-                                    {{scaItem.methodValue}}
-                                    <div *ngIf="scaItem.scaMethod">
-                                        Sca Method: {{scaItem.scaMethod}}
-                                    </div>
-                                    <div *ngIf="scaItem.usesStaticTan">
-                                        Static TAN: {{scaItem.staticTan}}
-                                    </div>
-                                </li>
-                            </ul>
-                        </td>
-                        <td>
-                            <a class="btn btn-primary" routerLink="/users/{{user.id}}/create-deposit-account">Create
-                                deposit account</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
-            </div>
+        <div class="col-12 col-md-4">
+          <div class="header__button">
+            <button class="btn btn-primary btn-block" routerLink="/users/create">Create new user</button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Login</th>
+              <th scope="col">Email</th>
+              <th scope="col">Accounts</th>
+              <th scope="col">Currencies</th>
+              <th scope="col">Authentication methods</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users; index as i" routerLink="/users/{{ user.id }}">
+              <th scope="row">{{ (config.currentPageNumber - 1) * config.itemsPerPage + i + 1 }}</th>
+              <td>{{ user.login }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let accountAccess of user?.accountAccesses" class="nav-item">
+                    {{ accountAccess.iban }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li *ngFor="let accountAccess of user?.accountAccesses" class="nav-item">
+                    {{ accountAccess.currency }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li *ngFor="let scaItem of user?.scaUserData; index as i; last as isLast" [ngClass]="{ 'mb-2': !isLast }">
+                    {{ scaItem.methodValue }}
+                    <div *ngIf="scaItem.scaMethod">Sca Method: {{ scaItem.scaMethod }}</div>
+                    <div *ngIf="scaItem.usesStaticTan">Static TAN: {{ scaItem.staticTan }}</div>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <a class="btn btn-primary" routerLink="/users/{{ user.id }}/create-deposit-account">Create deposit account</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <app-pagination-container [paginationConfig]="config" (pageDataConfig)="pageChange($event)"></app-pagination-container>
+      </div>
+    </div>
+  </div>
 </div>

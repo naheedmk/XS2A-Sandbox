@@ -9,7 +9,7 @@ import { AccountReport } from '../../models/account-report';
 import { UserAccess } from '../../models/user-access';
 import { AccountService } from '../../services/account.service';
 import { TppService } from '../../services/tpp.service';
-import {PageNavigationService} from '../../services/page-navigation.service';
+import { PageNavigationService } from '../../services/page-navigation.service';
 
 @Component({
   selector: 'app-account',
@@ -33,7 +33,7 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
-        map(response => {
+        map((response) => {
           return response.id;
         })
       )
@@ -45,12 +45,9 @@ export class AccountComponent implements OnInit {
 
   public goToAccountDetail() {
     if (this.isAccountDeleted) {
-      this.infoService.openFeedback(
-        'You can not Grant Accesses to a Deleted/Blocked account',
-        {
-          severity: 'error',
-        }
-      );
+      this.infoService.openFeedback('You can not Grant Accesses to a Deleted/Blocked account', {
+        severity: 'error',
+      });
     } else {
       this.router.navigate(['/accounts/' + this.account.id + '/access']);
     }
@@ -63,17 +60,12 @@ export class AccountComponent implements OnInit {
   }
 
   deleteAccountTransactions() {
-    this.tppService
-      .deleteAccountTransactions(this.account.id)
-      .subscribe(() => {
-        this.getAccountReport();
-        this.infoService.openFeedback(
-          `Transactions of ${this.account.iban} successfully deleted`,
-          {
-            severity: 'info',
-          }
-        );
+    this.tppService.deleteAccountTransactions(this.account.id).subscribe(() => {
+      this.getAccountReport();
+      this.infoService.openFeedback(`Transactions of ${this.account.iban} successfully deleted`, {
+        severity: 'info',
       });
+    });
   }
 
   openDeleteConfirmation(content) {
@@ -87,10 +79,7 @@ export class AccountComponent implements OnInit {
 
   get isAccountDeleted(): boolean {
     if (this.account) {
-      return (
-        this.account.accountStatus === 'DELETED' ||
-        this.account.accountStatus === 'BLOCKED'
-      );
+      return this.account.accountStatus === 'DELETED' || this.account.accountStatus === 'BLOCKED';
     }
     return false;
   }
@@ -104,11 +93,9 @@ export class AccountComponent implements OnInit {
   }
 
   getAccountReport() {
-    this.accountService
-      .getAccountReport(this.accountID)
-      .subscribe((report: AccountReport) => {
-        console.log(report);
-        this.accountReport = report;
-      });
+    this.accountService.getAccountReport(this.accountID).subscribe((report: AccountReport) => {
+      console.log(report);
+      this.accountReport = report;
+    });
   }
 }

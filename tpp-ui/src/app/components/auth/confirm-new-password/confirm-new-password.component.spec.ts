@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmNewPasswordComponent } from './confirm-new-password.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {RouterTestingModule} from "@angular/router/testing";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {DebugElement} from "@angular/core";
-import {By} from "@angular/platform-browser";
-import {AuthService} from "../../../services/auth.service";
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { AuthService } from '../../../services/auth.service';
 
 describe('ConfirmNewPasswordComponent', () => {
   let component: ConfirmNewPasswordComponent;
@@ -20,16 +19,10 @@ describe('ConfirmNewPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-        BrowserAnimationsModule,
-      ],
-      providers: [ AuthService ],
-      declarations: [ ConfirmNewPasswordComponent ]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule],
+      providers: [AuthService],
+      declarations: [ConfirmNewPasswordComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -58,7 +51,7 @@ describe('ConfirmNewPasswordComponent', () => {
     el = fixture.debugElement.query(By.css('button')).nativeElement;
     el.click();
 
-    expect(authServiceSpy).toHaveBeenCalledWith({newPassword: '12345', code: '12345678'});
+    expect(authServiceSpy).toHaveBeenCalledWith({ newPassword: '12345', code: '12345678' });
     expect(authServiceSpy).toHaveBeenCalled();
   });
 

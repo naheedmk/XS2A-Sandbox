@@ -1,4 +1,4 @@
 export interface UserAccess {
-    scaWeight: number;
-    userLogin: string;
+  scaWeight: number;
+  userLogin: string;
 }

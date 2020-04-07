@@ -1,11 +1,11 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import {PageNavigationService} from './page-navigation.service';
+import { PageNavigationService } from './page-navigation.service';
 
 describe('PageNavigationService', () => {
   let service: PageNavigationService;
-  let storage = {};
-  let pageLink = 'link';
+  const storage = {};
+  const pageLink = 'link';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,7 +21,6 @@ describe('PageNavigationService', () => {
     spyOn(sessionStorage, 'setItem').and.callFake((key: string, value: string): string => {
       return (storage[key] = value as string);
     });
-
   });
 
   it('should be created', () => {
@@ -36,5 +35,4 @@ describe('PageNavigationService', () => {
     service.setLastVisitedPage(pageLink);
     expect(service.getLastVisitedPage()).toBe(pageLink);
   });
-
 });

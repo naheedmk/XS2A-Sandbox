@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PageNavigationService {
   private lastVisitedPageKey = 'lastVisitedPage';
 
-  constructor() { }
+  constructor() {}
 
   setLastVisitedPage(lastVisitedPageUrl: string): void {
     sessionStorage.setItem(this.lastVisitedPageKey, lastVisitedPageUrl);

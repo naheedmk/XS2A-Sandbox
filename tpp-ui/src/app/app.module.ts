@@ -3,7 +3,7 @@ import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {NgbModalModule, NgbPaginationModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FilterPipeModule } from 'ngx-filter-pipe';
@@ -16,9 +16,7 @@ import { IconModule } from './commons/icon/icon.module';
 import { InfoModule } from './commons/info/info.module';
 import { NavbarComponent } from './commons/navbar/navbar.component';
 import { SidebarComponent } from './commons/sidebar/sidebar.component';
-import {
-  AccountAccessManagementComponent,
-} from './components/account-access-management/account-access-management.component';
+import { AccountAccessManagementComponent } from './components/account-access-management/account-access-management.component';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 import { AccountListComponent } from './components/account-list/account-list.component';
 import { AccountComponent } from './components/account/account.component';
@@ -96,7 +94,7 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
     NgHttpLoaderModule.forRoot(),
     NgbModalModule,
     BrowserModule,
-    NgbPaginationModule
+    NgbPaginationModule,
   ],
   providers: [
     AutoLogoutService,
@@ -105,14 +103,13 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: ErrorHandler,
-      useClass: GlobalErrorsHandler
-    }
+      useClass: GlobalErrorsHandler,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

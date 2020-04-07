@@ -7,6 +7,6 @@ export class User {
   login: string;
   branch: string;
   pin: string;
-  scaUserData: ScaUserData [];
-  accountAccesses: AccountAccess [];
+  scaUserData: ScaUserData[];
+  accountAccesses: AccountAccess[];
 }

@@ -1,14 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import {
-  Inject,
-  Injectable,
-  InjectionToken,
-  Optional,
-  SecurityContext,
-  SkipSelf,
-  OnDestroy
-} from '@angular/core';
+import { Inject, Injectable, InjectionToken, Optional, SecurityContext, SkipSelf, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable, of as observableOf, throwError as observableThrow } from 'rxjs';
 import { finalize, map, share, tap } from 'rxjs/operators';
@@ -29,9 +21,7 @@ export function getIconNameNotFoundError(iconName: string): Error {
  */
 export function getIconNoHttpProviderError(): Error {
   return Error(
-    'Could not find HttpClient provider. ' +
-      'Please include the HttpClientModule from @angular/common/http in your ' +
-      'app imports.'
+    'Could not find HttpClient provider. ' + 'Please include the HttpClientModule from @angular/common/http in your ' + 'app imports.'
   );
 }
 
@@ -42,8 +32,7 @@ export function getIconNoHttpProviderError(): Error {
  */
 export function getIconFailedToSanitizeUrlError(url: SafeResourceUrl): Error {
   return Error(
-    `The URL provided to KbnIconRegistry was not trusted as a resource URL ` +
-      `via Angular's DomSanitizer. Attempted URL was "${url}".`
+    `The URL provided to KbnIconRegistry was not trusted as a resource URL ` + `via Angular's DomSanitizer. Attempted URL was "${url}".`
   );
 }
 
@@ -103,7 +92,7 @@ export class IconRegistry implements OnDestroy {
   /**
    * Registers an icon by URL in the default namespace.
    * @param iconName Name under which the icon should be registered.
-   * @param url
+   * @param url URL from which to fetch the SVG icon.
    */
   addSvgIcon(iconName: string, url: SafeResourceUrl): this {
     return this.addSvgIconInNamespace('', iconName, url);
@@ -113,7 +102,7 @@ export class IconRegistry implements OnDestroy {
    * Registers an icon by URL in the specified namespace.
    * @param namespace Namespace in which the icon should be registered.
    * @param iconName Name under which the icon should be registered.
-   * @param url
+   * @param url URL from which to fetch the SVG icon.
    */
   addSvgIconInNamespace(namespace: string, iconName: string, url: SafeResourceUrl): this {
     return this._addSvgIconConfig(namespace, iconName, new SvgIconConfig(url));
@@ -142,8 +131,8 @@ export class IconRegistry implements OnDestroy {
 
     return this._loadSvgIconFromConfig(new SvgIconConfig(safeUrl)).pipe(
       // tslint:disable-next-line:no-non-null-assertion
-      tap(svg => this._cachedIconsByUrl.set(url!, svg)),
-      map(svg => cloneSvg(svg))
+      tap((svg) => this._cachedIconsByUrl.set(url!, svg)),
+      map((svg) => cloneSvg(svg))
     );
   }
 
@@ -182,8 +171,8 @@ export class IconRegistry implements OnDestroy {
     } else {
       // Fetch the icon from the config's URL, cache it, and return a copy.
       return this._loadSvgIconFromConfig(config).pipe(
-        tap(svg => (config.svgElement = svg)),
-        map(svg => cloneSvg(svg))
+        tap((svg) => (config.svgElement = svg)),
+        map((svg) => cloneSvg(svg))
       );
     }
   }
@@ -193,9 +182,7 @@ export class IconRegistry implements OnDestroy {
    * from it.
    */
   private _loadSvgIconFromConfig(config: SvgIconConfig): Observable<SVGElement> {
-    return this._fetchUrl(config.url).pipe(
-      map(svgText => this._createSvgElementForSingleIcon(svgText))
-    );
+    return this._fetchUrl(config.url).pipe(map((svgText) => this._createSvgElementForSingleIcon(svgText)));
   }
 
   /**
@@ -303,9 +290,9 @@ export const ICON_REGISTRY_PROVIDER = {
     [new Optional(), new SkipSelf(), IconRegistry],
     [new Optional(), HttpClient],
     DomSanitizer,
-    [new Optional(), DOCUMENT as InjectionToken<any>]
+    [new Optional(), DOCUMENT as InjectionToken<any>],
   ],
-  useFactory: ICON_REGISTRY_PROVIDER_FACTORY
+  useFactory: ICON_REGISTRY_PROVIDER_FACTORY,
 };
 
 /** Clones an SVGElement while preserving type information. */

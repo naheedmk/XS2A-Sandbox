@@ -9,61 +9,62 @@ import { TppUserService } from '../../services/tpp.user.service';
 @Component({
   selector: 'app-user-profile-update',
   templateUrl: './user-profile-update.component.html',
-  styleUrls: ['./user-profile-update.component.scss']
+  styleUrls: ['./user-profile-update.component.scss'],
 })
 export class UserProfileUpdateComponent implements OnInit {
-    public user: User;
-    public userForm: FormGroup;
-    public submitted: boolean;
+  public user: User;
+  public userForm: FormGroup;
+  public submitted: boolean;
+  private minPasswordLength = 5;
 
-    constructor(private authService: AuthService,
-        private userInfoService: TppUserService,
-        private formBuilder: FormBuilder,
-        private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private userInfoService: TppUserService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
-    ngOnInit() {
-        this.setupEditUserFormControl();
-        this.getUserDetails();
+  ngOnInit() {
+    this.setupEditUserFormControl();
+    this.getUserDetails();
+  }
+
+  get formControl() {
+    return this.userForm.controls;
+  }
+
+  getUserDetails(): void {
+    if (this.authService.isLoggedIn()) {
+      this.userInfoService.getUserInfo().subscribe((user: User) => {
+        this.user = user;
+
+        this.userForm.patchValue({
+          email: this.user.email,
+          username: this.user.login,
+        });
+      });
     }
+  }
 
-    get formControl(){
-        return this.userForm.controls;
+  setupEditUserFormControl(): void {
+    this.userForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', Validators.minLength(this.minPasswordLength)],
+    });
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.userForm.invalid) {
+      return;
     }
-
-    getUserDetails():void{
-        if (this.authService.isLoggedIn()) {
-            this.userInfoService.getUserInfo().subscribe((user: User) => {
-                this.user = user;
-
-                this.userForm.patchValue({
-                    email: this.user.email,
-                    username: this.user.login
-                });
-            });
-        }
-    }
-
-    setupEditUserFormControl():void{
-        this.userForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            email: ['', [Validators.email, Validators.required]],
-            password: ['', Validators.minLength(5)]
-        })
-    }
-
-    onSubmit(){
-        this.submitted = true;
-        if(this.userForm.invalid) {
-            return;
-        }
-        const updatedUser: User = {
-            ...this.user,
-            email: this.userForm.get('email').value,
-            login: this.userForm.get('username').value,
-            pin: this.userForm.get('password').value.trim() ? this.userForm.get('password').value : this.user.pin
-        };
-        this.userInfoService.updateUserInfo(updatedUser).subscribe(
-          () => this.router.navigate(["/profile"])
-        );
-    }
+    const updatedUser: User = {
+      ...this.user,
+      email: this.userForm.get('email').value,
+      login: this.userForm.get('username').value,
+      pin: this.userForm.get('password').value.trim() ? this.userForm.get('password').value : this.user.pin,
+    };
+    this.userInfoService.updateUserInfo(updatedUser).subscribe(() => this.router.navigate(['/profile']));
+  }
 }

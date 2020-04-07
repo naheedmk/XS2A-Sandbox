@@ -39,9 +39,9 @@ lint-tpp-ui:
 	find tpp-ui -type f -name "*.json" -not -path "tpp-ui/node_modules/*" -exec jsonlint -q {} \; # lint all json
 	find tpp-ui -type f \( -name "*.yml" -o -name "*.yaml" \) -exec yamllint -d "{extends: relaxed, rules: {line-length: {max: 160}}}" {} \;
 	find tpp-ui -type f \( -iname "*.xml" ! -iname pom.xml \) -exec xmllint --noout {} \;
-	#cd tpp-ui && npm ci && npm install
-	#cd tpp-ui && npm run lint
-	#cd tpp-ui && npm run prettier-check
+	cd tpp-ui && npm ci && npm install
+	cd tpp-ui && npm run lint
+	cd tpp-ui && npm run prettier-check
 	docker run --rm -i hadolint/hadolint < tpp-ui/Dockerfile
 
 lint-oba-ui:

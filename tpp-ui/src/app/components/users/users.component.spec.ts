@@ -9,108 +9,109 @@ import { of } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { UsersComponent } from './users.component';
-import {PaginationContainerComponent} from "../../commons/pagination-container/pagination-container.component";
-import {PageConfig, PaginationConfigModel} from "../../models/pagination-config.model";
-
+import { PaginationContainerComponent } from '../../commons/pagination-container/pagination-container.component';
 
 describe('UsersComponent', () => {
-    let component: UsersComponent;
-    let fixture: ComponentFixture<UsersComponent>;
-    let usersService: UserService;
+  let component: UsersComponent;
+  let fixture: ComponentFixture<UsersComponent>;
+  let usersService: UserService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ReactiveFormsModule,
-                FormsModule,
-                FilterPipeModule,
-                RouterTestingModule,
-                HttpClientTestingModule,
-                NgbPaginationModule,
-                NgbPaginationModule,
-            ],
-            declarations: [UsersComponent, PaginationContainerComponent],
-            providers: [UserService]
-        })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        FilterPipeModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        NgbPaginationModule,
+        NgbPaginationModule,
+      ],
+      declarations: [UsersComponent, PaginationContainerComponent],
+      providers: [UserService],
+    }).compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(UsersComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-        usersService = TestBed.get(UserService);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UsersComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    usersService = TestBed.get(UserService);
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should load users on NgOnInit', () => {
+    component.ngOnInit();
+    const mockUsers: User[] = [
+      {
+        id: 'USERID',
+        email: 'user@gmail.com',
+        login: 'user',
+        branch: 'branch',
+        pin: '123345',
+        scaUserData: [],
+        accountAccesses: [],
+      },
+    ];
+
+    const getUsersSpy = spyOn(usersService, 'listUsers').and.returnValue(of({ users: mockUsers, totalElements: mockUsers.length }));
+
+    component.ngOnInit();
+
+    expect(getUsersSpy).toHaveBeenCalled();
+    expect(component.users).toEqual(mockUsers);
+  });
+
+  it('should load users', () => {
+    const page = 5;
+    const size = 10;
+    const mockUsers: User[] = [
+      {
+        id: 'USERID',
+        email: 'user@gmail.com',
+        login: 'user',
+        branch: 'branch',
+        pin: '123345',
+        scaUserData: [],
+        accountAccesses: [],
+      },
+    ];
+    const getUsersSpy = spyOn(usersService, 'listUsers').and.returnValue(of({ users: mockUsers, totalElements: mockUsers.length }));
+
+    component.listUsers(page, size, 'string');
+
+    expect(getUsersSpy).toHaveBeenCalled();
+    expect(component.users).toEqual(mockUsers);
+    expect(component.config.totalItems).toEqual(mockUsers.length);
+  });
+
+  it('should pageChange', () => {
+    const pageNumber = 10;
+    const pageSize = 5;
+    const mockPageConfig = {
+      pageNumber,
+      pageSize,
+    };
+    component.searchForm.setValue({
+      query: 'foo',
+      itemsPerPage: 15,
     });
+    const listUsersSpy = spyOn(component, 'listUsers');
+    component.pageChange(mockPageConfig);
+    expect(listUsersSpy).toHaveBeenCalledWith(pageNumber, pageSize, 'foo');
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
-    it('should load users on NgOnInit', () => {
-        component.ngOnInit();
-        const mockUsers: User[] = [
-            {
-                id: 'USERID',
-                email: 'user@gmail.com',
-                login: 'user',
-                branch: 'branch',
-                pin: '123345',
-                scaUserData: [],
-                accountAccesses: []
-            }
-        ];
-
-        const getUsersSpy = spyOn(usersService, 'listUsers').and.returnValue(of({users: mockUsers, totalElements: mockUsers.length}));
-
-        component.ngOnInit();
-
-        expect(getUsersSpy).toHaveBeenCalled();
-        expect(component.users).toEqual(mockUsers);
-    });
-
-    it('should load users',  () => {
-        const mockUsers: User[] = [
-            {
-                id: 'USERID',
-                email: 'user@gmail.com',
-                login: 'user',
-                branch: 'branch',
-                pin: '123345',
-                scaUserData: [],
-                accountAccesses: []
-            }
-        ];
-        const getUsersSpy = spyOn(usersService, 'listUsers').and.returnValue(of({users: mockUsers, totalElements: mockUsers.length}));
-
-        component.listUsers(5,10, 'string');
-
-        expect(getUsersSpy).toHaveBeenCalled();
-        expect(component.users).toEqual(mockUsers);
-        expect(component.config.totalItems).toEqual(mockUsers.length);
-    });
-
-    it('should pageChange', () => {
-        const mockPageConfig = {
-            pageNumber: 10,
-            pageSize: 5
-        }
-        component.searchForm.setValue({
-                                    query: 'foo',
-                                    itemsPerPage: 15});
-        const listUsersSpy = spyOn(component, 'listUsers');
-        component.pageChange(mockPageConfig);
-        expect(listUsersSpy).toHaveBeenCalledWith(10, 5, 'foo');
-    });
-
-    it('should change the page size', () => {
-        const paginationConfigModel: PaginationConfigModel = {
-            itemsPerPage: 0,
-            currentPageNumber: 0,
-            totalItems: 0
-        }
-        component.config = paginationConfigModel;
-        component.changePageSize(10);
-        expect(component.config.itemsPerPage).toEqual(10);
-    });
-
+  it('should change the page size', () => {
+    const number = 10;
+    component.config = {
+      itemsPerPage: 0,
+      currentPageNumber: 0,
+      totalItems: 0,
+    };
+    component.changePageSize(number);
+    expect(component.config.itemsPerPage).toEqual(number);
+  });
 });

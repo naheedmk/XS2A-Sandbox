@@ -1,36 +1,34 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {User} from '../../models/user.model';
-import {AuthService} from '../../services/auth.service';
-import {TppUserService} from '../../services/tpp.user.service';
-import {TppService} from "../../services/tpp.service";
-import {Router} from "@angular/router";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { User } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
+import { TppUserService } from '../../services/tpp.user.service';
+import { TppService } from '../../services/tpp.service';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-
   public tppUser: User;
 
-  constructor(private authService: AuthService,
-              private userInfoService: TppUserService,
-              private tppService: TppService,
-              private router: Router,
-              private modalService: NgbModal) {
-  }
+  constructor(
+    private authService: AuthService,
+    private userInfoService: TppUserService,
+    private tppService: TppService,
+    private router: Router,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.userInfoService.getUserInfo().subscribe(
-        (response: User) => {
-          this.tppUser = response;
-          console.log(this.tppUser);
-        }
-      );
+      this.userInfoService.getUserInfo().subscribe((response: User) => {
+        this.tppUser = response;
+        console.log(this.tppUser);
+      });
     }
   }
 
@@ -42,9 +40,11 @@ export class UserProfileComponent implements OnInit {
   }
 
   openDeleteConfirmation(content) {
-    this.modalService.open(content).result.then(() => {
-      this.deleteTpp();
-    }, () => {
-    });
+    this.modalService.open(content).result.then(
+      () => {
+        this.deleteTpp();
+      },
+      () => {}
+    );
   }
 }

@@ -10,7 +10,9 @@
     "test": "ng test",
     "test-ci": "ng test --browsers ChromeHeadless --watch=false --environment=prod",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prettier": "find . -name '*.js' -or -name '*.ts' -or -name '*.html' -or -name '*.css' -or -name '*.scss'| grep -v build | grep -v \"assets/lib\" | grep -v node_modules | grep -v dist | xargs prettier --write",
+    "prettier-check": "find . -name '*.js' -or -name '*.ts' -or -name '*.html' -or -name '*.css' -or -name '*.scss'| grep -v build | grep -v \"assets/lib\" | grep -v node_modules | grep -v dist | xargs prettier-check"
   },
   "private": true,
   "dependencies": {
@@ -48,7 +50,6 @@
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
-    "codelyzer": "^5.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "jquery": "^3.4.1",
@@ -60,7 +61,19 @@
     "popper.js": "^1.15.0",
     "protractor": "^6.0.0",
     "ts-node": "~5.0.1",
-    "tslint": "~5.9.1",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "codelyzer": "^5.2.2",
+    "pretty-quick": "^2.0.1",
+    "prettier-check": "^2.0.0",
+    "prettier": "^2.0.4",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-angular": "^3.0.2",
+    "husky": "^4.2.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && ng lint"
+    }
   }
 }

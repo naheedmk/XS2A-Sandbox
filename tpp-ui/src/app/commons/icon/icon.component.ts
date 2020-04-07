@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  ViewEncapsulation,
-  ElementRef,
-  SimpleChanges,
-  OnChanges
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ElementRef, SimpleChanges, OnChanges, HostBinding } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 import { IconRegistry } from './icon-registry';
@@ -15,36 +7,23 @@ import { IconRegistry } from './icon-registry';
   selector: 'app-icon',
   template: '<ng-content></ng-content>',
   styleUrls: ['./icon.component.scss'],
-  host: {
-    class: 'app-icon',
-    '[class.app-icon--inline]': 'inline'
-  },
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent implements OnChanges {
   /**
    * Whether the icon should be inlined, automatically sizing the icon to match the font size of
    * the element the icon is contained in.
    */
-  @Input()
-  inline = false;
+  @HostBinding('[class.app-icon--inline]') inline = 'false';
 
   /** Name of the icon in the SVG icon set. */
   @Input()
   svgIcon: string;
 
-  constructor(
-    private _elementRef: ElementRef<HTMLElement>,
-    private _iconRegistry: IconRegistry,
-    private _sanitizer: DomSanitizer
-  ) {
+  constructor(private _elementRef: ElementRef<HTMLElement>, private _iconRegistry: IconRegistry, private _sanitizer: DomSanitizer) {
     const icons = ['user', 'account', 'upload', 'euro', 'add', 'generate_test_data', 'settings'];
-    icons.forEach(val => {
-      _iconRegistry.addSvgIcon(
-          val,
-          _sanitizer.bypassSecurityTrustResourceUrl('assets/icons/' + val + '.svg')
-      );
+    icons.forEach((val) => {
+      this._iconRegistry.addSvgIcon(val, this._sanitizer.bypassSecurityTrustResourceUrl('assets/icons/' + val + '.svg'));
     });
   }
 
@@ -53,11 +32,14 @@ export class IconComponent implements OnChanges {
       return ['', ''];
     }
     const parts = iconName.split(':');
+    const case1 = 1;
+    const case2 = 2;
+
     switch (parts.length) {
-      case 1:
+      case case1:
         return ['', parts[0]]; // Use default namespace.
-      case 2:
-        return <[string, string]>parts;
+      case case2:
+        return parts as [string, string];
       default:
         throw Error(`Invalid icon name: "${iconName}"`);
     }
@@ -73,7 +55,7 @@ export class IconComponent implements OnChanges {
           .getNamedSvgIcon(iconName, namespace)
           .pipe(take(1))
           .subscribe(
-            svg => this._setSvgElement(svg),
+            (svg) => this._setSvgElement(svg),
             (err: Error) => console.error(`Error retrieving icon: ${err.message}`)
           );
       } else {
@@ -89,11 +71,7 @@ export class IconComponent implements OnChanges {
     // See: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10898469/
     // Do this before inserting the element into the DOM, in order to avoid a style recalculation.
     const styleTags = svg.querySelectorAll('style') as NodeListOf<HTMLStyleElement>;
-
-    for (let i = 0; i < styleTags.length; i++) {
-      styleTags[i].textContent += ' ';
-    }
-
+    styleTags.forEach((s) => (s.textContent += ' '));
     this._elementRef.nativeElement.appendChild(svg);
   }
 

@@ -1,17 +1,16 @@
-import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class CertGenerationService {
+  public url = `${environment.certificateGenerationServer}`;
 
-    public url = `${environment.certificateGenerationServer}`;
+  constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) {}
-
-    public generate(certData: any) {
-        return this.http.post(this.url + '/api/cert-generator', certData);
-    }
+  public generate(certData: any) {
+    return this.http.post(this.url + '/api/cert-generator', certData);
+  }
 }
