@@ -50,7 +50,14 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.11.1",
-    "codelyzer": "^5.2.1",
+    "codelyzer": "^5.2.2",
+    "pretty-quick": "^2.0.1",
+    "prettier-check": "^2.0.0",
+    "prettier": "^2.0.4",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-angular": "^3.0.2",
+    "husky": "^4.2.3",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "jquery": "^3.4.1",
@@ -61,16 +68,17 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "ng-swagger-gen": "^1.8.1",
     "popper.js": "^1.16.1",
-    "prettier": "^1.19.1",
-    "prettier-check": "^2.0.0",
     "protractor": "^5.4.3",
     "puppeteer": "^1.13.0",
     "ts-node": "~7.0.0",
-    "tslint": "~5.11.0",
-    "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.5.3"
   },
   "resolutions": {
     "mixin-deep": "latest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && ng lint"
+    }
   }
 }
