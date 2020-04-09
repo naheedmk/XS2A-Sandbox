@@ -60,7 +60,7 @@ npm-install-developer-portal-ui: developer-portal-ui/package.json developer-port
 	cd developer-portal-ui && npm install
 
 ## Build arc42
-build-arc-42: arc42/images/generated $(ARC42_SRC) arc42/xs2a-sandbox-arc42.adoc developer-portal-ui/package.json ## Generate arc42 html documentation
+build-arc-42: arc42/images/generated $(ARC42_SRC) docs/arc42/xs2a-sandbox-arc42.adoc developer-portal-ui/package.json ## Generate arc42 html documentation
 	cd docs/arc42 && asciidoctor -a acc-version=$(VERSION) xs2a-sandbox-arc42.adoc
 
 arc42/images/generated: $(PLANTUML_SRC) ## Generate images from .puml files
