@@ -18,7 +18,7 @@ $ gem install asciidoctor
 * create architecture documentation
 +
 ```sh
-$ make arc42/xs2a-sandbox-arc42.html
+$ make docs/arc42/xs2a-sandbox-arc42.html
 ```
 
 == Tools Used for Diagrams
