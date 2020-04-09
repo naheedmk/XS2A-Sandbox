@@ -35,8 +35,9 @@ describe('LocalStorageService', () => {
   // --- snap ---
 
   it('should set an Item', () => {
+    expect(service).toBeTruthy();
     // @ts-ignore
-    expect(LocalStorageService.set('foo', 'bar')).toEqual('"bar"');
+    expect(LocalStorageService.set('foo', 'bar')).toEqual('bar');
     expect(LocalStorageService.get('foo')).toBe('bar');
   });
 
@@ -46,16 +47,16 @@ describe('LocalStorageService', () => {
 
   it('should set and remove Item', () => {
     // @ts-ignore
-    expect(LocalStorageService.set('foo', 'bar')).toEqual('"bar"');
+    expect(LocalStorageService.set('foo', 'bar')).toEqual('bar');
     expect(LocalStorageService.remove('foo')).toBeUndefined();
     expect(LocalStorageService.get('foo')).toBeNull();
   });
 
   it('should clear the storage', () => {
     // @ts-ignore
-    expect(LocalStorageService.set('foo', 'bar')).toEqual('"bar"');
+    expect(LocalStorageService.set('foo', 'bar')).toEqual('bar');
     // @ts-ignore
-    expect(LocalStorageService.set('bar', 'foo')).toEqual('"foo"');
+    expect(LocalStorageService.set('bar', 'foo')).toEqual('foo');
     expect(LocalStorageService.clear()).toBeUndefined();
     expect(LocalStorageService.get('foo')).toBeNull();
     expect(LocalStorageService.get('bar')).toBeNull();
