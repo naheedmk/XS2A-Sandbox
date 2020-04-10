@@ -197,6 +197,7 @@ Lint TPP frontend:
 
 Lint devportal frontend:
   stage: "Lint"
+  image: node:lts-alpine3.9
   except:
     - schedules
   script:
