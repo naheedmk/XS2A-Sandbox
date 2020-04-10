@@ -4,7 +4,7 @@
 
   .request-method {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     margin-bottom: 2vw;
   }
 
@@ -255,5 +255,5 @@
 .top-line,
 select {
   display: inline;
-  vertical-align: middle;
+  vertical-align: inherit;
 }
