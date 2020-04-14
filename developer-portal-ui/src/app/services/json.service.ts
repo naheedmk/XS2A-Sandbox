@@ -36,10 +36,10 @@ export class JsonService {
     if (this.customizeService.currentTheme) {
       this.customizeService.currentTheme.subscribe((theme: Theme) => {
         if (
-          theme &&
+          theme.pagesSettings &&
           theme.pagesSettings.playWithDataSettings &&
           theme.pagesSettings.playWithDataSettings.examplesCurrency &&
-          theme.pagesSettings.playWithDataSettings.examplesCurrency.length !== 0
+          theme.pagesSettings.playWithDataSettings.examplesCurrency.length > 0
         ) {
           this.currency = theme.pagesSettings.playWithDataSettings.examplesCurrency;
         }

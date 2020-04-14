@@ -46,37 +46,12 @@ export class CustomizeService {
     }
   }
 
-  static validateTheme(theme): string[] {
-    const general = ['globalSettings', 'contactInfo', 'officesInfo'];
-    const additional = [['logo'], ['img', 'name', 'position'], ['city', 'company', 'addressFirstLine', 'addressSecondLine'], [], []];
-    const errors: string[] = [];
-    const minLength = 2;
-
-    for (let i = 0; i < general.length; i++) {
-      if (!theme.hasOwnProperty(general[i])) {
-        errors.push(`Missing field ${general[i]}!`);
-      } else if (i < minLength) {
-        for (const property of additional[i]) {
-          if (!theme[general[i]].hasOwnProperty(property)) {
-            errors.push(`Field ${general[i]} missing property ${property}!`);
-          }
-        }
-      } else {
-        for (const office of theme.officesInfo) {
-          for (const property of additional[i]) {
-            if (!office.hasOwnProperty(property)) {
-              errors.push(`Field ${general[i]} missing property ${property}!`);
-            }
-          }
-        }
-      }
-    }
-
-    return errors;
-  }
-
   set theme(theme: Theme) {
-    this.currentTheme = of(this.setUpRoutes(theme));
+    if (theme) {
+      this.currentTheme = of(this.setUpRoutes(theme));
+    } else {
+      this.currentTheme = of({});
+    }
   }
 
   get custom(): boolean {
@@ -103,12 +78,14 @@ export class CustomizeService {
     this._custom = true;
   }
 
-  setStyling(theme) {
-    this.updateCSS(theme.globalSettings.cssVariables);
-    CustomizeService.removeExternalLinkElements();
+  setStyling(theme: Theme) {
+    if (theme.globalSettings.cssVariables) {
+      this.updateCSS(theme.globalSettings.cssVariables);
+    }
 
     if (theme.globalSettings.favicon) {
-      CustomizeService.setFavicon(theme.globalSettings.favicon.type, theme.globalSettings.favicon.href);
+      CustomizeService.removeExternalLinkElements();
+      CustomizeService.setFavicon('image/x-icon', theme.globalSettings.favicon);
     }
   }
 
@@ -142,15 +119,23 @@ export class CustomizeService {
         pagesSettings.navigationBarSettings.logo = `${folder}/${pagesSettings.navigationBarSettings.logo}`;
       }
 
-      if (pagesSettings.footerSettings && pagesSettings.footerSettings.footerLogo) {
-        pagesSettings.footerSettings.footerLogo = `${folder}/${pagesSettings.footerSettings.footerLogo}`;
+      if (pagesSettings.footerSettings && pagesSettings.footerSettings.logo) {
+        pagesSettings.footerSettings.logo = `${folder}/${pagesSettings.footerSettings.logo}`;
       }
 
-      if (pagesSettings.contactPageSettings.contactInfo && pagesSettings.contactPageSettings.contactInfo.img) {
+      if (
+        pagesSettings.contactPageSettings &&
+        pagesSettings.contactPageSettings.contactInfo &&
+        pagesSettings.contactPageSettings.contactInfo.img
+      ) {
         pagesSettings.contactPageSettings.contactInfo.img = `${folder}/${pagesSettings.contactPageSettings.contactInfo.img}`;
       }
 
-      if (pagesSettings.homePageSettings.contactInfo && pagesSettings.contactPageSettings.contactInfo.img) {
+      if (
+        pagesSettings.homePageSettings &&
+        pagesSettings.homePageSettings.contactInfo &&
+        pagesSettings.contactPageSettings.contactInfo.img
+      ) {
         pagesSettings.homePageSettings.contactInfo.img = `${folder}/${pagesSettings.homePageSettings.contactInfo.img}`;
       }
     }
@@ -158,7 +143,7 @@ export class CustomizeService {
     return theme;
   }
 
-  async normalizeLanguages(theme) {
+  async normalizeLanguages(theme: Theme) {
     let correctLanguages = {};
     const defaultLanguages = {
       en: `${this._defaultContentFolderPath}${this.languagesFolder}/en/united-kingdom.png`,
@@ -167,9 +152,9 @@ export class CustomizeService {
       ua: `${this._defaultContentFolderPath}${this.languagesFolder}/ua/ukraine.png`,
     };
 
-    if (theme.supportedLanguagesDictionary && this.custom) {
-      for (const lang of Object.keys(theme.supportedLanguagesDictionary)) {
-        const languageLink = `${this._customContentFolderPath}${this.languagesFolder}/${lang}/${theme.supportedLanguagesDictionary[lang]}`;
+    if (theme.globalSettings && theme.globalSettings.supportedLanguagesDictionary && this.custom) {
+      for (const lang of Object.keys(theme.globalSettings.supportedLanguagesDictionary)) {
+        const languageLink = `${this._customContentFolderPath}${this.languagesFolder}/${lang}/${theme.globalSettings.supportedLanguagesDictionary[lang]}`;
         const correctLang = await this.getCorrectLanguage(lang, languageLink);
         if (correctLang.length > 0) {
           correctLanguages[lang] = languageLink;
@@ -180,9 +165,11 @@ export class CustomizeService {
         correctLanguages = defaultLanguages;
       }
 
-      theme.supportedLanguagesDictionary = correctLanguages;
+      theme.globalSettings.supportedLanguagesDictionary = correctLanguages;
     } else {
-      theme.supportedLanguagesDictionary = defaultLanguages;
+      theme.globalSettings = {
+        supportedLanguagesDictionary: defaultLanguages,
+      };
     }
 
     return theme;

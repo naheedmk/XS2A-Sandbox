@@ -95,19 +95,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
   pathToFile = `./assets/content/i18n/en/home.md`;
 
   showProductHistory: boolean;
-  showSlider = true;
+  showSlider: boolean;
 
   private carouselInterval = 3000;
 
   constructor(private languageService: LanguageService, private customizeService: CustomizeService) {
     if (this.customizeService.currentTheme) {
       this.customizeService.currentTheme.subscribe((theme: Theme) => {
-        const homePageSettings = theme.pagesSettings.homePageSettings;
+        if (theme.pagesSettings) {
+          const homePageSettings = theme.pagesSettings.homePageSettings;
 
-        if (homePageSettings) {
-          this.enableSlider(homePageSettings.showSlider);
-          this.enableProductHistory(homePageSettings.showProductHistory);
-          this.setContactInfo(homePageSettings.contactInfo);
+          if (homePageSettings) {
+            this.enableSlider(homePageSettings.showSlider);
+            this.enableProductHistory(homePageSettings.showProductHistory);
+            this.setContactInfo(homePageSettings.contactInfo);
+          }
         }
       });
     }

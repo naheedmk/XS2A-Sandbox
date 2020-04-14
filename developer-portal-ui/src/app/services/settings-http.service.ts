@@ -16,11 +16,7 @@ export class SettingsHttpService {
   private static isThemeValid(theme) {
     try {
       JSON.parse(JSON.stringify(theme));
-      const errors = CustomizeService.validateTheme(theme);
-
-      if (!errors.length) {
-        return true;
-      }
+      return true;
     } catch (e) {
       console.log(e);
     }

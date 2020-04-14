@@ -1,12 +1,16 @@
 <div class="footer-bar">
   <div class="footer-top-items">
     <img
-      *ngIf="footerSettings?.logo"
+      *ngIf="footerSettings?.logo; else emptyTemplate"
       class="logo"
       [src]="footerSettings?.logo"
       (click)="navigationService.goToLogoLink(footerSettings?.logoLink, '/home')"
       alt="Logo"
     />
+
+    <ng-template #emptyTemplate>
+      <div class="empty-logo"></div>
+    </ng-template>
 
     <div *ngIf="showNavigation">
       <a

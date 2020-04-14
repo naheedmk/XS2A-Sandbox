@@ -12,7 +12,7 @@ export interface GlobalSettings {
 }
 
 export interface PagesSettings {
-  playWithDataSettings: PlayWithDataSettings;
+  playWithDataSettings?: PlayWithDataSettings;
   footerSettings: NavigationSettings;
   navigationBarSettings: NavigationSettings;
   contactPageSettings?: ContactPageSettings;
@@ -41,8 +41,8 @@ export interface OfficeInfo {
 }
 
 export interface TppSettings {
-  tppDefaultNokRedirectUrl: string;
-  tppDefaultRedirectUrl: string;
+  tppDefaultNokRedirectUrl?: string;
+  tppDefaultRedirectUrl?: string;
 }
 
 export interface NavigationSettings {
@@ -52,18 +52,18 @@ export interface NavigationSettings {
 }
 
 class ContactPageSettings {
-  contactInfo: ContactInfo;
-  officesInfo: OfficeInfo[];
+  contactInfo?: ContactInfo;
+  officesInfo?: OfficeInfo[];
 }
 
 class PlayWithDataSettings {
-  supportedApproaches: string[];
-  examplesCurrency: string;
-  tppSettings: TppSettings;
+  supportedApproaches?: string[];
+  examplesCurrency?: string;
+  tppSettings?: TppSettings;
 }
 
 export interface HomePageSettings {
-  contactInfo: ContactInfo;
+  contactInfo?: ContactInfo;
   showProductHistory?: boolean;
   showSlider?: boolean;
 }

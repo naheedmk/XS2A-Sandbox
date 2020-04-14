@@ -35,6 +35,7 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     if (
+      this.footerSettings &&
       this.footerSettings.allowedNavigationSize &&
       this.navigation &&
       Object.keys(this.navigation).length > this.footerSettings.allowedNavigationSize

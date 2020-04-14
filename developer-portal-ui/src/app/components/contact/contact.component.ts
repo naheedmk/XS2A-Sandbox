@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomizeService } from '../../services/customize.service';
-import { ContactInfo, GlobalSettings, OfficeInfo, Theme } from '../../models/theme.model';
+import { ContactInfo, OfficeInfo, Theme } from '../../models/theme.model';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
@@ -11,19 +11,19 @@ import { LanguageService } from '../../services/language.service';
 export class ContactComponent implements OnInit {
   contactInfo: ContactInfo;
   officesInfo: OfficeInfo[];
-  socialMedia: object;
 
   pathToFile = `./assets/content/i18n/en/contact.md`;
 
   constructor(public customizeService: CustomizeService, private languageService: LanguageService) {
     if (this.customizeService.currentTheme) {
       this.customizeService.currentTheme.subscribe((theme: Theme) => {
-        const contactPageSettings = theme.pagesSettings.contactPageSettings;
-        if (contactPageSettings) {
-          this.setContactInfo(contactPageSettings.contactInfo);
-          this.setOfficesInfo(contactPageSettings.officesInfo);
+        if (theme.pagesSettings) {
+          const contactPageSettings = theme.pagesSettings.contactPageSettings;
+          if (contactPageSettings) {
+            this.setContactInfo(contactPageSettings.contactInfo);
+            this.setOfficesInfo(contactPageSettings.officesInfo);
+          }
         }
-        this.setSocialMedia(theme.globalSettings);
       });
     }
   }
@@ -43,12 +43,6 @@ export class ContactComponent implements OnInit {
   private setOfficesInfo(officesInfo: OfficeInfo[]) {
     if (officesInfo) {
       this.officesInfo = officesInfo;
-    }
-  }
-
-  private setSocialMedia(globalSettings: GlobalSettings) {
-    if (globalSettings && globalSettings.socialMedia) {
-      this.socialMedia = globalSettings.socialMedia;
     }
   }
 }
