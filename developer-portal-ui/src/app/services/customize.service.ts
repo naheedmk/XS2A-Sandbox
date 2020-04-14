@@ -1,40 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import cssVars from 'css-vars-ponyfill';
-import { CSSVariables } from '../models/theme.model';
+import { CSSVariables, Theme } from '../models/theme.model';
 import { of } from 'rxjs';
+import { SUPPORTED_SOCIAL_MEDIA } from '../components/common/constant/constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomizeService {
-  constructor(private http: HttpClient) {}
-
-  set theme(theme) {
-    this.currentTheme = of(this.setUpRoutes(theme));
-  }
-
-  get custom() {
-    return this._custom;
-  }
-
-  get currentLanguageFolder() {
-    return (this.custom ? this._customContentFolderPath : this._defaultContentFolderPath) + this.languagesFolder;
-  }
-
-  get defaultContentFolder() {
-    return this._defaultContentFolderPath;
-  }
-
-  get customContentFolder() {
-    return this._customContentFolderPath;
-  }
   private _defaultContentFolderPath = '../assets/content';
   private _customContentFolderPath = '../assets/custom-content';
   private _custom = false;
   private languagesFolder = '/i18n';
 
   currentTheme;
+
+  constructor(private http: HttpClient) {}
 
   private static addFavicon(type: string, href: string) {
     const linkElement = document.createElement('link');
@@ -93,6 +75,30 @@ export class CustomizeService {
     return errors;
   }
 
+  set theme(theme: Theme) {
+    this.currentTheme = of(this.setUpRoutes(theme));
+  }
+
+  get custom(): boolean {
+    return this._custom;
+  }
+
+  get currentLanguageFolder(): string {
+    return (this.custom ? this._customContentFolderPath : this._defaultContentFolderPath) + this.languagesFolder;
+  }
+
+  get defaultContentFolder(): string {
+    return this._defaultContentFolderPath;
+  }
+
+  get customContentFolder(): string {
+    return this._customContentFolderPath;
+  }
+
+  getIconClassForSocialMedia(social: any): string {
+    return `social-media-icon fab ${SUPPORTED_SOCIAL_MEDIA[social]}`;
+  }
+
   setCustom() {
     this._custom = true;
   }
@@ -123,24 +129,30 @@ export class CustomizeService {
     // });
   }
 
-  private setUpRoutes(theme) {
-    if (theme.globalSettings.logo) {
-      theme.globalSettings.logo =
-        (this._custom ? this._customContentFolderPath : this._defaultContentFolderPath) + '/' + theme.globalSettings.logo;
+  private setUpRoutes(theme: Theme) {
+    const folder = this._custom ? this._customContentFolderPath : this._defaultContentFolderPath;
+
+    if (theme.globalSettings && theme.globalSettings.favicon) {
+      theme.globalSettings.favicon = `${folder}/${theme.globalSettings.favicon}`;
     }
 
-    if (theme.globalSettings.footerLogo) {
-      theme.globalSettings.footerLogo =
-        (this._custom ? this._customContentFolderPath : this._defaultContentFolderPath) + '/' + theme.globalSettings.footerLogo;
-    }
+    const pagesSettings = theme.pagesSettings;
+    if (pagesSettings) {
+      if (pagesSettings.navigationBarSettings && pagesSettings.navigationBarSettings.logo) {
+        pagesSettings.navigationBarSettings.logo = `${folder}/${pagesSettings.navigationBarSettings.logo}`;
+      }
 
-    if (theme.globalSettings.favicon && theme.globalSettings.favicon.href) {
-      theme.globalSettings.favicon.href =
-        (this._custom ? this._customContentFolderPath : this._defaultContentFolderPath) + '/' + theme.globalSettings.favicon.href;
-    }
+      if (pagesSettings.footerSettings && pagesSettings.footerSettings.footerLogo) {
+        pagesSettings.footerSettings.footerLogo = `${folder}/${pagesSettings.footerSettings.footerLogo}`;
+      }
 
-    if (theme.contactInfo.img) {
-      theme.contactInfo.img = (this._custom ? this._customContentFolderPath : this._defaultContentFolderPath) + '/' + theme.contactInfo.img;
+      if (pagesSettings.contactPageSettings.contactInfo && pagesSettings.contactPageSettings.contactInfo.img) {
+        pagesSettings.contactPageSettings.contactInfo.img = `${folder}/${pagesSettings.contactPageSettings.contactInfo.img}`;
+      }
+
+      if (pagesSettings.homePageSettings.contactInfo && pagesSettings.contactPageSettings.contactInfo.img) {
+        pagesSettings.homePageSettings.contactInfo.img = `${folder}/${pagesSettings.homePageSettings.contactInfo.img}`;
+      }
     }
 
     return theme;

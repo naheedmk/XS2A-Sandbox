@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomizeService } from '../../services/customize.service';
-import { ContactInfo, OfficeInfo } from '../../models/theme.model';
+import { ContactInfo, GlobalSettings, OfficeInfo, Theme } from '../../models/theme.model';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
@@ -11,22 +11,19 @@ import { LanguageService } from '../../services/language.service';
 export class ContactComponent implements OnInit {
   contactInfo: ContactInfo;
   officesInfo: OfficeInfo[];
+  socialMedia: object;
 
   pathToFile = `./assets/content/i18n/en/contact.md`;
-  showQuestionsComponent;
-  showContactCard;
 
   constructor(public customizeService: CustomizeService, private languageService: LanguageService) {
     if (this.customizeService.currentTheme) {
-      this.customizeService.currentTheme.subscribe((theme) => {
-        this.contactInfo = theme.contactInfo;
-        this.officesInfo = theme.officesInfo;
-
+      this.customizeService.currentTheme.subscribe((theme: Theme) => {
         const contactPageSettings = theme.pagesSettings.contactPageSettings;
         if (contactPageSettings) {
-          this.enableQuestionsComponent(contactPageSettings.showQuestionsComponent);
-          this.enableContactCard(contactPageSettings.showContactCard);
+          this.setContactInfo(contactPageSettings.contactInfo);
+          this.setOfficesInfo(contactPageSettings.officesInfo);
         }
+        this.setSocialMedia(theme.globalSettings);
       });
     }
   }
@@ -37,11 +34,21 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  private enableQuestionsComponent(showQuestionsComponent: boolean) {
-    this.showQuestionsComponent = !showQuestionsComponent ? showQuestionsComponent : true;
+  private setContactInfo(contactInfo: ContactInfo) {
+    if (contactInfo) {
+      this.contactInfo = contactInfo;
+    }
   }
 
-  private enableContactCard(showContactCard: boolean) {
-    this.showContactCard = !showContactCard ? showContactCard : true;
+  private setOfficesInfo(officesInfo: OfficeInfo[]) {
+    if (officesInfo) {
+      this.officesInfo = officesInfo;
+    }
+  }
+
+  private setSocialMedia(globalSettings: GlobalSettings) {
+    if (globalSettings && globalSettings.socialMedia) {
+      this.socialMedia = globalSettings.socialMedia;
+    }
   }
 }

@@ -1,6 +1,12 @@
 <div class="nav-bar">
   <div class="nav-bar-content">
-    <img *ngIf="logo" class="logo" [src]="logo" (click)="goToLogoLink(logoLink, '/home')" alt="Logo" />
+    <img
+      *ngIf="navBarSettings.logo"
+      class="logo"
+      [src]="navBarSettings.logo"
+      (click)="navigationService.goToLogoLink(navBarSettings.logoLink, '/home')"
+      alt="Logo"
+    />
 
     <div class="nav">
       <div class="nav-content">
@@ -10,7 +16,7 @@
             class="header-item"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: false }"
-            (click)="navigateTo(navItem)"
+            (click)="navigationService.navigateTo(navItem)"
           >
             {{ navItem.navName }}
           </a>

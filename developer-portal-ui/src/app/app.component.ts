@@ -4,7 +4,6 @@ import { DataService } from './services/data.service';
 import { LanguageService } from './services/language.service';
 import { filter } from 'rxjs/operators';
 import { MarkdownStylingService } from './services/markdown-styling.service';
-import { TrackingIdService } from './services/tracking-id.service';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
 import { CustomizeService } from './services/customize.service';
 import { Theme } from './models/theme.model';
@@ -31,20 +30,25 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private markdownStylingService: MarkdownStylingService,
     private certificateService: CertificateService,
-    private trackingIdService: TrackingIdService,
     private googleAnalyticsService: GoogleAnalyticsService,
     private navigationService: NavigationService
   ) {
-    this.setUpGoogleAnalytics(this.trackingIdService.trackingId[0].trackingId);
+    this.customizeService.currentTheme.subscribe((theme: Theme) => {
+      if (theme.globalSettings.cssVariables) {
+        this.customizeService.setStyling(theme);
+      }
+      if (theme.globalSettings.googleAnalyticsTrackingId) {
+        this.setUpGoogleAnalytics(theme.globalSettings.googleAnalyticsTrackingId);
+      }
 
-    this.customizeService.currentTheme.subscribe((theme) => {
-      this.customizeService.setStyling(theme);
       this.customizeService
         .normalizeLanguages(theme)
-        .then((normalizedTheme: Theme) => (this.supportedLanguagesDictionary = normalizedTheme.supportedLanguagesDictionary));
+        .then(
+          (normalizedTheme: Theme) => (this.supportedLanguagesDictionary = normalizedTheme.globalSettings.supportedLanguagesDictionary)
+        );
 
-      LocalStorageService.set(TPP_NOK_REDIRECT_URL_KEY, theme.tppSettings.tppDefaultNokRedirectUrl);
-      LocalStorageService.set(TPP_REDIRECT_URL_KEY, theme.tppSettings.tppDefaultRedirectUrl);
+      LocalStorageService.set(TPP_NOK_REDIRECT_URL_KEY, theme.pagesSettings.playWithDataSettings.tppSettings.tppDefaultNokRedirectUrl);
+      LocalStorageService.set(TPP_REDIRECT_URL_KEY, theme.pagesSettings.playWithDataSettings.tppSettings.tppDefaultRedirectUrl);
     });
 
     this.certificateService

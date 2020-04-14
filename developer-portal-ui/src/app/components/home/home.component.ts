@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 
 import { CustomizeService } from '../../services/customize.service';
-import { ContactInfo } from '../../models/theme.model';
+import { ContactInfo, Theme } from '../../models/theme.model';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
@@ -94,7 +94,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   pathToFile = `./assets/content/i18n/en/home.md`;
 
-  showQuestionsComponent: boolean;
   showProductHistory: boolean;
   showSlider = true;
 
@@ -102,14 +101,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(private languageService: LanguageService, private customizeService: CustomizeService) {
     if (this.customizeService.currentTheme) {
-      this.customizeService.currentTheme.subscribe((theme) => {
-        this.contactInfo = theme.contactInfo;
+      this.customizeService.currentTheme.subscribe((theme: Theme) => {
         const homePageSettings = theme.pagesSettings.homePageSettings;
 
         if (homePageSettings) {
           this.enableSlider(homePageSettings.showSlider);
           this.enableProductHistory(homePageSettings.showProductHistory);
-          this.enableQuestionsComponent(homePageSettings.showQuestionsComponent);
+          this.setContactInfo(homePageSettings.contactInfo);
         }
       });
     }
@@ -215,7 +213,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private enableQuestionsComponent(showQuestionsComponent: boolean) {
-    this.showQuestionsComponent = !showQuestionsComponent ? showQuestionsComponent : true;
+  private setContactInfo(contactInfo: ContactInfo) {
+    if (contactInfo) {
+      this.contactInfo = contactInfo;
+    }
   }
 }
