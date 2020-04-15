@@ -33,6 +33,7 @@
     color: var(--headerFontColor);
     background-color: var(--headerBG);
     border-top: var(--headerBorderTop);
+    box-shadow: var(--headerBoxShodowBottom);
     @media screen and (max-width: 1080px) {
       width: 100%;
     }
@@ -236,6 +237,11 @@
     max-height: 55%;
     max-width: 21%;
     cursor: pointer;
+  }
+
+  .empty-logo {
+    width: 10px;
+    height: 10px;
   }
 }
 
