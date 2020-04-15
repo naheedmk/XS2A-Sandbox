@@ -77,8 +77,7 @@ describe('ConsentsComponent', () => {
                 consentStatus : 'REJECTED'
             }
         }
-      component.revokeConsent(mockConsent);
-      const  result = component.isConsentEnabled(mockConsent);
+      const result = component.revokeConsent(mockConsent);
       expect(result).toBe(false);
     });
 
@@ -88,9 +87,21 @@ describe('ConsentsComponent', () => {
                 consentStatus : 'VALID'
             }
         }
-        let revokeSpy = spyOn(onlineBankingService, 'revokeConsent').and.returnValue(of({success: true}));
+        let revokeSpy = spyOn(onlineBankingService, 'revokeConsent').and.returnValue(of(true));
         let consentSpy = spyOn(component, 'getConsents');
         component.revokeConsent(mockConsent);
         expect(consentSpy).toHaveBeenCalled();
+    });
+
+    it('should revoke the consent when consent is valid and Success', () => {
+        let mockConsent: ObaAisConsent= {
+            aisAccountConsent: {
+                consentStatus : 'VALID'
+            }
+        }
+        let revokeSpy = spyOn(onlineBankingService, 'revokeConsent').and.returnValue(of(false));
+        let infoSpy = spyOn(infoService, 'openFeedback');
+        component.revokeConsent(mockConsent);
+        expect(infoSpy).toHaveBeenCalledWith('could not revoke the consent', { severity: 'error' });
     });
 });
