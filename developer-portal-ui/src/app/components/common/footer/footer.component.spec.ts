@@ -1,11 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FooterComponent } from './footer.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { Pipe, PipeTransform } from '@angular/core';
-import { NavigationService } from '../../../services/navigation.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { GoogleAnalyticsService } from '../../../services/google-analytics.service';
 import { CustomizeService } from '../../../services/customize.service';
 import { of } from 'rxjs';
 import { MarkdownModule } from 'ngx-markdown';
@@ -98,7 +94,6 @@ describe('FooterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FooterComponent, TranslatePipe],
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
         MarkdownModule.forRoot(),
         TranslateModule.forRoot({
@@ -109,12 +104,7 @@ describe('FooterComponent', () => {
           },
         }),
       ],
-      providers: [
-        NavigationService,
-        TranslateService,
-        GoogleAnalyticsService,
-        { provide: CustomizeService, useValue: CustomizeServiceStub },
-      ],
+      providers: [TranslateService, { provide: CustomizeService, useValue: CustomizeServiceStub }],
     }).compileComponents();
   }));
 

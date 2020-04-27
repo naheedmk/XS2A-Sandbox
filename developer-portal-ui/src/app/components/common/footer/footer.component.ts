@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomizeService } from '../../../services/customize.service';
 import { MarkdownStylingService } from '../../../services/markdown-styling.service';
 import { LanguageService } from '../../../services/language.service';
@@ -9,8 +9,6 @@ import { LanguageService } from '../../../services/language.service';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  @Input() navigation;
-  showNavigation = true;
   pathToFile = `./assets/content/i18n/en/footer.md`;
 
   constructor(
