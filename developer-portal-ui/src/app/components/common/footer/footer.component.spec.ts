@@ -8,11 +8,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GoogleAnalyticsService } from '../../../services/google-analytics.service';
 import { CustomizeService } from '../../../services/customize.service';
 import { of } from 'rxjs';
-import {MarkdownModule} from 'ngx-markdown';
-import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
-import {HttpLoaderFactory} from "../../../services/language.service";
-import {HttpClient} from "@angular/common/http";
-
+import { MarkdownModule } from 'ngx-markdown';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HttpLoaderFactory } from '../../../services/language.service';
+import { HttpClient } from '@angular/common/http';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -98,7 +97,8 @@ describe('FooterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FooterComponent, TranslatePipe],
-      imports: [RouterTestingModule,
+      imports: [
+        RouterTestingModule,
         HttpClientTestingModule,
         MarkdownModule.forRoot(),
         TranslateModule.forRoot({
@@ -107,8 +107,14 @@ describe('FooterComponent', () => {
             useFactory: HttpLoaderFactory,
             deps: [HttpClient],
           },
-        }),],
-      providers: [NavigationService,TranslateService, GoogleAnalyticsService, { provide: CustomizeService, useValue: CustomizeServiceStub}],
+        }),
+      ],
+      providers: [
+        NavigationService,
+        TranslateService,
+        GoogleAnalyticsService,
+        { provide: CustomizeService, useValue: CustomizeServiceStub },
+      ],
     }).compileComponents();
   }));
 

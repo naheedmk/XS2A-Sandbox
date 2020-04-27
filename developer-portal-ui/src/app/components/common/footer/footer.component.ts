@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CustomizeService } from '../../../services/customize.service';
-import {MarkdownStylingService} from '../../../services/markdown-styling.service';
-import {LanguageService} from '../../../services/language.service';
-
+import { MarkdownStylingService } from '../../../services/markdown-styling.service';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-footer',
@@ -17,16 +16,13 @@ export class FooterComponent implements OnInit {
   constructor(
     private customizeService: CustomizeService,
     private markdownStylingService: MarkdownStylingService,
-    private languageService: LanguageService,
-  ) {
-
-  }
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit() {
     this.languageService.currentLanguage.subscribe((data) => {
       this.pathToFile = `${this.customizeService.currentLanguageFolder}/${data}/footer.md`;
       this.markdownStylingService.createTableOfContent(true);
     });
-
   }
 }
