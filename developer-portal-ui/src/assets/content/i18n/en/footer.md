@@ -6,15 +6,15 @@
   
   <div>
   
-  [<a class="footer-item"> Home </a>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/home)
+  [<span class="footer-item"> Home </span>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/home)
   
-  [<a class="footer-item">Getting started</a>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/getting-started) 
+  [<span class="footer-item">Getting started</span>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/getting-started) 
   
-  [<a class="footer-item">Test cases</a>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/test-cases/redirect)
+  [<span class="footer-item">Test cases</span>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/test-cases/redirect)
   
-  [<a class="footer-item">FAQs</a>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/page/faq)  
+  [<span class="footer-item">FAQs</span>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/page/faq)  
     
-  [<a class="footer-item">Contact</a>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/page)
+  [<span class="footer-item">Contact</span>](https://dev-dynamicsandbox-developerportalui.cloud.adorsys.de/page)
   
   </div>
   
@@ -30,4 +30,3 @@
   </div>
   
 </div>
-    
