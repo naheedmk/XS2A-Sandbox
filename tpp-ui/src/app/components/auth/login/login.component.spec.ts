@@ -43,21 +43,6 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
         component.ngOnInit();
     });
-
-    it('should call login on the service', () => {
-        authServiceSpy = spyOn(authService, 'login').and.callThrough();
-
-        const form = component.loginForm;
-        form.controls['login'].setValue('test');
-        form.controls['pin'].setValue('12345678');
-
-        el = fixture.debugElement.query(By.css('button')).nativeElement;
-        el.click();
-
-        expect(authServiceSpy).toHaveBeenCalledWith({login: 'test', pin: '12345678'});
-        expect(authServiceSpy).toHaveBeenCalled();
-    });
-
     it('should create', () => {
         expect(component).toBeTruthy();
     });
@@ -101,9 +86,4 @@ describe('LoginComponent', () => {
         expect(component.errorMessage).toEqual('Please enter your credentials');
     });
 
-    it('Set error message by button click and invalid form', () => {
-        el = fixture.debugElement.query(By.css('button')).nativeElement;
-        el.click();
-        expect(component.errorMessage).toEqual('Please enter your credentials');
-    });
 });
