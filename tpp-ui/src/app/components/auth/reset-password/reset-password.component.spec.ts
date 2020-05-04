@@ -84,4 +84,6 @@ describe('ResetPasswordComponent', () => {
     expect(component.errorMessage).toEqual('Please enter your credentials');
   });
 
+  // TODO write unite tests https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/-/issues/704
+
 });
