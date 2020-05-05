@@ -45,7 +45,7 @@ describe('AccountDetailsComponent', () => {
   });
 
   it('should get the account detail', () => {
-    let mockAccount = {
+    const mockAccount = {
       id: '123456',
       iban: 'DE35653635635663',
       bban: 'BBBAN',
@@ -72,8 +72,8 @@ describe('AccountDetailsComponent', () => {
   });
 
   it('should get the Transactions', () => {
-    let mockResponse = {};
-    let transactionsSpy = spyOn(
+    const mockResponse = {};
+    const transactionsSpy = spyOn(
       onlineBankingService,
       'getTransactions'
     ).and.returnValue(of({ mockResponse }));
@@ -82,7 +82,7 @@ describe('AccountDetailsComponent', () => {
   });
 
   it('should change the page', () => {
-    let config = {
+    const config = {
       itemsPerPage: 10,
       currentPage: 1,
       totalItems: 0,
