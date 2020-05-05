@@ -2,6 +2,9 @@
 
 For build and run XS2ASandbox requires GNU Make to be installed on your local machine. Please, make sure it is installed.
 
+**Note**: If you clone master branch or tag version of XS2ASandbox you can run service by simply run command
+like  `docker-compose up` or `make run` without steps that described further.
+
 1.Download the project and go to the project directory:
 
 ```sh
