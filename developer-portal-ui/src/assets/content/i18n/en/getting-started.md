@@ -141,7 +141,7 @@ You can remove all the Sandbox containers from Docker with the following command
 
 _docker-compose rm -s -f -v_
 
-## Note
+## Note1
 
 Check amount of memory given to Docker (Open Docker Desktop -> Preferences -> Advanced -> Memory). For a fast and painless start of all the services it should be not less than 5 GB.
 
@@ -156,6 +156,11 @@ _git clone https://github.com/adorsys/XS2A-Sandbox_
 After downloading the project go to the project directory:
 
 _cd XS2A-Sandbox_
+
+## Note2
+
+If you clone master branch or tag version of XS2ASandbox you can run service by simply run command
+like  `docker-compose up` or `make run` without steps that described further.
 
 After that you can build and run XS2ASandbox in two ways - with a docker command or with Makefile commands.
 

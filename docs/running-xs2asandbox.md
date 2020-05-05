@@ -2,9 +2,6 @@
 
 For build and run XS2ASandbox requires GNU Make to be installed on your local machine. Please, make sure it is installed.
 
-**Note**: If you clone master branch or tag version of XS2ASandbox you can run service by simply run command
-like  `docker-compose up` or `make run` without steps that described further.
-
 1.Download the project and go to the project directory:
 
 ```sh
@@ -36,8 +33,11 @@ Here are links where you can install needed dependencies:
 | PlantUML 1.2019.3  | http://plantuml.com/en/starting         |
 
 
-**Note**: check amount of memory given to **Docker** (Open Docker Desktop -> Preferences -> Advanced -> Memory).
+**Note1**: check amount of memory given to **Docker** (Open Docker Desktop -> Preferences -> Advanced -> Memory).
 For a fast and painless start of all the services it should be not less than 5 GB.
+
+**Note2**: If you clone master branch or tag version of XS2ASandbox you can run service by simply run command
+like  `docker-compose up` or `make run` without steps that described further.
 
 3.Build and run the project:
 
