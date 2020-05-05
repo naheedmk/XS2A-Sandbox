@@ -36,8 +36,8 @@ Here are links where you can install needed dependencies:
 **Note1**: check amount of memory given to **Docker** (Open Docker Desktop -> Preferences -> Advanced -> Memory).
 For a fast and painless start of all the services it should be not less than 5 GB.
 
-**Note2**: If you clone master branch or tag version of XS2ASandbox you can run service by simply run command
-like  `docker-compose up` or `make run` without steps that described further.
+**Note2**: If you clone master branch or tag version of XS2ASandbox you should run service with commands
+like  `docker-compose up` or `make run`.
 
 3.Build and run the project:
 

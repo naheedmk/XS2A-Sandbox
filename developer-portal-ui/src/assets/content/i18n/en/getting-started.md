@@ -159,8 +159,8 @@ _cd XS2A-Sandbox_
 
 ## Note2
 
-If you clone master branch or tag version of XS2ASandbox you can run service by simply run command
-like  `docker-compose up` or `make run` without steps that described further.
+If you clone master branch or tag version of XS2ASandbox you should run service with commands
+like  `docker-compose up` or `make run`.
 
 After that you can build and run XS2ASandbox in two ways - with a docker command or with Makefile commands.
 
