@@ -22,7 +22,7 @@ If you want to debug mail messages you can add this properties as well:
   - SPRING_MAIL_PROPERTIES_MAIL_DEBUG=true
 ```
 
-**Note**: To use for example gmail account and smtp server to sent emails you should configure two-factor authentication and create application password.
+**Note**: To use for example Gmail account and SMTP server to sent emails you should configure two-factor authentication and create application password.
 
 ### Password reset
 

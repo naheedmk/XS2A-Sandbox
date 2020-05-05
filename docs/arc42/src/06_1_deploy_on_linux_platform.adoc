@@ -58,6 +58,8 @@ This is description of services,dependencies and steps  to run XS2ASandbox on an
 | | | SCA_MULTILEVEL_ENABLED  |
 | | | SPRING_MAIL_HOST  |
 | | | SPRING_MAIL_PORT  |
+| | | SPRING_MAIL_USERNAME  |
+| | | SPRING_MAIL_PASSWORD  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_FROM  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH  |
 | | | SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE |
