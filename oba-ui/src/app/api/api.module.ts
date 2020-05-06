@@ -1,7 +1,10 @@
 /* tslint:disable */
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
+import {
+  ApiConfiguration,
+  ApiConfigurationInterface,
+} from './api-configuration';
 
 import { PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService } from './services/psuaisprovides-access-to-online-banking-account-functionality.service';
 import { OnlineBankingAccountInformationService } from './services/online-banking-account-information.service';
@@ -17,12 +20,8 @@ import { PSUSCAProvidesAccessToOneTimePasswordForStrongCustomerAuthenticationSer
  * Provider for all Api services, plus ApiConfiguration
  */
 @NgModule({
-  imports: [
-    HttpClientModule
-  ],
-  exports: [
-    HttpClientModule
-  ],
+  imports: [HttpClientModule],
+  exports: [HttpClientModule],
   declarations: [],
   providers: [
     ApiConfiguration,
@@ -34,7 +33,7 @@ import { PSUSCAProvidesAccessToOneTimePasswordForStrongCustomerAuthenticationSer
     OnlineBankingOauthAuthorizationService,
     PSUPISCancellationProvidesAccessToOnlineBankingPaymentFunctionalityService,
     PSUPISProvidesAccessToOnlineBankingPaymentFunctionalityService,
-    PSUSCAProvidesAccessToOneTimePasswordForStrongCustomerAuthenticationService
+    PSUSCAProvidesAccessToOneTimePasswordForStrongCustomerAuthenticationService,
   ],
 })
 export class ApiModule {
@@ -44,9 +43,9 @@ export class ApiModule {
       providers: [
         {
           provide: ApiConfiguration,
-          useValue: {rootUrl: customParams.rootUrl}
-        }
-      ]
-    }
+          useValue: { rootUrl: customParams.rootUrl },
+        },
+      ],
+    };
   }
 }

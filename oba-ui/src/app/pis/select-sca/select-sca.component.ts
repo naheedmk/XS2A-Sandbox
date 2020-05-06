@@ -12,10 +12,9 @@ import { ShareDataService } from '../../common/services/share-data.service';
 @Component({
   selector: 'app-select-sca',
   templateUrl: './select-sca.component.html',
-  styleUrls: ['./select-sca.component.scss']
+  styleUrls: ['./select-sca.component.scss'],
 })
 export class SelectScaComponent implements OnInit, OnDestroy {
-
   public authResponse: PaymentAuthorizeResponse;
   public selectedScaMethod: ScaUserDataTO;
   public scaForm: FormGroup;
@@ -27,7 +26,8 @@ export class SelectScaComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private pisService: PisService,
-    private shareService: ShareDataService) {
+    private shareService: ShareDataService
+  ) {
     this.scaForm = this.formBuilder.group({
       scaMethod: ['', Validators.required],
     });
@@ -49,15 +49,19 @@ export class SelectScaComponent implements OnInit, OnDestroy {
           if (this.authResponse.scaMethods) {
             this.selectedScaMethod = this.authResponse.scaMethods[0];
             console.log(this.selectedScaMethod);
-            this.scaForm.get('scaMethod').setValue(this.selectedScaMethod.id, {emitEvent: false});
+            this.scaForm
+              .get('scaMethod')
+              .setValue(this.selectedScaMethod.id, { emitEvent: false });
           }
         });
       }
     });
 
     this.scaForm.get('scaMethod').valueChanges.subscribe(id => {
-        const selectedScaMethod = this.scaMethods.find(scaMethod => scaMethod.id === id);
-        this.handleMethodSelectedEvent(selectedScaMethod);
+      const selectedScaMethod = this.scaMethods.find(
+        scaMethod => scaMethod.id === id
+      );
+      this.handleMethodSelectedEvent(selectedScaMethod);
     });
   }
 
@@ -69,25 +73,32 @@ export class SelectScaComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(
-      this.pisService.selectScaMethod({
-        encryptedPaymentId: this.authResponse.encryptedConsentId,
-        authorisationId: this.authResponse.authorisationId,
-        scaMethodId: this.selectedScaMethod.id
-      }).subscribe(authResponse => {
-        this.authResponse = authResponse;
-        this.shareService.changeData(this.authResponse);
-        this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.TAN_CONFIRMATION}`]);
-      })
+      this.pisService
+        .selectScaMethod({
+          encryptedPaymentId: this.authResponse.encryptedConsentId,
+          authorisationId: this.authResponse.authorisationId,
+          scaMethodId: this.selectedScaMethod.id,
+        })
+        .subscribe(authResponse => {
+          this.authResponse = authResponse;
+          this.shareService.changeData(this.authResponse);
+          this.router.navigate([
+            `${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.TAN_CONFIRMATION}`,
+          ]);
+        })
     );
   }
 
   public onCancel(): void {
-    this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.RESULT}`], {
-      queryParams: {
-        encryptedConsentId: this.authResponse.encryptedConsentId,
-        authorisationId: this.authResponse.authorisationId
+    this.router.navigate(
+      [`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.RESULT}`],
+      {
+        queryParams: {
+          encryptedConsentId: this.authResponse.encryptedConsentId,
+          authorisationId: this.authResponse.authorisationId,
+        },
       }
-    });
+    );
   }
 
   handleMethodSelectedEvent(scaMethod: ScaUserDataTO): void {
@@ -104,5 +115,4 @@ export class SelectScaComponent implements OnInit, OnDestroy {
   public isScaSelected() {
     return !this.selectedScaMethod;
   }
-
 }

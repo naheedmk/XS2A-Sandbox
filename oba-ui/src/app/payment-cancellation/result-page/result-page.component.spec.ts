@@ -10,9 +10,8 @@ describe('ResultPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ResultPageComponent]
-    })
-      .compileComponents();
+      declarations: [ResultPageComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

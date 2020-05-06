@@ -3,7 +3,16 @@ import { AccountReferenceTO } from './account-reference-to';
 import { LocalTime } from './local-time';
 import { PaymentTargetTO } from './payment-target-to';
 export interface PaymentTO {
-  frequency?: 'Daily' | 'Weekly' | 'EveryTwoWeeks' | 'Monthly' | 'EveryTwoMonths' | 'Quarterly' | 'SemiAnnual' | 'Annual' | 'Monthlyvariable';
+  frequency?:
+    | 'Daily'
+    | 'Weekly'
+    | 'EveryTwoWeeks'
+    | 'Monthly'
+    | 'EveryTwoMonths'
+    | 'Quarterly'
+    | 'SemiAnnual'
+    | 'Annual'
+    | 'Monthlyvariable';
   accountId?: string;
   dayOfExecution?: number;
   debtorAccount?: AccountReferenceTO;
@@ -19,5 +28,18 @@ export interface PaymentTO {
   requestedExecutionTime?: LocalTime;
   startDate?: string;
   targets?: Array<PaymentTargetTO>;
-  transactionStatus?: 'ACCC' | 'ACCP' | 'ACSC' | 'ACSP' | 'ACTC' | 'ACWC' | 'ACWP' | 'RCVD' | 'PDNG' | 'RJCT' | 'CANC' | 'ACFC' | 'PATC';
+  transactionStatus?:
+    | 'ACCC'
+    | 'ACCP'
+    | 'ACSC'
+    | 'ACSP'
+    | 'ACTC'
+    | 'ACWC'
+    | 'ACWP'
+    | 'RCVD'
+    | 'PDNG'
+    | 'RJCT'
+    | 'CANC'
+    | 'ACFC'
+    | 'PATC';
 }

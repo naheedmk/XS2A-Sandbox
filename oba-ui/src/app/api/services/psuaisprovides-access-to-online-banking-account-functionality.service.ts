@@ -1,6 +1,11 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpRequest,
+  HttpResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { BaseService as __BaseService } from '../base-service';
 import { ApiConfiguration as __Configuration } from '../api-configuration';
 import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
@@ -24,17 +29,20 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
   static readonly getListOfAccountsUsingGETPath = '/ais/accounts';
   static readonly aisAuthUsingGETPath = '/ais/auth';
   static readonly grantPiisConsentUsingPOSTPath = '/ais/piis';
-  static readonly authrizedConsentUsingPOSTPath = '/ais/{encryptedConsentId}/authorisation/{authorisationId}/authCode';
-  static readonly aisDoneUsingGETPath = '/ais/{encryptedConsentId}/authorisation/{authorisationId}/done';
-  static readonly loginUsingPOSTPath = '/ais/{encryptedConsentId}/authorisation/{authorisationId}/login';
-  static readonly selectMethodUsingPOSTPath = '/ais/{encryptedConsentId}/authorisation/{authorisationId}/methods/{scaMethodId}';
-  static readonly startConsentAuthUsingPOSTPath = '/ais/{encryptedConsentId}/authorisation/{authorisationId}/start';
-  static readonly revokeConsentUsingDELETEPath = '/ais/{encryptedConsentId}/{authorisationId}';
+  static readonly authrizedConsentUsingPOSTPath =
+    '/ais/{encryptedConsentId}/authorisation/{authorisationId}/authCode';
+  static readonly aisDoneUsingGETPath =
+    '/ais/{encryptedConsentId}/authorisation/{authorisationId}/done';
+  static readonly loginUsingPOSTPath =
+    '/ais/{encryptedConsentId}/authorisation/{authorisationId}/login';
+  static readonly selectMethodUsingPOSTPath =
+    '/ais/{encryptedConsentId}/authorisation/{authorisationId}/methods/{scaMethodId}';
+  static readonly startConsentAuthUsingPOSTPath =
+    '/ais/{encryptedConsentId}/authorisation/{authorisationId}/start';
+  static readonly revokeConsentUsingDELETEPath =
+    '/ais/{encryptedConsentId}/{authorisationId}';
 
-  constructor(
-    config: __Configuration,
-    http: HttpClient
-  ) {
+  constructor(config: __Configuration, http: HttpClient) {
     super(config, http);
   }
 
@@ -43,7 +51,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    * @param Cookie Cookie
    * @return List of accounts accessible to the user.
    */
-  getListOfAccountsUsingGETResponse(Cookie?: string): __Observable<__StrictHttpResponse<Array<AccountDetailsTO>>> {
+  getListOfAccountsUsingGETResponse(
+    Cookie?: string
+  ): __Observable<__StrictHttpResponse<Array<AccountDetailsTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -55,12 +65,13 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<Array<AccountDetailsTO>>;
       })
     );
@@ -70,7 +81,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    * @param Cookie Cookie
    * @return List of accounts accessible to the user.
    */
-  getListOfAccountsUsingGET(Cookie?: string): __Observable<Array<AccountDetailsTO>> {
+  getListOfAccountsUsingGET(
+    Cookie?: string
+  ): __Observable<Array<AccountDetailsTO>> {
     return this.getListOfAccountsUsingGETResponse(Cookie).pipe(
       __map(_r => _r.body as Array<AccountDetailsTO>)
     );
@@ -87,26 +100,33 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  aisAuthUsingGETResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisAuthUsingGETParams): __Observable<__StrictHttpResponse<AuthorizeResponse>> {
+  aisAuthUsingGETResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisAuthUsingGETParams
+  ): __Observable<__StrictHttpResponse<AuthorizeResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.redirectId != null) __params = __params.set('redirectId', params.redirectId.toString());
-    if (params.encryptedConsentId != null) __params = __params.set('encryptedConsentId', params.encryptedConsentId.toString());
-    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/ais/auth`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
+    if (params.redirectId != null)
+      __params = __params.set('redirectId', params.redirectId.toString());
+    if (params.encryptedConsentId != null)
+      __params = __params.set(
+        'encryptedConsentId',
+        params.encryptedConsentId.toString()
+      );
+    if (params.Authorization != null)
+      __headers = __headers.set(
+        'Authorization',
+        params.Authorization.toString()
+      );
+    let req = new HttpRequest<any>('GET', this.rootUrl + `/ais/auth`, __body, {
+      headers: __headers,
+      params: __params,
+      responseType: 'json',
+    });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<AuthorizeResponse>;
       })
     );
@@ -122,7 +142,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  aisAuthUsingGET(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisAuthUsingGETParams): __Observable<AuthorizeResponse> {
+  aisAuthUsingGET(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisAuthUsingGETParams
+  ): __Observable<AuthorizeResponse> {
     return this.aisAuthUsingGETResponse(params).pipe(
       __map(_r => _r.body as AuthorizeResponse)
     );
@@ -137,25 +159,24 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  grantPiisConsentUsingPOSTResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.GrantPiisConsentUsingPOSTParams): __Observable<__StrictHttpResponse<PIISConsentCreateResponse>> {
+  grantPiisConsentUsingPOSTResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.GrantPiisConsentUsingPOSTParams
+  ): __Observable<__StrictHttpResponse<PIISConsentCreateResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = params.piisConsentRequestTO;
-    if (params.Cookie != null) __headers = __headers.set('Cookie', params.Cookie.toString());
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/ais/piis`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
+    if (params.Cookie != null)
+      __headers = __headers.set('Cookie', params.Cookie.toString());
+    let req = new HttpRequest<any>('POST', this.rootUrl + `/ais/piis`, __body, {
+      headers: __headers,
+      params: __params,
+      responseType: 'json',
+    });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<PIISConsentCreateResponse>;
       })
     );
@@ -169,7 +190,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  grantPiisConsentUsingPOST(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.GrantPiisConsentUsingPOSTParams): __Observable<PIISConsentCreateResponse> {
+  grantPiisConsentUsingPOST(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.GrantPiisConsentUsingPOSTParams
+  ): __Observable<PIISConsentCreateResponse> {
     return this.grantPiisConsentUsingPOSTResponse(params).pipe(
       __map(_r => _r.body as PIISConsentCreateResponse)
     );
@@ -188,27 +211,32 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  authrizedConsentUsingPOSTResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AuthrizedConsentUsingPOSTParams): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
+  authrizedConsentUsingPOSTResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AuthrizedConsentUsingPOSTParams
+  ): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
-    if (params.authCode != null) __params = __params.set('authCode', params.authCode.toString());
-    if (params.Cookie != null) __headers = __headers.set('Cookie', params.Cookie.toString());
+    if (params.authCode != null)
+      __params = __params.set('authCode', params.authCode.toString());
+    if (params.Cookie != null)
+      __headers = __headers.set('Cookie', params.Cookie.toString());
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/authCode`,
+      this.rootUrl +
+        `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/authCode`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<ConsentAuthorizeResponse>;
       })
     );
@@ -226,7 +254,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  authrizedConsentUsingPOST(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AuthrizedConsentUsingPOSTParams): __Observable<ConsentAuthorizeResponse> {
+  authrizedConsentUsingPOST(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AuthrizedConsentUsingPOSTParams
+  ): __Observable<ConsentAuthorizeResponse> {
     return this.authrizedConsentUsingPOSTResponse(params).pipe(
       __map(_r => _r.body as ConsentAuthorizeResponse)
     );
@@ -248,28 +278,37 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  aisDoneUsingGETResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisDoneUsingGETParams): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
+  aisDoneUsingGETResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisDoneUsingGETParams
+  ): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
-    if (params.oauth2 != null) __params = __params.set('oauth2', params.oauth2.toString());
-    if (params.authConfirmationCode != null) __params = __params.set('authConfirmationCode', params.authConfirmationCode.toString());
-    if (params.Cookie != null) __headers = __headers.set('Cookie', params.Cookie.toString());
+    if (params.oauth2 != null)
+      __params = __params.set('oauth2', params.oauth2.toString());
+    if (params.authConfirmationCode != null)
+      __params = __params.set(
+        'authConfirmationCode',
+        params.authConfirmationCode.toString()
+      );
+    if (params.Cookie != null)
+      __headers = __headers.set('Cookie', params.Cookie.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/done`,
+      this.rootUrl +
+        `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/done`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<ConsentAuthorizeResponse>;
       })
     );
@@ -290,7 +329,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  aisDoneUsingGET(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisDoneUsingGETParams): __Observable<ConsentAuthorizeResponse> {
+  aisDoneUsingGET(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.AisDoneUsingGETParams
+  ): __Observable<ConsentAuthorizeResponse> {
     return this.aisDoneUsingGETResponse(params).pipe(
       __map(_r => _r.body as ConsentAuthorizeResponse)
     );
@@ -311,28 +352,34 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  loginUsingPOSTResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.LoginUsingPOSTParams): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
+  loginUsingPOSTResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.LoginUsingPOSTParams
+  ): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
-    if (params.pin != null) __params = __params.set('pin', params.pin.toString());
-    if (params.login != null) __params = __params.set('login', params.login.toString());
-    if (params.Cookie != null) __headers = __headers.set('Cookie', params.Cookie.toString());
+    if (params.pin != null)
+      __params = __params.set('pin', params.pin.toString());
+    if (params.login != null)
+      __params = __params.set('login', params.login.toString());
+    if (params.Cookie != null)
+      __headers = __headers.set('Cookie', params.Cookie.toString());
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/login`,
+      this.rootUrl +
+        `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/login`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<ConsentAuthorizeResponse>;
       })
     );
@@ -352,7 +399,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  loginUsingPOST(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.LoginUsingPOSTParams): __Observable<ConsentAuthorizeResponse> {
+  loginUsingPOST(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.LoginUsingPOSTParams
+  ): __Observable<ConsentAuthorizeResponse> {
     return this.loginUsingPOSTResponse(params).pipe(
       __map(_r => _r.body as ConsentAuthorizeResponse)
     );
@@ -371,27 +420,30 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  selectMethodUsingPOSTResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.SelectMethodUsingPOSTParams): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
+  selectMethodUsingPOSTResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.SelectMethodUsingPOSTParams
+  ): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
-
-    if (params.Cookie != null) __headers = __headers.set('Cookie', params.Cookie.toString());
+    if (params.Cookie != null)
+      __headers = __headers.set('Cookie', params.Cookie.toString());
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/methods/${params.scaMethodId}`,
+      this.rootUrl +
+        `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/methods/${params.scaMethodId}`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<ConsentAuthorizeResponse>;
       })
     );
@@ -409,7 +461,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  selectMethodUsingPOST(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.SelectMethodUsingPOSTParams): __Observable<ConsentAuthorizeResponse> {
+  selectMethodUsingPOST(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.SelectMethodUsingPOSTParams
+  ): __Observable<ConsentAuthorizeResponse> {
     return this.selectMethodUsingPOSTResponse(params).pipe(
       __map(_r => _r.body as ConsentAuthorizeResponse)
     );
@@ -428,27 +482,31 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  startConsentAuthUsingPOSTResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.StartConsentAuthUsingPOSTParams): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
+  startConsentAuthUsingPOSTResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.StartConsentAuthUsingPOSTParams
+  ): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
     __body = params.aisConsent;
-    if (params.Cookie != null) __headers = __headers.set('Cookie', params.Cookie.toString());
+    if (params.Cookie != null)
+      __headers = __headers.set('Cookie', params.Cookie.toString());
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/start`,
+      this.rootUrl +
+        `/ais/${params.encryptedConsentId}/authorisation/${params.authorisationId}/start`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<ConsentAuthorizeResponse>;
       })
     );
@@ -466,7 +524,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  startConsentAuthUsingPOST(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.StartConsentAuthUsingPOSTParams): __Observable<ConsentAuthorizeResponse> {
+  startConsentAuthUsingPOST(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.StartConsentAuthUsingPOSTParams
+  ): __Observable<ConsentAuthorizeResponse> {
     return this.startConsentAuthUsingPOSTResponse(params).pipe(
       __map(_r => _r.body as ConsentAuthorizeResponse)
     );
@@ -484,26 +544,30 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  revokeConsentUsingDELETEResponse(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.RevokeConsentUsingDELETEParams): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
+  revokeConsentUsingDELETEResponse(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.RevokeConsentUsingDELETEParams
+  ): __Observable<__StrictHttpResponse<ConsentAuthorizeResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
-    if (params.Cookie != null) __headers = __headers.set('Cookie', params.Cookie.toString());
+    if (params.Cookie != null)
+      __headers = __headers.set('Cookie', params.Cookie.toString());
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/ais/${params.encryptedConsentId}/${params.authorisationId}`,
+      this.rootUrl +
+        `/ais/${params.encryptedConsentId}/${params.authorisationId}`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<ConsentAuthorizeResponse>;
       })
     );
@@ -520,7 +584,9 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
    *
    * @return OK
    */
-  revokeConsentUsingDELETE(params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.RevokeConsentUsingDELETEParams): __Observable<ConsentAuthorizeResponse> {
+  revokeConsentUsingDELETE(
+    params: PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService.RevokeConsentUsingDELETEParams
+  ): __Observable<ConsentAuthorizeResponse> {
     return this.revokeConsentUsingDELETEResponse(params).pipe(
       __map(_r => _r.body as ConsentAuthorizeResponse)
     );
@@ -528,12 +594,10 @@ class PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService extends __B
 }
 
 module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
-
   /**
    * Parameters for aisAuthUsingGET
    */
   export interface AisAuthUsingGETParams {
-
     /**
      * redirectId
      */
@@ -554,7 +618,6 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
    * Parameters for grantPiisConsentUsingPOST
    */
   export interface GrantPiisConsentUsingPOSTParams {
-
     /**
      * piisConsentRequestTO
      */
@@ -570,7 +633,6 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
    * Parameters for authrizedConsentUsingPOST
    */
   export interface AuthrizedConsentUsingPOSTParams {
-
     /**
      * encryptedConsentId
      */
@@ -596,7 +658,6 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
    * Parameters for aisDoneUsingGET
    */
   export interface AisDoneUsingGETParams {
-
     /**
      * encryptedConsentId
      */
@@ -627,7 +688,6 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
    * Parameters for loginUsingPOST
    */
   export interface LoginUsingPOSTParams {
-
     /**
      * encryptedConsentId
      */
@@ -658,7 +718,6 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
    * Parameters for selectMethodUsingPOST
    */
   export interface SelectMethodUsingPOSTParams {
-
     /**
      * scaMethodId
      */
@@ -684,7 +743,6 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
    * Parameters for startConsentAuthUsingPOST
    */
   export interface StartConsentAuthUsingPOSTParams {
-
     /**
      * encryptedConsentId
      */
@@ -710,7 +768,6 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
    * Parameters for revokeConsentUsingDELETE
    */
   export interface RevokeConsentUsingDELETEParams {
-
     /**
      * encryptedConsentId
      */
@@ -728,4 +785,4 @@ module PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService {
   }
 }
 
-export { PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService }
+export { PSUAISProvidesAccessToOnlineBankingAccountFunctionalityService };

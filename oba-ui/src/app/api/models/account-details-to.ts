@@ -9,7 +9,27 @@ export interface AccountDetailsTO {
   currency?: string;
   details?: string;
   iban?: string;
-  accountType?: 'CACC' | 'CASH' | 'CHAR' | 'CISH' | 'COMM' | 'CPAC' | 'LLSV' | 'LOAN' | 'MGLD' | 'MOMA' | 'NREX' | 'ODFT' | 'ONDP' | 'OTHR' | 'SACC' | 'SLRY' | 'SVGS' | 'TAXE' | 'TRAN' | 'TRAS';
+  accountType?:
+    | 'CACC'
+    | 'CASH'
+    | 'CHAR'
+    | 'CISH'
+    | 'COMM'
+    | 'CPAC'
+    | 'LLSV'
+    | 'LOAN'
+    | 'MGLD'
+    | 'MOMA'
+    | 'NREX'
+    | 'ODFT'
+    | 'ONDP'
+    | 'OTHR'
+    | 'SACC'
+    | 'SLRY'
+    | 'SVGS'
+    | 'TAXE'
+    | 'TRAN'
+    | 'TRAS';
   linkedAccounts?: string;
   maskedPan?: string;
   msisdn?: string;

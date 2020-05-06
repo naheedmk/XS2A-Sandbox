@@ -8,37 +8,36 @@ import { CustomizeService } from '../../common/services/customize.service';
 @Component({
   selector: 'app-confirm-password',
   templateUrl: './confirm-password.component.html',
-  styleUrls: ['./confirm-password.component.scss']
+  styleUrls: ['./confirm-password.component.scss'],
 })
 export class ConfirmPasswordComponent implements OnInit {
+  confirmNewPasswordForm: FormGroup;
+  public submitted: boolean;
+  public errorMessage: string;
 
-    confirmNewPasswordForm: FormGroup;
-    public submitted: boolean;
-    public errorMessage: string;
+  constructor(
+    public customizeService: CustomizeService,
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
-    constructor(
-      public customizeService: CustomizeService,
-      private authService: AuthService,
-      private formBuilder: FormBuilder,
-      private router: Router) {
+  ngOnInit() {
+    this.confirmNewPasswordForm = this.formBuilder.group({
+      newPassword: ['', Validators.required],
+      code: ['', Validators.required],
+    });
+  }
+
+  onSubmit() {
+    if (this.confirmNewPasswordForm.invalid) {
+      this.submitted = true;
+      this.errorMessage = 'Please enter your credentials';
+      return;
     }
 
-    ngOnInit() {
-        this.confirmNewPasswordForm = this.formBuilder.group({
-            newPassword: ['', Validators.required],
-            code: ['', Validators.required],
-        });
-    }
-
-    onSubmit() {
-        if (this.confirmNewPasswordForm.invalid) {
-            this.submitted = true;
-            this.errorMessage = 'Please enter your credentials';
-            return;
-        }
-
-        this.authService.resetPassword(this.confirmNewPasswordForm.value)
-            .subscribe(() => this.router.navigate(['/login']));
-    }
-
+    this.authService
+      .resetPassword(this.confirmNewPasswordForm.value)
+      .subscribe(() => this.router.navigate(['/login']));
+  }
 }

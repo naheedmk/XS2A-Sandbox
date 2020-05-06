@@ -5,7 +5,6 @@ import { AccountReference } from './account-reference';
  * Piis consent request
  */
 export interface PiisConsentRequest {
-
   /**
    * Account, where the confirmation of funds service is aimed to be submitted to.
    */

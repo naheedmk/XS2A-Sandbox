@@ -12,12 +12,12 @@ import { PisService } from '../../common/services/pis.service';
 import { ShareDataService } from '../../common/services/share-data.service';
 
 import LoginUsingPOST2Params = PSUPISCancellationProvidesAccessToOnlineBankingPaymentFunctionalityService.LoginUsingPOST2Params;
-import {PSUPISCancellationProvidesAccessToOnlineBankingPaymentFunctionalityService} from "../../api/services/psupiscancellation-provides-access-to-online-banking-payment-functionality.service";
+import { PSUPISCancellationProvidesAccessToOnlineBankingPaymentFunctionalityService } from '../../api/services/psupiscancellation-provides-access-to-online-banking-payment-functionality.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
@@ -29,16 +29,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-
-  constructor(public customizeService: CustomizeService,
-              private formBuilder: FormBuilder,
-              private infoService: InfoService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private pisCancellationService: PisCancellationService,
-              private shareService: ShareDataService,
-              private pisService: PisService) {
-  }
+  constructor(
+    public customizeService: CustomizeService,
+    private formBuilder: FormBuilder,
+    private infoService: InfoService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private pisCancellationService: PisCancellationService,
+    private shareService: ShareDataService,
+    private pisService: PisService
+  ) {}
 
   ngOnInit() {
     this.initLoginForm();
@@ -48,29 +48,44 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     this.subscriptions.push(
-      this.pisCancellationService.pisCancellationLogin({
-        ...this.loginForm.value,
-        encryptedPaymentId: this.encryptedPaymentId,
-        authorisationId: this.redirectId,
-      } as LoginUsingPOST2Params).subscribe(authorisationResponse => {
-        console.log(authorisationResponse);
-        this.shareService.changePaymentData(authorisationResponse);
-        this.router.navigate([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.CONFIRM_CANCELLATION}`]);
-      }, (error: HttpErrorResponse) => {
-        // if paymentId or redirectId is missing
-        if (this.encryptedPaymentId === undefined || this.redirectId === undefined) {
-          this.infoService.openFeedback('Payment data is missing. Please initiate payment cancellation prior to login', {
-            severity: 'error'
-          });
-        } else {
-          if (error.status === 401) {
-            this.errorMessage = 'Invalid credentials';
-          } else {
-            this.errorMessage = error.error ? error.error.message : error.message;
+      this.pisCancellationService
+        .pisCancellationLogin({
+          ...this.loginForm.value,
+          encryptedPaymentId: this.encryptedPaymentId,
+          authorisationId: this.redirectId,
+        } as LoginUsingPOST2Params)
+        .subscribe(
+          authorisationResponse => {
+            console.log(authorisationResponse);
+            this.shareService.changePaymentData(authorisationResponse);
+            this.router.navigate([
+              `${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.CONFIRM_CANCELLATION}`,
+            ]);
+          },
+          (error: HttpErrorResponse) => {
+            // if paymentId or redirectId is missing
+            if (
+              this.encryptedPaymentId === undefined ||
+              this.redirectId === undefined
+            ) {
+              this.infoService.openFeedback(
+                'Payment data is missing. Please initiate payment cancellation prior to login',
+                {
+                  severity: 'error',
+                }
+              );
+            } else {
+              if (error.status === 401) {
+                this.errorMessage = 'Invalid credentials';
+              } else {
+                this.errorMessage = error.error
+                  ? error.error.message
+                  : error.message;
+              }
+              throw new HttpErrorResponse(error);
+            }
           }
-          throw new HttpErrorResponse(error);
-        }
-      })
+        )
     );
   }
 
@@ -84,16 +99,24 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.redirectId = params.redirectId;
 
       // set oauth2 param in shared service
-      params.oauth2 ? this.shareService.setOauthParam(true) : this.shareService.setOauthParam(false);
+      params.oauth2
+        ? this.shareService.setOauthParam(true)
+        : this.shareService.setOauthParam(false);
 
       this.subscriptions.push(
-        this.pisService.pisAuthCode({encryptedPaymentId: this.encryptedPaymentId, redirectId: this.redirectId})
-          .subscribe(authCodeResponse => {
+        this.pisService
+          .pisAuthCode({
+            encryptedPaymentId: this.encryptedPaymentId,
+            redirectId: this.redirectId,
+          })
+          .subscribe(
+            authCodeResponse => {
               this.shareService.changeData(authCodeResponse.body);
             },
-            (error) => {
+            error => {
               console.log(error);
-            })
+            }
+          )
       );
     });
   }
@@ -101,9 +124,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private initLoginForm(): void {
     this.loginForm = this.formBuilder.group({
       login: ['', Validators.required],
-      pin: ['', Validators.required]
+      pin: ['', Validators.required],
     });
   }
-
-
 }

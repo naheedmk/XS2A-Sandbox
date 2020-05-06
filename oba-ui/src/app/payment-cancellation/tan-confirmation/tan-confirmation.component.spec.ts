@@ -5,7 +5,7 @@ import { ShareDataService } from '../../common/services/share-data.service';
 import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
 import { TanConfirmationComponent } from './tan-confirmation.component';
 import AuthorisePaymentUsingPOSTParams = PSUPISCancellationProvidesAccessToOnlineBankingPaymentFunctionalityService.AuthorisePaymentUsingPOSTParams;
-import {PSUPISCancellationProvidesAccessToOnlineBankingPaymentFunctionalityService} from "../../api/services/psupiscancellation-provides-access-to-online-banking-payment-functionality.service";
+import { PSUPISCancellationProvidesAccessToOnlineBankingPaymentFunctionalityService } from '../../api/services/psupiscancellation-provides-access-to-online-banking-payment-functionality.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoutingPath } from '../../common/models/routing-path.model';
 
@@ -13,12 +13,11 @@ import { of, throwError } from 'rxjs';
 import get = Reflect.get;
 
 const mockRouter = {
-    navigate: (url: string) => {
-    }
+  navigate: (url: string) => {},
 };
 
 const mockActivatedRoute = {
-    params: of({id: '12345'})
+  params: of({ id: '12345' }),
 };
 
 describe('TanConfirmationComponent', () => {
@@ -30,13 +29,15 @@ describe('TanConfirmationComponent', () => {
   let route: ActivatedRoute;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule],
+      imports: [ReactiveFormsModule],
       declarations: [TanConfirmationComponent, PaymentDetailsComponent],
-        providers: [ShareDataService, PisCancellationService,
-            {provide: Router, useValue: mockRouter},
-            {provide: ActivatedRoute, useValue: mockActivatedRoute}]
-    })
-      .compileComponents();
+      providers: [
+        ShareDataService,
+        PisCancellationService,
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -54,52 +55,84 @@ describe('TanConfirmationComponent', () => {
   });
 
   it('should call the on submit', () => {
-      let mockResponse = {
-          encryptedPaymentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+    let mockResponse = {
+      encryptedPaymentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+      authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+    };
+    component.authResponse = mockResponse;
+    component.tanForm.get('authCode').setValue('izsugfHZVblizdwru79348z0');
+    let pisCancelSpy = spyOn(
+      pisCancellationService,
+      'authorizePayment'
+    ).and.returnValue(of(mockResponse));
+    let navigateSpy = spyOn(router, 'navigate').and.returnValue(
+      of(undefined).toPromise()
+    );
+    component.onSubmit();
+    expect(navigateSpy).toHaveBeenCalledWith(
+      [`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
+      {
+        queryParams: {
+          encryptedConsentId: undefined,
           authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+          oauth2: null,
+        },
       }
-      component.authResponse = mockResponse;
-      component.tanForm.get('authCode').setValue('izsugfHZVblizdwru79348z0');
-      let pisCancelSpy = spyOn(pisCancellationService, 'authorizePayment').and.returnValue(of(mockResponse));
-      let navigateSpy = spyOn(router, 'navigate').and.returnValue(of(undefined).toPromise());
-      component.onSubmit();
-      expect(navigateSpy).toHaveBeenCalledWith([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
-          {queryParams: { encryptedConsentId:undefined,
-                  authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293', oauth2: null}});
-      expect(pisCancelSpy).toHaveBeenCalled();
+    );
+    expect(pisCancelSpy).toHaveBeenCalled();
   });
 
-    it('should call the on submit and return to result page when you set a wrong TAN', () => {
-        let mockResponse = {
-            encryptedConsentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
-            authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293'
-        }
-        component.authResponse = mockResponse;
-        component.tanForm.get('authCode').setValue('izsugfHZVblizdwru79348z0fHZVblizdwru793');
-        component.invalidTanCount = 3;
-        let pisCancelSpy = spyOn(pisCancellationService, 'authorizePayment').and.returnValue(throwError(mockResponse));
-        let navigateSpy = spyOn(router, 'navigate').and.returnValue(of(undefined).toPromise());
-        component.onSubmit();
-        expect(navigateSpy).toHaveBeenCalledWith([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
-            {queryParams: { encryptedConsentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
-                    authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293', oauth2: null}});
-        expect(pisCancelSpy).toHaveBeenCalled();
-    });
+  it('should call the on submit and return to result page when you set a wrong TAN', () => {
+    let mockResponse = {
+      encryptedConsentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+      authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+    };
+    component.authResponse = mockResponse;
+    component.tanForm
+      .get('authCode')
+      .setValue('izsugfHZVblizdwru79348z0fHZVblizdwru793');
+    component.invalidTanCount = 3;
+    let pisCancelSpy = spyOn(
+      pisCancellationService,
+      'authorizePayment'
+    ).and.returnValue(throwError(mockResponse));
+    let navigateSpy = spyOn(router, 'navigate').and.returnValue(
+      of(undefined).toPromise()
+    );
+    component.onSubmit();
+    expect(navigateSpy).toHaveBeenCalledWith(
+      [`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
+      {
+        queryParams: {
+          encryptedConsentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+          authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+          oauth2: null,
+        },
+      }
+    );
+    expect(pisCancelSpy).toHaveBeenCalled();
+  });
 
-    it('should cancel and redirect to result page', () => {
-        let mockResponse = {
-            encryptedConsentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
-            authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293'
-        }
-        component.authResponse = mockResponse;
-        let navigateSpy = spyOn(router, 'navigate');
-        component.onCancel();
-        expect(navigateSpy).toHaveBeenCalledWith([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
-            {queryParams: { encryptedConsentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
-                    authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293'}});
-    });
+  it('should cancel and redirect to result page', () => {
+    let mockResponse = {
+      encryptedConsentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+      authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+    };
+    component.authResponse = mockResponse;
+    let navigateSpy = spyOn(router, 'navigate');
+    component.onCancel();
+    expect(navigateSpy).toHaveBeenCalledWith(
+      [`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
+      {
+        queryParams: {
+          encryptedConsentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+          authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+        },
+      }
+    );
+  });
 
-    it('should call the on submit with no data and return', () => {
-        component.onSubmit();
-    });
+  it('should call the on submit with no data and return', () => {
+    component.onSubmit();
+  });
 });

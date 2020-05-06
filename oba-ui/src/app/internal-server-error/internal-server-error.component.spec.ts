@@ -8,9 +8,8 @@ describe('InternalServerErrorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InternalServerErrorComponent ]
-    })
-    .compileComponents();
+      declarations: [InternalServerErrorComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

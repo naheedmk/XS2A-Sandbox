@@ -12,37 +12,37 @@ import { of, throwError } from 'rxjs';
 import get = Reflect.get;
 
 const mockRouter = {
-    navigate: (url: string) => {
-    }
+  navigate: (url: string) => {},
 };
 
 const mockActivatedRoute = {
-    params: of({id: '12345'})
+  params: of({ id: '12345' }),
 };
 
 describe('ConfirmCancellationComponent', () => {
   let component: ConfirmCancellationComponent;
   let fixture: ComponentFixture<ConfirmCancellationComponent>;
-    let router: Router;
-    let route: ActivatedRoute;
-    let shareDataService: ShareDataService;
+  let router: Router;
+  let route: ActivatedRoute;
+  let shareDataService: ShareDataService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [ConfirmCancellationComponent, PaymentDetailsComponent],
-        providers: [ShareDataService,
-            {provide: Router, useValue: mockRouter},
-            {provide: ActivatedRoute, useValue: mockActivatedRoute}]
-    })
-      .compileComponents();
+      providers: [
+        ShareDataService,
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfirmCancellationComponent);
     component = fixture.componentInstance;
-      router = TestBed.get(Router);
-      route = TestBed.get(ActivatedRoute);
-      shareDataService = TestBed.get(ShareDataService);
+    router = TestBed.get(Router);
+    route = TestBed.get(ActivatedRoute);
+    shareDataService = TestBed.get(ShareDataService);
     fixture.detectChanges();
   });
 
@@ -50,27 +50,35 @@ describe('ConfirmCancellationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-    it('should confirm the payment and redirect to select sca page ', () => {
-        let mockResponse = {
-            encryptedConsentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
-            authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293'
-        }
-        component.authResponse = mockResponse;
-        let navigateSpy = spyOn(router, 'navigate');
-        component.onConfirm();
-        expect(navigateSpy).toHaveBeenCalledWith([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.SELECT_SCA}`]);
-    });
+  it('should confirm the payment and redirect to select sca page ', () => {
+    let mockResponse = {
+      encryptedConsentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+      authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+    };
+    component.authResponse = mockResponse;
+    let navigateSpy = spyOn(router, 'navigate');
+    component.onConfirm();
+    expect(navigateSpy).toHaveBeenCalledWith([
+      `${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.SELECT_SCA}`,
+    ]);
+  });
 
-    it('should cancel and redirect to result page', () => {
-        let mockResponse = {
-            encryptedConsentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
-            authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293'
-        }
-        component.authResponse = mockResponse;
-        let navigateSpy = spyOn(router, 'navigate');
-        component.onCancel();
-        expect(navigateSpy).toHaveBeenCalledWith([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
-            {queryParams: { encryptedConsentId:'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
-                    authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293'}});
-    });
+  it('should cancel and redirect to result page', () => {
+    let mockResponse = {
+      encryptedConsentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+      authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+    };
+    component.authResponse = mockResponse;
+    let navigateSpy = spyOn(router, 'navigate');
+    component.onCancel();
+    expect(navigateSpy).toHaveBeenCalledWith(
+      [`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
+      {
+        queryParams: {
+          encryptedConsentId: 'owirhJHGVSgueif98200293uwpgofowbOUIGb39845zt0',
+          authorisationId: 'uwpgofowbOUIGb39845zt0owirhJHGVSgueif98200293',
+        },
+      }
+    );
+  });
 });

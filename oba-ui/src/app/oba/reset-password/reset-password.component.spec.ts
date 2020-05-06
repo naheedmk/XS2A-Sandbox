@@ -18,16 +18,15 @@ describe('ResetPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResetPasswordComponent ],
+      declarations: [ResetPasswordComponent],
       imports: [
-          ReactiveFormsModule,
-          HttpClientTestingModule,
-          RouterTestingModule,
-          BrowserAnimationsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        BrowserAnimationsModule,
       ],
-        providers: [AuthService]
-    })
-    .compileComponents();
+      providers: [AuthService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -38,71 +37,81 @@ describe('ResetPasswordComponent', () => {
     de = fixture.debugElement.query(By.css('form'));
     el = de.nativeElement;
     fixture.detectChanges();
-    component.ngOnInit();  });
+    component.ngOnInit();
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-    it('should call login on the service', () => {
-        authServiceSpy = spyOn(authService, 'requestCodeToResetPassword').and.callThrough();
+  it('should call login on the service', () => {
+    authServiceSpy = spyOn(
+      authService,
+      'requestCodeToResetPassword'
+    ).and.callThrough();
 
-        const form = component.resetPasswordForm;
-        form.controls['login'].setValue('test');
-        form.controls['email'].setValue('test@test.de');
-        fixture.detectChanges();
+    const form = component.resetPasswordForm;
+    form.controls['login'].setValue('test');
+    form.controls['email'].setValue('test@test.de');
+    fixture.detectChanges();
 
-        el = fixture.debugElement.query(By.css('button')).nativeElement;
-        el.click();
+    el = fixture.debugElement.query(By.css('button')).nativeElement;
+    el.click();
 
-        expect(authServiceSpy).toHaveBeenCalledWith({login: 'test', email: 'test@test.de'});
-        expect(authServiceSpy).toHaveBeenCalled();
+    expect(authServiceSpy).toHaveBeenCalledWith({
+      login: 'test',
+      email: 'test@test.de',
     });
+    expect(authServiceSpy).toHaveBeenCalled();
+  });
 
-    it('loginForm should be invalid when at least one field is empty', () => {
-        expect(component.resetPasswordForm.valid).toBeFalsy();
-    });
+  it('loginForm should be invalid when at least one field is empty', () => {
+    expect(component.resetPasswordForm.valid).toBeFalsy();
+  });
 
-    it('email field validity', () => {
-        let errors = {};
-        const email = component.resetPasswordForm.controls['email'];
-        expect(email.valid).toBeFalsy();
+  it('email field validity', () => {
+    let errors = {};
+    const email = component.resetPasswordForm.controls['email'];
+    expect(email.valid).toBeFalsy();
 
-        // email field is required
-        errors = email.errors || {};
-        expect(errors['required']).toBeTruthy();
+    // email field is required
+    errors = email.errors || {};
+    expect(errors['required']).toBeTruthy();
 
-        // set email to something correct
-        email.setValue('test@test.de');
-        errors = email.errors || {};
-        expect(errors['required']).toBeFalsy();
-    });
+    // set email to something correct
+    email.setValue('test@test.de');
+    errors = email.errors || {};
+    expect(errors['required']).toBeFalsy();
+  });
 
-    it('login field validity', () => {
-        let errors = {};
-        const login = component.resetPasswordForm.controls['login'];
-        expect(login.valid).toBeFalsy();
+  it('login field validity', () => {
+    let errors = {};
+    const login = component.resetPasswordForm.controls['login'];
+    expect(login.valid).toBeFalsy();
 
-        // login field is required
-        errors = login.errors || {};
-        expect(errors['required']).toBeTruthy();
+    // login field is required
+    errors = login.errors || {};
+    expect(errors['required']).toBeTruthy();
 
-        // set login to something correct
-        login.setValue('foo');
-        errors = login.errors || {};
-        expect(errors['required']).toBeFalsy();
-    });
+    // set login to something correct
+    login.setValue('foo');
+    errors = login.errors || {};
+    expect(errors['required']).toBeFalsy();
+  });
 
-    it('should call the valid form on Submit ', () => {
-        component.resetPasswordForm.get('email').setValue('foo@foo.de');
-        component.resetPasswordForm.get('login').setValue('foo');
-        let resetSpy = spyOn(authService, 'requestCodeToResetPassword').and.returnValue(of({}));
-        component.onSubmit();
-        expect(resetSpy).toHaveBeenCalled();
-    });
+  it('should call the valid form on Submit ', () => {
+    component.resetPasswordForm.get('email').setValue('foo@foo.de');
+    component.resetPasswordForm.get('login').setValue('foo');
+    let resetSpy = spyOn(
+      authService,
+      'requestCodeToResetPassword'
+    ).and.returnValue(of({}));
+    component.onSubmit();
+    expect(resetSpy).toHaveBeenCalled();
+  });
 
-    it('should call the on Submit', () => {
-        component.onSubmit();
-        expect(component.resetPasswordForm.invalid).toBeTruthy()
-    });
+  it('should call the on Submit', () => {
+    component.onSubmit();
+    expect(component.resetPasswordForm.invalid).toBeTruthy();
+  });
 });

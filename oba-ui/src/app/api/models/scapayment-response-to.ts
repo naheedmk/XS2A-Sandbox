@@ -16,7 +16,29 @@ export interface SCAPaymentResponseTO {
   paymentType?: 'SINGLE' | 'PERIODIC' | 'BULK';
   psuMessage?: string;
   scaMethods?: Array<ScaUserDataTO>;
-  scaStatus?: 'received' | 'psuIdentified' | 'psuAuthenticated' | 'scaMethodSelected' | 'started' | 'finalised' | 'failed' | 'exempted' | 'unconfirmed';
+  scaStatus?:
+    | 'received'
+    | 'psuIdentified'
+    | 'psuAuthenticated'
+    | 'scaMethodSelected'
+    | 'started'
+    | 'finalised'
+    | 'failed'
+    | 'exempted'
+    | 'unconfirmed';
   statusDate?: string;
-  transactionStatus?: 'ACCC' | 'ACCP' | 'ACSC' | 'ACSP' | 'ACTC' | 'ACWC' | 'ACWP' | 'RCVD' | 'PDNG' | 'RJCT' | 'CANC' | 'ACFC' | 'PATC';
+  transactionStatus?:
+    | 'ACCC'
+    | 'ACCP'
+    | 'ACSC'
+    | 'ACSP'
+    | 'ACTC'
+    | 'ACWC'
+    | 'ACWP'
+    | 'RCVD'
+    | 'PDNG'
+    | 'RJCT'
+    | 'CANC'
+    | 'ACFC'
+    | 'PATC';
 }

@@ -13,10 +13,9 @@ import { ShareDataService } from '../../common/services/share-data.service';
 @Component({
   selector: 'app-select-sca',
   templateUrl: './select-sca.component.html',
-  styleUrls: ['./select-sca.component.scss']
+  styleUrls: ['./select-sca.component.scss'],
 })
 export class SelectScaComponent implements OnInit, OnDestroy {
-
   public authResponse: ConsentAuthorizeResponse;
   public selectedScaMethod: ScaUserDataTO;
   public scaForm: FormGroup;
@@ -29,7 +28,8 @@ export class SelectScaComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private aisService: AisService,
-    private shareService: ShareDataService) {
+    private shareService: ShareDataService
+  ) {
     this.scaForm = this.formBuilder.group({
       scaMethod: ['', Validators.required],
     });
@@ -63,35 +63,46 @@ export class SelectScaComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(
-      this.aisService.selectScaMethod({
-        encryptedConsentId: this.authResponse.encryptedConsentId,
-        authorisationId: this.authResponse.authorisationId,
-        scaMethodId: this.selectedScaMethod.id
-      }).subscribe(authResponse => {
-        this.authResponse = authResponse;
-        this.shareService.changeData(this.authResponse);
-        this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.TAN_CONFIRMATION}`]);
-      })
+      this.aisService
+        .selectScaMethod({
+          encryptedConsentId: this.authResponse.encryptedConsentId,
+          authorisationId: this.authResponse.authorisationId,
+          scaMethodId: this.selectedScaMethod.id,
+        })
+        .subscribe(authResponse => {
+          this.authResponse = authResponse;
+          this.shareService.changeData(this.authResponse);
+          this.router.navigate([
+            `${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.TAN_CONFIRMATION}`,
+          ]);
+        })
     );
   }
 
   // TODO: move to Oba Util https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/issues/9
   public onCancel(): void {
-    this.aisService.revokeConsent({
-      encryptedConsentId: this.authResponse.encryptedConsentId,
-      authorisationId: this.authResponse.authorisationId
-    }).subscribe(authResponse => {
-      console.log(authResponse);
-      this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.RESULT}`], {
-        queryParams: {
-          encryptedConsentId: this.authResponse.encryptedConsentId,
-          authorisationId: this.authResponse.authorisationId
-        }
-      }).then(() => {
-        this.authResponse = authResponse;
-        this.shareService.changeData(this.authResponse);
+    this.aisService
+      .revokeConsent({
+        encryptedConsentId: this.authResponse.encryptedConsentId,
+        authorisationId: this.authResponse.authorisationId,
+      })
+      .subscribe(authResponse => {
+        console.log(authResponse);
+        this.router
+          .navigate(
+            [`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.RESULT}`],
+            {
+              queryParams: {
+                encryptedConsentId: this.authResponse.encryptedConsentId,
+                authorisationId: this.authResponse.authorisationId,
+              },
+            }
+          )
+          .then(() => {
+            this.authResponse = authResponse;
+            this.shareService.changeData(this.authResponse);
+          });
       });
-    });
   }
 
   handleMethodSelectedEvent(scaMethod: ScaUserDataTO): void {
@@ -102,5 +113,4 @@ export class SelectScaComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
-
 }

@@ -4,7 +4,6 @@
  * Ais account access information
  */
 export interface AisAccountAccessInfo {
-
   /**
    * Access to accounts
    */

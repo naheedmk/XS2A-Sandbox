@@ -14,18 +14,18 @@ import { TanConfirmationComponent } from './tan-confirmation/tan-confirmation.co
 @NgModule({
   declarations: [
     TanConfirmationComponent,
-    LoginComponent, ConfirmCancellationComponent,
+    LoginComponent,
+    ConfirmCancellationComponent,
     PaymentDetailsComponent,
     SelectScaComponent,
-    ResultPageComponent
+    ResultPageComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     PaymentCancellationRoutingModule,
-    NotFoundModule
-  ]
+    NotFoundModule,
+  ],
 })
-export class PaymentCancellationModule {
-}
+export class PaymentCancellationModule {}

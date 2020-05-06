@@ -5,7 +5,6 @@ import { AisAccountAccessInfo } from './ais-account-access-info';
  * Ais consent request
  */
 export interface AisConsentRequest {
-
   /**
    * Set of accesses given by psu for this account
    */

@@ -1,6 +1,11 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpRequest,
+  HttpResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { BaseService as __BaseService } from '../base-service';
 import { ApiConfiguration as __Configuration } from '../api-configuration';
 import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
@@ -16,14 +21,12 @@ import { ObaAisConsent } from '../models/oba-ais-consent';
   providedIn: 'root',
 })
 class OnlineBankingConsentsService extends __BaseService {
-  static readonly confirmUsingGETPath = '/api/v1/consents/confirm/{userLogin}/{consentId}/{authorizationId}/{tan}';
+  static readonly confirmUsingGETPath =
+    '/api/v1/consents/confirm/{userLogin}/{consentId}/{authorizationId}/{tan}';
   static readonly revokeConsentUsingPUTPath = '/api/v1/consents/{consentId}';
   static readonly consentsUsingGETPath = '/api/v1/consents/{userLogin}';
 
-  constructor(
-    config: __Configuration,
-    http: HttpClient
-  ) {
+  constructor(config: __Configuration, http: HttpClient) {
     super(config, http);
   }
 
@@ -38,27 +41,28 @@ class OnlineBankingConsentsService extends __BaseService {
    *
    * - `authorizationId`: authorizationId
    */
-  confirmUsingGETResponse(params: OnlineBankingConsentsService.ConfirmUsingGETParams): __Observable<__StrictHttpResponse<null>> {
+  confirmUsingGETResponse(
+    params: OnlineBankingConsentsService.ConfirmUsingGETParams
+  ): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
-
-
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/v1/consents/confirm/${params.userLogin}/${params.consentId}/${params.authorizationId}/${params.tan}`,
+      this.rootUrl +
+        `/api/v1/consents/confirm/${params.userLogin}/${params.consentId}/${params.authorizationId}/${params.tan}`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<null>;
       })
     );
@@ -74,7 +78,9 @@ class OnlineBankingConsentsService extends __BaseService {
    *
    * - `authorizationId`: authorizationId
    */
-  confirmUsingGET(params: OnlineBankingConsentsService.ConfirmUsingGETParams): __Observable<null> {
+  confirmUsingGET(
+    params: OnlineBankingConsentsService.ConfirmUsingGETParams
+  ): __Observable<null> {
     return this.confirmUsingGETResponse(params).pipe(
       __map(_r => _r.body as null)
     );
@@ -84,7 +90,9 @@ class OnlineBankingConsentsService extends __BaseService {
    * @param consentId consentId
    * @return OK
    */
-  revokeConsentUsingPUTResponse(consentId: string): __Observable<__StrictHttpResponse<boolean>> {
+  revokeConsentUsingPUTResponse(
+    consentId: string
+  ): __Observable<__StrictHttpResponse<boolean>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -96,13 +104,16 @@ class OnlineBankingConsentsService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'text'
-      });
+        responseType: 'text',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return (_r as HttpResponse<any>).clone({ body: (_r as HttpResponse<any>).body === 'true' }) as __StrictHttpResponse<boolean>
+      __map(_r => {
+        return (_r as HttpResponse<any>).clone({
+          body: (_r as HttpResponse<any>).body === 'true',
+        }) as __StrictHttpResponse<boolean>;
       })
     );
   }
@@ -120,7 +131,9 @@ class OnlineBankingConsentsService extends __BaseService {
    * @param userLogin userLogin
    * @return OK
    */
-  consentsUsingGETResponse(userLogin: string): __Observable<__StrictHttpResponse<Array<ObaAisConsent>>> {
+  consentsUsingGETResponse(
+    userLogin: string
+  ): __Observable<__StrictHttpResponse<Array<ObaAisConsent>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -132,12 +145,13 @@ class OnlineBankingConsentsService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<Array<ObaAisConsent>>;
       })
     );
@@ -154,12 +168,10 @@ class OnlineBankingConsentsService extends __BaseService {
 }
 
 module OnlineBankingConsentsService {
-
   /**
    * Parameters for confirmUsingGET
    */
   export interface ConfirmUsingGETParams {
-
     /**
      * userLogin
      */
@@ -182,4 +194,4 @@ module OnlineBankingConsentsService {
   }
 }
 
-export { OnlineBankingConsentsService }
+export { OnlineBankingConsentsService };

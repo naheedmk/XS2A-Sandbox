@@ -11,9 +11,8 @@ describe('ConfirmPaymentComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ConfirmPaymentComponent, PaymentDetailsComponent]
-    })
-      .compileComponents();
+      declarations: [ConfirmPaymentComponent, PaymentDetailsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

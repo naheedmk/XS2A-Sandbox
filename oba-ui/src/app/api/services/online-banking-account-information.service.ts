@@ -1,6 +1,11 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpRequest,
+  HttpResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { BaseService as __BaseService } from '../base-service';
 import { ApiConfiguration as __Configuration } from '../api-configuration';
 import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
@@ -21,14 +26,14 @@ import { CustomPageImplTransactionTO } from '../models/custom-page-impl-transact
 class OnlineBankingAccountInformationService extends __BaseService {
   static readonly accountUsingGETPath = '/api/v1/ais/account/{accountId}';
   static readonly accountsUsingGETPath = '/api/v1/ais/accounts/{userLogin}';
-  static readonly getPendingPeriodicPaymentsUsingGETPath = '/api/v1/ais/payments';
-  static readonly transactionsUsingGET1Path = '/api/v1/ais/transactions/{accountId}';
-  static readonly transactionsUsingGETPath = '/api/v1/ais/transactions/{accountId}/page';
+  static readonly getPendingPeriodicPaymentsUsingGETPath =
+    '/api/v1/ais/payments';
+  static readonly transactionsUsingGET1Path =
+    '/api/v1/ais/transactions/{accountId}';
+  static readonly transactionsUsingGETPath =
+    '/api/v1/ais/transactions/{accountId}/page';
 
-  constructor(
-    config: __Configuration,
-    http: HttpClient
-  ) {
+  constructor(config: __Configuration, http: HttpClient) {
     super(config, http);
   }
 
@@ -36,7 +41,9 @@ class OnlineBankingAccountInformationService extends __BaseService {
    * @param accountId accountId
    * @return OK
    */
-  accountUsingGETResponse(accountId: string): __Observable<__StrictHttpResponse<AccountDetailsTO>> {
+  accountUsingGETResponse(
+    accountId: string
+  ): __Observable<__StrictHttpResponse<AccountDetailsTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -48,12 +55,13 @@ class OnlineBankingAccountInformationService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<AccountDetailsTO>;
       })
     );
@@ -72,7 +80,9 @@ class OnlineBankingAccountInformationService extends __BaseService {
    * @param userLogin userLogin
    * @return OK
    */
-  accountsUsingGETResponse(userLogin: string): __Observable<__StrictHttpResponse<Array<AccountDetailsTO>>> {
+  accountsUsingGETResponse(
+    userLogin: string
+  ): __Observable<__StrictHttpResponse<Array<AccountDetailsTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -84,12 +94,13 @@ class OnlineBankingAccountInformationService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<Array<AccountDetailsTO>>;
       })
     );
@@ -107,7 +118,9 @@ class OnlineBankingAccountInformationService extends __BaseService {
   /**
    * @return OK
    */
-  getPendingPeriodicPaymentsUsingGETResponse(): __Observable<__StrictHttpResponse<Array<PaymentTO>>> {
+  getPendingPeriodicPaymentsUsingGETResponse(): __Observable<
+    __StrictHttpResponse<Array<PaymentTO>>
+  > {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -118,12 +131,13 @@ class OnlineBankingAccountInformationService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<Array<PaymentTO>>;
       })
     );
@@ -148,13 +162,17 @@ class OnlineBankingAccountInformationService extends __BaseService {
    *
    * @return OK
    */
-  transactionsUsingGET1Response(params: OnlineBankingAccountInformationService.TransactionsUsingGET1Params): __Observable<__StrictHttpResponse<Array<TransactionTO>>> {
+  transactionsUsingGET1Response(
+    params: OnlineBankingAccountInformationService.TransactionsUsingGET1Params
+  ): __Observable<__StrictHttpResponse<Array<TransactionTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (params.dateTo != null) __params = __params.set('dateTo', params.dateTo.toString());
-    if (params.dateFrom != null) __params = __params.set('dateFrom', params.dateFrom.toString());
+    if (params.dateTo != null)
+      __params = __params.set('dateTo', params.dateTo.toString());
+    if (params.dateFrom != null)
+      __params = __params.set('dateFrom', params.dateFrom.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/v1/ais/transactions/${params.accountId}`,
@@ -162,12 +180,13 @@ class OnlineBankingAccountInformationService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<Array<TransactionTO>>;
       })
     );
@@ -183,7 +202,9 @@ class OnlineBankingAccountInformationService extends __BaseService {
    *
    * @return OK
    */
-  transactionsUsingGET1(params: OnlineBankingAccountInformationService.TransactionsUsingGET1Params): __Observable<Array<TransactionTO>> {
+  transactionsUsingGET1(
+    params: OnlineBankingAccountInformationService.TransactionsUsingGET1Params
+  ): __Observable<Array<TransactionTO>> {
     return this.transactionsUsingGET1Response(params).pipe(
       __map(_r => _r.body as Array<TransactionTO>)
     );
@@ -204,15 +225,21 @@ class OnlineBankingAccountInformationService extends __BaseService {
    *
    * @return OK
    */
-  transactionsUsingGETResponse(params: OnlineBankingAccountInformationService.TransactionsUsingGETParams): __Observable<__StrictHttpResponse<CustomPageImplTransactionTO>> {
+  transactionsUsingGETResponse(
+    params: OnlineBankingAccountInformationService.TransactionsUsingGETParams
+  ): __Observable<__StrictHttpResponse<CustomPageImplTransactionTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.dateTo != null) __params = __params.set('dateTo', params.dateTo.toString());
-    if (params.dateFrom != null) __params = __params.set('dateFrom', params.dateFrom.toString());
+    if (params.size != null)
+      __params = __params.set('size', params.size.toString());
+    if (params.page != null)
+      __params = __params.set('page', params.page.toString());
+    if (params.dateTo != null)
+      __params = __params.set('dateTo', params.dateTo.toString());
+    if (params.dateFrom != null)
+      __params = __params.set('dateFrom', params.dateFrom.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/v1/ais/transactions/${params.accountId}/page`,
@@ -220,12 +247,13 @@ class OnlineBankingAccountInformationService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
-      });
+        responseType: 'json',
+      }
+    );
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
+      __map(_r => {
         return _r as __StrictHttpResponse<CustomPageImplTransactionTO>;
       })
     );
@@ -245,7 +273,9 @@ class OnlineBankingAccountInformationService extends __BaseService {
    *
    * @return OK
    */
-  transactionsUsingGET(params: OnlineBankingAccountInformationService.TransactionsUsingGETParams): __Observable<CustomPageImplTransactionTO> {
+  transactionsUsingGET(
+    params: OnlineBankingAccountInformationService.TransactionsUsingGETParams
+  ): __Observable<CustomPageImplTransactionTO> {
     return this.transactionsUsingGETResponse(params).pipe(
       __map(_r => _r.body as CustomPageImplTransactionTO)
     );
@@ -253,12 +283,10 @@ class OnlineBankingAccountInformationService extends __BaseService {
 }
 
 module OnlineBankingAccountInformationService {
-
   /**
    * Parameters for transactionsUsingGET1
    */
   export interface TransactionsUsingGET1Params {
-
     /**
      * accountId
      */
@@ -279,7 +307,6 @@ module OnlineBankingAccountInformationService {
    * Parameters for transactionsUsingGET
    */
   export interface TransactionsUsingGETParams {
-
     /**
      * accountId
      */
@@ -307,4 +334,4 @@ module OnlineBankingAccountInformationService {
   }
 }
 
-export { OnlineBankingAccountInformationService }
+export { OnlineBankingAccountInformationService };

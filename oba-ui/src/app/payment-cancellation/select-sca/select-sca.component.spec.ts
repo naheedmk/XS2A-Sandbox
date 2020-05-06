@@ -12,9 +12,8 @@ describe('SelectScaComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, ReactiveFormsModule],
-      declarations: [SelectScaComponent, PaymentDetailsComponent]
-    })
-      .compileComponents();
+      declarations: [SelectScaComponent, PaymentDetailsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

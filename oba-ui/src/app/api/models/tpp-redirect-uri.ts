@@ -1,6 +1,5 @@
 /* tslint:disable */
 export interface TppRedirectUri {
-
   /**
    * Nok redirect URI
    */

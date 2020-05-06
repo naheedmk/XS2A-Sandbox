@@ -1,7 +1,6 @@
 /* tslint:disable */
 import { TppRedirectUri } from './tpp-redirect-uri';
 export interface TppInfo {
-
   /**
    * Issuer CN
    */

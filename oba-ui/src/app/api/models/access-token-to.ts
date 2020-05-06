@@ -5,7 +5,6 @@ import { AisConsentRequest } from './ais-consent-request';
  * The access token object.
  */
 export interface AccessTokenTO {
-
   /**
    * The token identifier
    */
@@ -14,7 +13,7 @@ export interface AccessTokenTO {
   /**
    * The bearer this token.
    */
-  act?: {[key: string]: string};
+  act?: { [key: string]: string };
 
   /**
    * The specification of psd2 account access permission associated with this token

@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: RoutingPath.SELECT_SCA,
-    component: SelectScaComponent
+    component: SelectScaComponent,
   },
   {
     path: RoutingPath.TAN_CONFIRMATION,
@@ -32,14 +32,12 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
-
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PaymentCancellationRoutingModule {
-}
+export class PaymentCancellationRoutingModule {}

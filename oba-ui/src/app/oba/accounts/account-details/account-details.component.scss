@@ -1,10 +1,12 @@
-@import "~src/assets/themes/table";
+@import '~src/assets/themes/table';
 
-.header__title, .row {
+.header__title,
+.row {
   margin-bottom: 2rem;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   white-space: nowrap;
 }
 

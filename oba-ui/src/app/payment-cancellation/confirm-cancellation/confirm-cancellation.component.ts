@@ -10,10 +10,9 @@ import { ShareDataService } from '../../common/services/share-data.service';
 @Component({
   selector: 'app-confirm-cancellation',
   templateUrl: './confirm-cancellation.component.html',
-  styleUrls: ['./confirm-cancellation.component.scss']
+  styleUrls: ['./confirm-cancellation.component.scss'],
 })
 export class ConfirmCancellationComponent implements OnInit {
-
   public authResponse: ConsentAuthorizeResponse;
   public encryptedConsentId: string;
   public authorisationId: string;
@@ -23,8 +22,8 @@ export class ConfirmCancellationComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private shareService: ShareDataService) {
-  }
+    private shareService: ShareDataService
+  ) {}
 
   get accounts(): Array<AccountDetailsTO> {
     return this.authResponse ? this.authResponse.accounts : [];
@@ -43,20 +42,24 @@ export class ConfirmCancellationComponent implements OnInit {
   }
 
   public onConfirm() {
-    this.router.navigate([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.SELECT_SCA}`]);
+    this.router.navigate([
+      `${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.SELECT_SCA}`,
+    ]);
   }
 
   public onCancel(): void {
-    this.router.navigate([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`], {
-      queryParams: {
-        encryptedConsentId: this.authResponse.encryptedConsentId,
-        authorisationId: this.authResponse.authorisationId
+    this.router.navigate(
+      [`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.RESULT}`],
+      {
+        queryParams: {
+          encryptedConsentId: this.authResponse.encryptedConsentId,
+          authorisationId: this.authResponse.authorisationId,
+        },
       }
-    });
+    );
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
-
 }

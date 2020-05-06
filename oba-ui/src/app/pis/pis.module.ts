@@ -18,15 +18,14 @@ import { TanConfirmationComponent } from './tan-confirmation/tan-confirmation.co
     ResultPageComponent,
     SelectScaComponent,
     PaymentDetailsComponent,
-    ConfirmPaymentComponent
+    ConfirmPaymentComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     PisRoutingModule,
-    NotFoundModule
-  ]
+    NotFoundModule,
+  ],
 })
-export class PisModule {
-}
+export class PisModule {}

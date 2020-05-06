@@ -1,7 +1,7 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ResultPageComponent} from './result-page.component';
-import {RouterTestingModule} from "@angular/router/testing";
+import { ResultPageComponent } from './result-page.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ResultPageComponent', () => {
   let component: ResultPageComponent;
@@ -10,9 +10,8 @@ describe('ResultPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ResultPageComponent]
-    })
-      .compileComponents();
+      declarations: [ResultPageComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
