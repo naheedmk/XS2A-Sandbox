@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import {TppUserService} from '../../services/tpp.user.service';
 import {AuthService} from '../../services/auth.service';
-import {TppService} from "../../services/tpp.service";
+import {TppManagementService} from "../../services/tpp.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { Router } from '@angular/router';
 import { DebugElement } from '@angular/core';
@@ -56,7 +56,7 @@ describe('UserProfileUpdateComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
       ],
-      providers: [TppUserService, AuthService, TppService, NgbModal,
+      providers: [TppUserService, AuthService, TppManagementService, NgbModal,
           {provide: AuthService, useValue: mockAuthUserService},
           {provide: TppUserService, useValue: mockinfoService},
           {provide: Router, useValue: mockRouter}],

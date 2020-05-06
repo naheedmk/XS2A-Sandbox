@@ -24,6 +24,7 @@ import {
 } from '../../../models/tpp-id-structure.model';
 import JSZip from 'jszip';
 import { CertGenerationService } from '../../../services/cert-generation.service';
+import {CountryService} from '../../../services/country.service';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -45,7 +46,7 @@ describe('RegisterComponent', () => {
         InfoModule,
         FormsModule,
       ],
-      providers: [AuthService, InfoService, CertGenerationService],
+      providers: [AuthService, CountryService, InfoService, CertGenerationService],
       declarations: [RegisterComponent, CertificateComponent],
     }).compileComponents();
   }));
