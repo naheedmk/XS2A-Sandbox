@@ -136,7 +136,6 @@ nav {
   border-bottom:1px solid black;
 }
 
-
 select:not([multiple]) {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -173,172 +172,203 @@ select {
   }
 }
 
-.btn {
-  white-space: nowrap;
-  border-radius: var(--buttonBorderRadius);
-  font-size: 1.1rem;
-
-  &-primary {
-    color: var(--buttonTextColor);
-
-    background: var(--buttonBG);
-    border: none;
-
-    &:hover {
-      background: var(--buttonHovered);
-    }
-
-    &:disabled {
-      opacity: var(--button-opacity);
-      background: var(--buttonBGDisabled);
-      color: var(--buttonColorTextDisabled);
-    }
-
-    &:focus {
-      outline: none;
-      background: var(--buttonClicked);
-    }
-
-    &:active {
-      background-color: inherit;
-    }
-  }
-
-  &-outline-danger {
-    color: var(--secondaryButtonTextColor);
-    background: var(--secondaryButtonBG);
-    border: var(--secondaryButtonBorderStyle);
-
-    &:hover {
-      color: var(--secondaryButtonHoveredTextColor);
-      background: var(--secondaryButtonHovered);
-    }
-
-    &:disabled {
-      background: var(--buttonBGDisabled);
-      opacity: .65;
-    }
-
-    &:focus {
-      outline: none;
-      background: var(--secondaryButtonClicked);
-      color: var(--secondaryButtonClickedTextColor);
-    }
-
-  }
+.link-color {
+  color:#a0a0a0;
 }
 
-
-a {
-  font-size: 1.1rem;
-  transition: all 0.2s ease-in;
-  color: var(--anchorFontColor);
-
-  &.active, &:hover {
-    color: var(--anchorFontColorHover);
-  }
-
-  &.text-primary:hover, &.text-primary:focus {
-    color: var(--anchorFontColorHover) !important;
-  }
+tr {
+  border-bottom: 1px solid #c4ccd3;
+  color: var(--tr-color);
 }
 
-.text-primary {
-  color: var(--colorPrimary) !important;
+td {
+  padding: .5rem 1.25rem;
 }
 
-.card {
-  border: none;
+th {
+  font-size: 1.125rem !important;
+  color: #545b68 !important;
+  font-weight:700 !important;
 
-  .card__subtitle {
-    font-size: 1.2rem !important;
-    text-align: center;
-    margin-bottom: var(--subtitle-margin);
-  }
+}
 
-  .form-group {
-    margin: var(--margin-form-group);
-    margin-bottom: 2rem;
-  }
+  .btn  {
+    white-space: nowrap;
+    border-radius: var(--buttonBorderRadius);
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0 12px;
+    height: var(--button-heigh) !important;
 
-  .card-body {
-    &--large {
-      padding: 2rem 2rem;
+
+    &-primary {
+      color: var(--buttonTextColor);
+      background: var(--buttonBG);
+      border: none;
+
+      &:hover {
+        background: var(--buttonHovered);
+      }
+
+      &:disabled {
+        opacity: var(--button-opacity);
+        background: var(--buttonBGDisabled);
+        color: var(--buttonColorTextDisabled);
+      }
+
+      &:focus {
+        outline: none;
+        background: var(--buttonClicked);
+      }
+
+      &:active {
+        background-color: inherit;
+      }
     }
-  }
 
-  &--small {
-    max-width: 500px;
-  }
+    &-table-btn {
+      color: var(--buttonTextColor);
+      background: var(--buttonBG);
+      border: none;
+
+      &:hover {
+        background: var(--buttonHovered);
+      }
+
+      &:disabled {
+        opacity: var(--button-opacity);
+        background: var(--buttonBGDisabled);
+        color: var(--buttonColorTextDisabled);
+      }
+
+      &:focus {
+        outline: none;
+        background: var(--buttonClicked);
+      }
+
+      &:active {
+        background-color: inherit;
+      }
+
+    }
+
+
+
+    }
+
+
 
   a {
-    color: #a0a0a0;
+    font-size: 1.1rem;
+    transition: all 0.2s ease-in;
+    color: var(--anchorFontColor);
+
+    &.active, &:hover {
+      color: var(--anchorFontColorHover);
+    }
+
+    &.text-primary:hover, &.text-primary:focus {
+      color: var(--anchorFontColorHover) !important;
+    }
   }
-}
 
-.icon__container {
-  width: 24px;
-  height: 24px;
-  margin-right: 16px;
+  .text-primary {
+    color: var(--colorPrimary) !important;
+  }
 
-  .icon {
+  .card {
+    border: none;
+
+    .card__subtitle {
+      font-size: 1.2rem !important;
+      text-align: center;
+    }
+
+    .form-group {
+      margin: var(--margin-form-group);
+      margin-bottom: 2rem;
+    }
+
+    .card-body {
+      &--large {
+        padding: 2rem 2rem;
+      }
+    }
+
     &--small {
-      width: 20px;
-      height: 20px;
+      max-width: 500px;
     }
 
-    &--medium {
-      width: 28px;
-      height: 28px;
-    }
-  }
-}
-
-.modal-footer > * {
-  margin-bottom: 0;
-}
-
-.nav-item {
-  &:not(:last-of-type) {
-    margin-bottom: 10px;
   }
 
-  .nav-link {
-    display: flex;
-    justify-content: flex-start;
-  }
-}
-
-.box {
-  position: relative;
-  padding: $grid-gutter-width;
-  background: $light-grey-10;
-
-  &__close-icon {
-    position: absolute;
-    top: $grid-gutter-width / 2;
-    right: $grid-gutter-width / 2;
-  }
-}
-
-.no-underline {
-  text-decoration: none !important;
-}
-
-.clickable {
-  cursor: pointer !important;
-}
-
-.form-inline {
-  display: inline-block;
-  .form-check {
+  .form-inline {
+    display: inline-block;
+    .form-check {
       justify-content: left;
     }
-}
-
-
-@media (max-width: 767px) {
-  .bg-sm-light {
-    background-color: $light-grey-10;
   }
-}
+
+  .icon__container {
+    width: 24px;
+    height: 24px;
+    margin-right: 16px;
+
+    .icon {
+      &--small {
+        width: 20px;
+        height: 20px;
+      }
+
+      &--medium {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+
+  .has-search .form-control-feedback {
+    margin-top: var(--margin-top-icon) !important
+  }
+
+  .modal-footer > * {
+    margin-bottom: 0;
+  }
+
+  .nav-item {
+    &:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+
+    .nav-link {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
+  .box {
+    position: relative;
+    padding: $grid-gutter-width;
+    background: $light-grey-10;
+
+    &__close-icon {
+      position: absolute;
+      top: $grid-gutter-width / 2;
+      right: $grid-gutter-width / 2;
+    }
+  }
+
+  .no-underline {
+    text-decoration: none !important;
+  }
+
+  .clickable {
+    cursor: pointer !important;
+  }
+
+
+  @media (max-width: 767px) {
+    .bg-sm-light {
+      background-color: $light-grey-10;
+    }
+  }
+
