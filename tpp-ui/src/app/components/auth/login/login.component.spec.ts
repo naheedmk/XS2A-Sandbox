@@ -78,6 +78,7 @@ fdescribe('LoginComponent', () => {
     expect(component.errorMessage).toEqual('Please enter your credentials');
   });
 
+  // TODO write unite tests https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/-/issues/704
   it('should login and go to the next page', () => {
     component.loginForm.get('login').setValue('foo');
     component.loginForm.get('pin').setValue('12345');
