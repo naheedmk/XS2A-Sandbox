@@ -52,11 +52,9 @@ fdescribe('LoginComponent', () => {
     const login = component.loginForm.controls['login'];
     expect(login.valid).toBeFalsy();
 
-    // login field is required
     errors = login.errors || {};
     expect(errors['required']).toBeTruthy();
 
-    // set login to something correct
     login.setValue('test@test.de');
     errors = login.errors || {};
     expect(errors['required']).toBeFalsy();
@@ -67,11 +65,9 @@ fdescribe('LoginComponent', () => {
     const pin = component.loginForm.controls['pin'];
     expect(pin.valid).toBeFalsy();
 
-    // pin field is required
     errors = pin.errors || {};
     expect(errors['required']).toBeTruthy();
 
-    // set pin to something correct
     pin.setValue('12345678');
     errors = pin.errors || {};
     expect(errors['required']).toBeFalsy();
