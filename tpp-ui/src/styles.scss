@@ -192,6 +192,11 @@ th {
 
 }
 
+tr:hover {
+  border-bottom: 2px solid #545b68;
+  border-bottom: var(--border-bottom)
+}
+
 .btn  {
   white-space: nowrap;
   border-radius: var(--buttonBorderRadius);
