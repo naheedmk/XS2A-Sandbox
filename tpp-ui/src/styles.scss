@@ -174,7 +174,13 @@ select {
 
 .link-color {
   color:#a0a0a0;
+
+  &:hover {
+    color:#a0a0a0;
+  }
+
 }
+
 
 tr {
   border-bottom: 1px solid #c4ccd3;
