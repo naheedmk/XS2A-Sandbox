@@ -21,6 +21,10 @@ export class TppManagementService {
   constructor(private http: HttpClient) {
   }
 
+  changePin(tppId: string, newPin: string) {
+    return this.http.put(`${this.url}/admin/password?tppId=${tppId}&pin=${newPin}`, null);
+  }
+
   blockTpp(tppId: string) {
     return this.http.post(`${this.url}/admin/status?tppId=${tppId}`, null);
   }
@@ -119,5 +123,4 @@ export class TppManagementService {
     const endpoint = accounts ? 'account' : 'users';
     return this.http.get<PaginationResponse<User[]>>(`${this.url}/admin/${endpoint}`, {params: params});
   }
-
 }

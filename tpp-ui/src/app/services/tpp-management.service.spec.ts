@@ -18,7 +18,7 @@ describe('TppService', () => {
   });
 
   it('should delete the Tpp user', () => {
-    tppService.deleteTpp();
+    tppService.deleteSelf();
   });
 
   it('should delete the accountTransations ', () => {

@@ -28,7 +28,7 @@
     <div class="card-body">
       <div class="table-responsive">
         <div class="container-fluid configs-container">
-          <div class="row d-flex justify-content-between configs">
+          <div class="row d-flex justify-content-between confgs">
             <div class="paginator">
               <app-pagination-container [paginationConfig]="config"
                                         (pageDataConfig)="pageChange($event)"></app-pagination-container>
@@ -110,17 +110,37 @@
             <td [routerLink]="[createLastVisitedPageLink(tpp.id)]"
                 [queryParams]="{page: config.currentPageNumber}">{{tpp.blocked ? 'Blocked' : 'Active'}}</td>
             <td class="actions d-flex justify-content-end">
-              <button class="btn btn-primary btn-sm"
-                      (click)="openConfirmation(blockConfirmation, tpp.id, true)">
+              <button class="btn btn-table-btn btn-sm"
+                      (click)="openConfirmation(blockConfirmation, tpp.id, 'block')">
                 {{ tpp.blocked ? 'Unblock TPP' : 'Block TPP'}}
               </button>
-              <button class="btn btn-primary btn-sm"
-                      (click)="resetPIN(tpp)">Reset PIN
+              <button class="btn btn-table-btn btn-sm"
+                      (click)="openConfirmation(changePinModal, tpp.id, 'pin')">Change PIN
               </button>
-              <button (click)="openConfirmation(deleteConfirmationModal,  tpp.id, false)"
+              <button (click)="openConfirmation(deleteConfirmationModal,  tpp.id, 'delete')"
                       class="btn btn-outline-danger btn-sm">
                 Delete
               </button>
+
+              <ng-template #changePinModal let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title-2">Change password for TPP</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="text" class="form-control"
+                         [(ngModel)]="newPin" [ngClass]="{'is-invalid': !newPin || newPin === ''}"
+                         [ngModelOptions]="{standalone: true}">
+                  <div lass="invalid-feedback" *ngIf="!newPin || newPin === ''"> Please, enter any PIN for TPP, PIN cannot be empty</div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel
+                  </button>
+                  <button type="button" class="btn btn-primary" (click)="modal.close('Ok click')">Change PIN</button>
+                </div>
+              </ng-template>
 
               <ng-template #deleteConfirmationModal let-modal>
                 <div class="modal-header">
@@ -162,7 +182,7 @@
         </table>
 
         <div class="container-fluid">
-          <div class="row d-flex justify-content-between configs-container">
+          <div class="row d-flex justify-content-start">
             <app-pagination-container [paginationConfig]="config"
                                       (pageDataConfig)="pageChange($event)"></app-pagination-container>
 

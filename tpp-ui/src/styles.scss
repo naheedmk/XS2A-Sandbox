@@ -388,22 +388,24 @@ a {
 }
 
 .configs {
-  position: absolute;
-  right: 4%;
+  //position: absolute;
+  //right: 7%;
 }
 
 .paginator {
-  padding: 1rem;
-  max-width: 6rem;
+  //padding: 1rem;
+  //max-width: 9rem;
 }
 
 .tpp-filters {
+
+  max-width: 60%;
 
   .filter, label {
     padding: .5rem;
 
     .form-control {
-      height: 80%;
+      height: 90%;
     }
   }
 

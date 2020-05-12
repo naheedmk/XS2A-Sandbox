@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
   tppUser: User;
   countries;
   userAmount = 0;
+  private newPin = 'pin';
 
   constructor(private countryService: CountryService,
               private userInfoService: TppUserService,
@@ -71,12 +72,14 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  openConfirmation(content, block: boolean) {
+  openConfirmation(content, type: string) {
     this.modalService.open(content).result.then(() => {
-      if (block) {
+      if (type === 'block') {
         this.blockTpp();
-      } else {
+      } else if (type === 'delete'){
         this.delete();
+      } else {
+        this.changePin();
       }
     }, () => {
     });
@@ -101,6 +104,14 @@ export class UserProfileComponent implements OnInit {
       });
     }
 
+  }
+
+  private changePin() {
+    if (this.newPin && this.newPin !== '') {
+      this.tppService.changePin(this.tppUser.id, this.newPin).subscribe(() => {
+        this.infoService.openFeedback('TPP PIN was successfully changed!', {severity: 'info'});
+      });
+    }
   }
 
   private countUsers(accountAccesses: AccountAccess[], tppId: string) {

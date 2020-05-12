@@ -124,7 +124,7 @@ describe('AccountListComponent', () => {
       } as Account
     ];
     const getAccountsSpy = spyOn(accountService, 'getAccounts').and.returnValue(of({accounts: mockAccounts, totalElements: mockAccounts.length}));
-    component.getAccounts(5, 10);
+    component.getAccounts(5, 10, {});
     expect(getAccountsSpy).toHaveBeenCalled();
     expect(component.accounts).toEqual(mockAccounts);
     expect(component.config.totalItems).toEqual(mockAccounts.length);

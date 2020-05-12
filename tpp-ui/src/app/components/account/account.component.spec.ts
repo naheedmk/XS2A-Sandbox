@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { Account } from '../../models/account.model';
 import { IconModule } from '../../commons/icon/icon.module';
 import { InfoModule } from '../../commons/info/info.module';
 import { InfoService } from '../../commons/info/info.service';
@@ -11,8 +10,8 @@ import { AccountService } from '../../services/account.service';
 import { AccountComponent } from './account.component';
 import { ConvertBalancePipe } from '../../pipes/convertBalance.pipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TppManagementService } from '../../services/tpp.service';
 import { Router } from '@angular/router';
+import {TppManagementService} from '../../services/tpp-management.service';
 
 
 describe('AccountComponent', () => {

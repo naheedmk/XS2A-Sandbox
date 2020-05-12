@@ -23,6 +23,7 @@ export class TppsComponent implements OnInit {
   tpps: User[] = [];
   countries: Array<string>;
   countriesList: Array<object> = [];
+  newPin = 'pin';
 
   config: PaginationConfigModel = {
     itemsPerPage: 10,
@@ -80,19 +81,17 @@ export class TppsComponent implements OnInit {
     return `/profile/${id}`;
   }
 
-  openConfirmation(content, tppId: string, block: boolean) {
+  openConfirmation(content, tppId: string, type: string) {
     this.modalService.open(content).result.then(() => {
-      if (block) {
+      if (type === 'block') {
         this.blockTpp(tppId);
-      } else {
+      } else if (type === 'delete'){
         this.delete(tppId);
+      } else {
+        this.changePin(tppId);
       }
     }, () => {
     });
-  }
-
-  resetPIN(tpp: User) {
-
   }
 
   showAllTpps() {
@@ -147,8 +146,31 @@ export class TppsComponent implements OnInit {
   private delete(tppId: string) {
     this.tppManagementService.deleteTpp(tppId).subscribe(() => {
       this.infoService.openFeedback('TPP was successfully deleted!', {severity: 'info'});
-      this.getTpps(1, this.config.itemsPerPage, {tppId: this.searchForm.controls.tppId.value, blocked: this.searchForm.controls.blocked.value});
+      this.getTpps(1, this.config.itemsPerPage,
+        {
+          userLogin: this.searchForm.get('userLogin').value,
+          tppId: this.searchForm.get('tppId').value,
+          tppLogin: this.searchForm.get('tppLogin').value,
+          country: this.searchForm.get('country').value,
+          blocked: this.searchForm.get('blocked').value
+        });
     });
+  }
+
+  private changePin(tppId: string) {
+    if (this.newPin && this.newPin !== '') {
+      this.tppManagementService.changePin(tppId, this.newPin).subscribe(() => {
+        this.infoService.openFeedback('TPP PIN was successfully changed!', {severity: 'info'});
+        this.getTpps(1, this.config.itemsPerPage,
+          {
+            userLogin: this.searchForm.get('userLogin').value,
+            tppId: this.searchForm.get('tppId').value,
+            tppLogin: this.searchForm.get('tppLogin').value,
+            country: this.searchForm.get('country').value,
+            blocked: this.searchForm.get('blocked').value
+          });
+      });
+    }
   }
 
   private getCountries() {

@@ -22,7 +22,7 @@
   <div class="card">
     <div class="card-body">
       <div class="table-responsive">
-        <div class="container-fluid configs-container">
+        <div class="container-fluid" [ngClass]="{'configs-container': admin}">
           <div class="row d-flex justify-content-between configs">
             <div class="paginator">
               <app-pagination-container [paginationConfig]="config"
@@ -120,8 +120,12 @@
           </tbody>
         </table>
 
-        <app-pagination-container [paginationConfig]="config"
-                                  (pageDataConfig)="pageChange($event)"></app-pagination-container>
+        <div class="container-fluid">
+          <div class="row d-flex justify-content-start">
+            <app-pagination-container [paginationConfig]="config"
+                                      (pageDataConfig)="pageChange($event)"></app-pagination-container>
+          </div>
+        </div>
       </div>
     </div>
   </div>

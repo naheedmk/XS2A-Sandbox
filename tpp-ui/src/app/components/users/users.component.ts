@@ -127,8 +127,8 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  private listUsers(page: number, size: number, params: TppQueryParams) {
-    if (this.admin) {
+  listUsers(page: number, size: number, params: TppQueryParams) {
+    if (this.admin === true) {
       this.tppManagementService.getAllUsers(page - 1, size, params).subscribe((response: UserResponse) => {
         this.users = response.users;
         this.config.totalItems = response.totalElements;
@@ -159,6 +159,7 @@ export class UsersComponent implements OnInit {
     this.tppUserService.currentTppUser.subscribe(
       (user: User) => {
         this.admin = user && user.userRoles.includes('SYSTEM');
+
         if (this.admin !== undefined) {
           this.listUsers(this.config.currentPageNumber, this.config.itemsPerPage, {
             userLogin: this.searchForm.get('userLogin').value,
