@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-import static de.adorsys.psd2.sandbox.tpp.rest.server.auth.SecurityConstant.USER_LOGIN;
-import static de.adorsys.psd2.sandbox.tpp.rest.server.auth.SecurityConstant.USER_PIN;
-import static de.adorsys.psd2.sandbox.tpp.rest.server.auth.SecurityConstant.ACCESS_TOKEN;
+import static de.adorsys.psd2.sandbox.tpp.rest.server.auth.SecurityConstant.*;
 
 public class LoginAuthenticationFilter extends AbstractAuthFilter {
     private final UserMgmtStaffRestClient userMgmtStaffRestClient;
