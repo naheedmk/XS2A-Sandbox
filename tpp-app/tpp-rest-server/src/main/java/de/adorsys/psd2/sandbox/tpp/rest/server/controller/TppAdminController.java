@@ -44,13 +44,13 @@ public class TppAdminController implements TppAdminRestApi {
     private void checkUpdateData(UserTO user) {
         UserTO userStored = userClient.getUserById(user.getId()).getBody();
         if (userStored.isBlocked() || userStored.isSystemBlocked()) {
-            throw new TppException(400, "You are not allowed to modify %!");
+            throw new TppException("You are not allowed to modify a Blocked user!", 400);
         }
         if (!userStored.getUserRoles().containsAll(user.getUserRoles())) {
-            throw new TppException(400, "You are not allowed to modify users roles!");
+            throw new TppException("You are not allowed to modify users roles!", 400);
         }
         if (!userStored.getBranch().equals(user.getBranch())) {
-            throw new TppException(400, "User are not allowed to modify users tpp relation!");
+            throw new TppException("User are not allowed to modify users tpp relation!", 400);
         }
     }
 
