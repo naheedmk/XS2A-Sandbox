@@ -10,7 +10,7 @@ import {
 } from '../../models/pagination-config.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PageNavigationService } from '../../services/page-navigation.service';
-// import {TppManagementService} from '../../services/tpp-management.service';
+import { TppManagementService } from '../../services/tpp-management.service';
 import { User } from '../../models/user.model';
 import { TppUserService } from '../../services/tpp.user.service';
 import { CountryService } from '../../services/country.service';
@@ -24,6 +24,7 @@ import { TppQueryParams } from '../../models/tpp-management.model';
 // TODO Merge UsersComponent, TppsComponent and AccountListComponent into one single component https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/-/issues/713
 export class AccountListComponent implements OnInit, OnDestroy {
   admin = false;
+  users: User[] = [];
   accounts: Account[] = [];
   subscription = new Subscription();
   countries: Array<object> = [];
@@ -48,7 +49,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
     public router: Router,
     private countryService: CountryService,
     public pageNavigationService: PageNavigationService,
-    // private tppManagementService: TppManagementService,
+    private tppManagementService: TppManagementService,
     private tppUserService: TppUserService,
     private route: ActivatedRoute
   ) {}
@@ -58,26 +59,25 @@ export class AccountListComponent implements OnInit, OnDestroy {
     this.getCountries();
     this.getCurrentData();
     this.onQueryUsers();
+    this.getTpps(this.config.currentPageNumber, this.config.itemsPerPage, {});
   }
 
   getAccounts(page: number, size: number, params: TppQueryParams) {
-    // if (this.admin) {
-    //   this.tppManagementService.getAllAccounts(page - 1, size, params).subscribe((response: AccountResponse) => {
-    //     this.accounts = response.accounts;
-    //     this.config.totalItems = response.totalElements;
-    //   });
-    // } else if (this.admin === false) {
-    //   this.accountService.getAccounts(page - 1, size, params.ibanParam).subscribe((response: AccountResponse) => {
-    //     this.accounts = response.accounts;
-    //     this.config.totalItems = response.totalElements;
-    //   });
-    // }
-    this.accountService
-      .getAccounts(page - 1, size, params.ibanParam)
-      .subscribe((response: AccountResponse) => {
-        this.accounts = response.accounts;
-        this.config.totalItems = response.totalElements;
-      });
+    if (this.admin) {
+      this.tppManagementService
+        .getAllAccounts(page - 1, size, params)
+        .subscribe((response: AccountResponse) => {
+          this.accounts = response.accounts;
+          this.config.totalItems = response.totalElements;
+        });
+    } else if (this.admin === false) {
+      this.accountService
+        .getAccounts(page - 1, size, params.ibanParam)
+        .subscribe((response: AccountResponse) => {
+          this.accounts = response.accounts;
+          this.config.totalItems = response.totalElements;
+        });
+    }
   }
 
   goToDepositCash(account: Account) {
@@ -136,6 +136,18 @@ export class AccountListComponent implements OnInit, OnDestroy {
     return `${baseLink}${id}`;
   }
 
+  private getTpps(page: number, size: number, queryParams: TppQueryParams) {
+    this.tppManagementService
+      .getTpps(page - 1, size, queryParams)
+      .subscribe((response) => {
+        this.users = response.tpps;
+        this.config.totalItems = response.totalElements;
+      });
+  }
+  createLastVisitedPageLink(id: string): string {
+    this.pageNavigationService.setLastVisitedPage('/accounts');
+    return `/accounts/${id}`;
+  }
   setBlocked(blocked) {
     this.searchForm.controls.blocked.patchValue(blocked);
   }
@@ -178,7 +190,6 @@ export class AccountListComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   private getCurrentData() {
     this.tppUserService.currentTppUser.subscribe((user: User) => {
       this.admin = user && user.userRoles.includes('SYSTEM');
