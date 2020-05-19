@@ -55,11 +55,12 @@ export class UserDetailsComponent implements OnInit {
     this.pageNavigationService.setLastVisitedPage(
       `${this.currentPage}${this.userId}`
     );
+    this.pageNavigationService.setLastVisitedPage(
+      `${this.currentPage}${this.userId}`
+    );
     this.accService
       .getAccountByIban(iban)
-      .subscribe((account) =>
-        this.router.navigate([`/users/${this.userId}/update-user-details`])
-      );
+      .subscribe((account) => this.router.navigate(['/accounts/', account.id]));
   }
 
   confirmEmail(email: string) {
@@ -79,6 +80,6 @@ export class UserDetailsComponent implements OnInit {
 
   createLastVisitedPageLink(tppId: string, userId: string): string {
     this.pageNavigationService.setLastVisitedPage(`/users/${userId}`);
-    return `/update-user-details`;
+    return `/profile/${tppId}`;
   }
 }
