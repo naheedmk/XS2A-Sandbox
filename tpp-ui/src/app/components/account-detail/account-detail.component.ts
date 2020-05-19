@@ -1,23 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AccountStatus, AccountType, UsageType} from "../../models/account.model";
-import {AccountService} from "../../services/account.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TestDataGenerationService} from "../../services/test.data.generation.service";
-import {InfoService} from "../../commons/info/info.service";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AccountStatus,
+  AccountType,
+  UsageType,
+} from '../../models/account.model';
+import { AccountService } from '../../services/account.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TestDataGenerationService } from '../../services/test.data.generation.service';
+import { InfoService } from '../../commons/info/info.service';
 
 @Component({
   selector: 'app-account-detail',
   templateUrl: './account-detail.component.html',
-  styleUrls: ['./account-detail.component.scss']
+  styleUrls: ['./account-detail.component.scss'],
 })
 export class AccountDetailComponent implements OnInit {
   accountForm = new FormGroup({
-    'accountType': new FormControl('CASH', Validators.required),
-    'usageType': new FormControl(UsageType.PRIV, Validators.required),
-    'currency': new FormControl('EUR', Validators.required),
-    'iban': new FormControl(null, Validators.required),
-    'accountStatus': new FormControl(AccountStatus.ENABLED, Validators.required),
+    accountType: new FormControl('CASH', Validators.required),
+    usageType: new FormControl(UsageType.PRIV, Validators.required),
+    currency: new FormControl('EUR', Validators.required),
+    iban: new FormControl(null, Validators.required),
+    accountStatus: new FormControl(AccountStatus.ENABLED, Validators.required),
   });
   private userID: string;
 
@@ -33,8 +37,9 @@ export class AccountDetailComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private generationService: TestDataGenerationService,
-    private infoService: InfoService) {
-      this.userID = this.activatedRoute.snapshot.params['id'];
+    private infoService: InfoService
+  ) {
+    this.userID = this.activatedRoute.snapshot.params['id'];
   }
 
   ngOnInit() {
@@ -43,9 +48,9 @@ export class AccountDetailComponent implements OnInit {
 
   initializeCurrenciesList() {
     return this.accountService.getCurrencies().subscribe(
-      data => this.currencies = data,
-      error => console.log(error)
-    )
+      (data) => (this.currencies = data),
+      (error) => console.log(error)
+    );
   }
 
   get accountType() {
@@ -79,16 +84,16 @@ export class AccountDetailComponent implements OnInit {
       return;
     }
 
-    this.accountService.createAccount(this.userID, this.accountForm.getRawValue())
+    this.accountService
+      .createAccount(this.userID, this.accountForm.getRawValue())
       .subscribe(() => this.router.navigate(['/accounts']));
   }
 
   generateIban() {
-    return this.generationService.generateIban()
-        .subscribe(data => {
-          this.accountForm.get('iban').setValue(data);
-          this.infoService.openFeedback('IBAN has been successfully generated');
-        });
+    return this.generationService.generateIban().subscribe((data) => {
+      this.accountForm.get('iban').setValue(data);
+      this.infoService.openFeedback('IBAN has been successfully generated');
+    });
   }
 
   onCancel() {
