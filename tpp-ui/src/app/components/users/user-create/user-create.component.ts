@@ -5,6 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.model';
 import { InfoService } from '../../../commons/info/info.service';
 import { ScaMethods } from '../../../models/scaMethods';
+import { TppManagementService } from '../../../services/tpp-management.service';
 
 @Component({
   selector: 'app-user-create',
@@ -14,6 +15,7 @@ import { ScaMethods } from '../../../models/scaMethods';
 export class UserCreateComponent implements OnInit {
   id: string;
   user: User;
+  admin: true;
   methods: string[];
   userForm: FormGroup;
   submitted: boolean;
@@ -23,7 +25,8 @@ export class UserCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private infoService: InfoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private tppManagementService: TppManagementService
   ) {}
 
   get formControl() {
@@ -113,20 +116,25 @@ export class UserCreateComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-
-    this.userService.createUser(this.userForm.value).subscribe(
-      () => {
-        this.router.navigateByUrl('/users/all');
-      },
-      () => {
-        this.infoService.openFeedback(
-          'Provided Login or Email are already taken',
-          {
-            severity: 'error',
-          }
-        );
-      }
-    );
+    if (this.admin === true) {
+      this.tppManagementService
+        .createUser(this.userForm.value)
+        .subscribe(() => this.router.navigate(['/users/all']));
+    } else if (this.admin === false) {
+      this.userService.createUser(this.userForm.value).subscribe(
+        () => {
+          this.router.navigateByUrl('/users/all');
+        },
+        () => {
+          this.infoService.openFeedback(
+            'Provided Login or Email are already taken',
+            {
+              severity: 'error',
+            }
+          );
+        }
+      );
+    }
   }
 
   getMethodsValues() {

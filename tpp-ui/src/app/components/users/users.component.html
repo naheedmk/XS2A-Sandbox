@@ -47,17 +47,6 @@
             <div *ngIf="admin" class="tpp-filters">
               <div class="container-fluid">
                 <div class="row d-flex justify-content-end">
-                  <!--                  <div class="mr-2">-->
-                  <!--                    <label for="country">TPP Login:</label>-->
-                  <!--                    <div class="filter">-->
-                  <!--                      <input-->
-                  <!--                        class="form-control"-->
-                  <!--                        placeholder="Enter TPP login..."-->
-                  <!--                        formControlName="tppLogin"-->
-                  <!--                        type="text"-->
-                  <!--                      />-->
-                  <!--                    </div>-->
-                  <!--                  </div>-->
                   <div class="mr-2">
                     <label for="country">TPP ID:</label>
                     <div class="filter">
@@ -120,7 +109,6 @@
             </div>
           </div>
         </div>
-
         <table class="table">
           <thead>
             <tr>
@@ -130,15 +118,14 @@
               <th scope="col">Accounts</th>
               <th scope="col">Currencies</th>
               <th scope="col" *ngIf="admin">TPP ID</th>
-              <!--              <th scope="col" *ngIf="admin">TPP login</th>-->
               <th scope="col">Authentication methods</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              *ngFor="let user of users; let i = index"
-              [routerLink]="[createLastVisitedPageLink(user.id)]"
+              *ngFor="let user of users; index as i"
+              [routerLink]="['/users/' + user.id]"
               [queryParams]="{ page: config.currentPageNumber }"
               [ngClass]="{ 'disabled-tr': user.blocked }"
             >
@@ -200,6 +187,7 @@
                 <a
                   class="btn btn-table-btn"
                   routerLink="/users/{{ user.id }}/create-deposit-account"
+                  [queryParams]="{ tppId: user.branch, userId: user.id }"
                   *ngIf="!user.blocked"
                 >
                   Create deposit account

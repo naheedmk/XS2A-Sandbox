@@ -62,7 +62,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
   }
 
   getAccounts(page: number, size: number, params: TppQueryParams) {
-    if (this.admin) {
+    if (this.admin === true) {
       this.tppManagementService
         .getAllAccounts(page - 1, size, params)
         .subscribe((response: AccountResponse) => {
