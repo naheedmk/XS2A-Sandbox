@@ -59,7 +59,6 @@ export class AccountListComponent implements OnInit, OnDestroy {
     this.getCountries();
     this.getCurrentData();
     this.onQueryUsers();
-    this.getTpps(this.config.currentPageNumber, this.config.itemsPerPage, {});
   }
 
   getAccounts(page: number, size: number, params: TppQueryParams) {
@@ -146,7 +145,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
   }
   createLastVisitedPageLink(id: string): string {
     this.pageNavigationService.setLastVisitedPage('/accounts');
-    return `/accounts/${id}`;
+    return `/profile/${id}`;
   }
   setBlocked(blocked) {
     this.searchForm.controls.blocked.patchValue(blocked);

@@ -52,7 +52,9 @@
             <div class="form__margin">
               <div class="form-group">
                 <label for="country"
-                  ><span *ngIf="!customizeService.isCustom()">Your</span>
+                  ><span *ngIf="!customizeService.isCustom() && !admin"
+                    >Your</span
+                  >
                   Country*</label
                 >
 
@@ -82,8 +84,10 @@
               <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label for="id">
-                    <span *ngIf="!customizeService.isCustom()">Your</span> TPP
-                    ID*</label
+                    <span *ngIf="!customizeService.isCustom() && !admin"
+                      >Your</span
+                    >
+                    TPP ID*</label
                   >
                   <input
                     [ngClass]="{

@@ -36,17 +36,17 @@
             <div *ngIf="admin" class="tpp-filters">
               <div class="container-fluid">
                 <div class="row d-flex justify-content-end">
-                  <div class="mr-2">
-                    <label for="country">TPP Login:</label>
-                    <div class="filter">
-                      <input
-                        class="form-control"
-                        placeholder="Enter TPP login..."
-                        formControlName="tppLogin"
-                        type="text"
-                      />
-                    </div>
-                  </div>
+                  <!--                  <div class="mr-2">-->
+                  <!--                    <label for="country">TPP Login:</label>-->
+                  <!--                    <div class="filter">-->
+                  <!--                      <input-->
+                  <!--                        class="form-control"-->
+                  <!--                        placeholder="Enter TPP login..."-->
+                  <!--                        formControlName="tppLogin"-->
+                  <!--                        type="text"-->
+                  <!--                      />-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
                   <div class="mr-2">
                     <label for="country">TPP ID:</label>
                     <div class="filter">
@@ -117,14 +117,13 @@
               <th scope="col">IBAN</th>
               <th scope="col">Currency</th>
               <th scope="col" *ngIf="admin">TPP ID</th>
-              <th scope="col" *ngIf="admin">TPP login</th>
               <th scope="col">Account Type</th>
               <th scope="col">Usage Type</th>
               <th scope="col">Account Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
-          <tbody *ngFor="let user of users">
+          <tbody>
             <tr
               *ngFor="let account of accounts; index as i"
               [routerLink]="[createAccountDetailsLink(account.id)]"
@@ -140,12 +139,11 @@
               <td>{{ account.currency }}</td>
               <td>
                 <a
-                  [routerLink]="[createLastVisitedPageLink(user.branch)]"
+                  [routerLink]="[createLastVisitedPageLink(account.branch)]"
                   [queryParams]="{ page: config.currentPageNumber }"
-                  >{{ user.branch }}</a
-                >
+                  >{{ account.branch }}
+                </a>
               </td>
-              <td>{{ user.login }}</td>
               <td>{{ account.accountType }}</td>
               <td>{{ account.usageType }}</td>
               <td>{{ account.blocked ? 'Blocked' : 'Active' }}</td>

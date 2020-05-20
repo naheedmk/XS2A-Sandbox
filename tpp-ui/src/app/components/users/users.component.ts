@@ -22,7 +22,6 @@ import { CountryService } from '../../services/country.service';
 // TODO Merge UsersComponent, TppsComponent and AccountListComponent into one single component https://git.adorsys.de/adorsys/xs2a/psd2-dynamic-sandbox/-/issues/713
 export class UsersComponent implements OnInit {
   admin;
-  tpps: User[] = [];
   users: User[] = [];
   countries: Array<object> = [];
   config: PaginationConfigModel = {
@@ -63,7 +62,7 @@ export class UsersComponent implements OnInit {
 
   createLastVisitedPageLink(id: string): string {
     this.pageNavigationService.setLastVisitedPage('/users/all');
-    return `/users/${id}/`;
+    return `/profile/${id}/`;
   }
 
   pageChange(pageConfig: PageConfig) {
@@ -184,15 +183,5 @@ export class UsersComponent implements OnInit {
         );
       }
     });
-    // this.getTpps(this.config.currentPageNumber, this.config.itemsPerPage, {});
-  }
-
-  private getTpps(page: number, size: number, queryParams: TppQueryParams) {
-    this.tppManagementService
-      .getTpps(page - 1, size, queryParams)
-      .subscribe((response) => {
-        this.tpps = response.tpps;
-        this.config.totalItems = response.totalElements;
-      });
   }
 }
