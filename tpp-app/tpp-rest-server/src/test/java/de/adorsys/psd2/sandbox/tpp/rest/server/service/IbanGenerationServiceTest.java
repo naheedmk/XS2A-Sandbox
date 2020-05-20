@@ -74,7 +74,6 @@ class IbanGenerationServiceTest {
     @Test
     void validateIbansForDifferentCountries_CharacterTypeCAndA() {
 
-        //when(userMgmtRestClient.getUserById(anyString())).thenReturn(getNewUserTO(TPP_ID, Collections.emptyList(), UserRoleTO.STAFF))
         // When
         List<String> ibans = generationService.getCountryCodes().keySet().stream()
                                  .map(c -> generationService.getBankCodeStructure(c))
