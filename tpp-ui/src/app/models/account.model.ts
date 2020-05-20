@@ -2,7 +2,6 @@ import { Amount } from './amount.model';
 
 export class Account {
   branch: string;
-
   id: string;
   /** International Bank Account Number */
   iban: string;

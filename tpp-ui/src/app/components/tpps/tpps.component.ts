@@ -70,7 +70,6 @@ export class TppsComponent implements OnInit {
       blocked: this.searchForm.get('blocked').value,
     });
   }
-
   setBlocked(blocked) {
     this.searchForm.controls.blocked.patchValue(blocked);
   }
