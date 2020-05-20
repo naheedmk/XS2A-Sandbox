@@ -44,7 +44,7 @@ export class UserCreateComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       login: ['', Validators.required],
       pin: ['', [Validators.required, Validators.minLength(5)]],
-      userRoles: this.formBuilder.array(['CUSTOMER']), // register users with customer role
+      userRoles: this.formBuilder.array(['CUSTOMER'])
     });
   }
 
