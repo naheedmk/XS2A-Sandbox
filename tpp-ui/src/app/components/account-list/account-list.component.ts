@@ -143,6 +143,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
         this.config.totalItems = response.totalElements;
       });
   }
+
   createLastVisitedPageLink(id: string): string {
     this.pageNavigationService.setLastVisitedPage('/accounts');
     return `/profile/${id}`;
@@ -189,6 +190,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   private getCurrentData() {
     this.tppUserService.currentTppUser.subscribe((user: User) => {
       this.admin = user && user.userRoles.includes('SYSTEM');
