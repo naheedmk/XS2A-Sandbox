@@ -128,7 +128,7 @@
               *ngFor="let account of accounts; index as i"
               [routerLink]="[createAccountDetailsLink(account.id)]"
               [queryParams]="{ page: config.currentPageNumber }"
-              [ngClass]="{ 'disabled-tr': account.blocked }"
+              [ngClass]="{ 'disabled-text': account.blocked }"
             >
               <th scope="row">
                 {{

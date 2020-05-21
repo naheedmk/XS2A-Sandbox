@@ -9,6 +9,7 @@ import {AccountService} from "../../services/account.service";
 import {InfoService} from "../../commons/info/info.service";
 import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
 import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {ADMIN_KEY} from "../../commons/constant/constant";
 
 @Component({
     selector: 'app-account-access-management',
@@ -19,6 +20,7 @@ import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 export class AccountAccessManagementComponent implements OnInit, OnDestroy {
 
     users: User[];
+    admin: string;
     account: Account;
     subscription = new Subscription();
 
@@ -43,6 +45,7 @@ export class AccountAccessManagementComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.admin = localStorage.getItem(ADMIN_KEY)
         this.listUsers();
         this.setupAccountAccessFormControl();
     }
@@ -70,7 +73,6 @@ export class AccountAccessManagementComponent implements OnInit, OnDestroy {
         if (this.accountAccessForm.invalid) {
             return;
         }
-
         this.accountAccessForm.get('iban').setValue(this.account.iban);
         this.accountAccessForm.get('currency').setValue(this.account.currency);
         this.accountAccessForm.get('accountId').setValue(this.account.id);

@@ -37,8 +37,8 @@ export class TppManagementService {
     return this.http.put(this.url + '/admin/users', user);
   }
 
-  createUser(user: User): Observable<any> {
-    return this.http.post(this.url + '/admin/register', user);
+  createUser(user: User, tppId: string): Observable<any> {
+    return this.http.post(this.url + `/admin/register?tppId=${tppId}`, user);
   }
 
   deleteSelf() {
