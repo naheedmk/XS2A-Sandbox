@@ -9,7 +9,7 @@ import {AccountService} from '../../services/account.service';
 import {InfoService} from '../../commons/info/info.service';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
-import {ADMIN_KEY} from '../../../commons/constant/constant.ts';
+import {ADMIN_KEY} from '../../commons/constant/constant';
 
 
 @Component({
