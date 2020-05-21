@@ -35,7 +35,7 @@ public interface TppRestApi {
 
     @ApiOperation(value = "Generate random TPP-ID")
     @PostMapping("/id")
-    ResponseEntity<String> getRandomTppId(@RequestBody BankCodeStructure structure);
+    ResponseEntity<String> getRandomTppId(@RequestParam String countryCode);
 
     @ApiOperation(value = "Register new TPP")
     @PostMapping("/register")

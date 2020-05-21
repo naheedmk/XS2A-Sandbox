@@ -136,7 +136,7 @@ class TppControllerTest {
     void getRandomTppId() {
         when(dataRestClient.branchId(any())).thenReturn(ResponseEntity.ok("DE_123"));
         BankCodeStructure structure = new BankCodeStructure(DE);
-        ResponseEntity<String> result = tppController.getRandomTppId(structure);
+        ResponseEntity<String> result = tppController.getRandomTppId("DE");
         ArgumentCaptor<BbanStructure> captor = ArgumentCaptor.forClass(BbanStructure.class);
         verify(dataRestClient, times(1)).branchId(captor.capture());
         BbanStructure value = captor.getValue();

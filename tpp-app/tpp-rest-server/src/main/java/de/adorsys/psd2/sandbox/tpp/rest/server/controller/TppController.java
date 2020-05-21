@@ -8,6 +8,7 @@ import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.BankCodeStructure;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppRestApi;
+import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import de.adorsys.psd2.sandbox.tpp.rest.server.service.IbanGenerationService;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +54,8 @@ public class TppController implements TppRestApi {
     }
 
     @Override
-    public ResponseEntity<String> getRandomTppId(BankCodeStructure structure) {
+    public ResponseEntity<String> getRandomTppId(String countryCode) {
+        BankCodeStructure structure = new BankCodeStructure(CountryCode.getByCode(countryCode));
         BbanStructure bbanStructure = new BbanStructure();
         bbanStructure.setCountryPrefix(structure.getCountryCode().name());
         bbanStructure.setLength(structure.getLength());
