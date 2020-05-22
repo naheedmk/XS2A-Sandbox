@@ -49,6 +49,18 @@ export class TppManagementService {
     return this.http.delete(this.url + '/account/' + accountId);
   }
 
+
+  listUsers(page: number = 0, size: number = 25, queryParam: string = ''): Observable<UserResponse> {
+    return this.http.get<PaginationResponse<User[]>>( `${this.url}/admin/users?page=${page}&size=${size}&queryParam=${queryParam}`).pipe(
+      map((resp) => {
+        return {
+          users: resp.content,
+          totalElements: resp.totalElements
+        };
+      })
+    );
+  }
+
   getUsersForTpp(tppId: string): Observable<User[]> {
     return this.getAllUsers(0, 100, { tppId: tppId }).pipe(
       map((resp) => {
