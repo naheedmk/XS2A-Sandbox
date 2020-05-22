@@ -50,9 +50,8 @@ export class UserCreateComponent implements OnInit {
   }
 
   listUsers() {
-    const MAX_VALUE = 2147483647; //for getting all the available user;;
-    this.tppManagementService.listUsers(0, MAX_VALUE).subscribe((resp: any) => {
-      this.users = resp.users
+     this.tppManagementService.getTpps(0, 500).subscribe((resp: any) => {
+      this.users = resp.tpps
       console.log('user', this.users);
     });
   }
@@ -63,7 +62,7 @@ export class UserCreateComponent implements OnInit {
     const inputFocus$ = this.focus$;
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$)
       .pipe(
-        map((searchText: string) => (searchText ? this.users : this.users.filter((user, i) => user.branch))
+        map((searchText: string) => (searchText ? this.users : this.users.filter((user) => user))
         ));
   }
 
