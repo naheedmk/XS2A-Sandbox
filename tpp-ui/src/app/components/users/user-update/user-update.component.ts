@@ -16,7 +16,7 @@ import {ADMIN_KEY} from "../../../commons/constant/constant";
 })
 export class UserUpdateComponent implements OnInit {
   admin: string;
-  tppId;
+  tppId: string;
   user: User;
   updateUserForm: FormGroup;
   methods: string[];
