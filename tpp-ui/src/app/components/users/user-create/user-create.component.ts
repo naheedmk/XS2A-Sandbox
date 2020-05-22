@@ -18,9 +18,11 @@ import {ADMIN_KEY} from "../../../commons/constant/constant";
 })
 export class UserCreateComponent implements OnInit {
   @ViewChild('instance', {static: true}) instance: NgbTypeahead;
+
   focus$ = new Subject<User[]>();
   click$ = new Subject<User[]>();
   tppId: string;
+
   id: string;
   users: User[];
   admin: string;
@@ -51,14 +53,14 @@ export class UserCreateComponent implements OnInit {
 
   listUsers() {
      this.tppManagementService.getTpps(0, 500).subscribe((resp: any) => {
-      this.users = resp.tpps
-      console.log('user', this.users);
+      this.users = resp.tpps;
     });
   }
 
+
   search: (obs: Observable<string>) => Observable<User[]> = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() =>  this.instance && !this.instance.isPopupOpen()));
     const inputFocus$ = this.focus$;
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$)
       .pipe(
