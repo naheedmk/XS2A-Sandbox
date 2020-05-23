@@ -9,7 +9,7 @@ import {TppManagementService} from '../../../services/tpp-management.service';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {merge, Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
-import {ADMIN_KEY} from "../../../commons/constant/constant";
+import {ADMIN_KEY} from '../../../commons/constant/constant';
 
 @Component({
   selector: 'app-user-create',
@@ -56,7 +56,6 @@ export class UserCreateComponent implements OnInit {
       this.users = resp.tpps;
     });
   }
-
 
   search: (obs: Observable<string>) => Observable<User[]> = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
