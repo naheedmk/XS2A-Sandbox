@@ -1,4 +1,4 @@
-# Release notes v.3.8
+# Release notes v.4.0
 
 Current version consists of following components:
 
