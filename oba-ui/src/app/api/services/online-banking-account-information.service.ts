@@ -11,6 +11,7 @@ import { AccountDetailsTO } from '../models/account-details-to';
 import { PaymentTO } from '../models/payment-to';
 import { TransactionTO } from '../models/transaction-to';
 import { CustomPageImplTransactionTO } from '../models/custom-page-impl-transaction-to';
+import { SendCode } from '../models';
 
 /**
  * Oba Ais Controller
@@ -222,8 +223,8 @@ class OnlineBankingAccountInformationService extends __BaseService {
         params: __params,
         responseType: 'json'
       });
-
-    return this.http.request<any>(req).pipe(
+      console.log('hello from service', req.body)
+      return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
         return _r as __StrictHttpResponse<CustomPageImplTransactionTO>;
@@ -245,11 +246,58 @@ class OnlineBankingAccountInformationService extends __BaseService {
    *
    * @return OK
    */
+
   transactionsUsingGET(params: OnlineBankingAccountInformationService.TransactionsUsingGETParams): __Observable<CustomPageImplTransactionTO> {
     return this.transactionsUsingGETResponse(params).pipe(
       __map(_r => _r.body as CustomPageImplTransactionTO)
     );
   }
+
+  getCurrentAccountInfo() {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/v1/me`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<AccountDetailsTO>;
+      })
+    );
+
+  }
+  updateAccountInfo() {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/v1/password`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<SendCode>;
+      })
+    );
+  }
+
 }
 
 module OnlineBankingAccountInformationService {
