@@ -172,11 +172,15 @@ export class RegisterComponent implements OnInit {
   }
 
   public generateTppId(countryCode: string) {
-    return this.generationService.generateTppId(countryCode)
-      .subscribe((data) => {
+    if (countryCode) {
+      return this.generationService.generateTppId(countryCode)
+        .subscribe((data) => {
           this.userForm.get('id').setValue(data);
           this.infoService.openFeedback('TPP ID has been successfully generated');
         });
+    } else {
+      this.infoService.openFeedback('To generate TPP ID you need to select a country');
+    }
   }
 
   public generateZipFile(certBlob, keyBlob): Promise<any> {
