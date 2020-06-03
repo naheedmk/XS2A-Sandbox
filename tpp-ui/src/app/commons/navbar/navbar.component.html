@@ -1,43 +1,42 @@
 <nav class="navbar navbar-light py-3">
   <div class="flex">
     <a class="navbar-brand text-primary mr-4" routerLink="/">
-        <img
-            class="logo"
-            [src]="customizeService.getLogo()"
-        />
+      <img class="logo" [src]="customizeService.getLogo()" />
     </a>
-    <span class="navbar-brand ml-3"><span *ngIf="!customizeService.isCustom()">adorsys&nbsp;</span>{{title}}</span>
+    <span class="navbar-brand ml-3"
+      ><span *ngIf="!customizeService.isCustom()">adorsys&nbsp;</span
+      >{{ title }}</span
+    >
   </div>
-<!--    <ul class="nav">-->
-<!--        <li class="dropdown ml-auto">-->
-<!--            <a class="nav-item dropdown-toggle mr-3 no-underline clickable" id="dropdownMenuButton"-->
-<!--               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-<!--               *ngIf="tppUser?.login">{{ tppUser.login }}-->
-<!--            </a>-->
-<!--            <div class="dropdown-menu dropdown-menu-right" >-->
-<!--                <a routerLink="/profile" class="dropdown-item py-2">-->
-<!--                    <div>-->
-<!--                        <img src="./assets/icons/user.svg">-->
-<!--                        <span> Profile</span>-->
-<!--                    </div>-->
-<!--                </a>-->
-<!--                <a (click)="onLogout()" [routerLinkActive]="['active']" class="dropdown-item clickable pb-2">-->
-<!--                    <div>-->
-<!--                        <img src="./assets/icons/sign_out.svg">-->
-<!--                        <span class="nav__title"> Sign out</span>-->
-<!--                    </div>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </li>-->
-<!--    </ul>-->
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown button
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
-    </div>
-  </div>
+  <ul class="nav">
+    <li class="dropdown ml-auto">
+      <a
+        class="nav-item dropdown-toggle mr-3 no-underline clickable"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        *ngIf="tppUser?.login"
+        >{{ tppUser.login }}
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a routerLink="/profile" class="dropdown-item py-2">
+          <div>
+            <img src="./assets/icons/user.svg" />
+            <span> Profile</span>
+          </div>
+        </a>
+        <a
+          (click)="onLogout()"
+          [routerLinkActive]="['active']"
+          class="dropdown-item clickable pb-2"
+        >
+          <div>
+            <img src="./assets/icons/sign_out.svg" />
+            <span class="nav__title"> Sign out</span>
+          </div>
+        </a>
+      </div>
+    </li>
+  </ul>
 </nav>
