@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.aisService.aisAuthorise(params).subscribe(authorisationResponse => {
                 this.shareService.changeData(authorisationResponse);
-
                 this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.GRANT_CONSENT}`]);
             }, (error: HttpErrorResponse) => {
                 // if encryptedConsentId or redirectId is missing
@@ -75,10 +74,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                 } else {
                     if (error.status === 401) {
                         this.errorMessage = 'Invalid credentials';
+                    } else if (error.status === 408 && error.headers) {
+                      this.errorMessage = 'Consent is cancelled and cannot be authorized';
                     } else {
                         this.errorMessage = error.error ? error.error.message : error.message;
                     }
-                    throw new HttpErrorResponse(error);
                 }
             })
         );
@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                             console.log(error);
                         })
             );
-        })
+        });
     }
 
     private initLoginForm(): void {
