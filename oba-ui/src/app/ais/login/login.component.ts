@@ -66,7 +66,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this.shareService.changeData(authorisationResponse);
                 this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.GRANT_CONSENT}`]);
             }, (error: HttpErrorResponse) => {
-                // if encryptedConsentId or redirectId is missing
                 if (this.encryptedConsentId === undefined || this.redirectId === undefined) {
                     this.infoService.openFeedback('Consent data is missing. Please create consent prior to login', {
                         severity: 'error'
@@ -74,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 } else {
                     if (error.status === 401) {
                         this.errorMessage = 'Invalid credentials';
-                    } else if (error.status === 408 && error.headers) {
+                    } else if (error.status === 408) {
                       this.errorMessage = 'Consent is cancelled and cannot be authorized';
                     } else {
                         this.errorMessage = error.error ? error.error.message : error.message;
