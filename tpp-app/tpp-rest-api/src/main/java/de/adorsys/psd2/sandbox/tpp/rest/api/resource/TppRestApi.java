@@ -58,7 +58,7 @@ public interface TppRestApi {
     @DeleteMapping("/user/{userId}")
     ResponseEntity<Void> user(@PathVariable String userId);
 
-    @ApiOperation(value = "Clear data in CMS database for given PSUs by specified timestamp and in ledgers DB by given branch and timestamp", authorizations = @Authorization(value = "apiKey"))
+    @ApiOperation(value = "Revert TPP data by certain timestamp", authorizations = @Authorization(value = "apiKey"))
     @PostMapping("/revert")
     ResponseEntity<Void> revert(@RequestBody RevertRequestTO revertRequest);
 }

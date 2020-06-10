@@ -1,7 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.controller;
 
 import de.adorsys.ledgers.middleware.api.domain.general.BbanStructure;
-import de.adorsys.ledgers.middleware.api.domain.general.RevertRequestTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserRoleTO;
@@ -9,7 +8,6 @@ import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.DataRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
-import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsRollbackService;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.*;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import de.adorsys.psd2.sandbox.tpp.rest.server.service.IbanGenerationService;
@@ -24,7 +22,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.iban4j.CountryCode.*;
@@ -53,8 +50,6 @@ class TppControllerTest {
     private DataRestClient dataRestClient;
     @Mock
     private IbanGenerationService ibanGenerationService;
-    @Mock
-    private CmsRollbackService cmsRollbackService;
 
     @Test
     void register() {
@@ -150,19 +145,6 @@ class TppControllerTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
-    @Test
-    void revert_ok() {
-        // Given
-        when(userMgmtRestClient.getAllUsers())
-            .thenReturn(ResponseEntity.ok(Collections.singletonList(getUserTO())));
-
-        // When
-        ResponseEntity<Void> actual = tppController.revert(getRevertRequest());
-
-        // Then
-        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
-    }
-
     private Set<Currency> getSupportedCurrencies() {
         Set<Currency> currencies = new HashSet<>();
         currencies.add(Currency.getInstance("EUR"));
@@ -201,13 +183,5 @@ class TppControllerTest {
         when(dataRestClient.user(anyString())).thenReturn(ResponseEntity.ok().build());
         ResponseEntity<Void> result = tppController.user(USER_ID);
         assertEquals(HttpStatus.OK, result.getStatusCode());
-    }
-
-    private RevertRequestTO getRevertRequest() {
-        RevertRequestTO revertRequestTO = new RevertRequestTO();
-        revertRequestTO.setBranchId("DE-FAKENCA");
-        revertRequestTO.setTimestampToRevert(LocalDateTime.now());
-
-        return revertRequestTO;
     }
 }

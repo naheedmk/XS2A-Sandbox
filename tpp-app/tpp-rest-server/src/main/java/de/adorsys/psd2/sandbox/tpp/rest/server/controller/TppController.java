@@ -12,19 +12,18 @@ import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import de.adorsys.psd2.sandbox.tpp.rest.server.service.IbanGenerationService;
+import de.adorsys.psd2.sandbox.tpp.rest.server.service.RestExecutionService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.iban4j.CountryCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Currency;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -37,6 +36,7 @@ public class TppController implements TppRestApi {
     private final DataRestClient dataRestClient;
     private final IbanGenerationService ibanGenerationService;
     private final CmsRollbackService cmsRollbackService;
+    private final RestExecutionService restExecutionService;
 
     @Override
     public void login(String login, String pin) {
@@ -98,21 +98,7 @@ public class TppController implements TppRestApi {
 
     @Override
     public ResponseEntity<Void> revert(RevertRequestTO revertRequest) {
-
-        // Revert ledgers database first.
-        userMgmtStaffRestClient.revertDatabase(revertRequest);
-
-        List<UserTO> userList = userMgmtRestClient.getAllUsers().getBody();
-
-        // If users are present within this branch - get their logins (PSU IDs) and clean the CMS DB with logins and timestamp.
-        if (CollectionUtils.isNotEmpty(userList)) {
-            List<String> userLogins = userList.stream()
-                                          .map(UserTO::getLogin)
-                                          .collect(Collectors.toList());
-
-            cmsRollbackService.revertDatabase(userLogins, revertRequest.getTimestampToRevert());
-        }
-
-        return ResponseEntity.status(CREATED).build();
+        restExecutionService.revert(revertRequest);
+        return ResponseEntity.status(ACCEPTED).build();
     }
 }
