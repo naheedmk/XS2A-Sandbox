@@ -65,10 +65,8 @@ with psuIds as
          (delete from auth_available_sca_method where authorisation_id in
                                                       (select * from authorisationIds)),
      deleteAuthorisation as
-         (delete from authorisation where parent_id in
-                                          (select external_id
-                                           from consent c
-                                           where c.consent_id in (select * from consentIdsFilteredByPsuIds))),
+         (delete from authorisation where authorisation_id in
+                                          (select * from authorisationIds)),
 
      deleteConsentPsuData as
          (delete from consent_psu_data where consent_id in
