@@ -1,7 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.cms.impl.service;
 
 import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsRollbackService;
-import de.adorsys.psd2.sandbox.tpp.cms.impl.exception.CmsQueryException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -40,7 +39,7 @@ public class CmsRollbackServiceImpl implements CmsRollbackService {
                 .setParameter(2, databaseStateDateTime)
                 .executeUpdate();
         } catch (IOException e) {
-            throw new CmsQueryException("Error while executing native query in CMS");
+            throw new RuntimeException("Error while loading CMS SQL query file.");
         }
     }
 
