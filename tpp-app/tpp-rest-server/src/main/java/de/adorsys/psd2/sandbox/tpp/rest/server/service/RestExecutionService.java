@@ -47,7 +47,7 @@ public class RestExecutionService {
     public void revert(RevertRequestTO revertRequest) {
         CustomPageImpl<UserTO> pageableList = userMgmtStaffRestClient.getBranchUsersByRoles(Collections.singletonList(UserRoleTO.CUSTOMER),
                                                                                             "",
-                                                                                            Boolean.FALSE,
+                                                                                            false,
                                                                                             0,
                                                                                             1000).getBody();
 
