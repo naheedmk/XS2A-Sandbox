@@ -1,27 +1,27 @@
 package de.adorsys.ledgers.oba.rest.server.resource;
 
-import java.net.HttpCookie;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
+import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.oba.rest.server.config.cors.CookieConfigProperties;
+import de.adorsys.ledgers.oba.service.api.domain.ConsentReference;
+import de.adorsys.ledgers.oba.service.api.domain.OnlineBankingResponse;
+import de.adorsys.ledgers.oba.service.api.domain.PsuMessage;
+import de.adorsys.ledgers.oba.service.api.domain.PsuMessageCategory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
-import de.adorsys.ledgers.oba.service.api.domain.ConsentReference;
-import de.adorsys.ledgers.oba.service.api.domain.OnlineBankingResponse;
-import de.adorsys.ledgers.oba.service.api.domain.PsuMessage;
-import de.adorsys.ledgers.oba.service.api.domain.PsuMessageCategory;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.net.HttpCookie;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ResponseUtils {
@@ -113,9 +113,9 @@ public class ResponseUtils {
 		return ResponseEntity.status(status).body(authResp);
 	}
 
-	public String consentCookie(String cookieString) {
-		return cookie(cookieString, CONSENT_COOKIE_NAME);
-	}
+    public String consentCookie(String cookieString) {
+        return cookie(cookieString, CONSENT_COOKIE_NAME);
+    }
 
 	private String cookie(String cookieStringIn, String name) {
 		String cookieString = cookieStringIn;
@@ -125,20 +125,29 @@ public class ResponseUtils {
 
 		String cookieParamName=name+"=";
 
-		// Fix Java: rfc2965 want cookie to be separated by comma.
-		// SOmehow i am receiving some semicolon separated cookies.
-		// Quick Fix: First strip the preceeding cookies if not the first.
-		if(!StringUtils.startsWithIgnoreCase(cookieString, cookieParamName)) {
-			int indexOfIgnoreCase = StringUtils.indexOfIgnoreCase(cookieString, cookieParamName);
-			cookieString = cookieString.substring(indexOfIgnoreCase);
-		}
-		// The proce
-		List<HttpCookie> cookies = HttpCookie.parse(cookieString);
-		for (HttpCookie httpCookie : cookies) {
-			if(StringUtils.equalsIgnoreCase(httpCookie.getName(), name)){
-				return httpCookie.getValue();
-			}
-		}
-		return null;
-	}
+        // Fix Java: rfc2965 want cookie to be separated by comma.
+        // SOmehow i am receiving some semicolon separated cookies.
+        // Quick Fix: First strip the preceeding cookies if not the first.
+        if (!StringUtils.startsWithIgnoreCase(cookieString, cookieParamName)) {
+            int indexOfIgnoreCase = StringUtils.indexOfIgnoreCase(cookieString, cookieParamName);
+            try {
+                cookieString = cookieString.substring(indexOfIgnoreCase);
+            } catch (IndexOutOfBoundsException e) {
+                log.error(e.getMessage());
+                log.error("Data: cookieString {}, " +
+                              "\n name: {}, " +
+                              "\n indexOfIgnoreCase: {} " +
+                              "\n cookiesString: {} " +
+                              "\n cookieParamName: {}", cookieStringIn, name, indexOfIgnoreCase, cookieString, cookieParamName);
+            }
+        }
+        // The proce
+        List<HttpCookie> cookies = HttpCookie.parse(cookieString);
+        for (HttpCookie httpCookie : cookies) {
+            if (StringUtils.equalsIgnoreCase(httpCookie.getName(), name)) {
+                return httpCookie.getValue();
+            }
+        }
+          return null;
+    }
 }
