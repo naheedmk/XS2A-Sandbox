@@ -9,7 +9,8 @@ Current version consists of following components:
 5. **XS2A Connector-Examples v.7.4.2**
 
 - Migrated to XS2A version 7.4.1 and connector-examples version 7.4.2.
-- Added possibility to arrange recovery points for DB items revert.
+- Added recovery points support.
+- Added rollback to recovery point.
 - Added TPP ID generator.
 - Added feature that shows who is logged in at OBA UI profile with edit user details.
 - Added readable error message when consent is cancelled.
