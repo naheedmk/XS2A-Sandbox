@@ -240,19 +240,6 @@ Lint:TPP_backend:
     - echo "Run TPP backend lint"
     - make lint-tpp-rest-server
 
-Lint:Certificate_generator:
-  image: debian:stretch-slim
-  stage: "Lint"
-  except:
-    - schedules
-    - develop
-    - master
-  script:
-    - apt-get update && apt-get install jsonlint yamllint libxml2-utils make curl -yq && ln -s /usr/bin/jsonlint-php /usr/bin/jsonlint
-    - curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
-    - echo "Run Certificate generator lint"
-    - make lint-certificate-generator
-
 Lint:Docker_compose:
   image: maven:3.6-jdk-11-slim
   stage: "Lint"
