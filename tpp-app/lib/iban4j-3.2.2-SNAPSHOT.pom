@@ -1,0 +1,138 @@
+<!--
+  Copyright 2013 Artur Mkrtchyan
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.iban4j</groupId>
+    <artifactId>iban4j</artifactId>
+    <version>3.2.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>iban4j</name>
+    <description>A Java library for International Bank Account Number (IBAN) generation.</description>
+    <url>http://iban4j.org</url>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:arturmkrtchyan/iban4j.git</connection>
+        <developerConnection>scm:git:git@github.com:arturmkrtchyan/iban4j.git</developerConnection>
+        <url>git@github.com:arturmkrtchyan/iban4j.git</url>
+      <tag>HEAD</tag>
+  </scm>
+
+    <developers>
+        <developer>
+            <name>Artur Mkrtchyan</name>
+        </developer>
+    </developers>
+
+
+    <!--parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent-->
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdkVersion>1.8</jdkVersion>
+        <!--jdk6Signature>java16</jdk6Signature-->
+        <skipSigning>true</skipSigning>
+        <commons-validator.version>1.6</commons-validator.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+            <version>0.7.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons-validator.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- Compilation -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${jdkVersion}</source>
+                    <target>${jdkVersion}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Bundle sources during verify phase -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+
+        <profile>
+            <id>develop</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <properties>
+                <skipSigning>false</skipSigning>
+            </properties>
+        </profile>
+
+    </profiles>
+
+
+</project>
