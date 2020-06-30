@@ -38,7 +38,7 @@ export class RecoveryPointState {
         const state = getState();
         setState({
           ...state,
-          recoveryPoints: result,
+          recoveryPoints: Object(result),
         });
       })
     );
