@@ -11,7 +11,7 @@ import {
 })
 export class ShareDataService {
   // update user detail
-  private user = new BehaviorSubject<UserTO>(null);
+  private user = new BehaviorSubject(null);
   currentUser = this.user.asObservable();
 
   // response data
@@ -42,7 +42,7 @@ export class ShareDataService {
 
   constructor() {}
 
-  updateUserDetails(data: UserTO) {
+  updateUserDetails(data) {
     this.user.next(data);
   }
 

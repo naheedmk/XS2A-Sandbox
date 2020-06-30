@@ -57,7 +57,6 @@ export class AuthService {
         return false;
       }),
       catchError((error) => {
-        // Handle error here
         return throwError(error);
       })
     );

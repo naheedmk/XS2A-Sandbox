@@ -2,6 +2,7 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { CustomizeService } from '../services/customize.service';
 import { ShareDataService } from '../services/share-data.service';
+import { CurrentUserService } from '../services/current-user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,14 +13,19 @@ export class NavbarComponent implements OnInit, DoCheck {
   public title: string;
   public obaUser;
   public toggleFlag = false;
+
   constructor(
     public customizeService: CustomizeService,
     private authService: AuthService,
-    private shareDataService: ShareDataService
+    private shareDataService: ShareDataService,
+    private currentUserService: CurrentUserService
   ) {}
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
+      this.currentUserService
+        .getCurrentUser()
+        .subscribe((data) => (this.obaUser = data.body));
       this.shareDataService.currentUser.subscribe(
         (data) => (this.obaUser = data)
       );

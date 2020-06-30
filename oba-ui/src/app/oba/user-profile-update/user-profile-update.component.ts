@@ -51,6 +51,7 @@ export class UserProfileUpdateComponent implements OnInit {
     this.currentUser
       .updateUserDetails(updatedUser)
       .subscribe(() => this.setDefaultUserDetails());
+    this.shareDataService.updateUserDetails(updatedUser);
     this.infoService.openFeedback('User details was successfully updated!', {
       severity: 'info',
     });
