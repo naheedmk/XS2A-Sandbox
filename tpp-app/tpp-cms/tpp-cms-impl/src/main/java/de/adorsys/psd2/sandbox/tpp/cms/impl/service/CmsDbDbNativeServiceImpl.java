@@ -1,6 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.cms.impl.service;
 
-import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsNativeService;
+import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsDbNativeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CmsNativeServiceImpl implements CmsNativeService {
+public class CmsDbDbNativeServiceImpl implements CmsDbNativeService {
     private final ResourceLoader loader;
 
     private static final String ROLLBACK_CMS = "classpath:rollbackCms.sql";
@@ -38,7 +38,7 @@ public class CmsNativeServiceImpl implements CmsNativeService {
     @Override
     @Transactional("cmsTransactionManager")
     public void revertDatabase(List<String> userIds, LocalDateTime databaseStateDateTime) {
-        log.info("Reverting CMS DB for users: " + Arrays.toString(userIds.toArray()) + ", timestamp: " + databaseStateDateTime.toString());
+        log.debug("Reverting CMS DB for users: " + Arrays.toString(userIds.toArray()) + ", timestamp: " + databaseStateDateTime.toString());
         cmsEntityManager.createNativeQuery(loadQueryFromFile(ROLLBACK_CMS))
             .setParameter(1, userIds)
             .setParameter(2, databaseStateDateTime)
@@ -48,7 +48,7 @@ public class CmsNativeServiceImpl implements CmsNativeService {
     @Override
     @Transactional("cmsTransactionManager")
     public void deleteConsentsByUserIds(List<String> userIds) {
-        log.info("Deleting AIS-specific data in CMS DB (if present) for users: " + Arrays.toString(userIds.toArray()));
+        log.debug("Deleting AIS-specific data in CMS DB (if present) for users: " + Arrays.toString(userIds.toArray()));
 
         cmsEntityManager.createNativeQuery(loadQueryFromFile(DELETE_CONSENTS_IN_CMS))
             .setParameter(1, userIds)

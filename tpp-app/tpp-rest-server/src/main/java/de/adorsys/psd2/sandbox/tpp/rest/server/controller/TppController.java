@@ -6,7 +6,7 @@ import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.DataRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
-import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsNativeService;
+import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsDbNativeService;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.BankCodeStructure;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppRestApi;
@@ -36,7 +36,7 @@ public class TppController implements TppRestApi {
     private final UserMgmtRestClient userMgmtRestClient;
     private final DataRestClient dataRestClient;
     private final IbanGenerationService ibanGenerationService;
-    private final CmsNativeService cmsNativeService;
+    private final CmsDbNativeService cmsDbNativeService;
     private final RestExecutionService restExecutionService;
 
     @Override
@@ -80,7 +80,7 @@ public class TppController implements TppRestApi {
     @Override
     public ResponseEntity<Void> remove() {
         List<String> logins = userMgmtStaffRestClient.getBranchUserLogins().getBody();
-        cmsNativeService.deleteConsentsByUserIds(logins);
+        cmsDbNativeService.deleteConsentsByUserIds(logins);
         UserTO user = userMgmtRestClient.getUser().getBody();
 
         return dataRestClient.branch(user.getBranch());

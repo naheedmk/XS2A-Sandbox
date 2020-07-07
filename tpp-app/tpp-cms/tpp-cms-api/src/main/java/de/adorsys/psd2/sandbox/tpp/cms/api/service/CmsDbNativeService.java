@@ -3,7 +3,7 @@ package de.adorsys.psd2.sandbox.tpp.cms.api.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface CmsNativeService {
+public interface CmsDbNativeService {
 
     /**
      * Deletes all data in CMS database (AIS-specific, PIS-specific and authorisation data) by the given user IDs (PSU IDs) and timestamp.
