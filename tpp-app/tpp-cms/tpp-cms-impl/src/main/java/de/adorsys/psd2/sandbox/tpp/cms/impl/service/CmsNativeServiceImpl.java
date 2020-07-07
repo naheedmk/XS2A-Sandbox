@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -35,8 +36,9 @@ public class CmsNativeServiceImpl implements CmsNativeService {
     }
 
     @Override
-    @Transactional
+    @Transactional("cmsTransactionManager")
     public void revertDatabase(List<String> userIds, LocalDateTime databaseStateDateTime) {
+        log.info("Reverting CMS DB for users: " + Arrays.toString(userIds.toArray()) + ", timestamp: " + databaseStateDateTime.toString());
         cmsEntityManager.createNativeQuery(loadQueryFromFile(ROLLBACK_CMS))
             .setParameter(1, userIds)
             .setParameter(2, databaseStateDateTime)
@@ -44,8 +46,10 @@ public class CmsNativeServiceImpl implements CmsNativeService {
     }
 
     @Override
-    @Transactional
+    @Transactional("cmsTransactionManager")
     public void deleteConsentsByUserIds(List<String> userIds) {
+        log.info("Deleting AIS-specific data in CMS DB for users: " + Arrays.toString(userIds.toArray()));
+
         cmsEntityManager.createNativeQuery(loadQueryFromFile(DELETE_CONSENTS_IN_CMS))
             .setParameter(1, userIds)
             .executeUpdate();
