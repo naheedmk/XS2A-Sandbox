@@ -48,7 +48,7 @@ public class CmsNativeServiceImpl implements CmsNativeService {
     @Override
     @Transactional("cmsTransactionManager")
     public void deleteConsentsByUserIds(List<String> userIds) {
-        log.info("Deleting AIS-specific data in CMS DB for users: " + Arrays.toString(userIds.toArray()));
+        log.info("Deleting AIS-specific data in CMS DB (if present) for users: " + Arrays.toString(userIds.toArray()));
 
         cmsEntityManager.createNativeQuery(loadQueryFromFile(DELETE_CONSENTS_IN_CMS))
             .setParameter(1, userIds)
