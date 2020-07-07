@@ -1,6 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.cms.impl.service;
 
-import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsRollbackService;
+import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsNativeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -20,10 +20,13 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CmsRollbackServiceImpl implements CmsRollbackService {
-    private EntityManager cmsEntityManager;
+public class CmsNativeServiceImpl implements CmsNativeService {
     private final ResourceLoader loader;
+
     private static final String ROLLBACK_CMS = "classpath:rollbackCms.sql";
+    private static final String DELETE_CONSENTS_IN_CMS = "classpath:deleteConsents.sql";
+
+    private EntityManager cmsEntityManager;
 
     @Qualifier("cmsEntityManager")
     @Autowired
@@ -34,21 +37,27 @@ public class CmsRollbackServiceImpl implements CmsRollbackService {
     @Override
     @Transactional
     public void revertDatabase(List<String> userIds, LocalDateTime databaseStateDateTime) {
-        executeNativeQuery(ROLLBACK_CMS, userIds, databaseStateDateTime);
+        cmsEntityManager.createNativeQuery(loadQueryFromFile(ROLLBACK_CMS))
+            .setParameter(1, userIds)
+            .setParameter(2, databaseStateDateTime)
+            .executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void deleteConsentsByUserIds(List<String> userIds) {
+        cmsEntityManager.createNativeQuery(loadQueryFromFile(DELETE_CONSENTS_IN_CMS))
+            .setParameter(1, userIds)
+            .executeUpdate();
     }
 
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
-    private void executeNativeQuery(String queryFilePath, List<String> userIds, LocalDateTime databaseStateDateTime) {
+    private String loadQueryFromFile(String filename) {
         try {
-            InputStream stream = loader.getResource(queryFilePath).getInputStream();
-            String query = IOUtils.toString(stream, StandardCharsets.UTF_8);
-            cmsEntityManager.createNativeQuery(query)
-                .setParameter(1, userIds)
-                .setParameter(2, databaseStateDateTime)
-                .executeUpdate();
+            InputStream stream = loader.getResource(filename).getInputStream();
+            return IOUtils.toString(stream, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new RuntimeException("Error while loading CMS SQL query file.");
+            throw new RuntimeException("Error while loading CMS SQL query from file: " + filename);
         }
     }
-
 }

@@ -8,6 +8,7 @@ import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.DataRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
+import de.adorsys.psd2.sandbox.tpp.cms.api.service.CmsNativeService;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.*;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import de.adorsys.psd2.sandbox.tpp.rest.server.service.IbanGenerationService;
@@ -50,6 +51,8 @@ class TppControllerTest {
     private DataRestClient dataRestClient;
     @Mock
     private IbanGenerationService ibanGenerationService;
+    @Mock
+    private CmsNativeService cmsNativeService;
 
     @Test
     void register() {
@@ -69,7 +72,11 @@ class TppControllerTest {
     @Test
     void remove() {
         // Given
-        when(userMgmtRestClient.getUser()).thenReturn(ResponseEntity.ok(getUserTO()));
+        when(userMgmtRestClient.getUser())
+            .thenReturn(ResponseEntity.ok(getUserTO()));
+        when(userMgmtStaffRestClient.getBranchUserLogins())
+            .thenReturn(ResponseEntity.ok(Arrays.asList("anton.brueckner", "max.musterman")));
+
         when(dataRestClient.branch(any())).thenAnswer(i -> ResponseEntity.ok().build());
 
         // When

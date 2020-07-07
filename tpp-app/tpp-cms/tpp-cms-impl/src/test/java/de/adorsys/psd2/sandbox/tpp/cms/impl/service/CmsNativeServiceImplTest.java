@@ -22,10 +22,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class CmsRollbackServiceImplTest {
+class CmsNativeServiceImplTest {
 
     @InjectMocks
-    private CmsRollbackServiceImpl cmsRollbackService;
+    private CmsNativeServiceImpl cmsRollbackService;
 
     @Mock
     private final EntityManager cmsEntityManager = mock(EntityManager.class);
