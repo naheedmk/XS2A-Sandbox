@@ -249,7 +249,6 @@ Build:OBA_frontend:
     - VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)
     - jq --arg VERSION "$VERSION"  --arg BUILD_ID "$CI_PIPELINE_ID" '.version = $VERSION | .build_number = $BUILD_ID' oba-ui/info.json >> info.json
     - mv info.json oba-ui/info.json
-    - cat oba-ui/info.json
     - echo "Run OBA frontend  Build"
     - make npm-install-oba-ui
   cache: {}
@@ -271,7 +270,6 @@ Build:TPP_frontend:
     - VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)
     - jq --arg VERSION "$VERSION"  --arg BUILD_ID "$CI_PIPELINE_ID" '.version = $VERSION | .build_number = $BUILD_ID' tpp-ui/info.json >> info.json
     - mv info.json oba-ui/info.json
-    - cat oba-ui/info.json
     - echo "Run TPP frontend  Build"
     - make npm-install-tpp-ui
   cache: {}
@@ -293,7 +291,6 @@ Build:Devportal_frontend:
     - VERSION=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)
     - jq --arg VERSION "$VERSION"  --arg BUILD_ID "$CI_PIPELINE_ID" '.version = $VERSION | .build_number = $BUILD_ID' developer-portal-ui/info.json >> info.json
     - mv info.json developer-portal-ui/info.json
-    - cat developer-portal-ui/info.json
     - echo "Update postman test files"
     - scripts/.update-postman-test-files.sh
     - echo "Run Devportal frontend Build"
