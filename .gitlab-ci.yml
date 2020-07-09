@@ -244,7 +244,7 @@ Build:OBA_frontend:
   except:
     - schedules
   script:
-    - apt-get update && apt-get install make jq -yq
+    - apt-get update && apt-get install make maven jq -yq
     - echo "Update info.json"
     - VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)
     - jq --arg VERSION "$VERSION"  --arg BUILD_ID "$CI_PIPELINE_ID" '.version = $VERSION | .build_number = $BUILD_ID' oba-ui/info.json >> info.json
@@ -265,7 +265,7 @@ Build:TPP_frontend:
   except:
     - schedules
   script:
-    - apt-get update && apt-get install make jq -yq
+    - apt-get update && apt-get install make jq maven  -yq
     - echo "Update info.json"
     - VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)
     - jq --arg VERSION "$VERSION"  --arg BUILD_ID "$CI_PIPELINE_ID" '.version = $VERSION | .build_number = $BUILD_ID' tpp-ui/info.json >> info.json
@@ -286,7 +286,7 @@ Build:Devportal_frontend:
   except:
     - schedules
   script:
-    - apt-get update && apt-get install zip make jq -yq
+    - apt-get update && apt-get install zip make jq maven -yq
     - echo "Update info.json"
     - VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)
     - jq --arg VERSION "$VERSION"  --arg BUILD_ID "$CI_PIPELINE_ID" '.version = $VERSION | .build_number = $BUILD_ID' developer-portal-ui/info.json >> info.json
